@@ -1,13 +1,18 @@
-# Section heading patterns per regulator, used by the page-wise locator.
-# Patterns are Python regular expressions matched against a stripped line, case-insensitive.
-# Lines that look like table-of-contents entries (dot leaders, ellipsis, trailing page
-# numbers) are skipped before matching. Seeded from the eight sample PEs on 2026-10-05;
-# every pattern must be covered by a test case in tests/test_locate.py.
+# Section heading patterns per regulator, used by the page-wise locator (src/cra_extract/locate.py).
+# Patterns are Python regular expressions matched against a stripped line, case-insensitive,
+# after curly quotes are replaced by straight ones (FRB prints "INSTITUTION’S" with a curly
+# apostrophe). A line is a heading candidate only when it is short (at most 100 characters),
+# has no currency or percent sign and no run of three or more inner spaces (pdftotext column
+# gaps in tables). Lines that look like table-of-contents entries (dot leaders, ellipsis,
+# trailing page numbers) are skipped before matching, and so is everything on a mostly-ToC
+# page up to its last ToC row (wrapped ToC entries carry no leader).
+# Seeded from the eight sample PEs on 2026-10-05; every pattern must be covered by a test
+# case in tests/test_locate.py.
 
 toc_line_patterns:
-  - '\.{4,}\s*[A-Z]?-?\d+\s*$'     # "DESCRIPTION OF INSTITUTION .......... 2"
-  - '…{2,}\s*[A-Z]?-?\d+\s*$'      # OCC uses ellipsis characters
-  - '^\s*Table of Contents\s*$'
+  - '[.…]{3,}[\s.…]*[A-Z]?-?\d+\s*$'  # "DESCRIPTION OF INSTITUTION .......... 2", "Appendix A: ....… A-1"
+  - '[.…]{6,}\s*$'                   # wrapped FRB ToC rows: "WHITE PLAINS, NY-NJ) ........."
+  - '^Table of Contents$'
 
 sections:
   cover:
@@ -19,65 +24,84 @@ sections:
     max_pages: 1
 
   rating:
-    description: The institution's CRA rating statement and, for ISB, the component test ratings.
+    description: The institution's CRA rating statement and, for ISB, the component test ratings. OCC Small Bank PEs print "The lending test is rated" here.
     scope: institution
-    OCC: ["^Overall CRA Rating", "^INSTITUTION'?S CRA RATING", "^This institution is rated"]
-    FDIC: ["^INSTITUTION'?S CRA RATING", "^INSTITUTION RATING"]
-    FRB: ["^INSTITUTION'?S CRA RATING", "^INSTITUTION RATING"]
+    OCC: ["^Overall CRA Rating$", "^INSTITUTION'?S CRA RATING", "^This institution is rated"]
+    FDIC: ["^INSTITUTION RATING$", "^INSTITUTION'?S CRA RATING"]
+    FRB: ["^INSTITUTION'?S CRA RATING", "^INSTITUTION RATING$", "^INSTITUTION'?S COMMUNITY REINVESTMENT ACT RATING$"]
+    max_pages: 2
 
   description_of_institution:
     scope: institution
-    OCC: ['^Description of Institution']
+    OCC: ['^Description of Institution$']
     FDIC: ['^DESCRIPTION OF INSTITUTION$']
     FRB: ['^DESCRIPTION OF INSTITUTION$']
+    max_pages: 4
 
   description_of_assessment_area:
     scope: institution
-    OCC: ['^Description of Assessment Area']
+    OCC: ['^Description of Assessment Areas?$']
     FDIC: ['^DESCRIPTION OF ASSESSMENT AREAS?$']
     FRB: ['^DESCRIPTION OF ASSESSMENT AREAS?$']
+    max_pages: 4
 
   scope_of_evaluation:
     scope: institution
     OCC: ['^Scope of (the )?Evaluation$']
     FDIC: ['^SCOPE OF EVALUATION$']
-    FRB: ['^SCOPE OF EVALUATION$']
+    FRB: ['^SCOPE OF EVALUATION$', '^SCOPE OF EXAMINATION$']
+    max_pages: 4
 
   ltd_ratio:
     scope: institution
     OCC: ['^Loan-to-Deposit Ratio$']
     FDIC: ['^Loan-to-Deposit Ratio$']
-    FRB: ['^Loan-to-Deposit Ratio$', '^LOAN-TO-DEPOSIT RATIO']
+    FRB: ['^(Net )?Loan-to-Deposit Ratio$']
+    max_pages: 2
 
   aa_concentration:
     scope: institution
-    OCC: ['^Lending in Assessment Area']
+    OCC: ['^Lending in (the )?Assessment Areas?$']
     FDIC: ['^Assessment Area Concentration$']
-    FRB: ['^Assessment Area Concentration$', '^LENDING IN (THE )?ASSESSMENT AREA']
+    FRB: ['^Assessment Area Concentration$', '^Lending in (the )?Assessment Areas?$']
+    max_pages: 2
 
   illegal_credit_practices_review:
-    description: The fair lending / illegal credit practices review paragraph(s).
+    description: The fair lending / illegal credit practices review paragraph(s); 2 to 10 lines in all eight samples.
     scope: institution
-    OCC: ['^Discriminatory or Other Illegal Credit Practices Review']
-    FDIC: ['^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW']
-    FRB: ['^FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW']
+    OCC: ['^Discriminatory or Other Illegal Credit Practices Review$']
+    FDIC: ['^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$']
+    FRB: ['^FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$']
+    max_pages: 2
 
-# Headings that start a non-institution scope. Any page after one of these and before the
-# next institution-level heading inherits the scope.
+# Headings that end a section but are never located themselves (sub-test headings, appendix
+# front matter). A located section runs to the next section heading, scope marker or
+# boundary heading, whichever comes first, capped by max_pages.
+boundary_patterns:
+  OCC: ['^Lending Test$', '^Community Development Test$', '^Conclusions with Respect to Performance']
+  FDIC: ['^CONCLUSIONS ON PERFORMANCE CRITERIA', '^LENDING TEST$', '^COMMUNITY DEVELOPMENT TEST$', '^APPENDICES$', '^(SMALL|INTERMEDIATE SMALL) BANK PERFORMANCE CRITERIA$']
+  FRB: ['^SUMMARY OF MAJOR FACTORS SUPPORTING RATINGS?$', '^CONCLUSIONS WITH RESPECT TO PERFORMANCE', '^LENDING TEST$', '^COMMUNITY DEVELOPMENT TEST$', '^PERFORMANCE CONTEXT$']
+
+# Headings that start a non-institution scope. Every line after one of these inherits the
+# scope. Scope never returns to institution: in all three formats the institution-level
+# sections precede the state, MSA and assessment-area sections, which precede the appendices
+# (verified on the eight samples), and the appendix scope is sticky over the others because
+# appendix tables repeat state and MSA names (FieldPoint Appendix C). Markers are tried in the
+# order listed here, most specific first, so a heading matching two kinds gets the first.
 scope_markers:
-  state:
-    OCC: ['^State Rating', '^State of ', '^Scope of Evaluation in ']
-    FDIC: ['^STATE OF ', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
-    FRB: ['^STATE OF ', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
+  appendix:
+    OCC: ['^Appendix [A-D]:']
+    FDIC: ['^GLOSSARY$', '^APPENDIX [A-Z]\b', '^APPENDICES$']
+    FRB: ['^APPENDIX [A-D]\s*[-–:]', '^Appendix [A-D]\s*[-–:]']
   msa:
     OCC: ['^Multistate Metropolitan', '^MMSA Rating']
-    FDIC: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN .*(MSA|MD) "]
-    FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (MSA|MD) "]
+    FDIC: ['^[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN)']
+    FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?(MSA|MD) \\d", '^(MSA|MD) \d{4,5} .*SCOPE REVIEW$']
+  state:
+    OCC: ['^State Rating$', '^State of [A-Za-z ]+$', '^Scope of Evaluation in [A-Za-z ]+$']
+    FDIC: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
+    FRB: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE STATE OF )?[A-Z ]+$", '^CRA RATING FOR [A-Z ]+:']
   assessment_area:
     OCC: ['^Description of Assessment Area', '^Conclusions .* Assessment Area']
-    FDIC: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN .* AA$"]
+    FDIC: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN .* AA$", '^.+ AA [–-] (Full|Limited)-Scope Review$']
     FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN "]
-  appendix:
-    OCC: ['^Appendix [A-D]']
-    FDIC: ['^GLOSSARY$', '^APPENDIX']
-    FRB: ['^APPENDIX [A-D]', '^Appendix [A-D]']
