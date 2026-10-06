@@ -1,0 +1,776 @@
+                                PUBLIC DISCLOSURE
+                                             April 8, 2024
+
+
+                   COMMUNITY REINVESTMENT ACT
+                     PERFORMANCE EVALUATION
+                                      The Lemont National Bank
+                                        Charter Number 11715
+
+                                          1201 State Street
+                                          Lemont, IL 60439
+
+
+                                  ADC-Chicago (8308) Field Office
+                               Office of the Comptroller of the Currency
+                                   2001 Butterfield Road, Suite 400
+                                       Downers Grove, IL 60515
+
+
+NOTE: This document is an evaluation of this institution's record of meeting the credit needs of its
+      entire community, including low- and moderate-income neighborhoods, consistent with safe
+      and sound operation of the institution. This evaluation is not, and should not be construed as,
+      an assessment of the financial condition of this institution. The rating assigned to this
+      institution does not represent an analysis, conclusion, or opinion of the federal financial
+      supervisory agency concerning the safety and soundness of this financial institution.
+                                                            Charter Number: 11715
+
+                             Table of Contents
+Overall CRA Rating……...………………………………………………………………                               1
+Description of Institution………….…………………………………………………….                          2
+Scope of the Evaluation………………………………………………………………….                             2
+Discriminatory or Other Illegal Credit Practices Review……………………….………          4
+State Rating…….……………………………………………………………………….                                   5
+          State of Illinois ……….………………………………………………………                         7
+Lending Test …………………………………………………………………………….                                   7
+Appendix A: Scope of Examination………….…………………………………………                       A-1
+Appendix B: Summary of MMSA and State Ratings…………………………………...               B-1
+Appendix C: Definitions and Common Abbreviations………………………………….              C-1
+Appendix D: Tables of Performance Data………………………………………………                    D-1
+
+
+
+
+                                     i
+                                                                                      Charter Number: 11715
+
+Overall CRA Rating
+Institution’s CRA Rating: This institution is rated Substantial Noncompliance.
+
+The lending test is rated: Substantial Noncompliance.
+
+
+The major factors that support this rating include:
+
+•   The bank’s quarterly average loan-to-deposit ratio (LTD) is unreasonable at 10.6 percent.
+
+•   Lending activity within the assessment area (AA) needs improvement. The bank originated six loans
+    in the AA during the three-year evaluation period.
+
+•   The distribution of loans to borrowers of different income levels is very poor.
+
+•   Lemont did not receive any complaints regarding its CRA performance during the evaluation period.
+
+Loan-to-Deposit Ratio
+
+Considering the bank’s size, financial condition, and credit needs of the AA(s), the bank’s loan-to-
+deposit ratio is unreasonable.
+
+The Lemont National Bank’s (“Lemont” or “bank”) average LTD for the 16-quarter period since the
+preceding CRA evaluation was 10.6 percent. The bank’s average LTD ratio ranged from a high of 11.0
+percent to a low of 9.7 percent. In comparison, the average LTD ratio for similarly sized financial
+institutions with assets less than $100 million was 77.8 percent. The ratio ranged from a high of 116.2
+percent and a low of 63.4 percent.
+
+According to June 30, 2023, deposit market share information, 18 other depository institutions operating
+24 branches compete for deposits in the bank’s CRA AA. These institutions include very large
+commercial and regional depository institutions. According to the 2022 Aggregate Home Mortgage
+Disclosure Act (HMDA) data, 261 lenders originated home mortgage loans within the bank’s CRA AA.
+The lenders include large nationwide lenders as well as non-depository lenders which offer a wide range
+of mortgage loan products.
+
+Management asserted that high interest rates and high cost of housing adversely impacted Lemont’s
+demand for home mortgage loans. In particular, management stated that increased interest rates have
+affected the bank’s ability to originate home equity loans, home refinance, and home purchase loans.
+
+While multiple external factors may have contributed to Lemont’s low average LTD ratio, the LTD ratio
+reflects a weak level of lending relative to available resources.
+
+
+
+
+                                                      1
+                                                                                                Charter Number: 11715
+
+Lending in Assessment Area
+
+A majority of the bank’s loans are inside its assessment area(s) (AAs).
+
+The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the
+evaluation period. This analysis is performed at the bank, rather than the AA, level. This percentage
+does not include extensions of credit by affiliates that may be considered under the other performance
+criteria. While a majority of the bank’s loans were inside the bank’s AA, the total number of loans
+originated is very small (a total of six home mortgage loans) and reflects poor responsiveness to
+community credit needs.
+
+Lending Inside and Outside of the Assessment Area
+
+                                 Number of Loans                           Dollar Amount of Loans $(000s)
+Loan Category                                                      Total                                        Total
+                              Inside          Outside                        Inside           Outside
+                                                                    #                                          $(000s)
+                          #             %     #          %                   $         %       $         %
+Home Mortgage             6            54.5   5         45.4        11     1,863      52.9   1,657      47.1   3,520
+Total                     6            54.4   5         45.4        11     1,863      52.9   1,657      47.1   3,520
+
+
+
+Description of Institution
+Lemont is a nationally chartered bank headquartered in the village of Lemont, Illinois, located
+approximately 20 miles southwest of the city of Chicago. Lemont is a wholly owned subsidiary of
+Lemont Bancorp Inc., a one-bank holding company also based in Lemont, Illinois. As of December 31,
+2023, Lemont reported total assets of $65.4 million, total deposits of $47.0 million, and tier 1 capital of
+$3.6 million. The bank is a single state institution with five branch offices in Cook and Will counties.
+
+Historically, the bank’s business focus has been on residential mortgage lending. The bank offers
+standard loan products for home purchase, home refinance, residential construction loans, and home
+equity lines of credit. The bank is a portfolio mortgage lender and does not originate loans for sale on
+the secondary market. Additionally, the bank offers commercial real estate, business loans, passbook,
+and certificate of deposit loans. As of December 31, 2023, Lemont reported total loans of $5.1 million.
+Total loans represented eight percent of total assets. Residential home mortgage loans secured by 1-4
+single dwellings represent 93.5 percent of total assets and commercial loans represent 6.5 percent of
+total assets.
+
+Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation, dated June 19,
+2021. There are no known financial, legal, or other constraints prohibiting the bank from originating
+loans.
+
+
+Scope of the Evaluation
+Evaluation Period/Products Evaluated
+
+The evaluation period includes calendar years 2021 through 2023. We assessed the bank under the
+small bank CRA evaluation procedures. Based upon the examiner’s analysis of the bank’s lending
+activity, home mortgage loans represent the bank’s primary lending product. Lemont does not purchase
+                                                               2
+                                                                                        Charter Number: 11715
+
+home mortgage loans or consumer loans. The bank is not subject to reporting requirements of the Home
+Mortgage Disclosure Act. Therefore, we utilized internal bank records of home mortgage loan
+originations to evaluate the bank’s CRA performance. Due to the low loan origination volume, we
+reviewed 100 percent of the bank’s home mortgage loans during the evaluation period.
+
+Due to changes between the 2015 U.S Census American Community Survey (ACS) and the 2020 U.S.
+Census, we performed separate analysis periods for 2021 and 2022-2023 to evaluate geographic
+distribution and borrower income criteria. Performance in Tables O and P, in Appendix C reflect data
+from both analysis periods.
+
+Selection of Areas for Full-Scope Review
+
+In each state where the bank has an office, one or more of AAs within that state was selected for a full-
+scope review. For purposes of this evaluation, bank delineated assessment areas located within the same
+metropolitan statistical area (MSA), multistate metropolitan statistical area (MMSA), or combined
+statistical area (CSA) are combined and evaluated as a single AA. Similarly, bank delineated non-MSA
+AAs within the same state are combined and evaluated as a single area. These combined AAs may be
+evaluated as full- or limited-scope. Refer to the “Scope” section under each State Rating for details
+regarding how full-scope AAs were selected. Refer to appendix A, Scope of Examination, for a list of
+full- and limited-scope AAs.
+
+Ratings
+
+The bank’s overall rating is a blend of the state ratings, and where applicable, multistate ratings.
+
+The MMSA rating and state ratings are based on performance in all bank AAs. Refer to the “Scope”
+section under each state and MMSA Rating section for details regarding how the areas were weighted in
+arriving at the respective ratings.
+
+
+
+
+                                                      3
+                                                                                      Charter Number: 11715
+
+Discriminatory or Other Illegal Credit Practices Review
+Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal
+savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or
+other illegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans
+have been considered as part of the bank’s lending performance. As part of this evaluation process, the
+OCC consults with other federal agencies with responsibility for compliance with the relevant laws and
+regulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban
+Development, and the Bureau of Consumer Financial Protection, as applicable.
+
+The OCC has not identified that this institution (or any affiliate whose loans have been considered as
+part of the institution’s lending performance) has engaged in discriminatory or other illegal credit
+practices that require consideration in this evaluation.
+
+The OCC will consider any information that this institution engaged in discriminatory or other illegal
+credit practices, identified by or provided to the OCC before the end of the institution’s next
+performance evaluation in that subsequent evaluation, even if the information concerns activities that
+occurred during the evaluation period addressed in this performance evaluation.
+
+
+
+
+                                                    4
+                                                                                      Charter Number: 11715
+
+State Rating
+State of Illinois
+CRA rating for the State of Illinois: Substantial Noncompliance
+
+The Lending Test is rated: Substantial Noncompliance
+
+The major factors that support this rating include:
+
+•   Distribution of loans to borrowers of different income levels is very poor. The bank did not originate
+    any home mortgage loans to low-income or moderate-income borrowers in the AA during the
+    evaluation period.
+
+
+
+Description of Institution’s Operations in Illinois
+Lemont has one AA in the state of Illinois consisting of 14 contiguous census tracts located in portions
+of Cook, DuPage, and Will counties. These counties are part of the of Chicago-Naperville-Schaumburg,
+IL, MSA (MSA #16894). As of December 31, 2023, Lemont operated five branch offices in the AA.
+Four branches are located in Lemont within Cook County. One branch is in a retirement community.
+The fifth branch in Homer Glen located in Will County is in a retirement community. The bank
+operates drive-up automated teller machines at each of the bank’s three free-standing branch offices in
+the village of Lemont. The bank’s main office in Lemont offers banking services on Saturdays. During
+the evaluation period, the bank’s president and one full time loan officer originated loans. Additionally,
+Lemont did not conduct any advertising or marketing activities of the bank’s lending or deposit products
+during the evaluation period.
+
+According to June 30, 2023, deposit market share information, Lemont maintained $47 million in
+deposits and ranked 14th out of 17 depository institutions with a 1.5 percent deposit market share in the
+AA. The top three banks in the AA in terms of deposits, include JP Morgan Chase N.A. with a 14.2
+percent market share, BMO Harris N.A. with a 12.8 percent market share, and Busey Bank with a 12.5
+percent market share.
+
+According to 2022 Aggregate HMDA Data (2023 Aggregate HMDA data not yet available), 214 lenders
+originated and or purchased 1,820 home mortgage loans in the AA. The top three mortgage lenders, JP
+Morgan Chase N.A., Guaranteed Rate INC., and US Bank N.A. had a combined market share of 13.7
+percent. The volume of home mortgage loan originations and purchases in the AA significantly
+decreased from 2021 to 2022. Based upon information from 2021 and 2022 Aggregate HMDA data, the
+number of home mortgage loan decreased from 3,912 in 2021 to 1,820 home mortgage loans in the AA.
+
+During the evaluation period, Lemont originated a total of 11 loans. The following table reflects the
+breakdown of loans originated.
+
+
+
+
+                                                      5
+                                                                                                                      Charter Number: 11715
+
+                                                         Loan Originations 2021-2023
+             Type of Loan                                     Number of Loans                               Percentage of Total Number
+       Home Equity Lines of Credit                                   4                                                36.4%
+        Home Mortgage Refinance                                      5                                                45.5%
+        Home Mortgage Purchase                                       2                                                18.2%
+                Total                                                11                                              100.0%
+
+As part of the CRA Evaluation, the OCC reviewed information from an affordable housing organization
+to determine local economic conditions and community needs. According to this community contact,
+affordable housing is a need throughout the Chicago metropolitan area. This community contact stated
+that banks should be more diligent and flexible and tailor loans to match neighborhood needs related to
+the age of the housing stock and needs of the residents.
+
+The following table summarizes demographic characteristics of the bank’s CRA AA.
+
+                                     Table A – Demographic Information of the Assessment Area
+                                           Assessment Area: Lemont National Bank CRA AA
+                                                                          Low           Moderate           Middle     Upper      NA*
+Demographic Characteristics                                   #
+                                                                          % of #         % of #            % of #     % of #     % of #
+   Geographies (Census Tracts)                                     14            0.0                 0.0       42.9       57.1            0.0
+   Population by Geography                                   61,799              0.0                 0.0       37.3       62.7            0.0
+   Housing Units by Geography                                22,235              0.0                 0.0       36.8       63.2            0.0
+   Owner-Occupied Units by Geography                         18,375              0.0                 0.0       37.9       62.1            0.0
+   Occupied Rental Units by Geography                         2,610              0.0                 0.0       27.7       72.3            0.0
+   Vacant Units by Geography                                  1,250              0.0                 0.0       38.7       61.3            0.0
+   Businesses by Geography                                   10,538              0.0                 0.0       31.9       68.1            0.0
+   Farms by Geography                                             164            0.0                 0.0       36.0       64.0            0.0
+   Family Distribution by Income Level                       16,360             12.7                14.2       17.6       55.6            0.0
+   Household Distribution by Income Level                    20,985             15.3                12.1       15.8       56.8            0.0
+   Median Family Income MSA –16984                                         $92,622 Median Housing Value                           $370,911
+   Chicago-Naperville-Schaumburg, IL
+                                                                                       Median Gross Rent                            $1,329
+                                                                                       Families Below Poverty Level                      4.6%
+Source: 2020 U.S. Census and 2023 D&B Data
+Due to rounding, totals may not equal 100.0
+(*) The NA category consists of geographies that have not been assigned an income classification.
+
+
+
+The OCC evaluated the disparity between median family incomes of families in the AA and the cost of
+housing. From the information in the above table, low-income families earned less than $43,311 and
+moderate-income families earned between $43,312 and $74,098. One method used to determine
+housing affordability assumed a maximum monthly principal and interest payment of no more than 30
+percent of the borrower’s income. Based upon a 30-year mortgage with a five percent interest rate, not
+accounting for downpayment, homeowners’ insurance, real estate taxes, or additional monthly expenses,
+the mortgage loan amount for homes at the AA median family value would be $125,672 for low-income
+borrowers and $345,076 for moderate-income borrower. This illustrates that both low-income and
+moderate-income borrowers would be challenged to qualify for a mortgage in the AA.
+
+                                                                            6
+                                                                                        Charter Number: 11715
+
+
+
+
+Scope of Evaluation in Illinois
+
+We reviewed the bank’s performance in the bank’s single AA.
+
+LENDING TEST
+The bank’s performance under the Lending Test in Illinois is rated Substantial Noncompliance.
+
+Conclusions for Area Receiving a Full-Scope Review
+
+Based on a full-scope review, the bank’s performance in the bank’s AA is very poor.
+
+Distribution of Loans by Income Level of the Geography
+
+A geographic distribution analysis would not have been meaningful since there are no low-income or
+moderate-income census tracts in the bank’s CRA AA.
+
+Home Mortgage Loans
+
+Refer to Table O in the state of Illinois section of appendix D for the facts and data used to evaluate the
+geographic distribution of the bank’s home mortgage loan originations and purchases.
+
+Lending Gap Analysis
+
+Considering the lack of low-income and moderate-income census tracts, a lending gap analysis would not
+have been meaningful.
+
+Distribution of Loans by Income Level of the Borrower
+
+The bank exhibits a very poor distribution of loans to individuals of different income levels and
+businesses and farms of different sizes, given the product lines offered by the bank.
+
+In assessing borrower income distribution, consideration was given to the impact of the high cost of
+housing in the AA. The high cost of housing may impact the ability of low-income and moderate-
+income borrowers to obtain home mortgage loans.
+
+
+Home Mortgage Loans
+
+Refer to Table P in the state of Illinois section of appendix D for the facts and data used to evaluate the
+borrower distribution of the bank’s home mortgage loan originations and purchases.
+
+Based upon the data in the tables, the borrower income distribution of home mortgage loans is very
+poor. During the evaluation period, Lemont did not originate any home mortgage loans to low-income
+or moderate-income borrowers.
+
+                                                      7
+                                                                                  Charter Number: 11715
+
+
+
+
+Responses to Complaints
+
+The bank did not receive any consumer complaints related to its CRA performance during this
+evaluation period.
+
+
+
+
+                                                  8
+                                                                                         Charter Number: 11715
+
+Appendix A: Scope of Examination
+
+The following table identifies the time period covered in this evaluation, affiliate activities that were
+reviewed, and loan products considered. The table also reflects the MSAs and non-MSAs that received
+comprehensive examination review, designated by the term “full-scope,” and those that received a less
+comprehensive review, designated by the term “limited-scope”.
+
+ Time Period Reviewed:              01/01/2021 to 12/31/2023
+ Bank Products Reviewed:            Home mortgage
+
+
+ Affiliate(s)                       Affiliate Relationship     Products Reviewed
+ None                               None reviewed              Not Applicable
+
+
+
+ List of Assessment Areas and Type of Examination
+ Rating and Assessment Areas          Type of Exam             Other Information
+ State of Illinois
+ Chicago-Naperville-Schaumburg, IL                             Part of Cook County, DuPage County, and Will
+                                      Full scope
+ MSA                                                           County in Illinois
+
+
+
+
+                                                 Appendix A1
+                                                                   Charter Number: 11715
+
+
+
+Appendix B: Summary of MMSA and State Ratings
+
+
+                    RATINGS   The Lemont National Bank
+                                             Lending Test Rating
+Overall Bank:
+Lemont National Bank           Substantial Non-Compliance
+
+MMSA or State:
+
+State of Illinois              Substantial Non-Compliance
+
+
+
+
+                                    Appendix B-1
+                                                                                      Charter Number: 11715
+
+Appendix C: Definitions and Common Abbreviations
+
+
+The following terms and abbreviations are used in this performance evaluation, including the CRA
+tables. The definitions are intended to provide the reader with a general understanding of the terms, not a
+strict legal definition.
+
+Affiliate: Any company that controls, is controlled by, or is under common control with another
+company. A company is under common control with another company if the same company directly or
+indirectly controls both companies. For example, a bank subsidiary is controlled by the bank and is,
+therefore, an affiliate.
+
+Aggregate Lending (Aggt.): The number of loans originated and purchased by all reporting lenders
+(HMDA or CRA) in specified income categories as a percentage of the aggregate number of loans
+originated and purchased by all reporting lenders in the state/assessment area.
+
+Census Tract (CT): A small, relatively permanent statistical subdivision of a county delineated by a
+local committee of census data users for the purpose of presenting data. Census tracts nest within
+counties, and their boundaries normally follow visible features, but may follow legal geography
+boundaries and other non-visible features in some instances, Census tracts ideally contain about 4,000
+people and 1,600 housing units.
+
+Combined Statistical Area (CSA): A geographic entity consisting of two or more adjacent Core Based
+Statistical Areas with employment interchange measures of at least 15. An employment interchange
+measure is a measure of ties between two adjacent entities. The employment interchange measure is the
+sum of the percentage of workers living in the smaller entity who work in the larger entity and the
+percentage of employment in the smaller entity that is accounted for by workers who reside in the larger
+entity.
+
+Community Development (CD): Affordable housing (including multifamily rental housing) for low- or
+moderate-income individuals; community services targeted to low- or moderate-income individuals;
+activities that promote economic development by financing businesses or farms that meet Small
+Business Administration Development Company or Small Business Investment Company programs size
+eligibility standards or have gross annual revenues of $1 million or less; or activities that revitalize or
+stabilize low- or moderate-income geographies, distressed or underserved nonmetropolitan middle-
+income geographies, or designated disaster areas.
+
+Community Reinvestment Act (CRA): The statute that requires the OCC to evaluate a bank’s record
+of meeting the credit needs of its entire community, including LMI areas, consistent with the safe and
+sound operation of the bank, and to take this record into account when evaluating certain corporate
+applications filed by the bank.
+
+Consumer Loan(s): A loan(s) to one or more individuals for household, family, or other personal
+expenditures. A consumer loan does not include a home mortgage, small business, or small farm loan.
+This definition includes the following categories: motor vehicle loans, credit card loans, other secured
+consumer loans, and other unsecured consumer loans.
+
+
+                                               Appendix C-1
+                                                                                       Charter Number: 11715
+
+Family: Includes a householder and one or more other persons living in the same household who are
+related to the householder by birth, marriage, or adoption. The number of family households always
+equals the number of families; however, a family household may also include non-relatives living with
+the family. Families are classified by type as either a married-couple family or other family, which is
+further classified into ‘male householder’ (a family with a male householder’ and no wife present) or
+‘female householder’ (a family with a female householder and no husband present).
+
+Full-Scope Review: Performance under the Lending, Investment, and Service Tests is analyzed
+considering performance context, quantitative factors (e.g., geographic distribution, borrower
+distribution, and total number and dollar amount of investments), and qualitative factors (e.g.,
+innovativeness, complexity, and responsiveness).
+
+Geography: A census tract delineated by the United States Bureau of the Census in the most recent
+decennial census.
+
+Home Mortgage Disclosure Act (HMDA): The statute that requires certain mortgage lenders that
+conduct business or have banking offices in a metropolitan statistical area to file annual summary
+reports of their mortgage lending activity. The reports include such data as the race, gender, and the
+income of applicants, the amount of loan requested, the disposition of the application (e.g., approved,
+denied, and withdrawn), the lien status of the collateral, any requests for preapproval, and loans for
+manufactured housing.
+
+Home Mortgage Loans: A closed-end mortgage loan or an open-end line of credit as these terms are
+defined under 12 CFR 1003.2, and that is not an excluded transaction under 12 CFR 1003.3(c)(1)
+through (c)(10) and (c)(13).
+
+Household: Includes all persons occupying a housing unit. Persons not living in households are
+classified as living in group quarters. In 100 percent tabulations, the count of households always equals
+the count of occupied housing units.
+
+Limited-Scope Review: Performance under the Lending, Investment, and Service Tests is analyzed
+using only quantitative factors (e.g., geographic distribution, borrower distribution, total number and
+dollar amount of investments, and branch distribution).
+
+Low-Income Individual: Individual income that is less than 50 percent of the area median income.
+
+Low Income Geography: A census tract with a median family income that is less than 50 percent.
+
+Market Share: The number of loans originated and purchased by the institution as a percentage of the
+aggregate number of loans originated and purchased by all reporting lenders in the state/assessment area.
+
+Median Family Income (MFI): The median income determined by the U.S. Census Bureau every five
+years and used to determine the income level category of geographies. The median is the point at which
+half of the families have income above, and half below, a range of incomes. Also, the median income
+determined by the Federal Financial Institutions Examination Council (FFIEC) annually that is used to
+determine the income level category of individuals. For any given area, the median is the point at which
+half of the families have income above, and half below, a range of incomes.
+
+
+                                               Appendix C-2
+                                                                                          Charter Number: 11715
+
+
+Metropolitan Division: As defined by Office of Management and Budget, a county or group of
+counties within a Core Based Statistical Area that contains an urbanized population of at least 2.5
+million. A Metropolitan Division consists of one or more main/secondary counties that represent an
+employment center or centers, plus adjacent counties associated with the main/secondary county or
+counties through commuting ties.
+
+Metropolitan Statistical Area: An area, defined by the Office of Management and Budget, as a core
+based statistical area associated with at least one urbanized area that has a population of at least 50,000.
+The Metropolitan Statistical Area comprises the central county or counties containing the core, plus
+adjacent outlying counties having a high degree of social and economic integration with the central
+county or counties as measured through commuting.
+
+Middle-Income: Individual income that is at least 80 percent and less than 120 percent of the area
+median income, or a median family income that is at least 80 percent and less than 120 percent, in the
+case of a geography
+
+Moderate-Income: Individual income that is at least 50 percent and less than 80 percent of the area
+median income, or a median family income that is at least 50 percent and less than 80 percent, in the
+case of a geography.
+
+Multifamily: Refers to a residential structure that contains five or more units.
+
+Owner-Occupied Units: Includes units occupied by the owner or co-owner, even if the unit has not
+been fully paid for or is mortgaged.
+
+Qualified Investment: A qualified investment is defined as any lawful investment, deposit, membership
+share, or grant that has as its primary purpose community development.
+
+Rating Area: A rated area is a state or multi-state metropolitan statistical area. For an institution with
+domestic branches in only one state, the institution’s CRA rating would be the state rating. If an
+institution maintains domestic branches in more than one state, the institution will receive a rating for
+each state in which those branches are located. If an institution maintains domestic branches in two or
+more states within a multi-state metropolitan statistical area, the institution will receive a rating for the
+multi-state metropolitan statistical area.
+
+Small Loan(s) to Business(es): A loan included in 'loans to small businesses' as defined in the
+Consolidated Report of Condition and Income (Call Report) instructions. These loans have original
+amounts of $1 million or less and typically are either secured by nonfarm or nonresidential real estate or
+are classified as commercial and industrial loans.
+
+Small Loan(s) to Farm(s): A loan included in ‘loans to small farms’ as defined in the instructions for
+preparation of the Consolidated Report of Condition and Income (Call Report). These loans have
+original amounts of $500,000 or less and are either secured by farmland, or are classified as loans to
+finance agricultural production and other loans to farmers.
+
+
+
+
+                                                 Appendix C-3
+                                                                                   Charter Number: 11715
+
+Tier 1 Capital: The total of common shareholders’ equity, perpetual preferred shareholders’ equity with
+non-cumulative dividends, retained earnings and minority interests in the equity accounts of
+consolidated subsidiaries.
+
+Upper-Income: Individual income that is at least 120 percent of the area median income, or a median
+family income that is at least 120 percent, in the case of a geography.
+
+
+
+
+                                             Appendix C-4
+                                                                                                      Charter Number: 11715
+
+Appendix D: Tables of Performance Data
+
+
+Content of Standardized Tables
+A separate set of tables is provided for each state. All multistate metropolitan statistical areas, if
+applicable, are presented in one set of tables. References to the “bank” include activities of any affiliates
+that the bank provided for consideration (refer to appendix A: Scope of the Examination). For purposes
+of reviewing the Lending Test tables, the following are applicable: (1) purchased are treated as
+originations; and (2) “aggregate” is the percentage of the aggregate number of reportable loans
+originated and purchased by all HMDA or CRA-reporting lenders in the MMSA/assessment area.
+Deposit data are compiled by the FDIC and are available as of June 30th of each year. Tables without
+data are not included in this PE.
+
+The following is a listing and brief description of the tables included in each set:
+
+Table O.       Assessment Area Distribution of Home Mortgage Loans by Income Category of the
+               Geography - Compares the percentage distribution of the number of loans originated and
+               purchased by the bank in low-, moderate-, middle-, and upper-income geographies to the
+               percentage distribution of owner-occupied housing units throughout those geographies. The
+               table also presents aggregate peer data for the years the data is available.
+
+Table P.       Assessment Area Distribution of Home Mortgage Loans by Income Category of the
+               Borrower - Compares the percentage distribution of the number of loans originated and
+               purchased by the bank to low-, moderate-, middle-, and upper-income borrowers to the
+               percentage distribution of families by income level in each MMSA/assessment area. The
+               table also presents aggregate peer data for the years the data is available.
+
+Table Q.       Assessment Area Distribution of Loans to Small Businesses by Income Category of
+               the Geography - The percentage distribution of the number of small loans (less than or
+               equal to $1 million) to businesses that were originated and purchased by the bank in low-,
+               moderate-, middle-, and upper-income geographies compared to the percentage distribution
+               of businesses (regardless of revenue size) in those geographies. Because aggregate small
+               business data are not available for geographic areas smaller than counties, it may be
+               necessary to compare bank loan data to aggregate data from geographic areas larger than
+               the bank’s assessment area.
+
+Table R.       Assessment Area Distribution of Loans to Small Businesses by Gross Annual Revenue
+               - Compares the percentage distribution of the number of small loans (loans less than or
+               equal to $1 million) originated and purchased by the bank to businesses with revenues of
+               $1 million or less to: 1) the percentage distribution of businesses with revenues of greater
+               than $1 million; and, 2) the percentage distribution of businesses for which revenues are
+               not available. The table also presents aggregate peer small business data for the years the
+               data is available.
+
+
+The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the
+aggregate table due to how the underlying loan data is rounded in each table.
+
+                                                       Appendix D-1
+                                                                                                      Charter Number: 11715
+
+Table S.       Assessment Area Distribution of Loans to Farms by Income Category of the
+               Geography - The percentage distribution of the number of small loans (less than or equal
+               to $500,000) to farms originated and purchased by the bank in low-, moderate-, middle-,
+               and upper-income geographies compared to the percentage distribution of farms (regardless
+               of revenue size) throughout those geographies. The table also presents aggregate peer data
+               for the years the data is available. Because aggregate small farm data are not available for
+               geographic areas smaller than counties, it may be necessary to use geographic areas larger
+               than the bank’s assessment area.
+
+Table T.       Assessment Area Distribution of Loans to Farms by Gross Annual Revenues -
+               Compares the percentage distribution of the number of small loans (loans less than or equal
+               to $500 thousand) originated and purchased by the bank to farms with revenues of $1
+               million or less to: 1) the percentage distribution of farms with revenues of greater than $1
+               million; and, 2) the percentage distribution of farms for which revenues are not available.
+               The table also presents aggregate peer small farm data for the years the data is available.
+
+Table U.       Assessment Area Distribution of Consumer Loans by Income Category of the
+               Geography - Compares the percentage distribution of the number of loans originated and
+               purchased by the bank in low-, moderate-, middle-, and upper-income geographies to the
+               percentage distribution of households in those geographies.
+
+Table V.       Assessment Area Distribution of Consumer Loans by Income Category of the
+               Borrower - Compares the percentage distribution of the number of loans originated and
+               purchased by the bank to low-, moderate-, middle-, and upper-income borrowers to the
+               percentage distribution of households by income level in each MMSA/assessment area.
+
+
+
+
+The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the
+aggregate table due to how the underlying loan data is rounded in each table.
+
+                                                       Appendix D-2
+                                                                                                                           Charter Number: 11715
+
+
+
+ Table O: Assessment Area Distribution of Home Mortgage Loans by Income Category of the                                                                                               2021
+ Geography
+                   Total Home              Low-Income Tracts              Moderate-Income Tracts         Middle-Income Tracts        Upper-Income Tracts       Not Available-Income Tracts
+                  Mortgage Loans
+ Assessment                             % of                             % of                           % of                        % of                        % of
+ Area                                  Owner-       %                   Owner-       %                 Owner-      %               Owner-      %               Owner-      %
+ Assessment                    % of
+                   #     $             Occupied    Bank Aggregate       Occupied    Bank Aggregate     Occupied   Bank Aggregate   Occupied   Bank Aggregate   Occupied   Bank Aggregate
+ Area:                         Total
+                                       Housing     Loans                Housing     Loans              Housing    Loans            Housing    Loans            Housing    Loans
+                                        Units                            Units                          Units                       Units                       Units
+     Lemont        5   1,418 100.0        0.0       0.0        0.0         0.0        0.0        0.0     16.9      0.0     15.3      83.1     100.0   84.7        0.0      0.0       0.0
+
+
+      Total        5   1,418   100.0      0.0       0.0        0.0         0.0        0.0        0.0     16.9      0.0     15.3      83.1     100.0   84.7        0.0      0.0       0.0
+
+ Source: 2015 ACS Census; 01/01/2021 – 12/31/2021. Due to rounding, totals may not equal 100.0
+
+
+
+
+ Table O: Assessment Area Distribution of Home Mortgage Loans by Income Category of the                                                                                          2022-2023
+ Geography
+                   Total Home              Low-Income Tracts              Moderate-Income Tracts         Middle-Income Tracts        Upper-Income Tracts       Not Available-Income Tracts
+                  Mortgage Loans
+ Assessment                             % of                             % of                           % of                        % of                        % of
+ Area                                  Owner-       %                   Owner-       %                 Owner-      %               Owner-      %               Owner-      %
+ Assessment                    % of
+                   #     $             Occupied    Bank Aggregate       Occupied    Bank Aggregate     Occupied   Bank Aggregate   Occupied   Bank Aggregate   Occupied   Bank Aggregate
+ Area:                         Total
+                                       Housing     Loans                Housing     Loans              Housing    Loans            Housing    Loans            Housing    Loans
+                                        Units                            Units                          Units                       Units                       Units
+     Lemont        1    446    100.0      0.0       0.0        0.0         0.0        0.0        0.0     32.1      0.0     31.0      67.9     100.0   69.0        0.0      0.0       0.0
+
+
+      Total        1    446    100.0      0.0       0.0        0.0         0.0        0.0        0.0     31.1      0.0     31.0      67.9     100.0   69.0        0.0      0.0       0.0
+
+ Source: 2020 U.S Census; 01/01/2022 - 01/01/2023 Bank Data, "2023 Aggregate " data not
+ available. Due to rounding, totals may not equal 100.0
+
+
+
+
+The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the aggregate table due to how the
+underlying loan data is rounded in each table.
+
+                                                                                     Appendix D-3
+                                                                                                                          Charter Number: 11715
+
+
+ Table P: Assessment Area Distribution of Home Mortgage Loans by Income Category of the                                                                                              2021
+ Borrower
+                   Total Home              Low-Income Borrowers         Moderate-Income Borrowers      Middle-Income Borrowers     Upper-Income Borrowers     Not Available-Income Borrowers
+                  Mortgage Loans
+ Assessment                             % of                             % of                          % of                        % of                         % of
+ Area                                  Families    %                    Families     %                Families    %               Families    %                Families    %
+ Assessment                   % of
+                   #     $                        Bank Aggregate                    Bank Aggregate               Bank Aggregate              Bank Aggregate               Bank Aggregate
+ Area:                        Total
+                                                  Loans                             Loans                        Loans                       Loans                        Loans
+
+ Lemont            5   1,418 100.0       11.0       0.0       3.3         12.5       0.0       10.7    19.9       0.0    22.1       56.6     100.0   51.4        0.0       0.0      12.6
+
+
+ Total             5   1,418 100.0       11.0       0.0       3.3         12.5       0.0       10.7    19.9       0.0    22.1       56.6     100.0   51.4        0.0       0.0      12.6
+
+ Source: 2015 ACS Census; 01/01/2021 - 01/01/2021 Bank Data. Due to rounding, totals may not
+ equal 100.0
+
+
+
+
+ Table P: Assessment Area Distribution of Home Mortgage Loans by Income Category of the                                                                                          2022-2023
+ Borrower
+                   Total Home              Low-Income Borrowers         Moderate-Income Borrowers      Middle-Income Borrowers     Upper-Income Borrowers     Not Available-Income Borrowers
+                  Mortgage Loans
+ Assessment                             % of                             % of                          % of                        % of                         % of
+ Area                                  Families    %                    Families     %                Families    %               Families    %                Families    %
+ Assessment                   % of
+                   #     $                        Bank Aggregate                    Bank Aggregate               Bank Aggregate              Bank Aggregate               Bank Aggregate
+ Area:                        Total
+                                                  Loans                             Loans                        Loans                       Loans                        Loans
+
+ Lemont            1    445   100.0      12.9       0.0       5.3         13.6       0.0       15.3    17.0       0.0    21.5       56.4     100.0   45.4        0.0       0.0      12.5
+
+
+ Total             1    445   100.0      12.9       0.0       5.3         13.5       0.0       15.3    17.0       0.0    21.5       56.4     100.0   45.4        0.0       0.0      12.5
+
+ Source: 2020 U.S Census; 01/01/2022 - 01/01/2023 Bank Data, "2023 Aggregate-data “not
+ available. Due to rounding, totals may not equal 100.0
+
+
+
+
+The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the aggregate table due to how the
+underlying loan data is rounded in each table.
+
+                                                                                     Appendix D-4
+

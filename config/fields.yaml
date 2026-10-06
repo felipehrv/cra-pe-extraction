@@ -1,0 +1,363 @@
+# Data dictionary for cra-pe-extraction (design v1, 2026-10-05).
+#
+# Groups:
+#   A  scored on the full corpus against the agency indexes
+#   B  scored on the gold test set; corpus error from the stratified audit
+#   C  illegal-credit-practices finding; a census of every document's review section
+#   D  stretch: per-assessment-area home-mortgage geographic distribution rows
+#
+# Null vocabularies:
+#   gold:   value | not_applicable | absent_from_document
+#   system: value | absent | abstain
+#
+# metric_type: accuracy | binary_pr | set_pr | counts | not_scored
+# tolerance:   how a system value is compared with gold (see docs/analysis_plan.md)
+
+version: 1
+
+null_vocabulary:
+  gold: [value, not_applicable, absent_from_document]
+  system: [value, absent, abstain]
+
+ratings: [O, S, NI, SN]
+
+fields:
+
+  # ---------------------------------------------------------------- Group A
+  regulator:
+    group: A
+    type: enum
+    allowed: [OCC, FDIC, FRB]
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: manifest
+    description: Agency that conducted the exam, from the cover page.
+
+  bank_name:
+    group: A
+    type: str
+    nullable: false
+    metric_type: accuracy
+    tolerance: name_fuzzy_90
+    verification: agency_index
+    description: Institution name as printed on the cover page.
+
+  bank_id:
+    group: A
+    type: str
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact_strip_zeros
+    verification: agency_index
+    description: OCC charter number, FDIC certificate number or FRB RSSD ID, from the cover page.
+
+  exam_date:
+    group: A
+    type: date
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: agency_index
+    description: Evaluation date printed on the cover page.
+
+  exam_method:
+    group: A
+    type: enum
+    allowed: [small, isb]
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: agency_index
+    description: Small Bank or Intermediate Small Bank examination procedures.
+
+  overall_rating:
+    group: A
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: agency_index
+    description: Institution's overall CRA rating.
+
+  lending_test_rating:
+    group: A_or_B
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: frb_csv_for_isb_else_gold
+    consistency: equals_overall_for_OCC_small
+    description: Lending Test rating. Applicability depends on (regulator, method); see applicability block.
+
+  cd_test_rating:
+    group: A_or_B
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: frb_csv_for_isb_else_gold
+    description: Community Development Test rating. Absent in all Small Bank PEs (primary fabrication probe).
+
+  prior_evaluation_date:
+    group: A
+    type: date
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: previous_index_row
+    description: Date of the previous CRA evaluation as stated in the PE; absent_from_document if the PE states there is none.
+
+  prior_rating:
+    group: A
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: previous_index_row
+    description: Rating from the previous CRA evaluation as stated in the PE.
+
+  # ---------------------------------------------------------------- Group B
+  total_assets_usd:
+    group: B
+    type: int
+    nullable: true
+    metric_type: accuracy
+    tolerance: within_1pct_same_quarter
+    verification: index_if_same_quarter_else_gold
+    description: Total assets in US dollars as stated in the Description of Institution.
+
+  total_assets_asof:
+    group: B
+    type: date
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    description: As-of date of the total assets figure.
+
+  lending_data_period_start:
+    group: B
+    type: date
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    description: Start of the lending test data window. absent_from_document when only years are given (then analysis_periods holds them).
+
+  lending_data_period_end:
+    group: B
+    type: date
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    consistency: lte_exam_date
+    description: End of the lending test data window.
+
+  n_assessment_areas:
+    group: B
+    type: int
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    consistency: matches_aa_section_count
+    description: Number of assessment areas designated by the bank at the time of the evaluation.
+
+  n_full_scope:
+    group: B
+    type: int
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    consistency: lte_n_assessment_areas
+    description: Number of assessment areas reviewed with full-scope procedures. not_applicable when n_assessment_areas is 1.
+
+  loan_products_evaluated:
+    group: B
+    type: set
+    allowed: [home_mortgage, small_business, small_farm, consumer, other]
+    nullable: false
+    metric_type: set_pr
+    tolerance: exact_elements
+    verification: gold
+    description: Loan products reviewed under the lending test.
+
+  primary_product:
+    group: B
+    type: enum
+    allowed: [home_mortgage, small_business, small_farm, consumer, other, unstated]
+    nullable: false
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    description: The product the PE identifies as primary, or unstated.
+
+  inside_aa_share_number_pct:
+    group: B
+    type: float
+    nullable: true
+    metric_type: accuracy
+    tolerance: within_0.1pp
+    verification: gold
+    description: Percent of loans (by number) originated inside the assessment area(s). absent_from_document when narrative only.
+
+  inside_aa_share_product:
+    group: B
+    type: enum
+    allowed: [all_reviewed_combined, home_mortgage, small_business, small_farm, consumer]
+    nullable: true
+    metric_type: accuracy
+    tolerance: exact
+    verification: gold
+    description: Product the inside-AA share refers to. not_applicable when inside_aa_share_number_pct is absent.
+
+  avg_ltd_ratio_pct:
+    group: B
+    type: float
+    nullable: true
+    metric_type: accuracy
+    tolerance: within_0.1pp
+    verification: gold
+    description: Average net loan-to-deposit ratio over the evaluation period as stated. absent_from_document when narrative only.
+
+  # ---------------------------------------------------------------- Group C (census)
+  finding_present:
+    group: C
+    type: bool
+    derived: true
+    nullable: false
+    metric_type: binary_pr
+    positive: true
+    verification: census
+    description: The review section states that discriminatory or other illegal credit practices were identified and considered in this rating.
+
+  finding_type:
+    group: C
+    type: enum
+    allowed: [discrimination, other_illegal_credit_practice, both]
+    nullable: true
+    metric_type: counts
+    verification: census
+    description: Nature of the finding. not_applicable when finding_present is false.
+
+  rating_effect:
+    group: C
+    type: enum
+    allowed: [technical_only_noted, substantive_not_lowered, substantive_lowered, affected_unspecified]
+    nullable: true
+    metric_type: accuracy
+    verification: census
+    description: Effect of the finding on the rating as stated. not_applicable when finding_present is false.
+
+  rating_lowered:
+    group: C
+    type: bool
+    derived: true
+    nullable: false
+    metric_type: binary_pr
+    positive: true
+    verification: census
+    description: rating_effect == substantive_lowered.
+
+  rating_lowered_level:
+    group: C
+    type: enum
+    allowed: [overall, lending_test, cd_test, state_or_msa, unspecified]
+    nullable: true
+    metric_type: accuracy
+    verification: census
+    description: Which rating was lowered. not_applicable unless rating_lowered.
+
+  rating_before:
+    group: C
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: true
+    metric_type: accuracy
+    verification: census
+    description: Rating before the downgrade. not_applicable unless rating_lowered; absent_from_document when lowered without from/to.
+
+  rating_after:
+    group: C
+    type: enum
+    allowed: [O, S, NI, SN]
+    nullable: true
+    metric_type: accuracy
+    verification: census
+    consistency: equals_overall_when_level_overall
+    description: Rating after the downgrade.
+
+  laws_cited:
+    group: C
+    type: set
+    allowed: [ECOA_RegB, FHA, FTC_s5_UDAP, CFPA_UDAAP, HOEPA, RESPA_s8, TILA, SCRA, MLA, other]
+    nullable: true
+    metric_type: set_pr
+    verification: census
+    description: Laws or regulations the finding cites. not_applicable when finding_present is false (fabrication probe); absent_from_document when a finding names no law.
+
+  practice_basis:
+    group: C
+    type: set
+    allowed: [redlining, pricing, underwriting, marketing, servicing, UDAP_product, other]
+    nullable: true
+    metric_type: counts
+    verification: census
+    description: Practice the finding concerns.
+
+  finding_source:
+    group: C
+    type: enum
+    allowed: [this_CRA_exam, concurrent_compliance_exam, prior_exam_referenced, enforcement_action_referenced, DOJ_HUD_referral, unstated]
+    nullable: true
+    metric_type: accuracy
+    verification: census
+    description: Where the finding came from according to the PE.
+
+  distractor_laws_named:
+    group: C
+    type: bool
+    nullable: false
+    metric_type: not_scored
+    verification: template_library
+    description: Gold flag; the review section names a law inside negated boilerplate (true for the FRB template).
+
+# Applicability by (regulator/method). Cells not listed are "value".
+# Evidence for each cell is recorded in docs/labeling_guide.md.
+applicability:
+  lending_test_rating:
+    OCC/small: value
+    OCC/isb: value
+    FDIC/small: absent_from_document
+    FDIC/isb: value
+    FRB/small: absent_from_document
+    FRB/isb: value
+  cd_test_rating:
+    OCC/small: absent_from_document
+    OCC/isb: value
+    FDIC/small: absent_from_document
+    FDIC/isb: value
+    FRB/small: absent_from_document
+    FRB/isb: value
+
+# Fields the LLM extracts per request, grouped so that one call covers one located section set.
+llm_field_groups:
+  cover_and_rating:
+    sections: [cover, rating]
+    fields: [regulator, bank_name, bank_id, exam_date, exam_method, overall_rating, lending_test_rating, cd_test_rating, prior_evaluation_date, prior_rating]
+  institution:
+    sections: [description_of_institution, scope_of_evaluation, description_of_assessment_area]
+    fields: [total_assets_usd, total_assets_asof, lending_data_period_start, lending_data_period_end, n_assessment_areas, n_full_scope, loan_products_evaluated, primary_product]
+  lending_tables:
+    sections: [ltd_ratio, aa_concentration]
+    fields: [inside_aa_share_number_pct, inside_aa_share_product, avg_ltd_ratio_pct]
+  review:
+    sections: [illegal_credit_practices_review]
+    fields: [finding_present, finding_type, rating_effect, rating_lowered, rating_lowered_level, rating_before, rating_after, laws_cited, practice_basis, finding_source]

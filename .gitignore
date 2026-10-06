@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+
+# Corpus PDFs and text are fetched on demand; gold-set PDFs are committed explicitly.
+data/pdfs/
+data/text/
+data/cache/
+!data/gold/
+!data/gold/**

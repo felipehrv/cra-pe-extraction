@@ -1,0 +1,958 @@
+                     PUBLIC DISCLOSURE
+
+                              November 18, 2024
+
+
+          COMMUNITY REINVESTMENT ACT
+                       PERFORMANCE EVALUATION
+
+
+                             Small Business Bank
+                               RSSD# 663656
+
+                            13423 West 92nd Street
+                            Lenexa, Kansas 66215
+
+                    Federal Reserve Bank of Kansas City
+                             1 Memorial Drive
+                        Kansas City, Missouri 64198
+
+
+NOTE:   This document is an evaluation of this bank's record of meeting the credit needs
+        of its entire community, including low- and moderate-income neighborhoods,
+        consistent with safe and sound operation of the bank. This evaluation is not, nor
+        should it be construed as, an assessment of the financial condition of this bank.
+        The rating assigned to this bank does not represent an analysis, conclusion or
+        opinion of the federal financial supervisory agency concerning the safety and
+        soundness of this financial bank. in one assessment area.
+SMALL BUSINESS BANK                                                              CRA Performance Evaluation
+LENEXA, KANSAS                                                                            November 18, 2024
+
+
+                                             TABLE OF CONTENTS
+
+Institution’s Community Reinvestment Act Rating ........................................................... 2
+Scope of Examination ..................................................................................................... 2
+Description of Institution .................................................................................................. 2
+Description of Assessment Area ..................................................................................... 3
+Conclusions With Respect to Performance Criteria ........................................................ 7
+Fair Lending or Other Illegal Credit Practices Review ................................................... 11
+Appendix A – Map of the Assessment Area .................................................................. 12
+Appendix B – Demographic Information ........................................................................ 14
+Appendix C – Glossary.................................................................................................. 18
+
+
+
+
+                                                      Page 1 of 20
+SMALL BUSINESS BANK                                      CRA Performance Evaluation
+LENEXA, KANSAS                                                    November 18, 2024
+
+
+            INSTITUTION’S COMMUNITY REINVESTMENT ACT RATING
+
+Small Business Bank (the bank) is rated Needs to Improve. This rating is based on the
+following conclusions with respect to the performance criteria:
+
+         The bank’s net loan-to-deposit ratio (NLTD) is reasonable given the bank’s
+          size, financial condition, and assessment area (AA) credit needs.
+         A substantial majority of the bank’s loans are originated outside the AA.
+         A reasonable distribution of loans occurs throughout the bank’s AA.
+         Lending reflects a poor distribution among businesses of different sizes.
+         Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank)
+          received any Community Reinvestment Act (CRA)-related complaints since the
+          previous evaluation.
+
+
+SCOPE OF EXAMINATION
+
+Examiners utilized the Federal Financial Institutions Examination Council’s (FFIEC’s)
+Interagency Examination Procedures for Small Institutions to evaluate the bank’s CRA
+performance. The evaluation considered CRA performance context, including the bank’s
+asset size, financial condition, business strategy and market competition, as well as AA
+demographic and economic characteristics, and credit needs. In addition, available
+aggregate data for the most recent three years (2020, 2021, and 2022) was referenced
+for additional perspective to gauge credit demand within the bank’s AA. Lending
+performance was assessed within the bank’s only AA. Examiners reviewed the following
+data:
+
+         The bank’s 19-quarter average NLTD ratio, and
+         A statistical sample of 169 small business loans from a universe of 1,005 loans
+          originated between March 24, 2020, and December 31, 2023.
+
+
+DESCRIPTION OF INSTITUTION
+
+Small Business Bank is a community bank headquartered in Lenexa, Kansas. The bank’s
+characteristics include:
+
+         The bank is a wholly owned subsidiary of Gardner Bancshares, Inc., which is
+          also located in Lenexa, Kansas.
+         The bank has total assets of $94.2 million as of June 30, 2024.
+         The bank operates exclusively from its main office in Lenexa, Kansas and does
+          not currently operate any automated teller machines.
+         The bank’s loan portfolio composition indicates a lending focus on agricultural
+          lending followed by commercial lending. However, a majority of the agricultural
+
+
+                                     Page 2 of 20
+SMALL BUSINESS BANK                                                        CRA Performance Evaluation
+LENEXA, KANSAS                                                                      November 18, 2024
+
+
+                lending within the bank’s credit portfolio is comprised of participation loans
+                purchased from other lenders that are excluded from the CRA lending test
+                evaluation. Since the previous CRA evaluation, the bank’s loan strategy has
+                been focused on commercial lending, including origination of U.S. Small
+                Business Administration (SBA) guaranteed loans.
+
+                                                                Table 1
+                            Composition of Loan Portfolio as of June 30, 2024
+                 Loan Type                             $(000)                            %
+ Construction and Land Development                                  1,164                         1.5
+ Farmland                                                          38,506                        51.0
+ 1‐ to 4‐Family Residential Real Estate                             2,415                         3.2
+ Multifamily Residential Real Estate                                  517                         0.7
+ Nonfarm Nonresidential Real Estate                                17,145                        22.7
+ Agricultural                                                       3,225                         4.3
+ Commercial and Industrial                                          7,650                        10.1
+ Consumer                                                             829                         1.1
+ Other                                                              4,016                         5.3
+ Gross Loans                                                       75,467                       100.0
+ Note:       Percentages may not total 100.0 percent due to rounding.
+
+
+The bank was rated Satisfactory under the CRA at its March 23, 2020 performance
+evaluation. On September 1, 2023, the bank’s directorate entered into a Cease and
+Desist Order (C&D) with the Board of Governors of the Federal Reserve System which
+has impacted the bank’s overall lending strategies. As noted previously, the bank’s
+CRA performance in this evaluation considered lending activities originated between
+March 24, 2020, and December 31, 2023. Therefore, limited consideration was given to
+the impact of the C&D on the bank’s CRA performance since it was not effective until
+September 1, 2023.
+
+
+DESCRIPTION OF ASSESSMENT AREA
+
+The bank’s delineated AA is comprised of the Kansas City, Missouri-Kansas Multistate
+Metropolitan Statistical Area (MSA) AA (KCMO-KS MSA AA). Refer to Appendix A for an
+AA map and Appendix B for additional demographic data.
+
+               There have been no changes to the AA delineation since the prior evaluation.
+               The AA delineation for 2022 and 2023 is comprised of 607 census tracts,
+                including 58 low-, 152 moderate-, 220 middle-, 153 upper-, and 24 unknown-
+                income census tracts based on the most recent 2016-2020 American
+                Community Survey (ACS) data.
+               The AA delineation in 2020 and 2021 consisted of 530 census tracts, including
+                79 low-, 120 moderate-, 176 middle-, 136 upper-, and 19 unknown-income
+                census tracts based on 2011-2015 ACS data.
+
+
+                                                            Page 3 of 20
+SMALL BUSINESS BANK                                                       CRA Performance Evaluation
+LENEXA, KANSAS                                                                     November 18, 2024
+
+
+                According to the June 30, 2023 Federal Deposit Insurance Corporation (FDIC)
+                 Summary of Deposits Market Share Report, the bank ranked 71st of 116 FDIC-
+                 insured depository institutions operating from 667 locations in the AA, with a
+                 total deposit market share of 0.1 percent.
+                A community contact conducted as part of the CRA evaluation of another
+                 financial institution with branches in the AA was reviewed to ascertain the credit
+                 needs of area communities, the responsiveness of area banks in meeting those
+                 credit needs, and for perspective on local economic conditions. The contact
+                 represented an area housing organization.
+
+                                                            Table 2
+                                                 Population Change
+                                      Assessment Area: Kansas City MO‐KS MSA
+              Area                           2015 Population       2020 Population      Percent Change
+Kansas City MO‐KS MSA                                  2,055,675           2,192,035                  6.6
+Johnson County, KS                                       566,814             609,863                  7.6
+Leavenworth County, KS                                    78,227              81,881                  4.7
+Linn County, KS                                            9,528                9,591                 0.7
+Miami County, KS                                          32,688              34,191                  4.6
+Wyandotte County, KS                                     160,806             169,245                  5.2
+Bates County, MO                                          16,643              16,042                (3.6)
+Caldwell County, MO                                        9,083                8,815               (3.0)
+Cass County, MO                                          100,781             107,824                  7.0
+Clay County, MO                                          230,361             253,335                 10.0
+Clinton County, MO                                        20,498              21,184                  3.3
+Jackson County, MO                                       680,905             717,204                  5.3
+Lafayette County, MO                                      32,916              32,984                  0.2
+Platte County, MO                                         93,394             106,718                 14.3
+Ray County, MO                                            23,031              23,158                  0.6
+Kansas                                                 2,892,987           2,937,880                  1.6
+Missouri                                               6,045,448           6,154,913                  1.8
+Source:       2020 U.S. Census Bureau: Decennial Census
+              2011 – 2015 U.S. Census Bureau: American Community Survey
+
+
+                The AA’s population growth from 2015 to 2020 significantly outpaced figures
+                 for the states of Kansas and Missouri.
+                A majority of the 2020 AA population resided within Johnson County, Kansas,
+                 where the bank is located, and contiguous Jackson County, Missouri, with a
+                 combined total of 1,327,067 residents, or 60.5 percent of the total AA
+                 population.
+
+
+
+
+                                                         Page 4 of 20
+SMALL BUSINESS BANK                                                                          CRA Performance Evaluation
+LENEXA, KANSAS                                                                                        November 18, 2024
+
+
+                                                                  Table 3
+                                               Median Family Income Change
+                                         Assessment Area: Kansas City MO‐KS MSA
+                                                  2015 Median           2020 Median
+                      Area                                                                               Percent Change
+                                                 Family Income         Family Income
+Kansas City MO‐KS MSA                                       79,346                86,562                              9.1
+Johnson County, KS                                         103,631               111,766                              7.9
+Leavenworth County, KS                                      83,668                89,588                              7.1
+Linn County, KS                                             63,534                64,986                              2.3
+Miami County, KS                                            81,671                87,341                              6.9
+Wyandotte County, KS                                        51,479                57,396                             11.5
+Bates County, MO                                            58,560                63,250                              8.0
+Caldwell County, MO                                         59,643                61,671                              3.4
+Cass County, MO                                             78,333                85,798                              9.5
+Clay County, MO                                             82,057                85,961                              4.8
+Clinton County, MO                                          70,755                73,936                              4.5
+Jackson County, MO                                          66,730                74,470                             11.6
+Lafayette County, MO                                        70,449                76,250                              8.2
+Platte County, MO                                           92,114               100,420                              9.0
+Ray County, MO                                              68,913                75,811                             10.0
+Kansas                                                      72,535                77,620                              7.0
+Missouri                                                    66,438                72,834                              9.6
+Source:       2011 – 2015 U.S. Census Bureau: American Community Survey
+              2016 – 2020 U.S. Census Bureau: American Community Survey
+Note:         Median family incomes have been inflation‐adjusted and are expressed in 2020 dollars.
+
+
+                Changes in median family income (MFI) reflected positive growth throughout
+                 all the AA counties. The highest AA growth rates occurred in Wyandotte and
+                 Jackson Counties, although Wyandotte County had the lowest MFI in the AA
+                 by dollar amount.
+                Based on 2020 ACS data, the portion of AA families living below the poverty
+                 level was 6.9 percent, which was lower than figures for the states of Kansas
+                 and Missouri, at 7.6 percent and 8.9 percent, respectively. The portion of
+                 families living below the poverty level in the 14 AA counties ranged from a low
+                 of 3.0 percent in Ray County to a high of 14.8 percent in Wyandotte County.
+
+
+
+
+                                                              Page 5 of 20
+SMALL BUSINESS BANK                                                                    CRA Performance Evaluation
+LENEXA, KANSAS                                                                                  November 18, 2024
+
+
+                                                              Table 4
+                                                 Housing Cost Burden
+                                       Assessment Area: Kansas City MO‐KS MSA
+                                               Cost Burden – Renters          Cost Burden – Owners
+                   Area                     Low      Moderate      All      Low     Moderate     All
+                                          Income      Income     Renters  Income     Income   Owners
+    Kansas City MO‐KS MSA                     74.6        30.8       39.7     59.2       26.2      16.1
+    Johnson County, KS                        82.4        42.5       36.3     69.6       37.3      14.3
+    Leavenworth County, KS                    67.4        29.5       34.1     52.9       28.5      14.4
+    Linn County, KS                           45.6         2.1       28.4     68.2       17.3      26.4
+    Miami County, KS                          69.6        41.4       41.5     77.9       37.9      23.0
+    Wyandotte County, KS                      70.5        17.9       43.7     54.6       16.6      20.6
+    Bates County, MO                          58.1        15.8       34.1     52.9       31.3      16.4
+    Caldwell County, MO                       46.4         2.0       26.3     39.8       10.7      15.6
+    Cass County, MO                           78.0        27.2       40.4     58.1       27.9      15.7
+    Clay County, MO                           79.7        32.5       40.7     62.8       22.7      14.7
+    Clinton County, MO                        60.0        18.3       30.7     55.8       20.8      18.1
+    Jackson County, MO                        73.8        27.8       42.6     55.9       23.9      17.6
+    Lafayette County, MO                      58.3         5.7       30.7     44.9       11.6      12.0
+    Platte County, MO                         76.0        28.9       31.3     74.3       30.0      15.4
+    Ray County, MO                            60.2         5.3       34.4     45.0       10.2      11.6
+    Kansas                                    73.6        27.8       38.2     57.4       24.8      15.4
+    Missouri                                  72.9        27.2       39.2     57.0       25.3      16.1
+    Cost Burden is housing cost that equals 30 percent or more of household income.
+    Source:   U.S. Department of Housing and Urban Development (HUD), 2016 – 2020 Comprehensive Housing Affordability Strategy
+
+
+                The cost burden for both LMI renters and homeowners in the AA was generally
+                 comparable to figures for the states of Kansas and Missouri, with the greatest
+                 burden among LMI renters in Johnson County.
+                The AA housing affordability ratio1 of 35.1 percent was generally consistent with
+                 figures for Kansas and Missouri, at 38.8 percent and 35.0 percent, respectively.
+                 Affordability ratios within the 14 AA counties ranged from 33.0 percent in
+                 Johnson County to 46.9 percent in Caldwell County.
+                The AA median housing value of $195,994 was above values for the states of
+                 Kansas and Missouri, at $157,600 and $163,600, respectively. Values in the
+                 AA’s 14 counties ranged from $107,000 in Wyandotte County to a high of
+                 $277,500 in Johnson County.
+
+
+
+
+1
+       The housing affordability ratio is calculated by dividing the median household income by the median housing value. A lower ratio
+       reflects less affordable housing.
+
+
+
+                                                          Page 6 of 20
+SMALL BUSINESS BANK                                                             CRA Performance Evaluation
+LENEXA, KANSAS                                                                           November 18, 2024
+
+
+                                                                  Table 5
+                                                   Unemployment Rates
+                                          Assessment Area: Kansas City MO‐KS MSA
+                 Area                                  2018        2019       2020         2021         2022
+ Kansas City MO‐KS MSA                                      3.4         3.3        6.2            4.1          2.6
+ Johnson County, KS                                         2.9         2.9        5.0            2.7          2.3
+ Leavenworth County, KS                                     3.7         3.6        5.8            3.4          2.9
+ Linn County, KS                                            5.9         6.2        7.2            4.4          3.9
+ Miami County, KS                                           3.6         3.4        5.0            3.0          2.6
+ Wyandotte County, KS                                       4.9         4.5        7.9            4.7          3.5
+ Bates County, MO                                           3.9         4.0        5.4            4.0          2.7
+ Caldwell County, MO                                        3.2         3.1        5.4            4.8          2.8
+ Cass County, MO                                            3.1         3.0        5.4            3.7          2.4
+ Clay County, MO                                            2.9         2.8        6.1            4.6          2.5
+ Clinton County, MO                                         3.3         3.0        5.9            5.0          2.8
+ Jackson County, MO                                         3.8         3.7        7.3            5.1          2.9
+ Lafayette County, MO                                       3.3         3.0        5.3            4.0          2.6
+ Platte County, MO                                          2.6         2.6        5.4            3.8          2.2
+ Ray County, MO                                             3.7         3.6        6.9            6.1          3.3
+ Kansas                                                     3.4         3.3        5.8            3.3          2.7
+ Missouri                                                   3.2         3.2        6.1            4.1          2.5
+ Source:       Bureau of Labor Statistics: Local Area Unemployment Statistics
+
+
+                 Unemployment rates in the AA remained relatively aligned with the figures for
+                  Kansas and Missouri between 2018 and 2022. As noted in the table above,
+                  unemployment rates increased in 2020 throughout all the geographic areas due
+                  to the onset of the Coronavirus Disease 2019 pandemic (pandemic) before
+                  decreasing in 2022 to levels lower than pre-pandemic rates.
+                 Major employers in the AA include the federal government (20,846 employees),
+                  Children’s Mercy Hospital (8,382), Cerner Corporation (6,879), T-Mobile
+                  (6,000), Garmin International (5,005), Honeywell (5,000), Burns & McDonnell
+                  (5,000), and Saint Luke’s Health System (4,638).
+                 A community contact noted that the primary AA credit needs include home
+                  loans and business loans.
+
+
+CONCLUSIONS WITH RESPECT TO PERFORMANCE CRITERIA
+
+The bank’s overall lending test performance is Needs to Improve. The bank needs to
+improve its overall record of helping to meet the credit needs of its assessment area (AA),
+including loans to small businesses and the volume of lending within the bank’s AA, in a
+manner consistent with its resources and capabilities.
+
+
+
+
+                                                              Page 7 of 20
+SMALL BUSINESS BANK                                           CRA Performance Evaluation
+LENEXA, KANSAS                                                         November 18, 2024
+
+
+The overall rating is primarily attributed to the poor level of lending that occurred inside of
+the bank's delineated AA, which received considerable weight in the overall assessment
+of the bank’s CRA performance. In addition to the low level of AA lending, a significant
+number of the bank’s loans did not include revenue information. These factors limited a
+full assessment of the borrower distribution, and to a lesser extent, the geographic
+distribution of lending based on the limited number of AA loans when compared to the
+total number of loans in the small business sample.
+
+The loans without revenue information were part of the SBA’s Paycheck Protection
+Program (PPP), originated in response to the pandemic which was established as part of
+the Coronavirus Aid, Relief, and Economic Security Act. The PPP did not require the
+collection of revenue information from loan recipients. While PPP loans were considered
+responsive to the credit needs of small businesses and small farms, the primary focus of
+the CRA is to evaluate a financial institution’s performance in meeting the credit needs
+within its delineated AA.
+
+Net Loan-to-Deposit Ratio
+
+This performance criterion evaluates the bank’s average NLTD ratio to determine the
+reasonableness of lending in light of performance context, such as the bank’s capacity to
+lend, the availability of lending opportunities, the demographic and economic factors
+present in the AA, and in comparison to similarly situated FDIC-insured institutions. The
+similarly situated institutions were selected based on asset size, product offerings, market
+share, and the area where they are located.
+
+The bank’s NLTD ratio is reasonable. The bank’s 19-quarter average NLTD ratio of
+85.9 percent was comparable to those of four similarly situated institutions with ratios
+ranging from 34.8 percent to 90.0 percent.
+
+                                             Table 6
+                   Comparative NLTD Ratios December 31, 2019 – June 30, 2024
+                                                                                  NLTD Ratio
+                                                                     Asset Size      (%)
+                Institution                        Location
+                                                                       $(000)     19 Quarter
+                                                                                   Average
+ Small Business Bank                         Lenexa, Kansas              94,182           85.9
+ Similarly Situated Institutions
+ Preferred Bank                              Rothville, Missouri        136,259           34.8
+ The Citizens State Bank and Trust Company   Council Grove, Kansas       74,135           90.0
+ State Bank of Missouri                      Concordia, Missouri        144,864           54.5
+ Community Bank of Missouri                  Richmond, Missouri          79,707           71.4
+
+
+
+
+                                         Page 8 of 20
+SMALL BUSINESS BANK                                                    CRA Performance Evaluation
+LENEXA, KANSAS                                                                  November 18, 2024
+
+
+Assessment Area Concentration
+
+This performance criterion evaluates the percentage of lending extended inside and
+outside of the AA. The bank originated a substantial majority of loans, by number and
+dollar, outside the AA, denoting poor performance. As noted in Table 7, only 21.3 percent
+of the bank’s lending by number and 17.3 percent by dollar volume was originated inside
+the AA. The low volume of lending inside the bank’s AA primarily resulted from the
+significant number of PPP loans the bank originated throughout various parts of the
+country in 2020 and 2021 in response to the pandemic.
+
+                                                            Table 7
+                                Lending Inside and Outside the Assessment Area
+                                                    Inside                         Outside
+            Loan Type
+                                          #      #%     $(000)    $%      #      #%     $(000)   $%
+ Small Business                             36    21.3   1,528     17.3    133    78.7   7,325    82.7
+ Total Loans                                36    21.3   1,528     17.3    133    78.7   7,325    82.7
+ Note:   Percentages may not total 100.0 percent due to rounding.
+
+
+Geographic Distribution of Loans
+
+This performance criterion evaluates the bank’s distribution of lending within its AA by
+income level of census tracts with consideration given to the dispersion of loans
+throughout the AA. The bank’s geographic distribution of loans reflects reasonable
+distribution among the different census tracts and dispersion throughout the AA.
+
+Small Business Lending
+
+The geographic distribution of small business lending is reasonable. While the bank’s
+performance surpassed the demographic data for both years, the bank did not meet the
+credit needs of the AA based on the relatively low volume of lending inside the AA.
+Moreover, there were no small business loans in the sample in 2022 and 2023 based on
+very limited lending volume over both years, adding further support to the overall
+CRA rating. Notwithstanding these limiting factors, the bank’s distribution is considered
+reasonable.
+
+An analysis of the bank’s loan dispersion by income level of AA geographies revealed
+conspicuous lending gaps and lapses that included LMI tracts; however, this did not
+impact the overall conclusion given the vast geographic makeup of the AA, significant
+number of census tracts, limited lending volume, and competition for loans among area
+financial institutions.
+
+
+
+
+                                                        Page 9 of 20
+SMALL BUSINESS BANK                                                                             CRA Performance Evaluation
+LENEXA, KANSAS                                                                                           November 18, 2024
+
+
+                                                                    Table 8
+                Distribution of 2020 and 2021 Small Business Lending By Income Level of Geography
+                                             Assessment Area: Kansas City MO‐KS MSA
+Geographic                                                    Bank Loans By Year                                                          Total
+  Income                                  2020                                                      2021                              Businesses
+    Level              #            #%           $(000)          $%              #            #%           $(000)          $%               %
+Low                          1           5.6              8           1.0              3          16.7             16           2.3                 7.3
+Moderate                     6          33.3           182           22.1              5          27.8           195           27.7                20.2
+Middle                       3          16.7           336           40.8              6          33.3           379           53.8                36.1
+Upper                        8          44.4           298           36.2              3          16.7             25           3.5                34.6
+Unknown                      0           0.0              0           0.0              1           5.6             90          12.8                 1.8
+Tract‐Unk                   0           0.0              0           0.0              0           0.0              0           0.0
+Total                      18         100.0            823         100.0             18         100.0            705         100.0                100.0
+Source: 2021 FFIEC Census Da ta
+        2021 Dun & Bra dstreet Da ta
+        2011‐2015 U.S. Census Burea u: America n Community Survey
+Note:   Percenta ges ma y not tota l 100.0 percent due to rounding. No loa ns in the a na lysis were origina ted inside the AA in 2022 or 2023.
+
+
+Lending to Businesses of Different Sizes
+
+This performance criterion evaluates the bank’s lending to borrowers of different income
+levels and businesses of different revenue sizes. The bank’s lending has a poor
+distribution among businesses of different sizes.
+
+Small Business Lending
+
+The borrower distribution of small business lending is poor. As noted in the previous
+section, there were no small business loans within the sample during 2022 or 2023, and
+the majority of small business lending that occurred inside the AA consisted of PPP loans
+in which business revenue was not collected. As noted in Table 9, only 5 of the 36 loans
+originated in 2020 and 2021 included revenue information.
+
+
+
+
+                                                               Page 10 of 20
+SMALL BUSINESS BANK                                                                           CRA Performance Evaluation
+LENEXA, KANSAS                                                                                         November 18, 2024
+
+
+                                                                 Table 9
+              Distribution of 2020 and 2021 Small Business Lending By Revenue Size of Businesses
+                                   Assessment Area: Kansas City MO‐KS MSA
+                                                    Bank Loans By Year                           Total
+                                          2020                             2021                Businesses
+                                     #          #%        $(000)       $%            #         #%        $(000)       $%              %
+                                                               By Revenue
+$1 Million or Less                        3       16.7        186        22.6             2      11.1        307         43.5             90.6
+Over $1 Million                           0        0.0          0         0.0             0       0.0          0          0.0              8.5
+Revenue Unknown                          15       83.3        637        77.4            16      88.9        398         56.5              0.9
+Total                                    18     100.0         823       100.0            18    100.0         705       100.0            100.0
+                                                         By Loan Size
+$100,000 or Less                         16     88.9     413    50.2      17      94.4                       405        57.4
+$100,001 ‐ $250,000                       1      5.6     105    12.8        0      0.0                         0         0.0
+$250,001 ‐ $1 Million                     1      5.6     304    36.9        1      5.6                       300        42.6
+Total                                    18    100.0     823   100.0       18    100.0                       705       100.0
+                                          By Loan Size and Revenue $1 Million or Less
+$100,000 or Less                          2     66.7      81    43.5        1     50.0                         7         2.3
+$100,001 ‐ $250,000                       1     33.3     105    56.5        0      0.0                         0         0.0
+$250,001 ‐ $1 Million                     0      0.0       0     0.0        1     50.0                       300        97.7
+Total                                     3    100.0     186   100.0        2    100.0                       307       100.0
+Source: 2021 FFIEC Census Da ta
+        2021 Dun & Bra dstreet Da ta
+        2011‐2015 U.S. Census Bureau: American Community Survey
+Note:   Percentages ma y not tota l 100.0 percent due to rounding. No loans in the ana lysis were origina ted inside the AA in 2022 or 2023.
+
+
+
+
+FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW
+
+Compliance with the substantive provisions of antidiscrimination and other consumer
+protection laws and regulations, including the Equal Credit Opportunity Act and the Fair
+Housing Act, was considered as part of this CRA evaluation. No evidence of a pattern or
+practice of discrimination on a prohibited basis or of other illegal credit practices
+inconsistent with helping to meet community credit needs was identified.
+
+
+
+
+                                                            Page 11 of 20
+SMALL BUSINESS BANK                       CRA Performance Evaluation
+LENEXA, KANSAS                                     November 18, 2024
+
+
+            APPENDIX A – MAP OF THE ASSESSMENT AREA
+
+                            Map A-1
+                           2022-2023
+
+
+
+
+                          Page 12 of 20
+SMALL BUSINESS BANK                   CRA Performance Evaluation
+LENEXA, KANSAS                                 November 18, 2024
+
+
+                        Map A-2
+                       2020-2021
+
+
+
+
+                      Page 13 of 20
+SMALL BUSINESS BANK                                                                              CRA Performance Evaluation
+LENEXA, KANSAS                                                                                            November 18, 2024
+
+
+                              APPENDIX B – DEMOGRAPHIC INFORMATION
+
+                                                                 Table B-1
+                                           2023 Kansas City MO‐KS MSA AA Demographics
+                                                                                              Families < Poverty Level          Families by Family
+                                  Tract Distribution          Families by Tract Income
+    Income Categories                                                                         as % of Families by Tract               Income
+
+                                   #              %                #              %                #              %              #              %
+Low                                       58            9.6         32,365              6.0            8,775           27.1      111,065             20.5
+Moderate                                 152           25.0       122,356              22.5         14,997             12.3       95,410             17.6
+Middle                                   220           36.2       221,761              40.8         10,639              4.8      119,106             21.9
+Upper                                    153           25.2       164,171              30.2            2,692            1.6      217,318             40.0
+Unknown                                   24            4.0            2,246            0.4             564            25.1             0             0.0
+         Total AA                        607          100.0       542,899             100.0         37,667              6.9      542,899            100.0
+
+                               Housing                                                Housing Type by Tract
+                                Units by                 Owner‐occupied                                  Rental                        Vacant
+                                 Tract            #           % by tract       % by unit           #           % by unit         #           % by unit
+Low                                 70,987         23,318                4.2           32.8         36,527             51.5       11,142             15.7
+Moderate                           237,795        113,616               20.7           47.8         96,616             40.6       27,563             11.6
+Middle                             363,848        232,761               42.3           64.0       107,630              29.6       23,457              6.4
+Upper                              238,328        177,997               32.4           74.7         49,099             20.6       11,232              4.7
+Unknown                                7,265          2,008              0.4           27.6            3,787           52.1          1,470           20.2
+         Total AA                  918,223        549,700              100.0           59.9       293,659              32.0       74,864              8.2
+                                                                                      Businesses by Tract & Revenue Size
+                             Total Businesses by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                   #              %                #              %                #              %              #              %
+Low                                    5,505            5.9            4,856            5.7             607             7.9            42             5.1
+Moderate                            20,296             21.6         18,499             21.6            1,628           21.1           169            20.6
+Middle                              33,994             36.1         31,620             37.0            2,065           26.8           309            37.6
+Upper                               31,800             33.8         28,811             33.7            2,719           35.3           270            32.9
+Unknown                                2,450            2.6            1,730            2.0             689             8.9            31             3.8
+         Total AA                   94,045            100.0         85,516            100.0            7,708          100.0           821           100.0
+                       Percentage of Total Businesses:                                 90.9                             8.2                           0.9
+                                                                                        Farms by Tract & Revenue Size
+                                Total Farms by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                   #              %                #              %                #              %              #              %
+Low                                       17            1.0              16             1.0               1             2.9             0             0.0
+Moderate                                 328           19.1             321            19.2               6            17.6             1            14.3
+Middle                                   961           56.0             939            56.0              18            52.9             4            57.1
+Upper                                    408           23.8             398            23.7               8            23.5             2            28.6
+Unknown                                    3            0.2                2            0.1               1             2.9             0             0.0
+         Total AA                      1,717          100.0            1,676          100.0              34           100.0             7           100.0
+                            Percentage of Total Farms:                                 97.6                             2.0                           0.4
+Source: 2023 FFIEC Census Da ta
+        2023 Dun & Bra dstreet Da ta
+        2016‐2020 U.S. Census Burea u: America n Community Survey
+Note:   Percenta ges ma y not tota l 100.0 percent due to rounding.
+
+
+
+
+                                                              Page 14 of 20
+SMALL BUSINESS BANK                                                                               CRA Performance Evaluation
+LENEXA, KANSAS                                                                                             November 18, 2024
+
+
+                                                                  Table B-2
+                                           2022 Kansas City MO‐KS MSA AA Demographics
+                                                                                              Families < Poverty Level          Families by Family
+                                  Tract Distribution          Families by Tract Income
+    Income Categories                                                                         as % of Families by Tract               Income
+
+                                   #              %                #              %                #              %              #              %
+Low                                       58            9.6         32,365              6.0            8,775           27.1      111,065             20.5
+Moderate                                 152           25.0       122,356              22.5         14,997             12.3       95,410             17.6
+Middle                                   220           36.2       221,761              40.8         10,639              4.8      119,106             21.9
+Upper                                    153           25.2       164,171              30.2            2,692            1.6      217,318             40.0
+Unknown                                   24            4.0            2,246            0.4             564            25.1             0             0.0
+         Total AA                        607          100.0       542,899             100.0         37,667              6.9      542,899            100.0
+
+                               Housing                                                Housing Type by Tract
+                                Units by                 Owner‐occupied                                  Rental                        Vacant
+                                 Tract            #           % by tract       % by unit           #           % by unit         #           % by unit
+Low                                 70,987         23,318                4.2           32.8         36,527             51.5       11,142             15.7
+Moderate                           237,795        113,616               20.7           47.8         96,616             40.6       27,563             11.6
+Middle                             363,848        232,761               42.3           64.0       107,630              29.6       23,457              6.4
+Upper                              238,328        177,997               32.4           74.7         49,099             20.6       11,232              4.7
+Unknown                                7,265          2,008              0.4           27.6            3,787           52.1          1,470           20.2
+         Total AA                  918,223        549,700              100.0           59.9       293,659              32.0       74,864              8.2
+                                                                                      Businesses by Tract & Revenue Size
+                             Total Businesses by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                   #              %                #              %                #              %              #              %
+Low                                    5,552            5.9            4,878            5.7             631             8.1            43             5.0
+Moderate                            20,248             21.4         18,416             21.5            1,652           21.2           180            20.9
+Middle                              34,101             36.1         31,686             36.9            2,096           26.9           319            37.1
+Upper                               32,087             34.0         29,073             33.9            2,726           34.9           288            33.5
+Unknown                                2,498            2.6            1,772            2.1             696             8.9            30             3.5
+         Total AA                   94,486            100.0         85,825            100.0            7,801          100.0           860           100.0
+                       Percentage of Total Businesses:                                 90.8                             8.3                           0.9
+                                                                                        Farms by Tract & Revenue Size
+                                Total Farms by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                   #              %                #              %                #              %              #              %
+Low                                       15            0.9              14             0.8               1             2.9             0             0.0
+Moderate                                 325           19.1             318            19.2               6            17.1             1            14.3
+Middle                                   950           55.8             929            56.0              17            48.6             4            57.1
+Upper                                    408           24.0             396            23.9              10            28.6             2            28.6
+Unknown                                    3            0.2               2             0.1               1             2.9             0             0.0
+         Total AA                      1,701          100.0            1,659          100.0              35           100.0             7           100.0
+                            Percentage of Total Farms:                                 97.5                             2.1                           0.4
+Source: 2022 FFIEC Census Da ta
+        2022 Dun & Bra dstreet Da ta
+        2016‐2020 U.S. Census Burea u: America n Community Survey
+Note:   Percenta ges ma y not tota l 100.0 percent due to rounding.
+
+
+
+
+                                                               Page 15 of 20
+SMALL BUSINESS BANK                                                                               CRA Performance Evaluation
+LENEXA, KANSAS                                                                                             November 18, 2024
+
+
+                                                                  Table B-3
+                                           2021 Kansas City MO‐KS MSA AA Demographics
+                                                                                              Families < Poverty Level          Families by Family
+                                  Tract Distribution          Families by Tract Income
+    Income Categories                                                                         as % of Families by Tract               Income
+                                    #             %                #              %                #              %              #              %
+Low                                       79           14.9         39,180              7.5         13,683             34.9      111,001             21.3
+Moderate                                 120           22.6       106,172              20.4         16,287             15.3       91,302             17.5
+Middle                                   176           33.2       205,653              39.5         13,179              6.4      107,043             20.6
+Upper                                    136           25.7       168,604              32.4            3,645            2.2      211,251             40.6
+Unknown                                   19            3.6             988             0.2             451            45.6             0             0.0
+         Total AA                        530          100.0       520,597             100.0         47,245              9.1      520,597            100.0
+
+                                Housing                                               Housing Type by Tract
+                                Units by                 Owner‐occupied                                  Rental                        Vacant
+                                 Tract            #           % by tract       % by unit           #           % by unit         #           % by unit
+Low                                  92,203        28,833                5.5           31.3         43,560             47.2       19,810             21.5
+Moderate                           204,794         96,833               18.4           47.3         83,537             40.8       24,424             11.9
+Middle                             340,873        214,636               40.9           63.0       101,350              29.7       24,887              7.3
+Upper                              238,821        184,102               35.0           77.1         44,577             18.7       10,142              4.2
+Unknown                                 4,019          863               0.2           21.5            1,780           44.3          1,376           34.2
+         Total AA                  880,710        525,267              100.0           59.6       274,804              31.2       80,639              9.2
+                                                                                      Businesses by Tract & Revenue Size
+                              Total Businesses by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                    #             %                #              %                #              %              #              %
+Low                                     6,773           7.3            5,928            7.0             801            10.1            44             5.3
+Moderate                             18,866            20.2         17,078             20.2            1,622           20.5           166            19.9
+Middle                               33,715            36.1         30,831             36.4            2,554           32.3           330            39.6
+Upper                                32,277            34.6         29,625             35.0            2,372           30.0           280            33.6
+Unknown                                 1,692           1.8            1,126            1.3             553             7.0            13             1.6
+         Total AA                    93,323           100.0         84,588            100.0            7,902          100.0           833           100.0
+                       Percentage of Total Businesses:                                 90.6                             8.5                           0.9
+                                                                                        Farms by Tract & Revenue Size
+                                Total Farms by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                    #             %                #              %                #              %              #              %
+Low                                       21            1.2              19             1.1               2             5.7             0             0.0
+Moderate                                 295           17.1             290            17.3               3             8.6             2            25.0
+Middle                                   944           54.8             924            55.0              17            48.6             3            37.5
+Upper                                    460           26.7             445            26.5              12            34.3             3            37.5
+Unknown                                    2            0.1               1             0.1               1             2.9             0             0.0
+         Total AA                       1,722         100.0            1,679          100.0              35           100.0             8           100.0
+                            Percentage of Total Farms:                                 97.5                             2.0                           0.5
+Source: 2021 FFIEC Census Da ta
+        2021 Dun & Bra dstreet Da ta
+        2011‐2015 U.S. Census Burea u: America n Community Survey
+Note:   Percenta ges ma y not tota l 100.0 percent due to rounding.
+
+
+
+
+                                                               Page 16 of 20
+SMALL BUSINESS BANK                                                                               CRA Performance Evaluation
+LENEXA, KANSAS                                                                                             November 18, 2024
+
+
+                                                                  Table B-4
+                                           2020 Kansas City MO‐KS MSA AA Demographics
+                                                                                              Families < Poverty Level          Families by Family
+                                  Tract Distribution          Families by Tract Income
+    Income Categories                                                                         as % of Families by Tract               Income
+
+                                    #             %                #              %                #              %              #              %
+Low                                       79           14.9         39,180              7.5         13,683             34.9      111,001             21.3
+Moderate                                 120           22.6       106,172              20.4         16,287             15.3       91,302             17.5
+Middle                                   176           33.2       205,653              39.5         13,179              6.4      107,043             20.6
+Upper                                    136           25.7       168,604              32.4            3,645            2.2      211,251             40.6
+Unknown                                   19            3.6             988             0.2             451            45.6             0             0.0
+         Total AA                        530          100.0       520,597             100.0         47,245              9.1      520,597            100.0
+
+                                Housing                                               Housing Type by Tract
+                                Units by                 Owner‐occupied                                  Rental                        Vacant
+                                 Tract            #           % by tract       % by unit           #           % by unit         #           % by unit
+Low                                 92,203         28,833                5.5           31.3         43,560             47.2       19,810             21.5
+Moderate                           204,794         96,833               18.4           47.3         83,537             40.8       24,424             11.9
+Middle                             340,873        214,636               40.9           63.0       101,350              29.7       24,887              7.3
+Upper                              238,821        184,102               35.0           77.1         44,577             18.7       10,142              4.2
+Unknown                                 4,019          863               0.2           21.5            1,780           44.3          1,376           34.2
+         Total AA                  880,710        525,267              100.0           59.6       274,804              31.2       80,639              9.2
+                                                                                      Businesses by Tract & Revenue Size
+                              Total Businesses by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                    #             %                #              %                #              %              #              %
+Low                                     6,675           7.0            5,793            6.7             838            10.1            44             5.5
+Moderate                            19,001             20.0         17,162             19.9            1,679           20.3           160            20.0
+Middle                              34,451             36.2         31,424             36.5            2,719           32.9           308            38.4
+Upper                               33,267             35.0         30,543             35.5            2,448           29.6           276            34.4
+Unknown                                 1,724           1.8            1,119            1.3             591             7.1            14             1.7
+         Total AA                   95,118            100.0         86,041            100.0            8,275          100.0           802           100.0
+                       Percentage of Total Businesses:                                 90.5                             8.7                           0.8
+                                                                                        Farms by Tract & Revenue Size
+                                Total Farms by Tract
+                                                              Less Than or = $1 Million           Over $1 Million             Revenue Not Reported
+
+                                    #             %                #              %                #              %              #              %
+Low                                       19            1.1              18             1.1               1             2.8             0             0.0
+Moderate                                 297           16.9             290            16.9               4            11.1             3            37.5
+Middle                                   964           54.9             943            55.1              18            50.0             3            37.5
+Upper                                    474           27.0             460            26.9              12            33.3             2            25.0
+Unknown                                    2            0.1               1             0.1               1             2.8             0             0.0
+         Total AA                       1,756         100.0            1,712          100.0              36           100.0             8           100.0
+                            Percentage of Total Farms:                                 97.5                             2.1                           0.5
+Source: 2020 FFIEC Census Da ta
+        2020 Dun & Bra dstreet Da ta
+        2011‐2015 U.S. Census Burea u: America n Community Survey
+Note:   Percenta ges ma y not tota l 100.0 percent due to rounding.
+
+
+
+
+                                                               Page 17 of 20
+SMALL BUSINESS BANK                                         CRA Performance Evaluation
+LENEXA, KANSAS                                                       November 18, 2024
+
+
+                               APPENDIX C – GLOSSARY
+
+Aggregate lending: The number of loans originated and purchased by all reporting
+lenders in specified income categories as a percentage of the aggregate number of loans
+originated and purchased by all reporting lenders in the metropolitan area/assessment
+area.
+
+Census tract: A small subdivision of metropolitan and other densely populated counties.
+Census tract boundaries do not cross county lines; however, they may cross the
+boundaries of metropolitan statistical areas. Census tracts usually have between 2,500
+and 8,000 persons, and their physical size varies widely depending upon population
+density. Census tracts are designed to be homogeneous with respect to population
+characteristics, economic status, and living conditions to allow for statistical comparisons.
+
+Community development: Affordable housing (including multifamily rental housing) for
+low- or moderate-income individuals; community services targeted to low- or moderate-
+income individuals; activities that promote economic development by financing
+businesses or farms that meet the size eligibility standards of the Small Business
+Administration’s Development Company or Small Business Investment Company
+programs (13 CFR 121.301) or have gross annual revenues of $1 million or less; or,
+activities that revitalize or stabilize low- or moderate-income geographies, designated
+disaster areas; or designated distressed or underserved nonmetropolitan middle-income
+geographies.
+
+Consumer loan(s): A loan(s) to one or more individuals for household, family, or other
+personal expenditures. A consumer loan does not include a home mortgage, small
+business, or small farm loan. This definition includes the following categories: motor
+vehicle loans, credit card loans, other secured consumer loans, and other unsecured
+consumer loans.
+
+Family: Includes a householder and one or more other persons living in the same
+household who are related to the householder by birth, marriage, or adoption. The
+number of family households always equals the number of families; however, a family
+household may also include nonrelatives living with the family. Families are classified by
+type as either a married-couple family or other family, which is further classified into ‘male
+householder’ (a family with a male householder and no wife present) or ‘female
+householder’ (a family with a female householder and no husband present).
+
+Full-scope review: Performance is analyzed considering performance context,
+quantitative factors (for example, geographic distribution, borrower distribution, and total
+number and dollar amount of investments), and qualitative factors (for example,
+innovativeness, complexity, and responsiveness).
+
+
+
+
+                                       Page 18 of 20
+SMALL BUSINESS BANK                                        CRA Performance Evaluation
+LENEXA, KANSAS                                                      November 18, 2024
+
+
+Geography: A census tract delineated by the United States Bureau of the Census in the
+most recent decennial census.
+
+Home Mortgage Disclosure Act (HMDA): The statute that requires certain mortgage
+lenders that do business or have banking offices in a metropolitan statistical area to file
+annual summary reports of their mortgage lending activity. The reports include such data
+as the race, gender, and the income of applications, the amount of loan requested, and
+the disposition of the application (for example, approved, denied, and withdrawn).
+
+Home mortgage loans: Includes home purchase and home improvement loans as
+defined in the HMDA regulation. This definition also includes multifamily (five or more
+families) dwelling loans, loans for the purchase of manufactured homes and refinancings
+of home improvement and home purchase loans.
+
+Household: Includes all persons occupying a housing unit. Persons not living in
+households are classified as living in group quarters. In 100 percent tabulations, the count
+of households always equals the count of occupied housing units.
+
+Limited-scope review: Performance is analyzed using only quantitative factors (for
+example, geographic distribution, borrower distribution, total number and dollar amount
+of investments, and branch distribution).
+
+Low-income: Individual income that is less than 50 percent of the area median income,
+or a median family income that is less than 50 percent, in the case of a geography.
+
+Market share: The number of loans originated and purchased by the institution as a
+percentage of the aggregate number of loans originated and purchased by all reporting
+lenders in the metropolitan area/assessment area.
+
+Metropolitan area (MA): A metropolitan statistical area (MSA) or a metropolitan division
+(MD) as defined by the Office of Management and Budget. A MSA is a core area
+containing at least one urbanized area of 50,000 or more inhabitants, together with
+adjacent communities having a high degree of economic and social integration with that
+core. A MD is a division of a MSA based on specific criteria including commuting patterns.
+Only a MSA that has a population of at least 2.5 million may be divided into MDs.
+
+Middle-income: Individual income that is at least 80 percent and less than 120 percent
+of the area median income, or a median family income that is at least 80 percent and less
+than 120 percent, in the case of a geography.
+
+Moderate-income: Individual income that is at least 50 percent and less than 80 percent
+of the area median income, or a median family income that is at least 50 percent and less
+than 80 percent, in the case of a geography.
+
+
+                                      Page 19 of 20
+SMALL BUSINESS BANK                                        CRA Performance Evaluation
+LENEXA, KANSAS                                                      November 18, 2024
+
+
+Multifamily: Refers to a residential structure that contains five or more units.
+
+Nonmetropolitan area (NonMSA): Any area that is not located within an MSA.
+
+Other products: Includes any unreported optional category of loans for which the
+institution collects and maintains data for consideration during a CRA examination.
+Examples of such activity include consumer loans and other loan data an institution may
+provide concerning its lending performance.
+
+Owner-occupied units: Includes units occupied by the owner or co-owner, even if the
+unit has not been fully paid for or is mortgaged.
+
+Qualified investment: A qualified investment is defined as any lawful investment,
+deposit, membership share, or grant that has as its primary purpose community
+development.
+
+Rated area: A rated area is a state or multistate metropolitan area. For an institution with
+domestic branches in only one state, the institution’s CRA rating would be the state rating.
+If an institution maintains domestic branches in more than one state, the institution will
+receive a rating for each state in which those branches are located. If an institution
+maintains domestic branches in two or more states within a multistate metropolitan area,
+the institution will receive a rating for the multistate metropolitan area. For these
+institutions, no state ratings will be received unless the bank also maintains deposit
+facilities outside of the multistate metropolitan area. CRA activity is captured in either a
+state rating or a multistate metropolitan area rating, but not both.
+
+Small loan(s) to business(es): A loan included in 'loans to small businesses' as defined
+in the Consolidated Report of Condition and Income (Call Report) instructions. These
+loans have original amounts of $1 million or less and typically are either secured by
+nonfarm or nonresidential real estate or are classified as commercial and industrial loans.
+However, thrift institutions may also exercise the option to report loans secured by
+nonfarm residential real estate as ‘small business loans’ if the loans are reported on the
+TFR as nonmortgage, commercial loans.
+
+Small loan(s) to farm(s): A loan included in ‘loans to small farms’ as defined in the
+Consolidated Reports of Condition and Income (Call Report) instructions. These loans
+have original amounts of $500,000 or less and are either secured by farmland or are
+classified as loans to finance agricultural production and other loans to farmers.
+
+Upper-income: Individual income that is more than 120 percent of the area median
+income, or a median family income that is more than 120 percent, in the case of a
+geography.
+
+
+
+
+                                      Page 20 of 20
+

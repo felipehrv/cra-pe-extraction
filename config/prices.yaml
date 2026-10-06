@@ -1,0 +1,35 @@
+# Model prices (USD per million tokens) and free-tier limits, with retrieval dates.
+# Cost in traces is computed from usage fields returned by each API, times these prices.
+# Update on run day and record the date.
+
+anthropic:
+  retrieved: 2026-09-25
+  source: Claude API model reference (skill cache)
+  models:
+    claude-haiku-4-5: { input: 1.00, output: 5.00, batch_discount: 0.5 }
+    claude-sonnet-5-5: { input: 2.00, output: 10.00, batch_discount: 0.5 }
+    claude-opus-5-5: { input: 4.00, output: 20.00, batch_discount: 0.5 }
+  free_credit_usd: 5
+  free_credit_note: one-time credit for new console accounts, expires about 14 days after claiming (third-party sources, 2026-10-05)
+
+gemini:
+  retrieved: null
+  source: Google AI Studio plan page (fill in after account creation)
+  models:
+    gemini-3.8-flash: { input: null, output: null, free_tier: true }
+  free_tier:
+    requests_per_minute: null
+    requests_per_day: null
+    data_used_for_training: true
+    note: free tier terms allow Google to retain and use submitted data; acceptable here because PEs are public records
+
+local:
+  retrieved: 2026-10-05
+  models:
+    ollama/llama3.1:8b-instruct-q4_K_M: { input: 0.0, output: 0.0, hardware: "Apple M5, 24 GB" }
+    ollama/qwen2.5:7b-instruct-q4_K_M: { input: 0.0, output: 0.0, hardware: "Apple M5, 24 GB" }
+  electricity_usd_per_kwh: null
+
+manual_baseline:
+  wage_usd_per_hour: null
+  note: minutes per field come from the timer column in the label file, not from an assumed pages-per-hour figure

@@ -1,0 +1,553 @@
+                              PUBLIC DISCLOSURE
+
+
+                                           August 9, 2022
+
+
+
+
+                 COMMUNITY REINVESTMENT ACT
+                   PERFORMANCE EVALUATION
+
+
+                                        Liberty Bank, Inc.
+                                    Certificate Number: 26816
+
+                                         326 South 500 East
+                                     Salt Lake City, Utah 84102
+
+
+
+
+                              Federal Deposit Insurance Corporation
+                          Division of Depositor and Consumer Protection
+                                  San Francisco Regional Office
+
+                            25 Jessie Street at Ecker Square, Suite 2300
+                                  San Francisco, California 94105
+
+
+
+
+This document is an evaluation of this institution’s record of meeting the credit needs of its entire
+community, including low- and moderate-income neighborhoods, consistent with safe and sound
+operation of the institution. This evaluation is not, nor should it be construed as, an assessment of
+the financial condition of this institution. The rating assigned to this institution does not represent
+an analysis, conclusion, or opinion of the federal financial supervisory agency concerning the
+safety and soundness of this financial institution.
+                                               TABLE OF CONTENTS
+
+INSTITUTION RATING ................................................................................................................1
+DESCRIPTION OF INSTITUTION ...............................................................................................1
+DESCRIPTION OF ASSESSMENT AREA ...................................................................................2
+SCOPE OF EVALUATION ............................................................................................................4
+CONCLUSIONS ON PERFORMANCE CRITERIA.....................................................................5
+DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW .........................7
+APPENDICES .................................................................................................................................8
+   SMALL BANK PERFORMANCE CRITERIA ..........................................................................8
+   GLOSSARY.................................................................................................................................9
+                                   INSTITUTION RATING
+
+INSTITUTION’S CRA RATING: This institution is rated Substantial Noncompliance.
+
+An institution in this group has a substantially deficient record of helping to meet the credit needs of
+its assessment area (AA), including low- and moderate-income (LMI) neighborhoods, in a manner
+consistent with its resources and capabilities.
+
+Liberty Bank, Inc.’s (LBI) performance has remained the same since the previous evaluation. The
+following narrative supports the bank’s performance:
+
+   •   The loan-to-deposit (LTD) ratio is less than reasonable given the institution’s size, financial
+       conditions, and AA’s credit needs.
+
+   •   All of the loans were originated outside of the institution’s AA.
+
+   •   The geographic distribution of loans was not analyzed because all of the loans were
+       originated outside of the institution’s AA.
+
+   •   The borrower profile was not analyzed because all of the loans were originated outside of
+       the institution’s AA.
+
+   •   The institution did not receive any CRA-related complaints since the previous evaluation;
+       therefore, this factor did not affect the rating.
+
+   •   Examiners identified an illegal credit practice during the CRA evaluation period. However,
+       considering the bank’s already substantially deficient performance, this factor did not affect
+       the rating.
+
+                             DESCRIPTION OF INSTITUTION
+
+LBI is headquartered in Salt Lake City, Utah and operates one branch. LBI is wholly-owned by the
+Phillips Family and has no holding company, subsidiaries, or relevant affiliates. There have been
+no branches opened or closed, and no merger or acquisition activity, since the previous CRA
+Performance Evaluation.
+
+The institution received a “Substantial Noncompliance” CRA Rating at its previous CRA
+Performance Evaluation dated April 12, 2021, based on the Interagency Small Institution
+Examination Procedures.
+
+The bank’s primary lending product is a consumer loan product referred to as Tiny Home Loans.
+The bank has not originated any small farm or home mortgage loans during the review period. LBI
+brokers home mortgage loans to other brokers/investors as a service. The bank does not originate
+the loans or make the credit decision; therefore, these loans were not evaluated under the Lending
+Test.
+
+
+                                                   1
+LBI offers deposit services including savings products and certificates of deposits. Alternative
+banking services include a website; however, customers can only view account balances.
+
+As of June 30, 2022, the Consolidated Reports of Conditions and Income (Call Report) reported
+assets totaling $12.6 million, loans totaling $7.7 million, deposits totaling $10.8 million and
+securities of $691,000. The following table indicates the loan portfolio distribution.
+
+                                 Loan Portfolio Distribution as of June 30, 2022
+ Loan Category                                                                     $(000s)    %
+ Construction and Land Development                                                    0       0.0
+ Secured by Farmland                                                                  0       0.0
+ Secured by 1-4 Family Residential Properties                                        563      7.3
+ Secured by Multifamily (5 or more) Residential Properties                           0        0.0
+ Secured by Nonfarm Nonresidential Properties                                        70       0.9
+ Total Real Estate Loans                                                            633       8.2
+ Commercial and Industrial Loans                                                    125       1.6
+ Agricultural Loans                                                                   0       0.0
+ Consumer                                                                          6,988     90.2
+ Other Loans & Leases                                                                 0       0.0
+ Less: Unearned Income                                                                0       0.0
+ Total Loans & Leases                                                              7,746     100.0
+ Source: Call Report
+
+
+The bank is operating under formal enforcement actions, presenting legal and/or financial
+impediments, which have prohibited the bank from certain lending activities. While the bank is
+facing financial and legal impediments, LBI has been able to originate loans, but all of those
+activities have occurred outside of their designated AA, as described later in this evaluation.
+
+                           DESCRIPTION OF ASSESSMENT AREA
+
+The bank’s AA has not changed since the previous performance evaluation. LBI has defined its AA as
+all of Salt Lake County, which is part of the Salt Lake City, Utah Metropolitan Statistical Area (MSA)
+#41620 and is located along the Wasatch Mountain front. The AA meets regulatory requirements and
+does not arbitrarily exclude LMI geographies. Examiners relied on bank records, public financial
+information, demographic data from the 2015 American Community Survey (ACS) Census,
+business demographics, and other public sources, as well as information obtained from a
+community contact.
+
+Economic and Demographic Data
+
+The AA consists of 212 census tracts: 7 low-, 51 moderate-, 86 middle-, 65 upper-income, and 3
+census tracts where income information was not available. There were no distressed or underserved
+non-metropolitan middle-income census tracts within the AA. The following table shows select
+demographic, housing, and business information of the AA.
+
+
+
+
+                                                         2
+                                        Demographic Information of the Assessment Area
+                                                 Assessment Area: Salt Lake County
+                                                                      Low           Moderate        Middle     Upper      NA*
+Demographic Characteristics                               #
+                                                                      % of #         % of #         % of #     % of #     % of #
+   Geographies (Census Tracts)                                212            3.3            24.1        40.6       30.7        1.4
+   Population by Geography                           1,078,958               3.2            22.8        43.1       30.0        0.9
+   Housing Units by Geography                           372,990              3.1            24.3        42.6       29.2        0.7
+   Owner-Occupied Units by Geography                    233,092              1.5            17.5        44.9       35.6        0.5
+   Occupied Rental Units by Geography                   118,800              6.4            36.9        39.4       16.1        1.2
+   Vacant Units by Geography                             21,098              2.3            28.9        35.3       33.3        0.2
+   Businesses by Geography                              128,724              2.8            20.8        38.9       36.6        0.9
+   Farms by Geography                                      1,995             2.6            19.4        40.6       37.0        0.4
+   Family Distribution by Income Level                  247,693             19.9            17.6        22.0       40.5        0.0
+   Household Distribution by Income                     351,892             22.3            16.6        20.4       40.6        0.0
+   Level
+   Median Family Income MSA -                                          $71,849 Median Housing Value                       $247,942
+   #41620 Salt Lake City, UT MSA
+                                                                                   Median Gross Rent                          $966
+                                                                                   Families Below Poverty Level              9.2%
+Source: 2015 ACS and 2021 D&B Data.
+Due to rounding, totals may not equal 100.0 percent.
+(*) The NA category consists of geographies that have not been assigned an income classification.
+
+
+
+According to data obtained from the U.S. Bureau of Labor Statistics, the Salt Lake County
+unemployment rate as of January 2022 has improved since the previous evaluation. Overall, the
+AA is below the national unemployment average. The following table depicts the unemployment
+rates for 2022 in the bank’s AA in comparison with the state and national levels.
+
+                                                           Unemployment Rates
+                                                                            January 2021               January 2022
+                Area
+                                                                                 %                          %
+                Salt Lake County                                                3.6                        2.4
+                State of Utah                                                   3.3                        2.2
+                National Average                                                6.3                        4.0
+                Source: Bureau of Labor Statistics
+
+
+According to Moody’s Analytics as of March 2022, house price appreciation will cool in the near
+term because of lower affordability, an increased supply of homes, and rising mortgage rates.
+However, low housing affordability takes a toll on population growth. The jobless rates in the AA
+are among the lowest nationally and payrolls are about 3 percent above their pre-pandemic peak.
+The current top employers for Salt Lake County are as follows: University of Utah, Intermountain
+Health Care, Wal-Mart Stores, Zions Bancorp and Delta Airlines.
+
+
+                                                                        3
+Competition
+
+The AA reflects a high level of competition for financial services. According to the FDIC Deposit
+Market Share Report as of June 30, 2021, 44 financial institutions operate full-service branches
+within the AA. Of these institutions, LBI ranked second to last with $10.6 million in total deposits.
+The two largest stakeholders in the deposit market for the AA consist of Morgan Stanley Bank and
+Ally Bank. These competitors hold 20.9 percent and 19.5 percent, respectively, of the AA’s
+deposits.
+
+Community Contact
+
+As part of the evaluation process, examiners reviewed a recent community contact with an
+economic development organization that serves Salt Lake County. The organization focuses on
+creating prosperity and economic opportunity for county residents. The contact noted that financial
+institutions have been responsive to community credit needs; however, there continues to be a need
+for affordable, multi-family units and for providing technical support to small businesses.
+
+Credit Needs
+
+Considering the information from the community contacts, bank management, and demographic
+and economic data, examiners determined that small business and affordable housing represent the
+primary credit needs of the AA.
+
+                                 SCOPE OF EVALUATION
+
+General Information
+
+This evaluation covers the period from the previous evaluation dated April 12, 2021, to the current
+evaluation dated August 9, 2022. Examiners used the Interagency Small Institution Examination
+Procedures to evaluate LBI’s CRA performance, which evaluates the bank’s performance under the
+Lending Test.
+
+The Lending Test considered the institution’s performance according to the following criteria:
+
+   •   LTD ratio;
+   •   AA concentration;
+   •   Geographic distribution;
+   •   Borrower profile; and
+   •   Response to CRA-related complaints.
+
+Activities Reviewed
+
+According to bank management and a review of the composition of the bank’s loan portfolio,
+examiners determined that the institution’s primary product line to be consumer Tiny Home Loans.
+This conclusion considered the bank’s business strategy and number and dollar volume of loans
+originated during the evaluation period.
+
+                                                  4
+Examiners also reviewed the bank’s small business loans. In 2022, LBI originated 2 small business
+loans for $65,268, which represents 3.3 percent of total originations by number and 1.6 percent by
+dollar volume. The bank did not make any small farm or home mortgage loans in the review
+period. No other loan products represent a major product line, therefore, they provided no material
+support for conclusions or ratings and are not presented. The AA concentration received the most
+weight in the overall rating. Since no loans were originated inside the AA, the geographic
+distribution and borrower profile criteria were not analyzed as a meaningful conclusion could not be
+reached.
+
+The following table represents the number and dollar volume of loans reviewed each year.
+
+                                        Loan Products Reviewed
+                                                       2021                      2022 YTD
+ Loan Category                                #               $(000s)       #            $(000s)
+ Consumer – Tiny Home Loans                   37              2,401         22           1,696
+ Small Business Loans                         0                 0           2               65
+ Source: Bank Records
+ Year-to-date (YTD)
+
+
+Examiners reviewed the number and dollar volume of consumer loans. While the number and
+dollar volume of loans are presented, examiners emphasized performance by number of loans
+because the number of loans is a better indicator of the individuals served.
+
+                        CONCLUSIONS ON PERFORMANCE CRITERIA
+
+LENDING TEST
+
+LBI demonstrated very poor performance under the Lending Test. The LTD ratio and AA
+concentration performance criteria support this conclusion. Additionally, the geographic distribution
+and borrower profile criteria were excluded from the analysis due to the lack of lending in the AA. The
+AA concentration received the most weight in the overall performance.
+
+Loan-to-Deposit Ratio
+
+The LTD ratio is less than reasonable given the institution’s size, financial condition, and AA credit
+needs. The bank’s net LTD ratio, calculated from Call Report data, averaged 64.9 percent over the past
+five calendar quarters from June 30, 2021, to June 30, 2022. The ratio ranged from a low of 61.9
+percent as of December 31, 2021, to a high of 69.7 percent as of June 30, 2022. The average net LTD
+ratio was 54.2 percent at the previous evaluation where it was also rated less than reasonable. There
+are no similarly situated financial institutions based on business strategy, loan portfolio
+composition, branching, or financial capacity from which to draw sound comparisons.
+
+The bank made two investments during this review period totaling $311,708, which helped augment
+the LTD ratio only slightly. After the investments, the June 30, 2022 average net LTD ratio is 65.5
+percent over the same five calendar quarters. However, this did not materially impact the overall
+
+                                                   5
+conclusion as it only changes the average net LTD ratio by 0.6 percent; therefore, the LTD ratio
+remains less than reasonable.
+
+                                                        Loan-to-Deposit Ratio
+                                                                         Total Assets as of               Average Net
+ Bank                                                                       6/30/2022                     LTD Ratio
+                                                                              ($000s)                        (%)
+ Liberty Bank, Inc.                                                           12,614                         64.9
+ Source: Call Reports
+
+
+Assessment Area Concentration
+
+All of the loans and other lending related activities are outside the institution’s AA. The bank’s AA
+concentration performance declined since the previous evaluation period. LBI did not originate any
+loans inside the AA during the review period. The table below reflects the AA concentration
+performance.
+
+                                 Lending Inside and Outside of the Assessment Area
+                             Number of Loans                      Dollar Amount of Loans $(000s)
+ Loan
+                         Inside                 Outside        Total            Inside              Outside        Total
+ Category
+                  #    %                    #          %         #         $             %      $         %       $(000s)
+ Consumer – Tiny Home Loans
+    2021          0    0.0                  37        100.0      37        0             0.0   2,401     100.0     2,401
+  2022 YTD        0    0.0                  22        100.0      22        0             0.0   1,696     100.0     1,696
+ Subtotal         0    0.0                  59        100.0      59        0             0.0   4,097     100.0     4,097
+ Small Business Loans
+    2021          0    0.0                   0         0.0        0        0             0,0      0       0,0         0
+  2022 YTD        0    0.0                   2        100.0       2        0             0.0     65      100.0       65
+   Subtotal       0    0.0                   2        100.0       2        0             0.0     65      100.0       65
+ Total            0    0.0                  61        100.0      61        0             0.0   4,162     100.0     4,162
+ Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.
+
+
+Geographic Distribution
+
+The geographic distribution of loans could not be analyzed since all of the loans were originated
+outside of the bank’s AA.
+
+Borrower Profile
+
+The borrower profile could not be analyzed because all of the loans were originated outside the
+bank’s AA.
+
+
+
+
+                                                                 6
+Response to Complaints
+
+The institution has not received any CRA-related complaints since the previous evaluation;
+therefore, this criterion did not affect the rating.
+
+
+
+DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW
+
+The FDIC identified illegal credit practices during the evaluation period. Examiners cited a
+violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices
+(UDAP). The UDAP violation caused substantial harm to a majority of the bank’s mortgage loan
+borrowers. Management has not completed corrective action to address the violation, and
+management has not committed to implementing corrective action. Further, the bank does not have
+sufficient policies, procedures, training programs, internal assessment efforts, or other practices in
+place to prevent illegal credit practices. Although the bank’s practices harmed consumers,
+considering the bank’s already substantially deficient performance, this illegal credit practice did
+not affect the CRA rating.
+
+
+
+
+                                                  7
+                                         APPENDICES
+
+                     SMALL BANK PERFORMANCE CRITERIA
+
+Lending Test
+
+The Lending Test evaluates the bank’s record of helping to meet the credit needs of its assessment
+area(s) by considering the following criteria:
+    1) The bank’s loan-to-deposit ratio, adjusted for seasonal variation, and, as appropriate, other
+        lending-related activities, such as loan originations for sale to the secondary markets,
+        community development loans, or qualified investments;
+    2) The percentage of loans, and as appropriate, other lending-related activities located in the
+        bank’s assessment area(s);
+    3) The geographic distribution of the bank’s loans;
+    4) The bank’s record of lending to and, as appropriate, engaging in other lending-related
+        activities for borrowers of different income levels and businesses and farms of different
+        sizes; and
+    5) The bank’s record of taking action, if warranted, in response to written complaints about its
+        performance in helping to meet credit needs in its assessment area(s).
+
+
+
+
+                                                  8
+                                           GLOSSARY
+
+Aggregate Lending: The number of loans originated and purchased by all reporting lenders in
+specified income categories as a percentage of the aggregate number of loans originated and
+purchased by all reporting lenders in the metropolitan area/assessment area.
+
+American Community Survey (ACS): A nationwide United States Census survey that produces
+demographic, social, housing, and economic estimates in the form of five year estimates based on
+population thresholds.
+
+Area Median Income: The median family income for the MSA, if a person or geography is
+located in an MSA; or the statewide nonmetropolitan median family income, if a person or
+geography is located outside an MSA.
+
+Assessment Area: A geographic area delineated by the bank under the requirements of the
+Community Reinvestment Act.
+
+Census Tract: A small, relatively permanent statistical subdivision of a county or equivalent
+entity. The primary purpose of census tracts is to provide a stable set of geographic units for the
+presentation of statistical data. Census tracts generally have a population size between 1,200 and
+8,000 people, with an optimum size of 4,000 people. Census tract boundaries generally follow
+visible and identifiable features, but they may follow nonvisible legal boundaries in some
+instances. State and county boundaries always are census tract boundaries.
+
+Combined Statistical Area (CSA): A combination of several adjacent metropolitan statistical
+areas or micropolitan statistical areas or a mix of the two, which are linked by economic ties.
+
+Consumer Loan(s): A loan(s) to one or more individuals for household, family, or other personal
+expenditures. A consumer loan does not include a home mortgage, small business, or small farm
+loan. This definition includes the following categories: motor vehicle loans, credit card loans, home
+equity loans, other secured consumer loans, and other unsecured consumer loans.
+
+Core Based Statistical Area (CBSA): The county or counties or equivalent entities associated
+with at least one core (urbanized area or urban cluster) of at least 10,000 population, plus adjacent
+counties having a high degree of social and economic integration with the core as measured through
+commuting ties with the counties associated with the core. Metropolitan and Micropolitan
+Statistical Areas are the two categories of CBSAs.
+
+Family: Includes a householder and one or more other persons living in the same household who
+are related to the householder by birth, marriage, or adoption. The number of family households
+always equals the number of families; however, a family household may also include non-relatives
+living with the family. Families are classified by type as either a married-couple family or other
+family. Other family is further classified into “male householder” (a family with a male
+householder and no wife present) or “female householder” (a family with a female householder and
+no husband present).
+
+
+
+                                                  9
+FFIEC-Estimated Income Data: The Federal Financial Institutions Examination Council (FFIEC)
+issues annual estimates which update median family income from the metropolitan and
+nonmetropolitan areas. The FFIEC uses American Community Survey data and factors in
+information from other sources to arrive at an annual estimate that more closely reflects current
+economic conditions.
+
+Full-Scope Review: A full-scope review is accomplished when examiners complete all applicable
+interagency examination procedures for an assessment area. Performance under applicable tests is
+analyzed considering performance context, quantitative factors (e.g., geographic distribution,
+borrower profile, and total number and dollar amount of investments), and qualitative factors (e.g.,
+innovativeness, complexity, and responsiveness).
+
+Geography: A census tract delineated by the United States Bureau of the Census in the most recent
+decennial census.
+
+Home Mortgage Disclosure Act (HMDA): The statute that requires certain mortgage lenders that
+do business or have banking offices in a metropolitan statistical area to file annual summary reports
+of their mortgage lending activity. The reports include such data as the race, gender, and the
+income of applicants; the amount of loan requested; and the disposition of the application
+(approved, denied, and withdrawn).
+
+Home Mortgage Loans: Includes closed-end mortgage loans or open-end line of credits as defined
+in the HMDA regulation that are not an excluded transaction per the HMDA regulation.
+
+Housing Unit: Includes a house, an apartment, a mobile home, a group of rooms, or a single room
+that is occupied as separate living quarters.
+
+Limited-Scope Review: A limited scope review is accomplished when examiners do not complete
+all applicable interagency examination procedures for an assessment area.
+Performance under applicable tests is often analyzed using only quantitative factors (e.g.,
+geographic distribution, borrower profile, total number and dollar amount of investments, and
+branch distribution).
+
+Low-Income: Individual income that is less than 50 percent of the area median income, or a
+median family income that is less than 50 percent in the case of a geography.
+
+Market Share: The number of loans originated and purchased by the institution as a percentage of
+the aggregate number of loans originated and purchased by all reporting lenders in the metropolitan
+area/assessment area.
+
+Median Income: The median income divides the income distribution into two equal parts, one
+having incomes above the median and other having incomes below the median.
+
+Metropolitan Division (MD): A county or group of counties within a CBSA that contain(s) an
+urbanized area with a population of at least 2.5 million. A MD is one or more main/secondary
+
+
+
+                                                 10
+counties representing an employment center or centers, plus adjacent counties associated with the
+main/secondary county or counties through commuting ties.
+
+Metropolitan Statistical Area (MSA): CBSA associated with at least one urbanized area having a
+population of at least 50,000. The MSA comprises the central county or counties or equivalent
+entities containing the core, plus adjacent outlying counties having a high degree of social and
+economic integration with the central county or counties as measured through commuting.
+
+Middle-Income: Individual income that is at least 80 percent and less than 120 percent of the area
+median income, or a median family income that is at least 80 and less than 120 percent in the case
+of a geography.
+
+Moderate-Income: Individual income that is at least 50 percent and less than 80 percent of the
+area median income, or a median family income that is at least 50 and less than 80 percent in the
+case of a geography.
+
+Multi-family: Refers to a residential structure that contains five or more units.
+
+Nonmetropolitan Area (also known as non-MSA): All areas outside of metropolitan areas. The
+definition of nonmetropolitan area is not consistent with the definition of rural areas. Urban and
+rural classifications cut across the other hierarchies. For example, there is generally urban and rural
+territory within metropolitan and nonmetropolitan areas.
+
+Owner-Occupied Units: Includes units occupied by the owner or co-owner, even if the unit has
+not been fully paid for or is mortgaged.
+
+Rated Area: A rated area is a state or multistate metropolitan area. For an institution with
+domestic branches in only one state, the institution’s CRA rating would be the state rating. If an
+institution maintains domestic branches in more than one state, the institution will receive a rating
+for each state in which those branches are located. If an institution maintains domestic branches in
+two or more states within a multistate metropolitan area, the institution will receive a rating for the
+multistate metropolitan area.
+
+Rural Area: Territories, populations, and housing units that are not classified as urban.
+
+Small Business Loan: A loan included in “loans to small businesses” as defined in the
+Consolidated Report of Condition and Income (Call Report). These loans have original amounts of
+$1 million or less and are either secured by nonfarm nonresidential properties or are classified as
+commercial and industrial loans.
+
+Small Farm Loan: A loan included in “loans to small farms” as defined in the instructions for
+preparation of the Consolidated Report of Condition and Income (Call Report). These loans have
+original amounts of $500,000 or less and are either secured by farmland, including farm residential
+and other improvements, or are classified as loans to finance agricultural production and other loans
+to farmers.
+
+
+
+                                                   11
+Upper-Income: Individual income that is 120 percent or more of the area median income, or a
+median family income that is 120 percent or more in the case of a geography.
+
+Urban Area: All territories, populations, and housing units in urbanized areas and in places of
+2,500 or more persons outside urbanized areas. More specifically, “urban” consists of territory,
+persons, and housing units in places of 2,500 or more persons incorporated as cities, villages,
+boroughs (except in Alaska and New York), and towns (except in the New England states, New
+York, and Wisconsin).
+
+“Urban” excludes the rural portions of “extended cities”; census designated place of 2,500 or more
+persons; and other territory, incorporated or unincorporated, including in urbanized areas.
+
+
+
+
+                                                 12
+

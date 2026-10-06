@@ -1,0 +1,713 @@
+                                PUBLIC DISCLOSURE
+                                           March 27, 2023
+
+
+                   COMMUNITY REINVESTMENT ACT
+                     PERFORMANCE EVALUATION
+                                              GN Bank
+                                     Charter Number: 703395
+
+                                         4619 S. King Drive
+                                        Chicago, Illinois 60653
+
+
+
+                               Office of the Comptroller of the Currency
+
+                                   2001 Butterfield Road, Suite 400
+                                    Downers Grove, Illinois 60515
+
+
+NOTE: This document is an evaluation of this institution's record of meeting the credit needs of its
+      entire community, including low- and moderate-income neighborhoods, consistent with safe
+      and sound operation of the institution. This evaluation is not, and should not be construed as,
+      an assessment of the financial condition of this institution. The rating assigned to this
+      institution does not represent an analysis, conclusion, or opinion of the federal financial
+      supervisory agency concerning the safety and soundness of this financial institution.
+                                                               Charter Number: 703395
+
+
+
+
+                               Table of Contents
+Overall CRA Rating……...………………………………………………………………                                   1
+Description of Institution………….……………………………………………………..                             2
+Scope of the Evaluation………………………………………………………………….                                 3
+Discriminatory or Other Illegal Credit Practices Review………………………..………             3
+Lending Test …………………………………………………………………………….                                       4
+State Rating…….………………………………………………………………………..                                      4
+          State of Illinois………..……………………………………………..…….…                           6
+Appendix A: Scope of Examination………….…………………………………….……                          A-1
+Appendix B: Summary of State Ratings………………………………….......................        B-1
+Appendix C: Definitions and Common Abbreviations………………………………….                  C-1
+Appendix D: Tables of Performance Data………………………………………………                        D-1
+
+
+
+
+                                       i
+                                                                                          Charter Number: 703395
+
+Overall CRA Rating
+Institution’s CRA Rating: This institution is rated Needs to Improve.
+
+The lending test is rated: Needs to Improve.
+
+The major factors that support this rating include:
+
+•   A substantial majority of the bank’s loans are outside its assessment area (AA).
+
+•   The bank did not originate a sufficient volume of loans to conduct a geographic or borrower
+    distribution of loans.
+
+•   The bank’s quarterly average loan-to-deposit (LTD) ratio is considered reasonable.
+
+•   The bank did not receive any CRA-related complaints during the evaluation period.
+
+Loan-to-Deposit Ratio
+Considering the bank’s size, financial condition, and credit needs of the AA, the bank’s loan-to-deposit
+(LTD) ratio is reasonable. The bank’s quarterly average LTD ratio since the end of the last performance
+evaluation period, June 30, 2018 to December 31, 2021, was 54.32 percent. During this period, the LTD
+ratio reached a low of 36.67 percent and a high of 90.59 percent. There are fourteen peer banks
+operating within the bank’s AA with assets $200 million or less. These peer banks had quarterly average
+LTD ratios ranging from a low of 13.30 percent to the highest at 113.26 percent during this same time
+frame.
+
+Lending in Assessment Area
+
+A substantial majority of the bank’s loans are outside its AA. The bank originated and purchased 3.4
+percent of its total loans inside the bank’s AAs during the evaluation period. The OCC performed this
+analysis at the bank level rather than at the AA level. This percentage does not include extensions of
+credit by affiliates that may be considered under the other performance criteria.
+
+During 2021, the bank purchased 294 unsecured consumer loans totaling approximately $15.1 million.
+The loans are primarily unsecured consumer related loans made to medical and healthcare professionals
+located nationwide.
+
+Lending Inside and Outside of the Assessment Area
+
+                                 Number of Loans                       Dollar Amount of Loans $(000s)
+Loan Category                                                  Total                                        Total
+                              Inside          Outside                    Inside           Outside
+                                                                #                                          $(000s)
+                          #            %     #           %              $         %       $          %
+Commercial                4            9.1   40         90.9    44     600        2.3   25,156      97.7   25.756
+Consumer                  8            2.6   305        97.5   313     86         0.6   15,186      99.4   15,272
+Total                     12           3.4   345        96.4   357     686        1.7   40,342      98.3   41,028
+
+
+
+
+                                                        1
+                                                                                    Charter Number: 703395
+
+Description of Institution
+GN Bank (the bank), formerly known as Illinois-Service Federal Savings and Loan Association, was
+acquired by Group Nduom in April 2016, with a name change effective July 2018. The bank is a
+minority-owned depository institution (MDI) organized as a privately owned Federal Savings
+Association, headquartered in Chicago, IL.
+
+The bank delineated one AA consisting of 184 census tracts (CT) located in the southern portion of
+Cook County within the Chicago-Naperville-Evanston, IL Metropolitan Division (MD) of the Chicago-
+Naperville-Elgin, IL-IN-WI Metropolitan Statistical Area (MSA). The bank has one AA, referred to as
+the Chicago AA, which includes the southern portion of Cook County. The AA is comprised of 91
+(49.5 percent) low-income tracts, 66 (35.9 percent) moderate-income tracts, 15 (8.2 percent) middle-
+income tracts, seven (3.8 percent) upper-income tracts, and five (2.7 percent) with unknown income
+information. GN Bank operates in a single state with the main office located in Chicago’s Grand
+Boulevard community, in a middle-income census tract. The Chatham branch was closed in 2020.
+Customers have access to 24-hour automated teller machines (ATM).
+
+
+The bank has seen a steady decline in total assets and deposits during the evaluation period. As of
+December 31, 2021, GN Bank reported total assets of $84.7 million, total deposits of $74.3 million, and
+net loans and leases of $67.3 million. Total loans represented 78.2 percent of total assets. The bank’s
+loan portfolio mix was comprised of 52.6 percent commercial loans, 27.3 percent residential and 20.3
+percent consumer loans. As of December 31, 2021, the bank’s Tier 1 capital was $10.2 million. Total
+deposits as of December 31, 2019 were $126 million and total assets were $136.9 million; as of
+December 31, 2020 total deposits were $85 million and total assets were $99.7 million.
+
+In response to the COVID-19 pandemic, the bank provided relief to its customers by modifying loans to
+delay payments and defer interest. Bank management developed a 90-day principal and interest payment
+deferral program for borrowers that were experiencing financial hardship. Borrowers had an option to
+extend payments for an additional 90 days and resumed payment once the 90 day deferral program
+ended.
+
+Although not considered a primary loan product, during the evaluation period, the bank originated 34
+real estate mortgages totaling $19.4 million. Of the 34 originations, nine (26.5 percent) were in the
+bank’s AA, and all were located in either low- or moderate-income CTs.
+
+GN Bank is a consumer-driven bank, with products including checking and savings accounts,
+certificates of deposit, personal and consumer loans, and commercial and small business loans. Beyond
+lending and deposits, the bank offers account access alternatives such as online banking, mobile
+banking, as well as 24 hour ATMs at each location.
+
+GN Bank’s business strategy focuses on attracting loan participations with well established, larger banks
+and national lending organizations. The bank has a long-standing designation as a Community
+Development Financial Institution (CDFI). The goal for CDFI institutions is to provide financial
+services to distressed communities, such as the southside of Chicago, IL. Historically, the bank’s
+primary lending has been retail-focused, including residential real estate lending.
+
+The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.
+The bank has been operating under a formal enforcement action due to the financial condition of the
+                                                2
+                                                                                    Charter Number: 703395
+
+bank; however, this action’s capital constraints has not impeded the bank’s lending capacity as
+demonstrated by significant consumer loan purchase activity during the review period.
+
+
+Scope of the Evaluation
+Evaluation Period/Products Evaluated
+The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021. Based on
+the bank’s internal reports for lending activity and discussions with management, the OCC determined
+the primary loan products were consumer and small business loans. During the evaluation period, the
+bank did not originate a sufficient number of loans to provide a meaningful analysis for the Lending
+Test.
+
+Selection of Areas for Full-Scope Review
+In each state where the bank has an office, one or more of AAs within that state was selected for a full-
+scope review. For purposes of this evaluation, bank delineated assessment areas located within the same
+MSA are combined and evaluated as a single AA.
+
+Ratings
+The bank’s overall rating is based on the state of Illinois state rating. The state ratings are based on
+performance in all bank AAs. Refer to the “Scope” section under each State Rating for details regarding
+how full-scope AAs were selected. Refer to appendix A, Scope of Examination.
+
+Under interagency small bank CRA procedures, a small bank’s rating is determined through a blend of
+analyses. At the institution level, examiners assess the reasonableness of the bank’s LTD ratio and the
+bank’s record of lending within its AA compared to lending outside of its AA. Within each rating area,
+examiners assess the distribution of lending to geographies and to borrowers of different income levels.
+As GN Bank did not originate or purchase a sufficient volume of loans to conduct a meaningful analysis
+of lending to geographies and to borrowers of different income levels, the bank’s CRA rating is based
+solely on its LTD ratio and record of lending in its AA compared to lending outside its AA.
+
+Discriminatory or Other Illegal Credit Practices Review
+Pursuant to 12 CFR 25.28(c), in determining a national bank’s or federal savings association’s CRA
+rating, the OCC considers evidence of discriminatory or other illegal credit practices in any geography
+by the institution, or in any AA by an affiliate whose loans have been considered as part of the
+institution’s lending performance. As part of this evaluation process, the OCC consults with other
+federal agencies with responsibility for compliance with the relevant laws and regulations, including the
+U.S. Department of Justice, the U.S. Department of Housing and Urban Development, and the
+Consumer Financial Protection Bureau, as applicable.
+
+The OCC has not identified that this bank (or any affiliate whose loans have been considered as part of
+the bank’s lending performance) has engaged in discriminatory or other illegal credit practices that
+require consideration in this evaluation.
+
+The OCC will consider any information that this institution engaged in discriminatory or other illegal
+credit practices, identified by or provided to the OCC before the end of the institution’s next
+                                                3
+                                                                                     Charter Number: 703395
+
+performance evaluation in that subsequent evaluation, even if the information concerns activities that
+occurred during the evaluation period addressed in this performance evaluation.
+
+
+State Rating
+State of Illinois
+CRA rating for the State of Illinois: Needs to Improve.
+
+The Lending Test is rated: Needs to Improve.
+
+The major factors that support this rating include:
+
+•   The bank did not originate a sufficient volume of loans to conduct a geographic or borrower
+    distribution of loans.
+
+•   The bank did not receive any CRA-related complaints during the evaluation period.
+
+Description of Institution’s Operations in Illinois
+GN Bank operates two branches in the state of Illinois. The main office and stand-alone drive-thru are
+located in Chicago, IL, both in middle-income geographies. The main branch offers traditional banking
+hours by appointment only, and the drive-up is open Monday through Friday from 8:30 a.m. to 4:30 p.m.
+The Chatham office has a drive-up facility open Monday through Friday from 8:30 a.m. to 4:30 p.m.
+There were no changes in the AA during the examination period. The AA meets the requirements of the
+CRA and does not arbitrarily exclude low- or moderate-income geographies.
+
+Competition among financial institutions in the bank’s AA is very strong. GN Bank competes with
+several large, regional, and community banks that are well established throughout the community.
+According to the FDIC June 30, 2021, Deposit Market Share Report, GN Bank has a deposit market
+share of less than 1 percent and ranks 83rd out of 100 financial institutions within Cook County. The top
+four banks by deposit share within the AA include JPMorgan Chase Bank, N.A. (23.8 percent), BMO
+Harris Bank, N.A. (16.1 percent), Bank of America, N.A. (12.2 percent), and The Northern Trust
+Company (8.3 percent) with a combined deposit market share of 60.4 percent.
+
+The bank is not subject to the reporting requirements of the Home Mortgage Disclosure Act (HMDA).
+However, based on 2021 peer mortgage data, market share data for all HMDA reporting institutions in
+the AA shows there were 367 lending institutions within the AA competing for mortgage loans. The
+four largest competitors were Guaranteed Rate Inc., Rocket Mortgage, U.S. Bank, N.A, and
+Loandepot.com, LLC. To illustrate competition within the AA for small business lending, 2021 peer
+small business data shows there were 293 lending institutions within the AA competing for small
+business loans. The largest competitor was JP Morgan Chase, N.A. who originated 37,824 loans with a
+market share of 20.1 percent. The second largest competitor was American Express National Bank, who
+originated 26,367 loans with a market share of 14 percent.
+
+The median housing value of owner-occupied housing units for the Chicago AA was $150,837 in 2021.
+Based on the information in the above table, low-income families earned less than $37,512; and
+
+                                                 4
+                                                                                      Charter Number: 703395
+
+moderate-income families earned less than $60,019. One method used to determine housing
+affordability assumes a maximum monthly principal and interest payment of no more than 30 percent of
+the applicant’s income. This calculated to a maximum monthly mortgage payment of $938 for low-
+income borrowers and $1,500 for moderate-income borrowers. Assuming a 30-year mortgage with a 5
+percent interest rate, and not considering any down payment, homeowner’s insurance, real estate taxes,
+or additional monthly expenses, the monthly mortgage payment for a home at the Chicago AA median
+housing value would have been $810. Examiners took into consideration families living below the
+poverty level who often have difficulty qualifying for home mortgage products without flexible terms or
+reduced closing costs. The percentage of families living below the poverty level is 26.8 percent.
+
+Based on data from the U.S. Bureau of Labor Statistics, the annual unemployment rate for Cook County
+was 3.9 percent in 2019, 10.4 percent in 2020, and 7.0 percent in 2021. The highest unemployment rate
+was 19 percent in April 2020, which was the start of the pandemic. Major employers in the AA
+included: Advocate Health Care System; Northwestern Memorial Healthcare; Amita Health; University
+of Chicago; JPMorgan Chase & Co.; and Amazon.
+
+Examiners conducted community contact interviews to determine general banking and credit needs
+within the community and opportunities for local financial institutions to meet those needs.
+
+Examiners spoke with a contact from an organization that works to foster revitalization of low- to
+moderate-income communities such as Auburn Gresham, Englewood, and West Chatham. The
+pandemic had a significant impact on these communities. The contact stated there was a loss of basic
+service providers such as grocery stores, healthcare and pharmacies, and banking institutions.
+Commercial properties remain vacant, and residents are banking more through currency exchangers and
+payday lenders. Community needs include affordable housing, workforce development, and
+redevelopment of long vacant properties.
+
+Examiners spoke with a contact from a citywide coalition that is focused on community development.
+The coalition is focused on the development and rehabilitation of housing for low-income community
+residents. The cost of housing and living has increased to the point where people in neighborhoods all
+over the city are struggling to find affordable housing. The contact stated there are properties available
+within communities, but potential home buyers continue to be out bid by local investors.
+
+Examiners spoke with a contact from a local CDFI that provides financing and technical assistance for
+community stabilization and development that benefit low- to moderate-income neighborhoods,
+families, and individuals in metropolitan Chicago. The contact stated the closure of many larger big box
+stores had a devastating impact on the southside and westside communities of Chicago. The contact
+stated that banking services and products are available to individuals; but many individuals have part-
+time employment, and their income hinders the ability to qualify for a loan.
+
+Examiners utilized a community contact from a community development corporation that builds
+affordable, single-family homes for low-income families on the westside of Chicago. The organization
+provides programs that equip participants with basic skills for entry level employment, trade programs,
+and GED programs. The contact stated that larger banks have a competitive advantage in originating
+loans from low- to moderate-income buyers. The contact commented that local community banks offer
+higher savings rates and that tends to encourage community members to save money and build wealth.
+
+The OCC also considered information provided by another regulatory agency in a recent community
+contact with a representative of organization that provides homeowner counseling including first-time
+                                                 5
+                                                                                                                      Charter Number: 703395
+
+homebuyer, pre-purchase, rental, and foreclosure prevention. The organization provides financial
+coaching, workforce development, and other community services. The contact stated there is a
+significant demand for affordable housing. Individuals have banking and credit needs that are going
+unmet due to language and documentation issues.
+
+Chicago AA
+
+                                     Table A – Demographic Information of the Assessment Area
+                                                      Assessment Area: Chicago, IL AA
+                                                                           Low          Moderate           Middle     Upper       NA*
+Demographic Characteristics                                  #
+                                                                           % of #        % of #            % of #     % of #      % of #
+   Geographies (Census Tracts)                                   184           49.5                 35.9        8.2         3.8         2.7
+   Population by Geography                                 469,265             47.7                 40.0        7.8         3.1         1.4
+   Housing Units by Geography                              229,321             49.3                 37.7        8.4         2.8         1.8
+   Owner-Occupied Units by Geography                         68,222            31.9                 52.1       11.5         3.6         0.9
+   Occupied Rental Units by Geography                      115,186             55.0                 32.0        8.0         2.4         2.5
+   Vacant Units by Geography                                 45,913            60.7                 30.7        5.0         2.4         1.1
+   Businesses by Geography                                   35,371            40.3                 43.2       10.6         3.9         2.0
+   Farms by Geography                                            213           37.1                 51.2        8.0         1.9         1.9
+   Family Distribution by Income Level                     100,414             49.0                 18.3       14.7        18.0         0.0
+   Household Distribution by Income Level                  183,408             49.1                 17.1       14.7        19.1         0.0
+   Median Family Income MSA - 16984                                        $75,024 Median Housing Value                            $150,837
+   Chicago-Naperville-Evanston, IL
+                                                                                      Median Gross Rent                                $859
+                                                                                      Families Below Poverty Level                   26.8%
+Source: 2015 ACS and 2021 D&B Data
+Due to rounding, totals may not equal 100.0%
+(*) The NA category consists of geographies that have not been assigned an income classification.
+
+
+
+
+Scope of Evaluation in Illinois
+The bank has only one AA, which was used for a full-scope review.
+
+LENDING TEST
+The bank’s performance under the Lending Test in Illinois is rated Needs to Improve. The bank
+originated a minimal number of small business and consumer loans in the AA during the three year
+evaluation period. Given the low volume of lending within the AA, examiners were unable to perform a
+meaningful analysis of the geographic and borrower distribution.
+
+Distribution of Loans by Income Level of the Geography
+
+Examiners were unable to conclude on the Distribution of Loans by Income Level of the Geography.
+
+                                                                       6
+                                                                                    Charter Number: 703395
+
+Small Loans to Businesses
+
+Refer to Table Q in appendix D for the facts and data about the geographic distribution of the bank’s
+originations and purchases of small loans to businesses.
+
+Consumer Loans
+
+Refer to Table U in appendix D for the facts and data about the geographic distribution of the bank’s
+consumer loan originations and purchases.
+
+Lending Gap Analysis
+
+Examiners were unable to perform a lending gap analysis based on the low volume of lending during the
+evaluation period.
+
+Distribution of Loans by Income Level of the Borrower
+
+Examiners were unable to conclude on the Distribution of Loans by Income Level of the Borrower.
+
+Small Loans to Businesses
+
+Refer to Table R in appendix D for the facts and data about the borrower distribution of the bank’s
+originations and purchases of small loans to businesses.
+
+Consumer Loans
+
+Refer to Table V in appendix D for the facts and data about the borrower distribution of the bank’s
+consumer loan originations and purchases.
+
+Responses to Complaints
+
+The bank did not receive any CRA-related complaints during the evaluation period.
+
+
+
+
+                                                7
+                                                                                          Charter Number: 703395
+
+Appendix A: Scope of Examination
+
+The following table identifies the time period covered in this evaluation, affiliate activities that were
+reviewed, and loan products considered. The table also reflects the MSAs that received comprehensive
+examination review, designated by the term “full-scope.”
+
+ Time Period Reviewed:              January 1, 2019 through December 31, 2021
+ Bank Products Reviewed:            Small Business and Consumer Loans
+
+
+ Affiliate(s)                       Affiliate Relationship       Products Reviewed
+ None.                              Not Applicable               Not Applicable
+
+
+
+ List of Assessment Areas and Type of Examination
+ Rating and Assessment Areas          Type of Exam               Other Information
+ Illinois
+ Chicago-Naperville-Elgin, IL-IN-WI                              Southern Portion of Cook County with includes
+                                      Full-scope
+ MSA (Partial)                                                   184 census tracts.
+
+
+
+
+                                           Appendix A-1
+                                                            Charter Number: 703395
+
+
+
+Appendix B: Summary of State Ratings
+
+
+                  RATINGS       GN Bank
+Overall Bank:                         Lending Test Rating
+
+GN Bank                 Needs to Improve
+
+State:
+
+Illinois                Needs to Improve
+
+
+
+
+                             Appendix B-1
+                                                                                     Charter Number: 703395
+
+Appendix C: Definitions and Common Abbreviations
+
+
+The following terms and abbreviations are used in this performance evaluation, including the CRA
+tables. The definitions are intended to provide the reader with a general understanding of the terms, not a
+strict legal definition.
+
+Affiliate: Any company that controls, is controlled by, or is under common control with another
+company. A company is under common control with another company if the same company directly or
+indirectly controls both companies. For example, a bank subsidiary is controlled by the bank and is,
+therefore, an affiliate.
+
+Aggregate Lending (Aggt.): The number of loans originated and purchased by all reporting lenders
+(HMDA or CRA) in specified income categories as a percentage of the aggregate number of loans
+originated and purchased by all reporting lenders in the state/assessment area.
+
+Census Tract (CT): A small, relatively permanent statistical subdivision of a county delineated by a
+local committee of census data users for the purpose of presenting data. Census tracts nest within
+counties, and their boundaries normally follow visible features, but may follow legal geography
+boundaries and other non-visible features in some instances, Census tracts ideally contain about 4,000
+people and 1,600 housing units.
+
+Community Reinvestment Act (CRA): The statute that requires the OCC to evaluate a bank’s record
+of meeting the credit needs of its entire community, including LMI areas, consistent with the safe and
+sound operation of the bank, and to take this record into account when evaluating certain corporate
+applications filed by the bank.
+
+Consumer Loan(s): A loan(s) to one or more individuals for household, family, or other personal
+expenditures. A consumer loan does not include a home mortgage, small business, or small farm loan.
+This definition includes the following categories: motor vehicle loans, credit card loans, other secured
+consumer loans, and other unsecured consumer loans.
+
+Family: Includes a householder and one or more other persons living in the same household who are
+related to the householder by birth, marriage, or adoption. The number of family households always
+equals the number of families; however, a family household may also include non-relatives living with
+the family. Families are classified by type as either a married-couple family or other family, which is
+further classified into ‘male householder’ (a family with a male householder’ and no wife present) or
+‘female householder’ (a family with a female householder and no husband present).
+
+Full-Scope Review: Performance under the Lending, Investment, and Service Tests is analyzed
+considering performance context, quantitative factors (e.g., geographic distribution, borrower
+distribution, and total number and dollar amount of investments), and qualitative factors (e.g.,
+innovativeness, complexity, and responsiveness).
+
+Geography: A census tract delineated by the United States Bureau of the Census in the most recent
+decennial census.
+
+
+                                               Appendix C-1
+                                                                                       Charter Number: 703395
+
+Home Mortgage Disclosure Act (HMDA): The statute that requires certain mortgage lenders that
+conduct business or have banking offices in a metropolitan statistical area to file annual summary
+reports of their mortgage lending activity. The reports include such data as the race, gender, and the
+income of applicants, the amount of loan requested, the disposition of the application (e.g., approved,
+denied, and withdrawn), the lien status of the collateral, any requests for preapproval, and loans for
+manufactured housing.
+
+Household: Includes all persons occupying a housing unit. Persons not living in households are
+classified as living in group quarters. In 100 percent tabulations, the count of households always equals
+the count of occupied housing units.
+
+Low-Income Individual: Individual income that is less than 50 percent of the area median income.
+
+Low Income Geography: A census tract with a median family income that is less than 50 percent.
+
+Market Share: The number of loans originated and purchased by the institution as a percentage of the
+aggregate number of loans originated and purchased by all reporting lenders in the state/assessment area.
+
+Median Family Income (MFI): The median income determined by the U.S. Census Bureau every five
+years and used to determine the income level category of geographies. The median is the point at which
+half of the families have income above, and half below, a range of incomes. Also, the median income
+determined by the Federal Financial Institutions Examination Council (FFIEC) annually that is used to
+determine the income level category of individuals. For any given area, the median is the point at which
+half of the families have income above, and half below, a range of incomes.
+
+Metropolitan Division: As defined by Office of Management and Budget, a county or group of
+counties within a Core Based Statistical Area that contains an urbanized population of at least 2.5
+million. A Metropolitan Division consists of one or more main/secondary counties that represent an
+employment center or centers, plus adjacent counties associated with the main/secondary county or
+counties through commuting ties.
+
+Metropolitan Statistical Area: An area, defined by the Office of Management and Budget, as a core
+based statistical area associated with at least one urbanized area that has a population of at least 50,000.
+The Metropolitan Statistical Area comprises the central county or counties containing the core, plus
+adjacent outlying counties having a high degree of social and economic integration with the central
+county or counties as measured through commuting.
+
+Middle-Income: Individual income that is at least 80 percent and less than 120 percent of the area
+median income, or a median family income that is at least 80 percent and less than 120 percent, in the
+case of a geography
+
+Moderate-Income: Individual income that is at least 50 percent and less than 80 percent of the area
+median income, or a median family income that is at least 50 percent and less than 80 percent, in the
+case of a geography.
+
+Owner-Occupied Units: Includes units occupied by the owner or co-owner, even if the unit has not
+been fully paid for or is mortgaged.
+
+
+                                                Appendix C-2
+                                                                                         Charter Number: 703395
+
+Rating Area: A rated area is a state or multi-state metropolitan statistical area. For an institution with
+domestic branches in only one state, the institution’s CRA rating would be the state rating. If an
+institution maintains domestic branches in more than one state, the institution will receive a rating for
+each state in which those branches are located. If an institution maintains domestic branches in two or
+more states within a multi-state metropolitan statistical area, the institution will receive a rating for the
+multi-state metropolitan statistical area.
+
+Small Loan(s) to Business(es): A loan included in 'loans to small businesses' as defined in the
+Consolidated Report of Condition and Income (Call Report) instructions. These loans have original
+amounts of $1 million or less and typically are either secured by nonfarm or nonresidential real estate or
+are classified as commercial and industrial loans.
+
+Small Loan(s) to Farm(s): A loan included in ‘loans to small farms’ as defined in the instructions for
+preparation of the Consolidated Report of Condition and Income (Call Report). These loans have
+original amounts of $500,000 or less and are either secured by farmland, or are classified as loans to
+finance agricultural production and other loans to farmers.
+
+Tier 1 Capital: The total of common shareholders’ equity, perpetual preferred shareholders’ equity with
+non-cumulative dividends, retained earnings and minority interests in the equity accounts of
+consolidated subsidiaries.
+
+Upper-Income: Individual income that is at least 120 percent of the area median income, or a median
+family income that is at least 120 percent, in the case of a geography.
+
+
+
+
+                                                 Appendix C-3
+                                                                                       Charter Number: 703395
+
+Appendix D: Tables of Performance Data
+
+
+Content of Standardized Tables
+A separate set of tables is provided for each state. All multistate metropolitan statistical areas, if
+applicable, are presented in one set of tables. References to the “bank” include activities of any affiliates
+that the bank provided for consideration (refer to appendix A: Scope of the Examination). For purposes
+of reviewing the Lending Test tables, the following are applicable: (1) purchased are treated as
+originations; and (2) “aggregate” is the percentage of the aggregate number of reportable loans
+originated and purchased by all HMDA or CRA-reporting lenders in the MMSA/assessment area.
+Deposit data are compiled by the FDIC and are available as of June 30th of each year. Tables without
+data are not included in this PE.
+
+The following is a listing and brief description of the tables included in each set:
+
+
+Table Q.     Assessment Area Distribution of Loans to Small Businesses by Income Category of
+             the Geography - The percentage distribution of the number of small loans (less than or
+             equal to $1 million) to businesses that were originated and purchased by the bank in low-,
+             moderate-, middle-, and upper-income geographies compared to the percentage distribution
+             of businesses (regardless of revenue size) in those geographies. Because aggregate small
+             business data are not available for geographic areas smaller than counties, it may be
+             necessary to compare bank loan data to aggregate data from geographic areas larger than
+             the bank’s assessment area.
+
+Table R.     Assessment Area Distribution of Loans to Small Businesses by Gross Annual Revenue
+             - Compares the percentage distribution of the number of small loans (loans less than or
+             equal to $1 million) originated and purchased by the bank to businesses with revenues of
+             $1 million or less to: 1) the percentage distribution of businesses with revenues of greater
+             than $1 million; and, 2) the percentage distribution of businesses for which revenues are
+             not available. The table also presents aggregate peer small business data for the years the
+             data is available.
+
+Table U.     Assessment Area Distribution of Consumer Loans by Income Category of the
+             Geography - Compares the percentage distribution of the number of loans originated and
+             purchased by the bank in low-, moderate-, middle-, and upper-income geographies to the
+             percentage distribution of households in those geographies.
+
+Table V.     Assessment Area Distribution of Consumer Loans by Income Category of the
+             Borrower - Compares the percentage distribution of the number of loans originated and
+             purchased by the bank to low-, moderate-, middle-, and upper-income borrowers to the
+             percentage distribution of households by income level in each MMSA/assessment area.
+
+
+
+
+                                                Appendix D-1
+                                                                                                                                                         Charter Number: 703395
+
+
+Table Q: Assessment Area Distribution of Loans to Small Businesses by Income Category of the Geography                                                                              2019-21
+
+
+                       Total Loans to Small
+                                                   Low-Income Tracts         Moderate-Income Tracts           Middle-Income Tracts      Upper-Income Tracts        Not Available-Income Tracts
+                            Businesses
+
+                                                        %                         %                         %                         %                         %
+Assessment                     % of Overall    %                         %                         %                         %                         %
+                   #       $                           Bank Aggregate            Bank Aggregate            Bank Aggregate            Bank Aggregate            Bank Aggregate
+Area:                          Total Market Businesses                Businesses                Businesses                Businesses                Businesses
+                                                       Loans                     Loans                     Loans                     Loans                     Loans
+
+Chicago, IL        4 600 100.0 15,393             40.3   50.0     42.3          43.2     25.0     44.9        10.6    0.0     9.0       3.9      25.0     2.3         2.0     0.0      1.5
+AA
+Total              4 600 100.0 15,393             40.3   50.0     42.3          43.2     25.0     44.9        10.6    0.0     9.0       3.9      25.0     2.3         2.0     0.0      1.5
+Source: 2021 D&B Data; 01/01/2019 - 12/31/2021 Bank Data.
+Due to rounding, totals may not equal 100.0%
+
+
+
+
+Table R: Assessment Area Distribution of Loans to Small Businesses by Gross Annual Revenues                                                                                         2019-21
+
+
+                                                                                                                                        Businesses with Revenues    Businesses with Revenues
+                                                   Total Loans to Small Businesses                 Businesses with Revenues <= 1MM
+                                                                                                                                                > 1MM                    Not Available
+
+                                                                                     Overall        %           % Bank                     %            % Bank          %           % Bank
+Assessment Area:                              #             $      % of Total                                               Aggregate
+                                                                                     Market      Businesses     Loans                   Businesses      Loans        Businesses     Loans
+
+Chicago, IL AA                                4          600         100.0         15,393          94.3          100.0        28.7         1.4           0.0            4.3           0.0
+Total                                         4          600         100.0         15,393          94.3          100.0        28.7         1.4           0.0            4.3           0.0
+Source: 2021 D&B Data; 01/01/2019 - 12/31/2021 Bank Data.
+Due to rounding, totals may not equal 100.0%
+
+
+
+
+        The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the aggregate table due to how the
+        underlying loan data is rounded in each table.
+
+                                                                                                Appendix D-2
+                                                                                                                                          Charter Number: 703395
+
+
+Table U: Assessment Area Distribution of Consumer Loans by Income Category of the Geography                                                                     2019-21
+
+
+                        Total Consumer Loans            Low-Income Tracts     Moderate-Income Tracts   Middle-Income racts   Upper-Income Tracts   Not Available-Income
+                                                                                                                                                          Tracts
+
+Assessment Area:
+                                           % of          % of       % Bank      % of        % Bank       % of       % Bank     % of       % Bank     % of       % Bank
+                       #          $
+                                           Total       Households   Loans     Households    Loans      Households   Loans    Households   Loans    Households   Loans
+
+Chicago, IL AA         8         86       100.0          46.4        12.5        39.5        75.0         9.3        12.5       2.9         0.0       1.9         0.0
+Total                  8         86       100.0          46.4        12.5        39.5        75.0         9.3        12.5       2.9         0.0       1.9         0.0
+Source: 2015 ACS; 01/01/2019 - 12/31/2021 Bank Data.
+Due to rounding, totals may not equal 100.0%
+
+
+
+
+Table V - Assessment Area Distribution of Consumer Loans by Income Category of the Borrower                                                                     2019-21
+
+
+                        Total Consumer Loans           Low-Income Borrowers      Moderate-Income          Middle-Income         Upper-Income       Not Available-Income
+                                                                                   Borrowers               Borrowers             Borrowers              Borrowers
+
+
+                                           % of          % of       % Bank      % of        % Bank       % of       % Bank     % of       % Bank     % of       % Bank
+Assessment Area:       #          $
+                                           Total       Households   Loans     Households    Loans      Households   Loans    Households   Loans    Households   Loans
+
+Chicago, IL AA         8         86       100.0          49.1        12.5        17.1        25.0        14.7        12.5      19.1        50.0       0.0         0.0
+Total                  8         86       100.0          49.1        12.5        17.1        25.0        14.7        12.5      19.1        50.0       0.0         0.0
+Source: 2015 ACS; 01/01/2019 - 12/31/2021 Bank Data.
+Due to rounding, totals may not equal 100.0%
+
+
+
+
+The total loan amount presented in the tables for each assessment area may differ from the total loan amount reported in the aggregate table due to how the
+underlying loan data is rounded in each table.
+
+                                                                                  Appendix D-3
+

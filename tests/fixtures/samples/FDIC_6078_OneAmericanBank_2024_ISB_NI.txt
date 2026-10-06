@@ -1,0 +1,962 @@
+                              PUBLIC DISCLOSURE
+
+
+                                           August 5, 2024
+
+
+
+
+                 COMMUNITY REINVESTMENT ACT
+                   PERFORMANCE EVALUATION
+
+
+                                       One American Bank
+                                     Certificate Number: 6078
+
+                                       549 Broadway Street
+                                  Centerville, South Dakota 57014
+
+
+
+
+                              Federal Deposit Insurance Corporation
+                          Division of Depositor and Consumer Protection
+                                   Kansas City Regional Office
+
+                                    1100 Walnut St, Suite 2100
+                                    Kansas City, Missouri 64106
+
+
+
+
+This document is an evaluation of this institution’s record of meeting the credit needs of its entire
+community, including low- and moderate-income neighborhoods, consistent with safe and sound
+operation of the institution. This evaluation is not, nor should it be construed as, an assessment of
+the financial condition of this institution. The rating assigned to this institution does not represent
+an analysis, conclusion, or opinion of the federal financial supervisory agency concerning the
+safety and soundness of this financial institution.
+                                               TABLE OF CONTENTS
+
+INSTITUTION RATING ................................................................................................................1
+DESCRIPTION OF INSTITUTION ...............................................................................................2
+DESCRIPTION OF ASSESSMENT AREA ...................................................................................3
+SCOPE OF EVALUATION ............................................................................................................5
+CONCLUSIONS ON PERFORMANCE CRITERIA.....................................................................7
+DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW .......................14
+APPENDICES ...............................................................................................................................15
+   INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA .........................................15
+   GLOSSARY ..............................................................................................................................16
+                                   INSTITUTION RATING
+
+INSTITUTION’S CRA RATING: This institution is rated Needs to Improve.
+
+An institution in this group needs to improve its overall record of helping to meet the credit needs of
+its assessment area, including low- and moderate-income neighborhoods, in a manner consistent
+with its resources and capabilities.
+
+The Lending Test is rated Needs to Improve.
+
+   •   The loan-to-deposit ratio is more than reasonable given the bank’s size, financial condition,
+       and assessment area credit needs.
+
+   •   The bank originated a substantial majority of its consumer, home mortgage, small business,
+       and small farm loans outside its assessment area.
+
+   •   The geographic distribution of loans reflects poor dispersion throughout the assessment area.
+
+   •   The distribution of borrowers reflects poor penetration among individuals, businesses, and
+       farms of different revenue sizes and individuals of different income levels.
+
+   •   The institution has not received any Community Reinvestment Act (CRA)-related
+       complaints since the previous evaluation; therefore, this criterion did not affect the rating.
+
+The Community Development Test is rated Needs to Improve.
+
+   •   The institution’s community development performance demonstrates poor responsiveness to
+       community development needs in its assessment area through community development
+       loans, qualified investments, and community development services, as appropriate,
+       considering the institution’s capacity and the need and availability of such opportunities for
+       community development in the institution’s assessment area.
+
+
+
+
+                                                   1
+                                      DESCRIPTION OF INSTITUTION
+
+One American Bank is owned by One American Financial Corporation, a one-bank holding
+company located in Sioux Falls, South Dakota. At the previous evaluation, dated December 3,
+2018, the FDIC evaluated the institution under the Interagency Small Institution Examination
+Procedures, and the institution received a Satisfactory rating.
+
+One American Bank operates its main office in Centerville along with two full-service branches in
+Sioux Falls. The bank offers closed-end loan products including commercial, agricultural,
+consumer, and home mortgage loans and several open-end loan products, including home equity,
+overdraft lines of credit, and credit cards. One American Bank also provides traditional deposit
+services including checking accounts, savings accounts, and certificates of deposit. Since the last
+evaluation, the bank’s primary focus changed to consumer lending, specifically student loans. The
+student loans are sold after origination and are therefore not captured in the table below. In 2023,
+the bank originated approximately 14,500 student loans totaling $320.8 million. Alternative
+banking services include internet and mobile banking. The bank does not operate any deposit
+taking ATMs. The bank did not open or close any branches, and no merger or acquisition activities
+occurred since the previous evaluation.
+
+As of March 31, 2024, the institution reported total assets of $463 million, total loans of $327
+million, and total deposits of $322 million. The composition of the loan portfolio has significantly
+changed during the review period as the bank started a nationwide home mortgage loan program.
+While the bank has since discontinued this program, several loans remain outstanding and, as a
+result, residential real-estate loans comprise the majority of the loan portfolio. This is further
+detailed below in the Scope section. The following table illustrates the bank’s loan portfolio
+distribution.
+
+                                       Loan Portfolio Distribution as of March 31, 2024
+ Loan Category                                                                  $(000s)     %
+ Construction and Land Development                                                5,158     1.6
+ Secured by Farmland                                                              5,040     1.5
+ Secured by 1-4 Family Residential Properties                                   242,492    74.1
+ Secured by Multi-family (5 or more) Residential Properties                       2,023     0.6
+ Secured by Nonfarm Nonresidential Properties                                    15,722     4.8
+ Total Real Estate Loans                                                        270,435    82.6
+ Agricultural Loans                                                               4,090     1.3
+ Commercial and Industrial Loans                                                  7,799     2.4
+ Consumer Loans                                                                  44,353    13.6
+ Other Loans                                                                       414      0.1
+ Less: Unearned Income                                                              0       0.0
+ Total Loans                                                                    327,091   100.0
+ Source: Reports of Condition and Income
+
+
+
+
+                                                              2
+There are no legal impediments that would prevent the bank from helping to meet assessment area
+credit needs. On August 3, 2023, the bank entered into a Consent Order with the Federal Deposit
+Insurance Corporation and the South Dakota Division of Banking. The Order includes provisions
+requiring the bank to increase capital, revise lending policies/practices, monitor interest rate risk,
+and develop a liquidity plan. However, the Order does not restrict the bank from lending to
+qualified borrowers within the assessment area.
+
+                                  DESCRIPTION OF ASSESSMENT AREA
+
+The CRA requires each financial institution to define one or more assessment areas within which its
+CRA performance will be evaluated. One American Bank has designated a single assessment area,
+which consists of a portion of the Sioux Falls, South Dakota Metropolitan Statistical Area (MSA)
+(including all of Lincoln, McCook, Minnehaha, and Turner counties) and Clay County in the non-
+metropolitan portion of South Dakota. In 2024, the Sioux Falls, SD MSA added Rock County in
+Minnesota to become a multi-state MSA. Bank management stated that they do not plan on adding
+Rock County to their assessment area at this time due to low activity. The bank’s locations are
+located within the MSA.
+
+Economic and Demographic Data
+The following table illustrates select demographic characteristics of the assessment area.
+
+                                        Demographic Information of the Assessment Area
+                                                                      Low           Moderate        Middle     Upper      NA*
+Demographic Characteristics                               #
+                                                                      % of #         % of #         % of #     % of #     % of #
+   Geographies (Census Tracts)                                67             3.0            23.9        52.2       19.4        1.5
+   Population by Geography                             291,697               1.7            21.7        54.4       21.8        0.5
+   Housing Units by Geography                          117,296               2.7            24.5        53.1       18.8        0.9
+   Owner-Occupied Units by Geography                     72,004              1.0            18.3        56.8       23.9        0.0
+   Occupied Rental Units by Geography                    37,785              5.7            33.2        47.2       10.9        2.9
+   Vacant Units by Geography                               7,507             3.6            39.4        46.7       10.3        0.0
+   Businesses by Geography                               44,687              9.2            23.2        43.7       21.6        2.3
+   Farms by Geography                                      2,232             2.1            12.9        65.8       18.8        0.3
+   Family Distribution by Income Level                   69,361             18.6            18.0        24.7       38.7        0.0
+   Household Distribution by Income                    109,789              22.8            16.8        19.4       40.9        0.0
+   Level
+   Median Family Income MSA - 43620                                   $84,874 Median Housing Value                        $201,918
+   Sioux Falls, SD MSA
+   Median Family Income Non-MSAs -                                    $73,083 Median Gross Rent                               $819
+   SD
+                                                                                   Families Below Poverty Level              5.4%
+Source: 2020 U.S. Census and 2023 D&B Data
+Due to rounding, totals may not equal 100.0%
+(*) The NA category consists of geographies that have not been assigned an income classification.
+
+
+
+
+                                                                        3
+The following table presents the FFIEC-estimated median family income levels for the Sioux Falls,
+South Dakota MSA and the non-metropolitan portion of South Dakota for 2023.
+
+
+                                     Median Family Income Ranges
+                                Low              Moderate                 Middle             Upper
+Median Family Incomes
+                                <50%           50% to <80%             80% to <120%          ≥120%
+                           Sioux Falls, SD MSA Median Family Income (43620)
+2021 ($82,500)                 <$41,250      $41,250 to <$66,000    $66,000 to <$99,000     ≥$99,000
+2022 ($90,700)                 <$45,350      $45,350 to <$72,560   $72,560 to <$108,840    ≥$108,840
+2023 ($90,700)                 <$45,350      $45,350 to <$72,560   $72,560 to <$108,840    ≥$108,840
+                                  SD NA Median Family Income (99999)
+2021 ($70,600)                 <$35,300      $35,300 to <$56,480    $56,480 to <$84,720     ≥$84,720
+2022 ($81,200)                 <$40,600      $40,600 to <$64,960    $64,960 to <$97,440     ≥$97,440
+2023 ($81,200)                 <$40,600      $40,600 to <$64,960    $64,960 to <$97,440     ≥$97,440
+Source: FFIEC
+
+
+Competition
+The assessment area is competitive for financial services. According to Reports of Condition and
+Income filed by financial institutions as of June 30, 2023, 43 FDIC-insured financial institutions
+operate 140 offices within the Centerville Assessment Area. Of these institutions, One American
+Bank ranked 13th in market share at 0.03 percent.
+
+There is also a high level of competition for home mortgage loans amongst banks, credit unions,
+and non-depository mortgage lenders in the assessment area. In 2022 (most recent year available),
+224 lenders reported 11,629 residential mortgage loans originated or purchased in the assessment
+area. One American Bank ranked 140th of this group of lenders, with a market share of 0.02
+percent.
+
+The bank is not required to collect or report its small business and small farm loan data, and it has
+not elected to do so; therefore, the analysis of small business and small farm loans under the
+Lending Test does not include comparisons against aggregate data. However, this data reflects
+demand for these loans in the area. Aggregate data for 2021 shows that 97 lenders reported 8,879
+small business loans in the assessment area and 24 institutions reported 1,555 small farm loans.
+This demonstrates moderate competition for these product types throughout the entire assessment
+area. Many smaller institutions, including One American, are not required to report the above
+information.
+
+Community Contacts
+As part of the evaluation process, examiners contact third parties active in the assessment area to
+assist in identifying the credit needs of the area. This information helps determine what credit
+opportunities are available and whether local financial institutions are responsive to credit needs.
+For this evaluation, examiners used two interviews that were conducted within the assessment area,
+one individual was familiar with the housing market and the other individual was familiar with the
+general market and community needs in Sioux Falls.
+
+                                                   4
+The first contact stated that the housing market in Sioux Falls is incredibly competitive, specifically
+in the affordable housing sector. The contact further mentioned renters are struggling at this time,
+as vacancy rates are incredibly low, so finding an available unit can be challenging. Additionally,
+the contact noted rental rates continue to rise, which has further limited the options available for
+lower-income families. The contact stated there are many opportunities to finance multi-family
+units in and around Sioux Falls; however, based on the overall rental market, these units are priced
+well above what would be considered “affordable” for most lower-income families. The contact
+believes the majority of houses that remain under $200,000 would be quite old and likely need a
+significant amount of work. Lastly, the contact noted there are many financial institutions that are
+active in the community; however, the overall need for housing in Sioux Falls could indicate there
+are more opportunities to meet the credit needs of the area.
+
+The second contact stated that the general economy of the area is strong overall. However, the
+contact believes that the current housing market is difficult for buyers, especially first-time
+homebuyers, largely due to the current interest rate climate. The contact stated that small
+businesses seem to have difficulty getting started but the overall commercial market is strong. The
+contact stated that there are many opportunities for financial institutions to participate in community
+development activities. Overall, the contact believes local institutions have good participation
+within the community.
+
+Credit and Community Development Needs and Opportunities
+Considering information from the community contact, bank management, and demographic and
+economic data, examiners determined that home mortgage and small business loans represent the
+primary credit needs in the assessment area. Community development opportunities are also
+available; the continued growth of Sioux Falls allows for opportunities with economic development,
+as well as the need for affordable housing as the population continues to expand, and housing
+demand outpaces supply.
+
+                                  SCOPE OF EVALUATION
+
+General Information
+This evaluation covers the period from the prior CRA evaluation dated December 3, 2018, to the
+current evaluation dated August 5, 2024. One American Bank became subject to the Interagency
+Intermediate Small Institution Examination Procedures effective January 1, 2024. Therefore,
+examiners used Interagency Intermediate Small Institution Examination Procedures to evaluate One
+American Bank’s CRA performance. These procedures include the Lending Test and the
+Community Development Test. Banks must achieve at least a Satisfactory rating under each test to
+obtain an overall Satisfactory rating. Refer to the Appendices for information on each test. This
+evaluation does not include any lending activity from affiliated entities.
+
+Activities Reviewed
+The bank’s primary lending focus is consumer lending, followed by commercial and agricultural
+lending. This conclusion considered the bank’s current business strategy, volume of loans
+originated during the evaluation period, data from Reports of Condition and Income, and
+discussions with bank management. The product mix of the loan portfolio has changed
+
+                                                   5
+significantly since the previous evaluation. The bank’s primary lending focus during the last
+evaluation was commercial lending, which decreased 42.1 percent in relation to total loans and now
+comprises 7.2 of the loan portfolio. Residential Real Estate now represents 74.1 percent of the
+portfolio, a 70.9 percent increase in relation to total loans since the previous evaluation. This was
+due to the bank extending a large volume of nation-wide home mortgage loans. However, the bank
+has paused all residential real estate lending, and this product no longer represents the primary
+lending focus of the bank. This is reflected by analyzing the number of loans reported on the bank’s
+Home Mortgage Disclosure Act (HMDA) Loan Application Register (LAR), which included 12,433
+lines in 2021, 430 lines in 2022, and 23 lined in 2023. Given the shift in lending focus during the
+evaluation period, examiners reviewed consumer, small business, small farm, and home mortgage
+loans.
+
+Examiners analyzed all small business, small farm, and consumer loans (with readily available
+information) originated, renewed, or extended in 2022 and 2023 that remained outstanding as of the
+evaluation date for the Assessment Area concentration performance criterion. While student loans
+account for a majority of the bank’s consumer lending, only a small percentage are retained in the
+bank’s portfolio and were therefore reviewed. The consumer loan reviews also included other
+national products offered by third parties that are still outstanding but no longer being offered. For
+Geographic Distribution and Borrower Profile, all consumer, small business, and small farm loans
+located within the assessment area were reviewed. The 2022 and 2023 D&B data provided a
+standard of comparison for small business and small farm loans, while 2020 U.S. Census data was
+used as a comparison for consumer loans.
+
+For home mortgage lending, examiners considered all home mortgage loans reported on the bank’s
+2021, 2022, and 2023 HMDA LARs. The 2015 American Community Survey (ACS), 2020 U.S.
+Census, and aggregate data were used as comparisons for home mortgage performance. Although
+examiners analyzed the bank’s lending for all three years, only 2021 and 2022 are presented for the
+Geographic Distribution and Borrower Profile analyses, since examiners did not identify any loans
+located in the assessment area for 2023. The following table details the loan universes used for the
+Assessment Area concentration criterion and the loans reviewed for the Geographic Distribution
+and Borrower Distribution criteria.
+
+
+
+
+                                                  6
+                                                       Loan Products Reviewed
+                                                         Universe                                             Reviewed
+ Loan Category
+                                                #                     $(000s)                        #                       $(000s)
+ Home Mortgage
+                            2021             8,395                   2,850,028                       1                         100
+                            2022              359                     255,407                        2                         151
+                            2023               9                       4,850                         0                          0
+ Consumer
+                            2022              354                      7,765                        10                         235
+                            2023              163                      4,148                         1                          5
+ Small Business
+                            2022               22                      6,703                        20                        5,834
+                            2023               23                      5,143                        20                        4,090
+ Small Farm
+                            2022               13                      2,669                        13                        2,669
+                            2023               16                      2,826                        15                        2,787
+ Source: Bank Data
+ Note: The consumer, small farm and small business universes exclude loans that the bank opted to have considered for community development.
+
+
+For the Lending Test, consumer loans received the most weight, followed by home mortgage, small
+business, and small farm loans. For the Community Development Test, bank management provided
+data on community development loans, donations, and community development services since the
+prior evaluation. Prior period qualified investments still outstanding were considered.
+
+                         CONCLUSIONS ON PERFORMANCE CRITERIA
+
+LENDING TEST
+
+One American Bank’s performance needs to improve under the Lending Test. This conclusion is
+supported by the low level of lending within the bank’s assessment area, which overshadowed any
+reasonable performance that was noted.
+
+Loan-to-Deposit Ratio
+The loan-to-deposit ratio is more than reasonable given the institution’s size, financial condition,
+and credit needs of the assessment area. The bank’s average net loan-to-deposit ratio is 128.1
+percent over the past 22 calendar quarters and ranged from a low of 82.1 percent to a high of 260.9
+percent. Due to the bank’s unique product mix, portfolio changes, and lending focus, examiners did
+not identify any comparable banks. Instead, examiners utilized the 2023 Interagency Host-State
+Loan-to-Deposit Ratios report to compare One American Bank’s net loan-to-deposit ratio to the
+South Dakota state average net loan-to-deposit ratio. The report provided an average net loan-to-
+deposit ratio of 60 percent for South Dakota. Given this information, the loan-to-deposit ratio is
+more than reasonable.
+
+
+
+
+                                                                      7
+Assessment Area Concentration
+As detailed in the following table, One American Bank originated a substantial majority of loans
+outside its assessment area. This conclusion is based on the number and dollar amount of consumer
+and home mortgage lending outside the assessment area. While a majority of the small business
+and small farm loans were made inside the assessment area, consumer and home mortgage lending
+carried more weight. Furthermore, the bank’s largest lending focus in 2022 and 2023 was the
+student loan program. Information for student loans was not readily available; however,
+management concurred that a substantial majority of this lending occurs outside of the assessment
+area. The following table presents a breakdown of lending inside and outside of the assessment
+area.
+
+                                      Lending Inside and Outside of the Assessment Area
+                                    Number of Loans                          Dollar Amount of Loans $(000s)
+ Loan Category                    Inside            Outside          Total         Inside             Outside          Total
+                              #            %       #         %          #      $            %        $          %      $(000s)
+ Home Mortgage
+              2021            1            0.0   8,394     100.0     8,395    100           0.0   2,849,928   100.0   2,850,028
+              2022            2            0.6    357       99.4      359     151           0.1    255,255     99.9    255,407
+              2023            0            0.0     9       100.0       9       0            0.0     4,850     100.0     4,850
+          Subtotal            3            0.0   8,760     100.0     8,763    251           0.0   3,110,033   100.0   3,110,285
+ Consumer
+              2022           10            2.8   344        97.2       354    235           3.0     7,530     97.0      7,765
+              2023            1            0.6   162        99.4       163     5            0.1     4,143     99.9      4,148
+          Subtotal           11            2.1   506        97.9       517    240           2.0    11,673     98.0     11,913
+ Small Business
+              2022           20        90.9        2         9.1       22    5,834      87.0        869       13.0      6,703
+              2023           20        87.0        3        13.0       23    4,091      79.5       1,052       0.0      5,143
+          Subtotal           40        88.9        5        11.1       45    9,925      83.8       1,921      16.2     11,846
+ Small Farm
+              2022           13        100.0       0         0.0      13      2,669     100.0          0       0.0      2,669
+              2023           15         93.8       1         6.3      16      2,787      98.6         40       1.4      2,827
+          Subtotal           28         96.6       1         3.4      29      5,456      99.3         40       0.7      5,496
+ Total                       82          0.9     9,272      99.1     9,354   15,872       0.5     3,123,667   99.5    3,139,540
+ Source: HMDA Data; Bank Data. Due to rounding, totals may not equal 100.0
+
+
+Geographic Distribution
+The geographic distribution of loans reflects poor dispersion and is supported by the bank’s
+performance for consumer and home mortgage loans, which were more heavily weighted than the
+performance for small business and small farm loans.
+
+Consumer
+The bank originated 10 loans in 2022 and 1 loan in 2023 within the assessment area. In 2022, 6 loans
+were originated within moderate-income census tracts, while no loans were originated in low-income
+census tracts. The 2023 loan was originated in an upper-income census tract. While the bank did lend
+in a moderate-income census tract in 2022, the performance is overshadowed by the overall limited
+
+                                                                   8
+level of lending with the designated assessment area. Therefore, the geographic distribution of
+consumer loans is considered poor.
+
+Home Mortgage
+In 2021 and 2022, a total of three home mortgage loans were originated within the assessment area
+with only one originated in a moderate-income tract. Due to the low level of lending in relation to
+opportunities in the assessment area, the geographic distribution of home mortgage loans is deemed
+poor.
+
+Small Business
+In 2022 and 2023, the bank lagged D&B data in low-income tracts, but exceeded D&B data in
+moderate-income tracts. Overall, this performance is deemed reasonable. See the following table.
+
+                                       Geographic Distribution of Small Business Loans
+                                                  % of
+ Tract Income Level                                                      #     %         $         %
+                                                Businesses
+ Low
+                                      2022           9.1                 0     0.0       0         0.0
+                                      2023           9.2                 1     5.0     19,999      0.5
+ Moderate
+                                      2022          23.3                 7    35.0    1,005,784   17.2
+                                      2023          23.2                 7    35.0    986,818     24.1
+ Middle
+                                      2022          43.5                 12   60.0    4,573,661   78.4
+                                      2023          43.7                 11   55.0    2,875,999   70.3
+ Upper
+                                      2022          21.5                 1     5.0    255,000      4.4
+                                      2023          21.6                 1     5.0    207,835      5.1
+ Not Available
+                                      2022           2.5                 0     0.0       0         0.0
+                                      2023           2.3                 0     0.0       0         0.0
+ Totals
+                                      2022          100.0                20   100.0   5,834,444   100.0
+                                      2023          100.0                20   100.0   4,090,650   100.0
+ Source: 2022 & 2023 D&B Data; Bank Data; "--" data not available.
+ Due to rounding, totals may not equal 100.0%
+
+
+Small Farm
+While there were no loans originated in low-income census tracts during 2022 or 2023, the bank’s
+performance exceeded D&B data in moderate-income census tracts. Overall, this performance is
+deemed reasonable. See the following table for details.
+
+
+                                                                     9
+                                        Geographic Distribution of Small Farm Loans
+
+  Tract Income Level                          % of Farms               #    %           $        %
+
+  Low
+                                    2022           2.1                 0    0.0         0        0.0
+                                    2023           2.1                 0    0.0         0        0.0
+  Moderate
+                                    2022          12.7                 5   38.5       840,000   31.5
+                                    2023          12.9                 4   26.7       630,000   22.6
+  Middle
+                                    2022          66.8                 8   61.5    1,828,932    68.5
+                                    2023          65.8                11   73.3    2,156,932    77.4
+  Upper
+                                    2022          18.2                 0    0.0         0        0.0
+                                    2023          18.8                 0    0.0         0        0.0
+  Not Available
+                                    2022           0.3                 0    0.0         0        0.0
+                                    2023           0.3                 0    0.0         0        0.0
+  Totals
+                                    2022          100.0               13   100.0   2,668,932    100.0
+                                    2023          100.0               15   100.0   2,786,932    100.0
+  Source: 2022 & 2023 D&B Data; Bank Data; "--" data not available.
+  Due to rounding, totals may not equal 100.0%
+
+
+Borrower Profile
+The distribution of borrowers reflects a poor penetration among individuals of different income levels,
+as well as businesses and farms of different revenue sizes. The poor performance for the more heavily
+weighted consumer and home mortgage products overshadows the performance in small business and
+small farm lending.
+
+Consumer
+While the bank’s lending to low-and moderate-income individuals exceeds D&B data as illustrated in
+the following table, the performance is overshadowed by the low level of consumer lending within the
+assessment area. Therefore, performance reflects poor penetration among individuals of different
+income levels.
+
+
+
+
+                                                                  10
+                                Distribution of Consumer Loans by Borrower Income Level
+
+Borrower Income Level            % of Households       #              %               $       %
+
+Low
+                         2022            22.8          4             40.0           69,149   29.4
+                         2023            22.8          1             100.0           500     100.0
+Moderate
+                         2022            16.8          1             10.0           21,500    9.1
+                         2023            16.8          0              0.0             0       0.0
+Middle
+                         2022            19.4          3             30.0           32,614   13.9
+                         2023            19.4          0              0.0             0       0.0
+Upper
+                         2022            40.9          2             20.0          112,000   47.6
+                         2023            40.9          0              0.0             0       0.0
+Not Available
+                         2022             0.0          0              0.0             0       0.0
+                         2023             0.0          0              0.0             0       0.0
+Totals
+                         2022           100.0          10            100.0         235,263   100.0
+                         2023           100.0          1             100.0           500     100.0
+Source: 2020 U.S. Census; Bank Data.
+Due to rounding, totals may not equal 100.0%
+
+
+Home Mortgage
+The bank only originated three home mortgage loans within the assessment area during 2021 and
+2022. The low level of lending does not provide enough data to make a meaningful analysis.
+Therefore, performance reflects poor penetration among individuals of different income levels.
+
+Small Business
+In 2022 and 2023, while the bank’s lending to businesses under $1 million in gross annual revenue
+lagged comparable D&B data, it is within a reasonable range. In addition, the bank’s 2023
+performance reflects an increase from that noted at the prior evaluation as well as from 2022. See the
+following table for additional information.
+
+
+
+
+                                                            11
+                       Distribution of Small Business Loans by Gross Annual Revenue Category
+
+                                                  % of
+ Gross Revenue Level                                                      #     %         $         %
+                                                Businesses
+ <=$1,000,000
+                                      2022          89.1                  13   65.0    2,707,737   46.4
+                                      2023          90.4                  15   75.0    3,203,832   78.3
+ >$1,000,000
+                                      2022           3.2                  7    35.0    3,126,708   53.6
+                                      2023           2.7                  5    25.0    886,818     21.7
+ Revenue Not Available
+                                      2022           7.6                  0     0.0       0         0.0
+                                      2023           6.9                  0     0.0       0         0.0
+ Totals
+                                      2022         100.0                  20   100.0   5,834,444   100.0
+                                      2023         100.0                  20   100.0   4,090,650   100.0
+ Source: 2022 & 2023 D&B Data; Bank Data; "--" data not available.
+ Due to rounding, totals may not equal 100.0%
+
+
+Small Farm
+In 2022 and 2023, the bank originated all of its small farm loans to farms under $1 million in gross
+annual revenue. This performance reflects excellent penetration among farms of different income
+levels.
+
+Response to Complaints
+The institution has not received any CRA-related complaints since the previous evaluation;
+therefore, this criterion did not affect the Lending Test rating.
+
+COMMUNITY DEVELOPMENT TEST
+
+One American Bank demonstrated poor responsiveness to community development needs in its
+assessment area based on its low level of community development loans, donations, and community
+development services, in relation to the intuition’s capacity and the need and availability of such
+opportunities for community development in the institution’s assessment area. Overall, the
+community development test is rated needs to improve.
+
+Community Development Loans
+During the evaluation period, the bank originated 35 community development loans totaling
+approximately $4.4 million. As of March 31, 2024, the volume of community development loans
+represents 1.0 percent of total assets and 1.4 percent of net loans by dollar amount.
+
+Examiners compared the bank’s level of community development lending to three institutions of
+similar size. The similarly-size institutions’ community development loans ranged from 1.3 to 4.5
+percent of total assets and 1.6 to 7.7 percent of net loans. The bank’s ratios are slightly below these
+
+                                                                     12
+ranges. It is important to note that these ratios are calculated for the time period between
+evaluations. The comparable banks’ ratios cover activities that occurred in a two to three year
+period, while One American Bank’s ratios are calculated based on over five years of lending
+performance. It should also be noted that of the 35 loans, all but one were made to two entities.
+The following table illustrates the bank’s community development lending activity by assessment
+by year.
+
+                                     Community Development Lending
+                      Affordable      Community            Economic      Revitalize or
+                                                                                              Totals
+                       Housing         Services           Development     Stabilize
+  Activity Year
+                                                                                                 $(000s
+                      #    $(000s)    #     $(000s)       #    $(000s)   #     $(000s)   #
+                                                                                                    )
+  2018                -       -       1         1          -       -     -        -       1         1
+  2019                -       -       2         3          1      75     -        -       3        78
+  2020                -       -       1         1          4     912     -        -       5       913
+  2021                -       -       4         5          3     660     1      1,000     8      1,665
+  2022                -       -       5        47          1     150     -        -       6       197
+  2023                -       -       9      1,011         2     280     -        -      11      1,291
+  YTD 2024            -       -       -         0          1     300     -        -       1       300
+  Total               -       -      22       215         12    2,377    1      1,000    35      4,445
+  Source: Bank Data
+
+
+Qualified Investments
+The bank donated approximately $138,000 on 27 occasions to organizations focused on community
+development. As of March 31, 2024, the volume of qualified investments represents 0.03 percent of
+total assets and 0.6 percent of total securities by dollar amount. Examiners compared the bank’s
+level of qualified investments to three similarly situated institutions whose qualified investments
+ranged from 0.2 to 0.8 percent of total assets and 2.0 to 12.9 percent of total securities. However,
+while the qualified investments to total securities ratio is included as a measurement, this
+comparison can vary between institutions based on their investment strategies. As such, examiners
+focus more on the ratio of qualified investments to total assets, which is low in comparison.
+
+
+
+
+                                                     13
+                                            Qualified Investments
+                       Affordable       Community             Economic      Revitalize or
+                                                                                                 Totals
+Activity Year            Housing          Services          Development       Stabilize
+                       #    $(000s)     #     $(000s)       #     $(000s)   #     $(000s)   #       $(000s)
+Prior Period           -        -       -        -          -        -      -         -     -          -
+2018                   -        -       -          -        -        -      -        -      -             -
+2019                   -        -       -          -        -        -      -        -      -             -
+2020                   -        -       -          -        -        -      -        -      -             -
+2021                   -        -       -          -        -        -      -        -      -             -
+2022                   -        -       -          -        -        -      -        -      -             -
+2023                   -        -       -          -        -        -      -        -      -             -
+2024                   -        -       -          -        -        -      -        -      -             -
+YTD 2025               -        -       -          -        -        -      -        -      -             -
+Subtotal               -        -       -          -        -        -      -        -      -             -
+Qualified Grants &     -        -      24         131        -       -      3        7      27        138
+Donations
+Total                  -        -      24         131        -       -      3        7      27        138
+
+
+
+Community Development Services
+During the evaluation period, the bank employees provided no community development services to
+community development-related organizations within the assessment area. For comparison
+purposes, the three similarly situated institutions provided between 25 and 71 qualified community
+development services. The bank offers alternative banking services that are readily accessible
+throughout the assessment area, including to low- and moderate-income individuals. These include
+services such as internet and mobile banking, bill pay, and electronic statements, among others.
+
+ DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW
+
+Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore,
+this consideration did not affect the institution’s overall CRA rating.
+
+
+
+
+                                                       14
+                                         APPENDICES
+
+         INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA
+
+Lending Test
+
+The Lending Test evaluates the bank’s record of helping to meet the credit needs of its assessment
+area(s) by considering the following criteria:
+    1) The bank’s loan-to-deposit ratio, adjusted for seasonal variation, and, as appropriate, other
+        lending-related activities, such as loan originations for sale to the secondary markets,
+        community development loans, or qualified investments;
+    2) The percentage of loans, and as appropriate, other lending-related activities located in the
+        bank’s assessment area(s);
+    3) The geographic distribution of the bank’s loans;
+    4) The bank’s record of lending to and, as appropriate, engaging in other lending-related
+        activities for borrowers of different income levels and businesses and farms of different
+        sizes; and
+    5) The bank’s record of taking action, if warranted, in response to written complaints about its
+        performance in helping to meet credit needs in its assessment area(s).
+
+Community Development Test
+
+The Community Development Test considers the following criteria:
+   1) The number and amount of community development loans;
+   2) The number and amount of qualified investments;
+   3) The extent to which the bank provides community development services; and
+   4) The bank’s responsiveness through such activities to community development lending,
+      investment, and service needs.
+
+
+
+
+                                                 15
+                                           GLOSSARY
+
+Aggregate Lending: The number of loans originated and purchased by all reporting lenders in
+specified income categories as a percentage of the aggregate number of loans originated and
+purchased by all reporting lenders in the metropolitan area/assessment area.
+
+American Community Survey (ACS): A nationwide United States Census survey that produces
+demographic, social, housing, and economic estimates in the form of five year estimates based on
+population thresholds.
+
+Area Median Income: The median family income for the MSA, if a person or geography is
+located in an MSA; or the statewide nonmetropolitan median family income, if a person or
+geography is located outside an MSA.
+
+Assessment Area: A geographic area delineated by the bank under the requirements of the
+Community Reinvestment Act.
+
+Census Tract: A small, relatively permanent statistical subdivision of a county or equivalent
+entity. The primary purpose of census tracts is to provide a stable set of geographic units for the
+presentation of statistical data. Census tracts generally have a population size between 1,200 and
+8,000 people, with an optimum size of 4,000 people. Census tract boundaries generally follow
+visible and identifiable features, but they may follow nonvisible legal boundaries in some
+instances. State and county boundaries always are census tract boundaries.
+
+Combined Statistical Area (CSA): A combination of several adjacent metropolitan statistical
+areas or micropolitan statistical areas or a mix of the two, which are linked by economic ties.
+
+Community Development: For loans, investments, and services to qualify as community
+development activities, their primary purpose must:
+   (1) Support affordable housing for low- and moderate-income individuals;
+   (2) Target community services toward low- and moderate-income individuals;
+   (3) Promote economic development by financing small businesses or farms; or
+   (4) Provide activities that revitalize or stabilize low- and moderate-income geographies,
+       designated disaster areas, or distressed or underserved nonmetropolitan middle-income
+       geographies.
+
+Community Development Corporation (CDC): A CDC allows banks and holding companies to
+make equity type of investments in community development projects. Institution CDCs can
+develop innovative debt instruments or provide near-equity investments tailored to the development
+needs of the community. Institution CDCs are also tailored to their financial and marketing needs.
+A CDC may purchase, own, rehabilitate, construct, manage, and sell real property. Also, it may
+make equity or debt investments in development projects and in local businesses. The CDC
+activities are expected to directly benefit low- and moderate-income groups, and the investment
+dollars should not represent an undue risk on the banking organization.
+
+
+
+
+                                                 16
+Community Development Financial Institutions (CDFIs): CDFIs are private intermediaries
+(either for profit or nonprofit) with community development as their primary mission. A CDFI
+facilitates the flow of lending and investment capital into distressed communities and to individuals
+who have been unable to take advantage of the services offered by traditional financial institutions.
+Some basic types of CDFIs include community development banks, community development loan
+funds, community development credit unions, micro enterprise funds, and community development
+venture capital funds.
+
+A certified CDFI must meet eligibility requirements. These requirements include the following:
+   • Having a primary mission of promoting community development;
+   • Serving an investment area or target population;
+   • Providing development services;
+   • Maintaining accountability to residents of its investment area or targeted population through
+        representation on its governing board of directors, or by other means;
+   • Not constituting an agency or instrumentality of the United States, of any state or political
+        subdivision of a state.
+
+Community Development Loan: A loan that:
+  (1) Has as its primary purpose community development; and
+  (2) Except in the case of a wholesale or limited purpose institution:
+      (i) Has not been reported or collected by the institution or an affiliate for consideration in the
+           institution’s assessment area as a home mortgage, small business, small farm, or
+           consumer loan, unless it is a multifamily dwelling loan (as described in Appendix A to
+           Part 203 of this title); and
+      (ii) Benefits the institution’s assessment area(s) or a broader statewide or regional area
+           including the institution’s assessment area(s).
+
+Community Development Service: A service that:
+  (1) Has as its primary purpose community development;
+  (2) Is related to the provision of financial services; and
+  (3) Has not been considered in the evaluation of the institution’s retail banking services under §
+      345.24(d).
+
+Consumer Loan(s): A loan(s) to one or more individuals for household, family, or other personal
+expenditures. A consumer loan does not include a home mortgage, small business, or small farm
+loan. This definition includes the following categories: motor vehicle loans, credit card loans, home
+equity loans, other secured consumer loans, and other unsecured consumer loans.
+
+Core Based Statistical Area (CBSA): The county or counties or equivalent entities associated
+with at least one core (urbanized area or urban cluster) of at least 10,000 population, plus adjacent
+counties having a high degree of social and economic integration with the core as measured through
+commuting ties with the counties associated with the core. Metropolitan and Micropolitan
+Statistical Areas are the two categories of CBSAs.
+
+
+
+
+                                                  17
+Distressed Middle-Income Nonmetropolitan Geographies: A nonmetropolitan middle-income
+geography will be designated as distressed if it is in a county that meets one or more of the
+following triggers:
+    (1) An unemployment rate of at least 1.5 times the national average;
+    (2) A poverty rate of 20 percent or more; or
+    (3) A population loss of 10 percent or more between the previous and most recent decennial
+        census or a net migration loss of 5 percent or more over the 5-year period preceding the
+        most recent census.
+
+Family: Includes a householder and one or more other persons living in the same household who
+are related to the householder by birth, marriage, or adoption. The number of family households
+always equals the number of families; however, a family household may also include non-relatives
+living with the family. Families are classified by type as either a married-couple family or other
+family. Other family is further classified into “male householder” (a family with a male
+householder and no wife present) or “female householder” (a family with a female householder and
+no husband present).
+
+FFIEC-Estimated Income Data: The Federal Financial Institutions Examination Council (FFIEC)
+issues annual estimates which update median family income from the metropolitan and
+nonmetropolitan areas. The FFIEC uses American Community Survey data and factors in
+information from other sources to arrive at an annual estimate that more closely reflects current
+economic conditions.
+
+Full-Scope Review: A full-scope review is accomplished when examiners complete all applicable
+interagency examination procedures for an assessment area. Performance under applicable tests is
+analyzed considering performance context, quantitative factors (e.g, geographic distribution,
+borrower profile, and total number and dollar amount of investments), and qualitative factors (e.g,
+innovativeness, complexity, and responsiveness).
+
+Geography: A census tract delineated by the United States Bureau of the Census in the most recent
+decennial census.
+
+Home Mortgage Disclosure Act (HMDA): The statute that requires certain mortgage lenders that
+do business or have banking offices in a metropolitan statistical area to file annual summary reports
+of their mortgage lending activity. The reports include such data as the race, gender, and the
+income of applicants; the amount of loan requested; and the disposition of the application
+(approved, denied, and withdrawn).
+
+Home Mortgage Loans: Includes closed-end mortgage loans or open-end line of credits as defined
+in the HMDA regulation that are not an excluded transaction per the HMDA regulation.
+
+Housing Unit: Includes a house, an apartment, a mobile home, a group of rooms, or a single room
+that is occupied as separate living quarters.
+
+Limited-Scope Review: A limited scope review is accomplished when examiners do not complete
+all applicable interagency examination procedures for an assessment area.
+
+                                                 18
+Performance under applicable tests is often analyzed using only quantitative factors (e.g, geographic
+distribution, borrower profile, total number and dollar amount of investments, and branch
+distribution).
+
+Low-Income: Individual income that is less than 50 percent of the area median income, or a
+median family income that is less than 50 percent in the case of a geography.
+
+Low Income Housing Tax Credit: The Low-Income Housing Tax Credit Program is a housing
+program contained within the Internal Revenue Code of 1986, as amended. It is administered by
+the U.S. Department of the Treasury and the Internal Revenue Service. The U.S. Treasury
+Department distributes low-income housing tax credits to housing credit agencies through the
+Internal Revenue Service. The housing agencies allocate tax credits on a competitive basis.
+
+Developers who acquire, rehabilitate, or construct low-income rental housing may keep their tax
+credits. Or, they may sell them to corporations or investor groups, who, as owners of these
+properties, will be able to reduce their own federal tax payments. The credit can be claimed
+annually for ten consecutive years. For a project to be eligible, the developer must set aside a
+specific percentage of units for occupancy by low-income residents. The set-aside requirement
+remains throughout the compliance period, usually 30 years.
+
+Market Share: The number of loans originated and purchased by the institution as a percentage of
+the aggregate number of loans originated and purchased by all reporting lenders in the metropolitan
+area/assessment area.
+
+Median Income: The median income divides the income distribution into two equal parts, one
+having incomes above the median and other having incomes below the median.
+
+Metropolitan Division (MD): A county or group of counties within a CBSA that contain(s) an
+urbanized area with a population of at least 2.5 million. A MD is one or more main/secondary
+counties representing an employment center or centers, plus adjacent counties associated with the
+main/secondary county or counties through commuting ties.
+
+Metropolitan Statistical Area (MSA): CBSA associated with at least one urbanized area having a
+population of at least 50,000. The MSA comprises the central county or counties or equivalent
+entities containing the core, plus adjacent outlying counties having a high degree of social and
+economic integration with the central county or counties as measured through commuting.
+
+Middle-Income: Individual income that is at least 80 percent and less than 120 percent of the area
+median income, or a median family income that is at least 80 and less than 120 percent in the case
+of a geography.
+
+Moderate-Income: Individual income that is at least 50 percent and less than 80 percent of the
+area median income, or a median family income that is at least 50 and less than 80 percent in the
+case of a geography.
+
+Multi-family: Refers to a residential structure that contains five or more units.
+
+
+                                                  19
+Nonmetropolitan Area (also known as non-MSA): All areas outside of metropolitan areas. The
+definition of nonmetropolitan area is not consistent with the definition of rural areas. Urban and
+rural classifications cut across the other hierarchies. For example, there is generally urban and rural
+territory within metropolitan and nonmetropolitan areas.
+
+Owner-Occupied Units: Includes units occupied by the owner or co-owner, even if the unit has
+not been fully paid for or is mortgaged.
+
+Qualified Investment: A lawful investment, deposit, membership share, or grant that has as its
+primary purpose community development.
+
+Rated Area: A rated area is a state or multistate metropolitan area. For an institution with
+domestic branches in only one state, the institution’s CRA rating would be the state rating. If an
+institution maintains domestic branches in more than one state, the institution will receive a rating
+for each state in which those branches are located. If an institution maintains domestic branches in
+two or more states within a multistate metropolitan area, the institution will receive a rating for the
+multistate metropolitan area.
+
+Rural Area: Territories, populations, and housing units that are not classified as urban.
+
+Small Business Investment Company (SBIC): SBICs are privately-owned investment companies
+which are licensed and regulated by the Small Business Administration (SBA). SBICs provide
+long-term loans and/or venture capital to small firms. Because money for venture or risk
+investments is difficult for small firms to obtain, SBA provides assistance to SBICs to stimulate and
+supplement the flow of private equity and long-term loan funds to small companies. Venture
+capitalists participate in the SBIC program to supplement their own private capital with funds
+borrowed at favorable rates through SBA’s guarantee of SBIC debentures. These SBIC debentures
+are then sold to private investors. An SBIC’s success is linked to the growth and profitability of the
+companies that it finances. Therefore, some SBICs primarily assist businesses with significant
+growth potential, such as new firms in innovative industries. SBICs finance small firms by
+providing straight loans and/or equity-type investments. This kind of financing gives them partial
+ownership of those businesses and the possibility of sharing in the companies’ profits as they grow
+and prosper.
+
+Small Business Loan: A loan included in “loans to small businesses” as defined in the
+Consolidated Report of Condition and Income (Call Report). These loans have original amounts of
+$1 million or less and are either secured by nonfarm nonresidential properties or are classified as
+commercial and industrial loans.
+
+Small Farm Loan: A loan included in “loans to small farms” as defined in the instructions for
+preparation of the Consolidated Report of Condition and Income (Call Report). These loans have
+original amounts of $500,000 or less and are either secured by farmland, including farm residential
+and other improvements, or are classified as loans to finance agricultural production and other loans
+to farmers.
+
+
+
+                                                   20
+Underserved Middle-Income Nonmetropolitan Geographies: A nonmetropolitan middle-
+income geography will be designated as underserved if it meets criteria for population size, density,
+and dispersion indicating the area’s population is sufficiently small, thin, and distant from a
+population center that the tract is likely to have difficulty financing the fixed costs of meeting
+essential community needs.
+
+Upper-Income: Individual income that is 120 percent or more of the area median income, or a
+median family income that is 120 percent or more in the case of a geography.
+
+Urban Area: All territories, populations, and housing units in urbanized areas and in places of
+2,500 or more persons outside urbanized areas. More specifically, “urban” consists of territory,
+persons, and housing units in places of 2,500 or more persons incorporated as cities, villages,
+boroughs (except in Alaska and New York), and towns (except in the New England states, New
+York, and Wisconsin).
+
+“Urban” excludes the rural portions of “extended cities”; census designated place of 2,500 or more
+persons; and other territory, incorporated or unincorporated, including in urbanized areas.
+
+
+
+
+                                                 21
+

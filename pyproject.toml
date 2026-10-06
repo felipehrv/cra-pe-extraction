@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cra-pe-extraction"
+version = "0.1.0"
+description = "Verified extraction of structured fields from CRA Performance Evaluations, with honest evaluation and cost accounting"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Felipe H. Rodriguez Villalta" }]
+dependencies = [
+    "pymupdf>=1.24",
+    "rapidfuzz>=3.6",
+    "pandas>=2.1",
+    "numpy>=1.26",
+    "pyyaml>=6.0",
+    "pydantic>=2.6",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    "google-genai>=1.0",
+    "openai>=1.40",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5"]
+
+[project.scripts]
+cra = "cra_extract.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "network: tests that call external services (deselected in CI)",
+    "slow: tests that take more than a few seconds",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
