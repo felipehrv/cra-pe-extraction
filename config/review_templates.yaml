@@ -1,0 +1,109 @@
+# "No evidence" boilerplate paragraphs of the illegal-credit-practices review section, used by
+# the template-residual census (design 5.2, src/cra_extract/templates.py).
+#
+# Each entry is one paragraph, seeded verbatim from a negative sample PE on 2026-10-05 with
+# line breaks joined and curly quotes straightened; templates.normalize() lowercases and
+# collapses whitespace before matching. A paragraph is removed from a section when rapidfuzz
+# partial_ratio >= 90; a section is flagged for hand reading when the residual is longer than
+# 120 characters or no template scores 85 or above. Bank names are never part of a template
+# (the FRB New York paragraph starts after the bank name). FRB wording differs by Reserve Bank
+# district; add one entry per district as its PE is pulled (Phase 1).
+#
+# Fields: id, regulator, district (FRB only), source (sample file and lines), text,
+#         distractor_laws_named (true when the paragraph names a law inside negated boilerplate).
+
+version: 1
+
+templates:
+
+  # ------------------------------------------------------------------ OCC (three paragraphs)
+  - id: occ_pursuant_2023
+    regulator: OCC
+    source: OCC_703395_GNBank_2023_NI.txt L186-192
+    text: >-
+      Pursuant to 12 CFR 25.28(c), in determining a national bank's or federal savings
+      association's CRA rating, the OCC considers evidence of discriminatory or other illegal
+      credit practices in any geography by the institution, or in any AA by an affiliate whose
+      loans have been considered as part of the institution's lending performance. As part of
+      this evaluation process, the OCC consults with other federal agencies with responsibility
+      for compliance with the relevant laws and regulations, including the U.S. Department of
+      Justice, the U.S. Department of Housing and Urban Development, and the Consumer Financial
+      Protection Bureau, as applicable.
+
+  - id: occ_pursuant_2024
+    regulator: OCC
+    source: OCC_11715_LemontNB_2024_SN.txt L184-190 (same wording in OCC_13682_FirstNeighborBank_2024_ISB_O.txt L196-203)
+    text: >-
+      Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank's
+      or federal savings association's (collectively, bank) CRA rating, the OCC considers
+      evidence of discriminatory or other illegal credit practices in any geography by the bank,
+      or in any AA by an affiliate whose loans have been considered as part of the bank's
+      lending performance. As part of this evaluation process, the OCC consults with other
+      federal agencies with responsibility for compliance with the relevant laws and
+      regulations, including the U.S. Department of Justice, the U.S. Department of Housing and
+      Urban Development, and the Bureau of Consumer Financial Protection, as applicable.
+
+  - id: occ_not_identified_affiliate_bank
+    regulator: OCC
+    source: OCC_703395_GNBank_2023_NI.txt L194-196
+    text: >-
+      The OCC has not identified that this bank (or any affiliate whose loans have been
+      considered as part of the bank's lending performance) has engaged in discriminatory or
+      other illegal credit practices that require consideration in this evaluation.
+
+  - id: occ_not_identified_affiliate_institution
+    regulator: OCC
+    source: OCC_11715_LemontNB_2024_SN.txt L192-194
+    text: >-
+      The OCC has not identified that this institution (or any affiliate whose loans have been
+      considered as part of the institution's lending performance) has engaged in
+      discriminatory or other illegal credit practices that require consideration in this
+      evaluation.
+
+  - id: occ_not_identified_plain
+    regulator: OCC
+    source: OCC_13682_FirstNeighborBank_2024_ISB_O.txt L205-206
+    text: >-
+      The OCC has not identified that this institution has engaged in discriminatory or other
+      illegal credit practices that require consideration in this evaluation.
+
+  - id: occ_will_consider
+    regulator: OCC
+    source: OCC_703395_GNBank_2023_NI.txt L198-204 (page break and footer between L199 and L203 removed)
+    text: >-
+      The OCC will consider any information that this institution engaged in discriminatory or
+      other illegal credit practices, identified by or provided to the OCC before the end of the
+      institution's next performance evaluation in that subsequent evaluation, even if the
+      information concerns activities that occurred during the evaluation period addressed in
+      this performance evaluation.
+
+  # ------------------------------------------------------------------ FDIC
+  - id: fdic_no_evidence
+    regulator: FDIC
+    source: FDIC_6078_OneAmericanBank_2024_ISB_NI.txt L658-659
+    text: >-
+      Examiners did not identify any evidence of discriminatory or other illegal credit
+      practices; therefore, this consideration did not affect the institution's overall CRA
+      rating.
+
+  # ------------------------------------------------------------------ FRB, by district
+  - id: frb_new_york_compliance
+    regulator: FRB
+    district: New York
+    source: FRB_3664588_FieldPoint_2024_ISB_NI.txt L581-583 (leading bank name dropped)
+    text: >-
+      was in compliance with the substantive provisions of the anti-discrimination laws and
+      regulations. No evidence of discriminatory or other illegal credit practices inconsistent
+      with helping to meet the community credit needs of the assessment area was identified.
+
+  - id: frb_kansas_city_compliance
+    regulator: FRB
+    district: Kansas City
+    source: FRB_663656_SmallBusinessBank_2024_SM_NI.txt L531-535
+    distractor_laws_named: true
+    text: >-
+      Compliance with the substantive provisions of antidiscrimination and other consumer
+      protection laws and regulations, including the Equal Credit Opportunity Act and the Fair
+      Housing Act, was considered as part of this CRA evaluation. No evidence of a pattern or
+      practice of discrimination on a prohibited basis or of other illegal credit practices
+      inconsistent with helping to meet community credit needs was identified.

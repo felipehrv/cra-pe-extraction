@@ -24,7 +24,7 @@ and a quote located in the document string can be shown on its page.
 ``text_extractable`` is false when the mean characters per page is below
 :data:`MIN_MEAN_CHARS_PER_PAGE` or more than :data:`MAX_SPARSE_PAGE_SHARE` of the pages have
 fewer than :data:`MIN_CHARS_SPARSE_PAGE` characters. Such documents are scanned images that
-would need OCR (design.md section 2); the thresholds are far below the 1,800 to 2,200 mean
+would need OCR (design.md section 2); the thresholds are far below the 1,870 to 2,220 mean
 characters per page of the eight born-digital samples.
 
 CLI: ``python -m cra_extract.parse --manifest config/corpus.csv [--doc-id ID] [--force]``
