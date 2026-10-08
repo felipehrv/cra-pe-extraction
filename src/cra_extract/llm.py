@@ -48,6 +48,7 @@ from cra_extract.prompts import (
     build_prompt,
     build_schema,
     llm_field_group,
+    portable_schema,
 )
 
 DEFAULT_MAX_OUTPUT_TOKENS = 4096
@@ -339,8 +340,11 @@ class GeminiBackend(Backend):
     """Google Gemini via the google-genai SDK (``client.models.generate_content``).
 
     Structured output uses ``response_mime_type="application/json"`` together
-    with ``response_json_schema`` (plain JSON schema, google-genai 1.x). The API
-    key comes from ``GEMINI_API_KEY``.
+    with ``response_json_schema`` (plain JSON schema; both are fields of
+    ``GenerateContentConfig`` in google-genai 2.28, and the field doc says
+    ``response_mime_type`` is required when the schema is set). The schema is
+    passed through ``portable_schema`` because the documented subset has no
+    type arrays. The API key comes from ``GEMINI_API_KEY``.
     """
 
     name = "gemini"
@@ -372,7 +376,7 @@ class GeminiBackend(Backend):
         config = types.GenerateContentConfig(
             system_instruction=system_prompt,
             response_mime_type="application/json",
-            response_json_schema=json_schema,
+            response_json_schema=portable_schema(json_schema),
             max_output_tokens=self.max_output_tokens,
         )
         response = self.client.models.generate_content(

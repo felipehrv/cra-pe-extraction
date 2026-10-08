@@ -348,7 +348,7 @@ FDIC_1_20240101,finding_present,false,,3,Examiners did not identify any evidence
 
 PREDICTIONS_CSV = """doc_id,field,system,status,value,quote,page,scope,char_start,char_end,confidence,notes
 FDIC_1_20240101,overall_rating,llm,value,NI,This institution is rated Needs to Improve.,1,,,,0.9,
-FDIC_1_20240101,cd_test_rating,llm,value,S,The Community Development Test is rated: Outstanding.,1,,,,0.9,
+FDIC_1_20240101,cd_test_rating,llm,value,S,The Lending Test is rated: Needs to Improve.,1,,,,0.9,
 FDIC_1_20240101,total_assets_usd,llm,value,463000000,"As of March 31, 2024, the institution reported total assets of $463 million",2,,,,0.8,
 FDIC_1_20240101,total_assets_asof,llm,value,2024-03-31,"As of March 31, 2024, the institution reported total assets of $463 million",2,,,,0.8,
 FDIC_1_20240101,n_full_scope,llm,value,1,one full-scope review,2,,,,0.3,
@@ -390,7 +390,8 @@ def test_cli_round_trip(tmp_path: Path, capsys):
 
     llm = table1[table1["system"] == "llm"].set_index("field")
     assert llm.loc["overall_rating", "n_correct"] == 1 and llm.loc["overall_rating", "grounded_rate"] == 1.0
-    # cd_test_rating: value S is correct but the quote says Outstanding, so it is misgrounded.
+    # cd_test_rating: value S is correct but the quote (found, in scope) is about the Lending
+    # Test and never says Satisfactory, so it is misgrounded.
     assert llm.loc["cd_test_rating", "n_correct"] == 1
     assert llm.loc["cd_test_rating", "quote_does_not_support_rate"] == 1.0
     assert llm.loc["cd_test_rating", "correct_misgrounded"] == 1

@@ -1,0 +1,259 @@
+# Developer notes
+
+Working notes for the pipeline as integrated on 2026-10-07. The specification is
+`docs/design.md`; this file records how to run each stage, the two conventions every
+module shares (character offsets and traces), and the list of things the author still has
+to verify by hand before the gold set is labeled.
+
+## 1. Running the stages
+
+Every stage is a module with a `main(argv) -> int` and can be run three ways: through the
+Makefile, as `python -m cra_extract.<stage>`, or through the `cra` console script
+(`cra <stage> [options]`, defined in `src/cra_extract/cli.py` and `pyproject.toml`).
+`cra <stage> --help` prints the options of a stage. Stage order:
+
+| Stage | Make target | Reads | Writes |
+|---|---|---|---|
+| index | `make index` (live) or `make index-replay` (saved raw pull, `RAW_STAMP=20261007`) | agency APIs, or `data/index/raw/*_{stamp}.*` | `data/index/{occ,fdic,frb,frb_state_rows}.csv`, `config/corpus.csv`, `data/index/manifest_exclusions.csv`, `results/corpus_counts.csv` |
+| fetch | `make fetch` | `config/corpus.csv` | `data/pdfs/{doc_id}.pdf`, sha256 and pages in the manifest, `data/index/fetch_failures.csv` |
+| parse | `make parse` | `data/pdfs/` | `data/text/{doc_id}.pages.json`, `data/text/{doc_id}.txt`, pages, chars_per_page, text_extractable in the manifest |
+| locate | `make locate` | `data/text/` | `results/locator_coverage.csv` |
+| templates | `make templates` | `data/text/` | `results/census.csv` (Group C template-residual census) |
+| rules | `make rules` | `data/text/` | `results/rules.csv` (system S1) |
+| baseline | `make baseline` | `data/text/` | `results/baseline.csv` (system S0) |
+| label | `make label-init SPLIT=dev`, `make label-validate SPLIT=dev`, `make label-hash SPLIT=test` | `config/corpus.csv`, `data/gold/labels_{split}.csv` | the label sheet, validation problems, `docs/hashes.md` |
+| llm | `make smoke-llm BACKEND=anthropic MODEL=claude-haiku-4-5` | one sample PE, API key from `.env` | `data/traces/smoke/{backend}.jsonl` |
+| evaluate | `make eval-dev`, `make eval-test` | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv`, `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv` |
+
+Notes on running:
+
+- `locate`, `templates`, `rules` and `baseline` accept `--samples-dir tests/fixtures/samples`
+  to run on the eight pdftotext fixtures without `make parse`; with the default manifest they
+  exit 1 until `data/text/` is populated.
+- `fetch` returns exit 1 when any row failed; failures are appended to
+  `data/index/fetch_failures.csv`. `--limit N` counts rows that needed network work, not the
+  first N rows. A PDF whose sha256 differs from the manifest is logged as `sha256_mismatch`
+  and left alone; accepting a regulator-side replacement means clearing the sha256 cell.
+- `evaluate --split test` is guarded: the git tag `plan-v1.0` must exist (or
+  `CRA_ALLOW_TEST_EVAL=1` for CI on traces), every run is appended to
+  `results/test_invocations.log`, and a second scoring run needs a dated entry in
+  `docs/deviations.md`. `--replay-only` regenerates tables without counting as a run.
+- `make pilot`, `make scale`, `make freeze`, `make audit` and `make report` reference
+  modules that do not exist yet (`run`, `freeze`, `audit`, `report`). The `run` stage must
+  write `results/predictions_{split}.csv` with the `FieldValue` columns plus `system`, and
+  optionally `grounding_failure` (empty means grounded) and `locator_miss` (0 or 1), which
+  `evaluate.read_predictions` honours.
+- Tests: `make test` (`pytest -m "not network"`) and `make lint`. Live-service tests are
+  marked `network` and run only with `CRA_NETWORK_TESTS=1` (index fetchers) or
+  `CRA_LIVE_LLM=1` (LLM smoke test, backend chosen by `CRA_SMOKE_BACKEND` and
+  `CRA_SMOKE_MODEL`).
+
+## 2. Offset convention
+
+All character offsets (`Section.char_start`, `Section.char_end`, `FieldValue.char_start`,
+`FieldValue.char_end`, `Trace.section_offsets`) index one string per document, the document
+text:
+
+    doc_text(pages) == "\f".join(page.text for page in pages)
+
+defined once in `parse.doc_text` and imported by `locate` (and through it by `rules`,
+`baseline` and `templates`). It is byte-identical to `data/text/{doc_id}.txt`, which is
+written with `newline=""` so no line-ending translation occurs. Page k (1-based) starts at
+`sum(len(text) + 1 for every earlier page)`; the form feed between pages belongs to the
+page before it. `parse.page_offsets` and `parse.page_of_offset` implement this and the
+round trip is tested on all eight samples. Page text is stored verbatim (curly quotes and
+bullet glyphs included); matching runs on a straightened copy and quotes are compared after
+whitespace collapsing. The `locate.pages_from_text` helper splits pdftotext output on the
+same form feed, so fixtures and parsed documents share the convention.
+
+Line citations in `docs/labeling_guide.md` and `tests/fixtures/expected_samples.yaml`
+count lines on newlines only (editor or `sed -n 'N p'` numbering); Python `splitlines()`
+also splits on the form feed and drifts by one line per page.
+
+## 3. Trace layout
+
+Every LLM call is one `models.Trace` appended as a JSON line to
+`data/traces/{split}/{backend}.jsonl` (`llm.trace_path`), where `backend` is `gemini`,
+`openai_compat`, `ollama` or `anthropic`. Fields: `trace_id` (first 16 hex chars of the
+sha256 of doc_id, field_group, model and prompt_hash), `doc_id`, `field_group`, `backend`,
+`model`, `model_reported`, `prompt_hash` (sha256 over `prompts.PROMPT_VERSION`, the system
+prompt and the full user prompt, which embeds the located section text), `section_offsets`
+(document-text spans of the sections sent), `response_json`, `response_text`,
+`input_tokens`, `output_tokens`, `cost_usd` (from `config/prices.yaml`, 0.0 when
+unpriced), `latency_s`, `called_at` and `error`. A failed call is recorded with `error`
+set and every field of the group abstains with `notes="call_failed"`.
+
+`llm.ReplayBackend` serves traces keyed by `(model, prompt_hash)` from the same file and
+raises `TraceMissError` on a miss unless `--allow-api` is set. Any change to `prompts.py`,
+to the located sections or to `PROMPT_VERSION` invalidates every stored trace; bump the
+version deliberately and re-run the dev split with `--allow-api`. Smoke runs go to the
+`smoke` split so the `dev` files contain only pilot calls. The design plans
+`data/traces/corpus.jsonl.gz` for the corpus pass; `append_trace` writes uncompressed JSONL
+only, and `response_text` holds the full model output, so that file is what needs gzip.
+
+## 4. Integration edits (2026-10-07)
+
+- `src/cra_extract/cli.py` (new): argparse dispatcher for `cra`, lazy module imports.
+- `src/cra_extract/locate.py`: `doc_text` and the form feed are now imported from
+  `parse` instead of being redefined; `rules`, `baseline` and the tests keep importing
+  `locate.doc_text`.
+- `src/cra_extract/config.py`: `functools.cache` instead of `lru_cache(maxsize=None)`
+  (ruff UP033, the only lint failure of the merged tree).
+- `Makefile`: targets `index-replay`, `templates`, `rules`, `baseline`, `smoke-llm`,
+  `label-init`, `label-validate`, `label-hash`.
+- `docs/design.md` 5.1: Wilson interval for 29/30 corrected to [83.3, 99.4]
+  (`stats.wilson_ci(29, 30)` gives 0.8333).
+- `docs/labeling_guide.md` field 11: Liberty Bank's description does print the rounded
+  "$12.6 million" (LB:100-101); the sentence saying it has no figure was reworded.
+
+Proposals not applied, and why: adding `prior_evaluation_date_index` and
+`prior_rating_index` to `DocRecord` (pydantic ignores unknown manifest columns and design
+section 2 already lists fewer columns than the manifest carries; decide with the design
+text); writing blank split cells as `corpus` (the current manifest has no blank cells, all
+2,793 rows read `corpus`); explicit `tolerance` keys on Group C enums and `laws_cited` in
+`fields.yaml` (no behaviour change); `jsonschema` in the dev extra (not needed by the
+tests); `CRA_ALLOW_TEST_EVAL` in `ci.yml` (CI does not run `evaluate` yet); filling Gemini
+prices (the author must look them up); the design-text additions about feed anomalies and
+the primary-product data window (author decisions, listed below).
+
+## 5. Things the author must verify
+
+Corpus and index
+
+- Live corpus is 2,793 documents (FDIC 1,770, OCC 605, FRB 418); the design estimate was
+  2,600 to 2,800. `results/corpus_counts.csv` has the regulator x method x year table.
+- Manifest row `FDIC_445_20280408` (Mercer County State Bank) carries an impossible exam
+  date from the FDIC file id `2024/445_280408.PDF`; keep it until the cover date is read, or
+  hand-correct to 2024-04-08. Record it, and the 8 FRB rows (2006 to 2017) whose exam date
+  is after the public date, in the data-quality table of `docs/design.md`.
+- FDIC cert 22081 (Magnolia State Bank, file id `2022/PPE22081-000000008.PDF`) was dropped
+  for having no parseable exam date; it only affects the prior lookup.
+- The OCC API returns no release date for 642 rows with 2018 to 2019 exams and 3 rows with
+  2023 exams (charters 14510, 25088, 707506); FRB rows with "Not available" public dates are
+  index-only. Both only affect the prior lookup and the exclusion log.
+- Prior-exam coverage from the indexes: OCC 96.0, FRB 89.7, FDIC 88.0 percent of manifest
+  rows; the rest need gold for `prior_evaluation_date` and `prior_rating`.
+- FDIC component ratings from CRAPES are kept only as `fdic_*_rating_raw`; One American
+  Bank confirms the scale error (feed says Low Satisfactory, PE says Needs to Improve at
+  OA:57).
+- Two sample PEs with 2022 exam dates (SouthStar, Liberty) are manifest rows because their
+  release dates fall inside the window.
+- `data/index/raw/` still holds the interrupted 2026-10-05 pulls next to the complete
+  2026-10-07 pull; nothing was deleted.
+- Decide whether `DocRecord` should declare `prior_evaluation_date_index` and
+  `prior_rating_index` (see section 4).
+
+Fetch and parse
+
+- Page counts of the eight samples match pymupdf (GN Bank 17, Lemont 20, First Neighbor
+  26, SouthStar 45, Liberty 14, One American 23, FieldPoint 95, Small Business Bank 21);
+  mean chars per page 1,871 to 2,218, minimum page 133 chars, so all eight are
+  text-extractable under the 200 and 50 thresholds. Revisit the thresholds if scanned PEs
+  appear (design section 2 sets the OCR decision at 2 percent).
+- The rate limiter is per process; do not run two `fetch` processes at once.
+
+Locator and templates
+
+- Expected pages and snippets in `tests/test_locate.py` were hand-derived; spot-check the
+  citations (SouthStar L56 and L599, Liberty L353, One American L658, FieldPoint L96-100,
+  L579-583, L592, L637, L1210, L1731, L2200, L2590, Small Business Bank L67 and L373,
+  Lemont L50, GN Bank L54, First Neighbor L60).
+- OCC `description_of_assessment_area` is reported missing on all three OCC samples
+  because the heading only appears under State Rating; decide whether to locate it inside
+  state scope (confidence 0.5) for single-state OCC banks.
+- The furniture-trimming rule treats a column-gap line among the first three non-blank
+  lines of a page as a running header; a PE whose section table continues at the very top
+  of a page with no header could lose up to three rows. Check on the 100-document locator
+  run (design 6.10).
+- Only the New York and Kansas City FRB templates are seeded; pull one PE per remaining
+  district and add entries with the district field. FieldPoint's residual is the bank name
+  ("fieldpoint", 10 chars) by construction.
+- FRB Small applicability cells (lending_test_rating and cd_test_rating absent) rest on one
+  Kansas City document (SB:54-64); confirm on the 12-district pilot.
+
+Rules and baseline
+
+- Verify every line citation in `tests/fixtures/expected_samples.yaml` against the .txt
+  files; the tests pass against the fixture, so an error there would pass silently.
+- Known abstentions: `n_assessment_areas` on Lemont (count only in the State of Illinois
+  section, LM:222, and Appendix A); `inside_aa_share_number_pct` and
+  `inside_aa_share_product` on SouthStar (no Total row, SS:363-368; gold is the home
+  mortgage subtotal 75.2 at SS:367). Decide whether the rules should read Appendix A and
+  primary-product subtotals.
+- Genuinely missing sentences (First Neighbor `prior_evaluation_date`, `prior_rating`,
+  `total_assets_asof`) give abstain, not absent, on purpose.
+- FDIC total assets come from the LTD table's "Total Assets as of" column (SS:340,
+  LB:300) in preference to the rounded description figure; OCC and FRB use the description
+  sentence only. Confirm this matches the guide.
+- Lemont prints 54.5 percent inside the AA in the sentence (LM:99) and 54.4 in the table
+  (LM:114); the rule and the guide follow the sentence. Candidate data-quality row.
+- `exam_method` reads isb when "intermediate small bank/institution" appears anywhere in
+  the Scope section; run the 12-district pilot through `cra rules` before freezing.
+- Baseline false positives on boilerplate are zero on the samples because negated hits are
+  absorbed; the corpus-wide negated-hit count per regulator (`n_negated_hits` in
+  `results/baseline.csv`) is what the OCC-separate false-positive rate should use.
+- `tests/test_rules.py` contains two literal U+F0B7 bullet glyphs inside string literals;
+  `rules.py` builds its bullet class with `chr()` so the source stays ASCII.
+
+Labeling
+
+- `init_sheet` prefills `lending_test_rating` for OCC Small documents from the manifest
+  `overall_rating` (GN:52-54, LM:48-50); confirm you want it prefilled.
+- Hand-derived guide values to confirm before dev labeling: FN total_assets 593700000 with
+  as-of absent (FN:121, FN:135-136 is another paragraph); SS total_assets 1159094000 as of
+  2022-06-30 (SS:340) instead of "approximately $1.2 billion" (SS:123); SS inside_aa_share
+  75.2, product home_mortgage (SS:367); LB inside_aa_share 0.0 (LB:325) coded as a value;
+  FP n_assessment_areas 4 (FP:213-219 excludes the Miami MD); GN primary_product unstated
+  (GN:162-163); LB practice_basis absent (LB:352-355); LB rating_effect
+  substantive_not_lowered (LB:358-360).
+- When products have different data windows the guide codes the primary product's window
+  (SS:264-266 versus SS:273-274); neither design section 3 row 12 nor `fields.yaml` says
+  which window wins. Decide and record it.
+- `distractor_laws_named` is true for the Kansas City template (SB:531-535) and false for
+  New York (FP:581-583).
+- The `matches_aa_section_count` consistency rule is not checked by the sheet validator and
+  never flags in `evaluate.consistency_fail` because the section count is not in the
+  predictions file; the `run` stage should write it, or `risk_table` should take a
+  per-document count.
+- `config/corpus.csv` has no dev or test rows yet; the strata step must assign splits
+  before `cra label init --split dev` writes anything.
+
+LLM
+
+- No live call has been made yet. Run the smoke CLI once per backend before the
+  three-tier run (`make smoke-llm BACKEND=anthropic MODEL=claude-haiku-4-5`, then
+  `gemini` with `gemini-3.8-flash`, then `ollama` with `llama3.1:8b-instruct-q4_K_M`).
+  Gemini receives `portable_schema` (anyOf with null); if Anthropic or the OpenAI-compatible
+  endpoint rejects the canonical schema with a 400, route that backend through
+  `portable_schema` as well (one line in `_call`).
+- Confirm that Ollama honours `options.num_ctx` on `/v1/chat/completions` (watch the server
+  log); the fallback is a Modelfile with `PARAMETER num_ctx` or the native `/api/chat`.
+- `config/prices.yaml` has null prices and free-tier limits for `gemini-3.8-flash`, so its
+  traces carry `cost_usd` 0.0 until filled; wire the free-tier limits into `RateLimiter`
+  in the run stage.
+- Decide the Anthropic effort level per tier; the trace records `model_reported` but not
+  effort (adding `effort` to `models.Trace` is the change if it should be recorded).
+- The system prompt states the applicability rule, so the fabrication probes test whether
+  the model follows the rule, not whether it discovers absence unaided; drop the
+  applicability sentence for the probe fields and bump `PROMPT_VERSION` for the harder
+  probe.
+
+Evaluation
+
+- Hallucination rate counts any misgrounded answered item (quote not found, out of scope,
+  or not supporting the value), matching design 6.4; the fabrication denominator is gold
+  NA or ABS items (`fabrication_denominator` column). Confirm both for
+  `docs/analysis_plan.md` before the freeze.
+- `metrics_table` reports recall conditional on answering and `recall_overall` (abstentions
+  count as misses) side by side; decide which Table 1 shows.
+- `grounding.WORD_FORMS` for Group C enums and the 40-character template residual threshold
+  (`grounding.MAX_TEMPLATE_RESIDUAL`) are heuristics seeded from two positive samples;
+  revisit after the census positives are labeled. `exam_method` "small" grounds inside a
+  quote that says "Intermediate Small Bank" (affects the groundedness column only).
+- `calibration_table` uses probability `n_flags / 4` with 5 bins, so the ECE is
+  indicative only (design 6.5).
+- scipy is not installed, so only the stdlib Clopper-Pearson fallback is tested.
+- The test-split guard logs only invocations that pass the tag check; a refused run exits 2
+  without logging.
+- CI (`.github/workflows/ci.yml`) does not fetch tags; when `make reproduce` is added to
+  CI, set `CRA_ALLOW_TEST_EVAL=1` there.

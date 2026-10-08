@@ -161,22 +161,41 @@ def score_cell(
 
 
 def load_document(doc_id: str, text_dir: Path) -> tuple[list[Page], dict[str, Section]] | None:
-    """Pages and sections for grounding. Reads ``{doc_id}.pages.json`` (a dict with
-    ``pages`` and optional ``sections`` lists, as written by the locator) or, failing
-    that, ``{doc_id}.txt`` with pages separated by form feed and no scope tags."""
+    """Pages and sections for grounding. Reads ``{doc_id}.pages.json`` (the list written
+    by ``parse.write_pages``, or a dict with ``pages`` and optional ``sections`` lists)
+    or, failing that, ``{doc_id}.txt`` with pages separated by form feed. A document
+    that arrives without scope tags or sections is tagged and sectioned with
+    ``cra_extract.locate`` when that module is importable; otherwise every page keeps
+    scope ``unknown`` and the scope check in ``grounding`` does not apply."""
     json_path = text_dir / f"{doc_id}.pages.json"
+    txt_path = text_dir / f"{doc_id}.txt"
     if json_path.exists():
         payload = json.loads(json_path.read_text(encoding="utf-8"))
         if isinstance(payload, list):
             payload = {"pages": payload}
         pages = [Page(**p) for p in payload.get("pages", [])]
         sections = {s["name"]: Section(**s) for s in payload.get("sections", [])}
-        return pages, sections
-    txt_path = text_dir / f"{doc_id}.txt"
-    if txt_path.exists():
+    elif txt_path.exists():
         texts = txt_path.read_text(encoding="utf-8").split("\f")
-        return [Page(number=i + 1, text=t, chars=len(t)) for i, t in enumerate(texts)], {}
-    return None
+        pages = [Page(number=i + 1, text=t, chars=len(t)) for i, t in enumerate(texts)]
+        sections = {}
+    else:
+        return None
+    if not sections and all(p.scope == "unknown" for p in pages):
+        pages, sections = _locate(doc_id, pages)
+    return pages, sections
+
+
+def _locate(doc_id: str, pages: list[Page]) -> tuple[list[Page], dict[str, Section]]:
+    """Tag page scopes and locate sections with ``cra_extract.locate`` if available."""
+    try:
+        from cra_extract import locate
+    except ImportError:
+        return pages, {}
+    regulator = _regulator_of(doc_id)
+    tagged = locate.tag_pages(pages, regulator)
+    sections, _missing = locate.locate_all(doc_id, tagged, regulator)
+    return tagged, sections
 
 
 def _regulator_of(doc_id: str) -> str:
@@ -680,6 +699,8 @@ def run(
 
 
 def main(argv: list[str] | None = None) -> int:
+    """CLI: ``python -m cra_extract.evaluate --split dev|test [--systems ...] [--replay-only]``.
+    Exit code 2 when the test-split guard refuses the run."""
     parser = argparse.ArgumentParser(description="Score predictions against gold labels.")
     parser.add_argument("--split", required=True, choices=["dev", "test"])
     parser.add_argument("--systems", nargs="*", default=None, help="restrict to these system names")

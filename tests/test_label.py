@@ -156,6 +156,16 @@ def test_init_sheet_prefills_frb_isb_components_from_manifest(manifest):
     assert got["cd_test_rating"]["value"] == "S" and got["cd_test_rating"]["prefilled"] == "true"
 
 
+def test_init_sheet_prefills_occ_small_lending_from_overall(manifest):
+    rows = label.init_sheet(manifest, "dev")
+    by = {(r["doc_id"], r["field"]): r for r in rows}
+    small = by[("OCC_1001_20240304", "lending_test_rating")]
+    assert small["value"] == "S" and small["prefilled"] == "true" and small["null_reason"] == ""
+    # OCC ISB and FDIC ISB lending ratings are not derivable: left empty.
+    assert by[("OCC_1002_20240506", "lending_test_rating")]["value"] == ""
+    assert by[("FDIC_2002_20230910", "lending_test_rating")]["value"] == ""
+
+
 @pytest.mark.parametrize(
     "doc_id,lending,cd",
     [

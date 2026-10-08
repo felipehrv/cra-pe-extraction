@@ -134,13 +134,19 @@ def _as_cell(v: Any) -> str:
     return str(v)
 
 
+def _occ_small(doc: DocRecord) -> bool:
+    return doc.regulator == "OCC" and doc.method == "small"
+
+
 def init_sheet(
     manifest: list[DocRecord], split: str, out_path: Path | None = None
 ) -> list[dict[str, str]]:
     """One row per (doc_id, field) for the documents of ``split``.
 
     Group A fields known to the manifest are pre-filled (``prefilled=true``) as values
-    for the labeler to confirm. Fields whose applicability cell for the document's
+    for the labeler to confirm; for OCC Small Bank documents ``lending_test_rating`` is
+    pre-filled with the overall rating, which the PE prints and which is equal by
+    construction (design section 3). Fields whose applicability cell for the document's
     (regulator, method) is a null get that null pre-filled in ``null_reason``. Every
     other cell is empty. Refuses to build a dev or test sheet while a bank sits in
     both splits.
@@ -167,6 +173,8 @@ def init_sheet(
                 row["prefilled"] = "true"
             elif field in GROUP_A_FROM_MANIFEST:
                 v = getattr(doc, GROUP_A_FROM_MANIFEST[field])
+                if v is None and field == "lending_test_rating" and _occ_small(doc):
+                    v = doc.overall_rating  # printed and equal to overall by construction
                 if v is not None:
                     row["value"] = _as_cell(v)
                     row["prefilled"] = "true"

@@ -225,6 +225,26 @@ def test_fdic_rows_rejects_failed_status():
         ix.fdic_rows({"status": "error", "data": []})
 
 
+def test_fdic_exam_date_after_release_is_flagged_not_dropped(fdic_payload):
+    # Seen in the live 2024 pull: cert 445 is listed as 2024/445_280408.PDF (released
+    # 09/01/2024), so the file-name date parses as 2028-04-08. The row stays in the index
+    # with its verbatim URL and the anomaly is written to ``notes``.
+    template = dict(fdic_payload["data"][0])
+    template.update(
+        ORG_CERT_NUM="445", INST_FIN_LGL_NME="Mercer County State Bank",
+        EXM_CRA_PUB_DTE="09/01/2024", SYS_EXTRN_FILE_ID="2024/445_280408.PDF",
+        EXM_ACT_PROC_DESC="Small Bank Evaluation", EXM_RTG_FULL_DESC="Satisfactory",
+    )
+    records = ix.parse_fdic([template])
+    assert len(records) == 1
+    assert records[0].doc_id == "FDIC_445_20280408"
+    assert records[0].exam_date == date(2028, 4, 8)
+    assert records[0].url == "https://crapes.fdic.gov/publish/2024/445_280408.PDF"
+    assert records[0].notes == ix.EXAM_AFTER_RELEASE_NOTE
+    # Ordinary rows carry no note.
+    assert all(r.notes is None for r in ix.parse_fdic(fdic_payload))
+
+
 # --------------------------------------------------------------------------- FRB
 
 
@@ -455,6 +475,24 @@ def test_cli_offline_writes_outputs(tmp_path, monkeypatch):
     counts = pd.read_csv(tmp_path / "results" / "corpus_counts.csv")
     assert counts["release_year"].eq(2024).all()
     assert counts["n_docs"].sum() == len(manifest)
+
+
+def test_cli_from_raw_rebuilds_without_network(tmp_path, monkeypatch):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    monkeypatch.setattr(ix, "RAW_INDEX_DIR", raw)
+    monkeypatch.setattr(ix, "INDEX_DIR", tmp_path / "index")
+    monkeypatch.setattr(ix, "RESULTS_DIR", tmp_path / "results")
+    out = tmp_path / "corpus.csv"
+    argv = ["--window", "2024-01-01", "2024-12-31", "--out", str(out), "--from-raw", "20260101"]
+    with pytest.raises(FileNotFoundError, match="occ_cra_eval_20260101.json"):
+        ix.main(argv)
+    for src, dst in zip((OCC_FIXTURE, FDIC_FIXTURE, FRB_FIXTURE), ix.raw_paths("20260101"), strict=True):
+        dst.write_bytes(src.read_bytes())
+    assert ix.main(argv) == 0
+    manifest = pd.read_csv(out, dtype=str, keep_default_na=False)
+    assert manifest["release_date"].str[:4].eq("2024").all()
+    assert "FRB_3664588_20240116" in set(manifest["doc_id"])
 
 
 # --------------------------------------------------------------------------- network

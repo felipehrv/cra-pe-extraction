@@ -14,11 +14,13 @@ records with page and character offsets. It works line by line:
 3. A section starts at the first candidate line matching one of its patterns, preferring a
    line whose scope equals the section's declared scope (confidence 1.0; otherwise 0.5). It
    ends at the next heading of a different section, the next scope marker or the next
-   ``boundary_patterns`` heading, capped by ``max_pages``.
+   ``boundary_patterns`` heading, capped by ``max_pages``. Trailing page furniture (blank
+   lines, page numbers, "Charter Number" lines, running headers) is trimmed so that
+   ``page_end`` is the page of the last content line, not of the next heading.
 
 Character offsets index the document text defined as the pages joined by a form feed,
-which is what ``parse.doc_text`` produces; :func:`doc_text` reimplements that join here so
-this module does not depend on ``parse``.
+as defined by ``parse.doc_text``; this module imports that function and the separator so
+there is a single definition of the offset convention.
 """
 
 from __future__ import annotations
@@ -38,16 +40,18 @@ import pandas as pd
 
 from cra_extract.config import CORPUS_PATH, RESULTS_DIR, TEXT_DIR, load_headings
 from cra_extract.models import Page, Scope, Section
+from cra_extract.parse import PAGE_SEPARATOR as FORM_FEED
+from cra_extract.parse import doc_text
 
-FORM_FEED = "\f"
 MAX_HEADING_CHARS = 100
-_COLUMN_GAP = re.compile(r"\S {3,}\S")
+COLUMN_GAP = re.compile(r"\S {3,}\S")  # pdftotext column gap: a table row or a running header
+FURNITURE_PATTERNS = [  # page furniture, matched against a normalized line
+    re.compile(r"^\d{1,3}$"),  # bare page number
+    re.compile(r"^[ivxl]{1,6}$", re.IGNORECASE),  # roman page number on front matter
+    re.compile(r"^page \d+ of \d+$", re.IGNORECASE),
+    re.compile(r"^charter number:? \d+$", re.IGNORECASE),
+]
 _QUOTES = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"'})
-
-
-def doc_text(pages: list[Page]) -> str:
-    """Document text as pages joined by a form feed (same join as ``parse.doc_text``)."""
-    return FORM_FEED.join(p.text for p in pages)
 
 
 def pages_from_text(text: str) -> list[Page]:
@@ -64,6 +68,11 @@ def pages_from_text(text: str) -> list[Page]:
 def normalize_line(line: str) -> str:
     """Strip a line and replace curly quotes by straight ones before pattern matching."""
     return line.strip().translate(_QUOTES)
+
+
+def is_furniture_line(text: str) -> bool:
+    """True for a normalized line that is a page number, "Page x of y" or a charter-number footer."""
+    return any(p.search(text) for p in FURNITURE_PATTERNS)
 
 
 # --------------------------------------------------------------------------- patterns
@@ -119,6 +128,7 @@ class _Line:
     skip: bool = False  # inside the ToC block of a mostly-ToC page
     scope: str = "institution"
     event: tuple[str, str] | None = None  # ("section"|"boundary"|"marker", name)
+    rank: int = 0  # index among the non-blank lines of its page (running headers rank low)
 
 
 def _split_lines(pages: list[Page]) -> list[_Line]:
@@ -126,9 +136,12 @@ def _split_lines(pages: list[Page]) -> list[_Line]:
     base = 0
     for page in pages:
         offset = base
+        rank = 0
         for raw in page.text.split("\n"):
-            lines.append(_Line(page.number, offset, normalize_line(raw)))
+            line = _Line(page.number, offset, normalize_line(raw), rank=rank)
+            lines.append(line)
             offset += len(raw) + 1
+            rank += bool(line.text)
         base += len(page.text) + 1  # the joining form feed
     return lines
 
@@ -144,7 +157,7 @@ def is_heading_candidate(text: str) -> bool:
         0 < len(text) <= MAX_HEADING_CHARS
         and "$" not in text
         and "%" not in text
-        and not _COLUMN_GAP.search(text)
+        and not COLUMN_GAP.search(text)
     )
 
 
@@ -181,7 +194,11 @@ def _tag_events_and_scope(lines: list[_Line], pats: _Patterns) -> None:
             line.event = ("marker", marker)
             continue
         section = next(
-            (name for name, regs in pats.sections.items() if any(r.search(line.text) for r in regs)),
+            (
+                name
+                for name, regs in pats.sections.items()
+                if any(r.search(line.text) for r in regs)
+            ),
             None,
         )
         if section is not None:
@@ -225,7 +242,9 @@ def tag_pages(pages: list[Page], regulator: str) -> list[Page]:
             scope = counts[page.number].most_common(1)[0][0]
         else:
             scope = "institution"
-        tagged.append(page.model_copy(update={"scope": scope, "is_toc": is_toc, "chars": len(page.text)}))
+        tagged.append(
+            page.model_copy(update={"scope": scope, "is_toc": is_toc, "chars": len(page.text)})
+        )
     return tagged
 
 
@@ -251,19 +270,25 @@ def scope_at(spans: list[tuple[int, int, Scope]], offset: int) -> Scope:
     return spans[-1][2] if spans else "unknown"
 
 
-def _page_end_offset(pages: list[Page], number: int, text: str) -> int:
-    """Offset just past the text of page ``number`` (before the joining form feed)."""
-    end = sum(len(p.text) + 1 for p in pages[:number])
-    return min(end - 1, len(text))
+def _first_line_of_page(lines: list[_Line], number: int) -> int:
+    """Index of the first line on page ``number`` (``len(lines)`` when past the last page)."""
+    return next((i for i, ln in enumerate(lines) if ln.page >= number), len(lines))
 
 
-def _page_of(pages: list[Page], offset: int) -> int:
-    pos = 0
-    for page in pages:
-        pos += len(page.text) + 1
-        if offset < pos:
-            return page.number
-    return pages[-1].number
+def _is_furniture(line: _Line) -> bool:
+    """Blank line, page number or footer, or a running header (column gap near the page top)."""
+    return (
+        not line.text
+        or is_furniture_line(line.text)
+        or (line.rank < 3 and bool(COLUMN_GAP.search(line.text)))
+    )
+
+
+def _trim_end(lines: list[_Line], start_idx: int, end_idx: int) -> int:
+    """Move a section end back over trailing furniture; the heading line is always kept."""
+    while end_idx > start_idx + 1 and _is_furniture(lines[end_idx - 1]):
+        end_idx -= 1
+    return end_idx
 
 
 def _locate_from_lines(
@@ -277,19 +302,24 @@ def _locate_from_lines(
     in_scope = [i for i in hits if lines[i].scope == wanted]
     start_idx = in_scope[0] if in_scope else hits[0]
     start = lines[start_idx]
-    end_offset = len(text)
-    for ln in lines[start_idx + 1 :]:
-        if ln.event is not None and ln.event != ("section", name):
-            end_offset = ln.offset
-            break
+    end_idx = next(
+        (
+            i
+            for i in range(start_idx + 1, len(lines))
+            if lines[i].event is not None and lines[i].event != ("section", name)
+        ),
+        len(lines),
+    )
     max_pages = pats.max_pages.get(name)
     if max_pages:
-        end_offset = min(end_offset, _page_end_offset(pages, start.page + max_pages - 1, text))
+        end_idx = min(end_idx, _first_line_of_page(lines, start.page + max_pages))
+    end_idx = _trim_end(lines, start_idx, end_idx)
+    end_offset = lines[end_idx].offset if end_idx < len(lines) else len(text)
     return Section(
         name=name,
         doc_id=doc_id,
         page_start=start.page,
-        page_end=_page_of(pages, max(end_offset - 1, start.offset)),
+        page_end=lines[end_idx - 1].page,
         char_start=start.offset,
         char_end=end_offset,
         text=text[start.offset : end_offset],
@@ -305,7 +335,9 @@ def locate_section(name: str, doc_id: str, pages: list[Page], regulator: str) ->
     return _locate_from_lines(name, doc_id, pages, lines, doc_text(pages), regulator)
 
 
-def locate_all(doc_id: str, pages: list[Page], regulator: str) -> tuple[dict[str, Section], list[str]]:
+def locate_all(
+    doc_id: str, pages: list[Page], regulator: str
+) -> tuple[dict[str, Section], list[str]]:
     """Locate every section in ``headings.yaml``; return (found sections, missing names)."""
     lines, _ = _analyze(pages, regulator)
     text = doc_text(pages)
@@ -362,7 +394,9 @@ def load_pages_json(path: Path) -> list[Page]:
         if isinstance(item, str):
             pages.append(Page(number=i + 1, text=item, chars=len(item)))
         else:
-            pages.append(Page(number=item.get("number", i + 1), text=item["text"], chars=len(item["text"])))
+            pages.append(
+                Page(number=item.get("number", i + 1), text=item["text"], chars=len(item["text"]))
+            )
     return pages
 
 
@@ -388,8 +422,12 @@ def main(argv: list[str] | None = None) -> int:
     """CLI: ``python -m cra_extract.locate --manifest config/corpus.csv --report results/locator_coverage.csv``."""
     ap = argparse.ArgumentParser(description="Locator coverage report, one row per document.")
     ap.add_argument("--manifest", type=Path, default=CORPUS_PATH)
-    ap.add_argument("--text-dir", type=Path, default=TEXT_DIR, help="folder with {doc_id}.pages.json")
-    ap.add_argument("--samples-dir", type=Path, help="run on pdftotext .txt files instead of the manifest")
+    ap.add_argument(
+        "--text-dir", type=Path, default=TEXT_DIR, help="folder with {doc_id}.pages.json"
+    )
+    ap.add_argument(
+        "--samples-dir", type=Path, help="run on pdftotext .txt files instead of the manifest"
+    )
     ap.add_argument("--report", type=Path, default=RESULTS_DIR / "locator_coverage.csv")
     args = ap.parse_args(argv)
 

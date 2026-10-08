@@ -356,10 +356,20 @@ def _none_if_blank(v: Any) -> Any:
     return v
 
 
+EXAM_AFTER_RELEASE_NOTE = "index anomaly: exam date is after the release date"
+
+
 def records_from_index(index: pd.DataFrame) -> list[DocRecord]:
     """Turn Small Bank and ISB index rows into DocRecords; other methods are dropped and
-    their counts logged. Rows without an exam date cannot form a doc_id and are dropped too."""
+    their counts logged. Rows without an exam date cannot form a doc_id and are dropped too.
+
+    A row whose exam date falls after its release date is kept (the PDF URL is still the
+    agency's verbatim file id) but flagged in ``notes``: the FDIC feed encodes the exam
+    date only in the file name, and a typo there (``2024/445_280408.PDF``) would
+    otherwise pass silently into the doc_id and the verification of ``exam_date``.
+    """
     dropped = Counter()
+    flagged = []
     records = []
     for r in index.to_dict("records"):
         if r["method"] not in ("small", "isb"):
@@ -369,6 +379,11 @@ def records_from_index(index: pd.DataFrame) -> list[DocRecord]:
             dropped["(no exam date)"] += 1
             continue
         assets = _none_if_blank(r["total_assets_usd"])
+        release = r["release_date"] if isinstance(r["release_date"], date) else None
+        notes = None
+        if release is not None and r["exam_date"] > release:
+            notes = EXAM_AFTER_RELEASE_NOTE
+            flagged.append(f"{r['regulator']} {r['bank_id']} {r['exam_date']} ({r['source_file_id']})")
         records.append(
             DocRecord(
                 doc_id=make_doc_id(r["regulator"], r["bank_id"], r["exam_date"]),
@@ -376,7 +391,7 @@ def records_from_index(index: pd.DataFrame) -> list[DocRecord]:
                 bank_id=r["bank_id"],
                 bank_name=r["bank_name"],
                 exam_date=r["exam_date"],
-                release_date=r["release_date"] if isinstance(r["release_date"], date) else None,
+                release_date=release,
                 method=r["method"],
                 overall_rating=_none_if_blank(r["overall_rating"]),
                 lending_test_rating=_none_if_blank(r["lending_test_rating"]),
@@ -384,11 +399,14 @@ def records_from_index(index: pd.DataFrame) -> list[DocRecord]:
                 total_assets_usd=assets,
                 url=r["url"],
                 source_file_id=_none_if_blank(r["source_file_id"]),
+                notes=notes,
             )
         )
+    regulator = index["regulator"].iloc[0] if len(index) else "?"
     if dropped:
-        regulator = index["regulator"].iloc[0] if len(index) else "?"
         log.info("%s: dropped %d rows by method: %s", regulator, sum(dropped.values()), dict(dropped))
+    if flagged:
+        log.warning("%s: %d rows with exam date after release date: %s", regulator, len(flagged), flagged)
     return records
 
 
@@ -621,28 +639,44 @@ def fetch_frb(session: requests.Session | None = None) -> str:
 # --------------------------------------------------------------------------- orchestration
 
 
+def raw_paths(stamp: str) -> tuple[Path, Path, Path]:
+    """Where the three raw responses of one pull live under ``data/index/raw/``."""
+    return (
+        RAW_INDEX_DIR / f"occ_cra_eval_{stamp}.json",
+        RAW_INDEX_DIR / f"fdic_crapes_{stamp}.json",
+        RAW_INDEX_DIR / f"frb_cra_ratings_{stamp}.csv",
+    )
+
+
 def load_sources(
-    window: tuple[date, date], prior_from: date, offline: bool
+    window: tuple[date, date], prior_from: date, offline: bool, from_raw: str | None = None
 ) -> tuple[list[dict[str, Any]], Any, str]:
-    """Raw OCC rows, CRAPES payload and FRB CSV text, from the fixtures or the agencies.
-    Live responses are saved under ``data/index/raw/`` with today's date in the name."""
+    """Raw OCC rows, CRAPES payload and FRB CSV text, from the fixtures, a saved pull or
+    the agencies. Live responses are saved under ``data/index/raw/`` with today's date in
+    the name so that ``from_raw=YYYYMMDD`` can rebuild the same manifest without network."""
     if offline:
         log.info("offline: reading index fixtures from %s", FIXTURES_DIR / "index")
-        return (
-            json.loads(OCC_FIXTURE.read_text(encoding="utf-8")),
-            json.loads(FDIC_FIXTURE.read_text(encoding="utf-8")),
-            FRB_FIXTURE.read_text(encoding="utf-8-sig"),
-        )
-    ensure_dirs()
-    stamp = f"{date.today():%Y%m%d}"
-    occ_rows = fetch_occ(prior_from, window[1])
-    (RAW_INDEX_DIR / f"occ_cra_eval_{stamp}.json").write_text(json.dumps(occ_rows, indent=1), encoding="utf-8")
-    fdic_data, queries = fetch_fdic(prior_from, window[1])
-    fdic_payload = {"status": "success", "queries": queries, "data": fdic_data}
-    (RAW_INDEX_DIR / f"fdic_crapes_{stamp}.json").write_text(json.dumps(fdic_payload, indent=1), encoding="utf-8")
-    frb_text = fetch_frb()
-    (RAW_INDEX_DIR / f"frb_cra_ratings_{stamp}.csv").write_text(frb_text, encoding="utf-8")
-    return occ_rows, fdic_payload, frb_text
+        occ_path, fdic_path, frb_path = OCC_FIXTURE, FDIC_FIXTURE, FRB_FIXTURE
+    elif from_raw:
+        occ_path, fdic_path, frb_path = raw_paths(from_raw)
+        log.info("reading the saved pull %s from %s", from_raw, RAW_INDEX_DIR)
+    else:
+        ensure_dirs()
+        occ_path, fdic_path, frb_path = raw_paths(f"{date.today():%Y%m%d}")
+        occ_rows = fetch_occ(prior_from, window[1])
+        occ_path.write_text(json.dumps(occ_rows, indent=1), encoding="utf-8")
+        fdic_data, queries = fetch_fdic(prior_from, window[1])
+        fdic_payload = {"status": "success", "queries": queries, "data": fdic_data}
+        fdic_path.write_text(json.dumps(fdic_payload, indent=1), encoding="utf-8")
+        frb_path.write_text(fetch_frb(), encoding="utf-8")
+    missing = [p for p in (occ_path, fdic_path, frb_path) if not p.exists()]
+    if missing:
+        raise FileNotFoundError(f"index sources not found: {[str(p) for p in missing]}")
+    return (
+        json.loads(occ_path.read_text(encoding="utf-8")),
+        json.loads(fdic_path.read_text(encoding="utf-8")),
+        frb_path.read_text(encoding="utf-8-sig"),
+    )
 
 
 def _write_csv(df: pd.DataFrame, path: Path) -> None:
@@ -650,9 +684,11 @@ def _write_csv(df: pd.DataFrame, path: Path) -> None:
     df.to_csv(path, index=False, quoting=csv.QUOTE_MINIMAL)
 
 
-def run(window: tuple[date, date], prior_from: date, offline: bool, out: Path) -> pd.DataFrame:
+def run(
+    window: tuple[date, date], prior_from: date, offline: bool, out: Path, from_raw: str | None = None
+) -> pd.DataFrame:
     """Build and write the index files, manifest, exclusion log and counts; return the manifest."""
-    occ_rows, fdic_payload, frb_text = load_sources(window, prior_from, offline)
+    occ_rows, fdic_payload, frb_text = load_sources(window, prior_from, offline, from_raw)
     occ = occ_index(occ_rows)
     fdic = fdic_index(fdic_payload)
     frb, frb_state = frb_index(frb_text)
@@ -682,6 +718,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="earliest exam date to pull from the OCC and FDIC for the prior-exam lookup")
     parser.add_argument("--offline-from-fixtures", action="store_true",
                         help="use the snapshots under tests/fixtures/index instead of the agencies")
+    parser.add_argument("--from-raw", metavar="YYYYMMDD",
+                        help="rebuild from the raw responses of an earlier pull in data/index/raw/")
     parser.add_argument("--out", type=Path, default=CORPUS_PATH, help="manifest path")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
@@ -690,7 +728,7 @@ def main(argv: list[str] | None = None) -> int:
     start, end = args.window
     if start > end:
         parser.error("window START must not be after END")
-    run((start, end), args.prior_from, args.offline_from_fixtures, args.out)
+    run((start, end), args.prior_from, args.offline_from_fixtures, args.out, args.from_raw)
     return 0
 
 

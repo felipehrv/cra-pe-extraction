@@ -129,7 +129,7 @@ Prices from the API reference cached 2026-09-25, stored in `config/prices.yaml` 
 - Test strata: regulator x method with at least 3 per cell where the corpus has at least 50 documents in the cell, plus 5 NI/SN documents and 4 multi-AA (3 or more) documents. Census positives are not a stratum; if a drawn document is a positive it stays. Strata and selection probabilities in `config/strata.yaml`; gold metrics and corpus estimates are always reported separately.
 - Dev: 1 per regulator x method cell plus 4 chosen for layout variety (an FRB Kansas City PE, a multi-state ISB, a non-HMDA bank, an OCC PE with Table O). Dev is never used for inference.
 - Group A gold is a one-minute confirmation of the pre-filled index value on the cover page. The test table for Group A is labeled a smoke test (30/30 correct gives a Wilson lower bound of 88.6 percent); the real Group A evaluation is corpus-wide (section 6.3).
-- Expected CI widths on test, Wilson 95 percent, n = 30: 30/30 gives [88.6, 100]; 29/30 gives [83.0, 99.4]; 24/30 gives [62.7, 90.5].
+- Expected CI widths on test, Wilson 95 percent, n = 30: 30/30 gives [88.6, 100]; 29/30 gives [83.3, 99.4]; 24/30 gives [62.7, 90.5].
 - Labeling is blind to system output.
 
 ### 5.2 Census (Group C)

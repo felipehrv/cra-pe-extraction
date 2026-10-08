@@ -27,6 +27,7 @@ Failures are reported in three categories: ``quote_not_found``,
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import re
 from dataclasses import asdict, dataclass
@@ -42,6 +43,7 @@ GroundingFailure = Literal["quote_not_found", "quote_out_of_scope", "quote_does_
 
 MIN_LOCATE_SCORE = 90.0
 TEMPLATE_MATCH_SCORE = 90.0
+MAX_TEMPLATE_RESIDUAL = 40  # characters left after removing a template; fewer means boilerplate
 SUPPORTING_SCOPES = {"institution", "unknown"}
 
 FINDING_PREDICATES = ("identified", "lowered", "violation", "substantive", "cited", "downgrade")
@@ -420,21 +422,22 @@ def _asserts_finding(value: Any, spec: dict[str, Any]) -> bool:
 
 
 def matches_template(quote: str, regulator: str) -> bool:
-    """True when the quote is boilerplate: ``templates.residual`` leaves at most a short
-    residue, or (without that module) the quote carries a negation and no residual
-    predicate outside the negated phrase."""
+    """True when the quote is boilerplate: a stored template matches it (score at least
+    ``TEMPLATE_MATCH_SCORE``) and ``templates.residual`` leaves fewer than
+    ``MAX_TEMPLATE_RESIDUAL`` characters, or (without that module) the quote carries a
+    negation and no finding predicate outside the negated phrase."""
     try:
-        from cra_extract import templates  # type: ignore[attr-defined]
+        templates = importlib.import_module("cra_extract.templates")
     except ImportError:
         templates = None
     if templates is not None and hasattr(templates, "residual"):
-        try:
-            res = templates.residual(quote, regulator)
-        except TypeError:
-            res = templates.residual(quote)
-        text = getattr(res, "residual", getattr(res, "text", res))
+        res = templates.residual(quote, regulator)
+        if isinstance(res, str):
+            return len(res.strip()) < MAX_TEMPLATE_RESIDUAL
+        text = getattr(res, "residual_text", None)
         if isinstance(text, str):
-            return len(text.strip()) < 40
+            matched = bool(getattr(res, "removed", None)) or float(getattr(res, "score", 0.0)) >= TEMPLATE_MATCH_SCORE
+            return matched and len(text.strip()) < MAX_TEMPLATE_RESIDUAL
     norm = normalize(quote)
     if not _has_negation(norm):
         return False

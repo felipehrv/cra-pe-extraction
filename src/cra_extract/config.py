@@ -7,7 +7,7 @@ breaking anything. Configuration files live in ``config/`` and are versioned.
 from __future__ import annotations
 
 import os
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Any
 
@@ -50,19 +50,19 @@ def _load_yaml(path: Path) -> dict[str, Any]:
         return yaml.safe_load(fh) or {}
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_fields() -> dict[str, Any]:
     """Return the parsed data dictionary (``config/fields.yaml``)."""
     return _load_yaml(FIELDS_PATH)
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_headings() -> dict[str, Any]:
     """Return the per-regulator section heading patterns."""
     return _load_yaml(HEADINGS_PATH)
 
 
-@lru_cache(maxsize=None)
+@cache
 def load_prices() -> dict[str, Any]:
     """Return model prices and free-tier limits with their retrieval dates."""
     return _load_yaml(PRICES_PATH)

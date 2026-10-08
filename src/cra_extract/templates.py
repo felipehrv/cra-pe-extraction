@@ -28,18 +28,18 @@ from pydantic import BaseModel
 from rapidfuzz import fuzz
 
 from cra_extract.config import CORPUS_PATH, RESULTS_DIR, TEMPLATES_PATH, TEXT_DIR, load_headings
-from cra_extract.locate import load_pages_json, locate_section, normalize_line, pages_from_text
+from cra_extract.locate import (
+    COLUMN_GAP,
+    is_furniture_line,
+    load_pages_json,
+    locate_section,
+    normalize_line,
+    pages_from_text,
+)
 
 MATCH_THRESHOLD = 90.0  # a template at or above this score is removed from the section
 FLAG_SCORE = 85.0  # best score below this flags the section
 FLAG_RESIDUAL_CHARS = 120  # residual longer than this flags the section
-
-_FURNITURE = [
-    re.compile(r"^\d{1,3}$"),
-    re.compile(r"^page \d+ of \d+$", re.IGNORECASE),
-    re.compile(r"^charter number:? \d+$", re.IGNORECASE),
-    re.compile(r"\S {3,}\S"),  # running header with column gap
-]
 
 
 class Template(BaseModel):
@@ -90,7 +90,7 @@ def normalize(text: str, regulator: str | None = None) -> str:
     kept = []
     for raw in text.split("\n"):
         line = normalize_line(raw)
-        if not line or any(p.search(line) for p in _FURNITURE):
+        if not line or is_furniture_line(line) or COLUMN_GAP.search(line):
             continue
         if any(p.search(line) for p in headings):
             continue
@@ -99,22 +99,30 @@ def normalize(text: str, regulator: str | None = None) -> str:
 
 
 def residual(section_text: str, regulator: str) -> TemplateMatch:
-    """Remove matching boilerplate from a review section and decide whether to flag it."""
+    """Remove matching boilerplate from a review section and decide whether to flag it.
+
+    Templates are removed best score first, one at a time, until no template reaches
+    ``MATCH_THRESHOLD`` against what is left. Removing the best match first matters when two
+    templates are near-identical variants (the OCC 2023 and 2024 "Pursuant" paragraphs): the
+    weaker variant would otherwise align past the differing prefix and leave a stub behind.
+    ``score`` is the best score against the full section, which is what the flag rule uses.
+    """
     current = normalize(section_text, regulator)
+    candidates = templates_for(regulator)
     best_id: str | None = None
     best_score = 0.0
     removed: list[str] = []
-    for template in templates_for(regulator):
-        if not current:
-            break
-        aligned = fuzz.partial_ratio_alignment(template.normalized, current)
+    while current and candidates:
+        scored = [(fuzz.partial_ratio_alignment(t.normalized, current), t) for t in candidates]
+        aligned, template = max(scored, key=lambda st: st[0].score if st[0] else 0.0)
         score = float(aligned.score) if aligned else 0.0
-        if score > best_score:
+        if not removed and score > best_score:
             best_id, best_score = template.id, score
-        if score >= MATCH_THRESHOLD and aligned is not None:
-            current = (current[: aligned.dest_start] + " " + current[aligned.dest_end :]).strip()
-            current = re.sub(r"\s+", " ", current)
-            removed.append(template.id)
+        if score < MATCH_THRESHOLD or aligned is None or aligned.dest_end <= aligned.dest_start:
+            break
+        current = (current[: aligned.dest_start] + " " + current[aligned.dest_end :]).strip()
+        current = re.sub(r"\s+", " ", current)
+        removed.append(template.id)
     flagged = len(current) > FLAG_RESIDUAL_CHARS or best_score < FLAG_SCORE
     return TemplateMatch(
         template_id=best_id,
@@ -168,8 +176,12 @@ def main(argv: list[str] | None = None) -> int:
     """CLI: ``python -m cra_extract.templates --manifest config/corpus.csv --out results/census.csv``."""
     ap = argparse.ArgumentParser(description="Template-residual census of review sections.")
     ap.add_argument("--manifest", type=Path, default=CORPUS_PATH)
-    ap.add_argument("--text-dir", type=Path, default=TEXT_DIR, help="folder with {doc_id}.pages.json")
-    ap.add_argument("--samples-dir", type=Path, help="run on pdftotext .txt files instead of the manifest")
+    ap.add_argument(
+        "--text-dir", type=Path, default=TEXT_DIR, help="folder with {doc_id}.pages.json"
+    )
+    ap.add_argument(
+        "--samples-dir", type=Path, help="run on pdftotext .txt files instead of the manifest"
+    )
     ap.add_argument("--out", type=Path, default=RESULTS_DIR / "census.csv")
     args = ap.parse_args(argv)
 
@@ -185,7 +197,13 @@ def main(argv: list[str] | None = None) -> int:
                 path = args.text_dir / f"{row['doc_id']}.pages.json"
                 if path.exists():
                     pages = load_pages_json(path)
-                    docs.append((row["doc_id"], row["regulator"], _review_text(row["doc_id"], row["regulator"], pages)))
+                    docs.append(
+                        (
+                            row["doc_id"],
+                            row["regulator"],
+                            _review_text(row["doc_id"], row["regulator"], pages),
+                        )
+                    )
     else:
         print(f"manifest not found: {args.manifest}", file=sys.stderr)
         return 1
@@ -196,7 +214,11 @@ def main(argv: list[str] | None = None) -> int:
     args.out.parent.mkdir(parents=True, exist_ok=True)
     table.to_csv(args.out, index=False)
     print(f"{len(table)} documents; {int(table['flagged'].sum())} flagged; written to {args.out}")
-    print(table[["doc_id", "located", "template_id", "score", "residual_chars", "flagged"]].to_string(index=False))
+    print(
+        table[["doc_id", "located", "template_id", "score", "residual_chars", "flagged"]].to_string(
+            index=False
+        )
+    )
     return 0
 
 

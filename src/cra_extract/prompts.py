@@ -115,6 +115,35 @@ def build_schema(field_group: str) -> dict[str, Any]:
     }
 
 
+def portable_schema(schema: Any) -> Any:
+    """Rewrite nullable slots for APIs whose JSON-schema subset lacks type arrays.
+
+    ``{"type": ["string", "null"], "enum": [..., None]}`` becomes
+    ``{"anyOf": [{"type": "string", "enum": [...]}, {"type": "null"}]}``. Every
+    other key is copied through recursively, so the result is still a valid
+    JSON schema and validates the same documents. Used by the Gemini backend;
+    the OpenAI-compatible strict mode and the Anthropic API take the canonical
+    form from ``build_schema`` as is.
+    """
+    if isinstance(schema, list):
+        return [portable_schema(item) for item in schema]
+    if not isinstance(schema, dict):
+        return schema
+    out = {k: portable_schema(v) for k, v in schema.items()}
+    types = out.get("type")
+    if isinstance(types, list) and "null" in types:
+        non_null = [t for t in types if t != "null"]
+        base = {k: v for k, v in out.items() if k not in {"type", "enum", "description"}}
+        base["type"] = non_null[0] if len(non_null) == 1 else non_null
+        if "enum" in out:
+            base["enum"] = [e for e in out["enum"] if e is not None]
+        rewritten: dict[str, Any] = {"anyOf": [base, {"type": "null"}]}
+        if "description" in out:
+            rewritten["description"] = out["description"]
+        return rewritten
+    return out
+
+
 def _field_lines(field_group: str, doc: DocRecord) -> list[str]:
     """One bullet per field: type, allowed values, description and the applicability rule."""
     lines: list[str] = []

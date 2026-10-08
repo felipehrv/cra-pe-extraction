@@ -96,7 +96,10 @@ scope_markers:
   msa:
     OCC: ['^Multistate Metropolitan', '^MMSA Rating']
     FDIC: ['^[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN)']
-    FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?(MSA|MD) \\d", '^(MSA|MD) \d{4,5} .*SCOPE REVIEW$']
+    # The third FRB pattern is the MSA title line that opens each FieldPoint MSA page two lines
+    # before "FULL SCOPE REVIEW" (e.g. "MD 35614 (NEW YORK-JERSEY CITY-WHITE PLAINS, NY-NJ)");
+    # the closing parenthesis at the end of the line keeps prose and table rows out.
+    FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?(MSA|MD) \\d", '^(MSA|MD) \d{4,5} .*SCOPE REVIEW$', '^(MSA|MD) \d{4,5} \([^()]*\)$']
   state:
     OCC: ['^State Rating$', '^State of [A-Za-z ]+$', '^Scope of Evaluation in [A-Za-z ]+$']
     FDIC: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]

@@ -27,7 +27,10 @@ number as printed in the PDF viewer (1 = cover page), never a txt line.
 | FP | `FRB_3664588_FieldPoint_2024_ISB_NI.txt` | FRB (New York) | ISB | NI | four AAs in four states; state-level ratings |
 | SB | `FRB_663656_SmallBusinessBank_2024_SM_NI.txt` | FRB (Kansas City) | Small | NI | FRB Small layout; Cease and Desist mentioned but no finding; laws named inside negated boilerplate |
 
-A citation such as `SS:599` means line 599 of the SouthStar txt file.
+A citation such as `SS:599` means line 599 of the SouthStar txt file. Lines are counted on newline
+characters only, as an editor or `sed -n` counts them; the form-feed character that pdftotext
+writes at each page break is not a line break (Python's `str.splitlines()` treats it as one and
+would drift by one line per page, so use `split("\n")` when checking citations in code).
 
 ## 1. Vocabulary
 
@@ -152,7 +155,9 @@ differs by Reserve Bank district; the design pulls one PE per district to catalo
 ## 4. Applicability table
 
 Applicability is a function of (regulator, exam method). A cell marked ABS is pre-filled by `init`
-as `absent_from_document`; you confirm it by checking the rating page. If a pre-filled ABS cell
+as `absent_from_document`; you confirm it by checking the rating page. For OCC Small Bank documents
+`init` also pre-fills `lending_test_rating` with the overall rating from the index (the two are equal
+by construction, GN:52-54); confirm it against the printed "The lending test is rated" sentence. If a pre-filled ABS cell
 turns out to have a printed value, enter the value, clear `null_reason`, and write
 `applicability_exception` in `notes`: this is exactly the kind of thing the dev pilot exists to
 find.
@@ -261,8 +266,8 @@ prior component ratings; code only the overall.
 figure the PE gives for the institution and the date it refers to. Where: Description of
 Institution; in FDIC PEs also the "Total Assets as of" column of the LTD comparison table. OCC:
 "As of December 31, 2021, GN Bank reported total assets of $84.7 million" (GN:121-122). FDIC: "As
-of March 31, 2024, the institution reported total assets of $463 million" (OA:104); LB has no
-figure in the description paragraph but the LTD table prints "Total Assets as of 6/30/2022
+of March 31, 2024, the institution reported total assets of $463 million" (OA:104); LB's description
+gives only the rounded "assets totaling $12.6 million" (LB:100-101) but the LTD table prints "Total Assets as of 6/30/2022
 ($000s)" with "Liberty Bank, Inc. 12,614" (LB:297-300), so value 12614000, as-of 2022-06-30, scope
 institution. FRB: "Based on the September 30, 2023 ... Call Report, the bank had total assets of
 $1.7 billion" (FP:150-151); "The bank has total assets of $94.2 million as of June 30, 2024."
@@ -294,7 +299,7 @@ coded 2021-01-01 to 2023-12-31; a bare list of data years ("2021, 2022, and 2023
 OA:300-301; "originated, renewed, or extended in 2022 and 2023", OA:289-290) is years only and is
 ABS. When products have different windows, code the window of the primary product (field 14a) and
 list the others in notes: SS home mortgage is 2019 to 2021 by year (SS:263-266) and small business
-is dated (SS:272-273); home mortgage is primary (SS:288), so SS is ABS with
+is dated (SS:272-273); home mortgage is primary (SS:289), so SS is ABS with
 `analysis_periods=HMDA 2019-2021; SB 2021-01-01..2021-12-31`. Exact; end must not be after
 `exam_date` (validator). Traps: "This evaluation covers the period from the prior evaluation
 dated ... to the current evaluation dated ..." (SS:202-203, LB:224-225, OA:261-262) is the
@@ -345,7 +350,7 @@ farm loans were excluded"); do not include products that appear only in the loan
 
 **14a. primary_product** (enum, same plus unstated). The product the PE calls primary, major, or
 gives the most weight. "home mortgage loans represent the bank's primary lending product" (LM:144);
-"home mortgage loans received heavier weighting when arriving at overall conclusions" (SS:288);
+"home mortgage loans received heavier weighting when arriving at overall conclusions" (SS:289);
 "examiners placed more weight on home mortgage loans" (FP:276-277); "consumer loans received the
 most weight, followed by home mortgage, small business, and small farm loans" (OA:334-335). Never
 null: when only one product was evaluated, it is primary (SB: small_business, quote SB:80); when

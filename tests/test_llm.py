@@ -172,6 +172,32 @@ def test_schema_is_json_serializable():
     json.dumps(build_schema("review"))
 
 
+def test_portable_schema_rewrites_nullable_slots():
+    """Gemini's documented subset has no type arrays: nullables become anyOf."""
+    from cra_extract.prompts import portable_schema
+
+    schema = build_schema("cover_and_rating")
+    port = portable_schema(schema)
+    assert port["required"] == schema["required"] and port["additionalProperties"] is False
+    rating = port["properties"]["overall_rating"]["properties"]["value"]
+    assert "type" not in rating
+    assert rating["anyOf"] == [
+        {"type": "string", "enum": ["O", "S", "NI", "SN"]},
+        {"type": "null"},
+    ]
+    page = port["properties"]["overall_rating"]["properties"]["page"]
+    assert page["anyOf"] == [{"type": "integer"}, {"type": "null"}]
+    assert port["properties"]["overall_rating"]["properties"]["status"] == {
+        "type": "string", "enum": STATUSES,
+    }
+    laws = portable_schema(build_schema("review"))["properties"]["laws_cited"]["properties"]["value"]
+    assert laws["anyOf"][0]["type"] == "array" and laws["anyOf"][0]["items"]["enum"][0] == "ECOA_RegB"
+    # Idempotent and non-mutating.
+    assert portable_schema(port) == port
+    assert build_schema("cover_and_rating") == schema
+    json.dumps(port)
+
+
 # ----------------------------------------------------------------------------- prompt
 
 

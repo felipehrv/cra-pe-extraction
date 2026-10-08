@@ -1,0 +1,186 @@
+# Hand-derived expected values for the eight sample PEs, for tests/test_rules.py and
+# tests/test_baseline.py. Derived on 2026-10-07 by reading the pdftotext .txt files in
+# tests/fixtures/samples next to docs/labeling_guide.md; the author should verify every
+# line citation against the .txt file before trusting a test that passes.
+#
+# Each field entry has either `value` or `null` (absent_from_document), plus `line`: the
+# 1-based line number(s) of the .txt file where the value is printed, counted on newline
+# characters only (sed -n 'N p', or str.split("\n") in Python; never str.splitlines(), which
+# also breaks on the form feed at each page boundary). `note` records anything a second
+# reader should know. Dates are ISO (YAML parses them to datetime.date), sets are sorted
+# lists, dollar amounts are integer dollars, percentages are numbers without the sign.
+#
+# Applicability nulls follow config/fields.yaml: lending_test_rating is absent on FDIC and
+# FRB Small Bank PEs; cd_test_rating is absent on every Small Bank PE.
+
+version: 1
+
+samples:
+
+  OCC_703395_GNBank_2023_NI:
+    regulator: {value: OCC, line: 15}
+    bank_name: {value: GN Bank, line: 7}
+    bank_id: {value: "703395", line: 8}
+    exam_date: {value: 2023-03-27, line: 2}
+    exam_method: {value: small, line: 177, note: "'Under interagency small bank CRA procedures'"}
+    overall_rating: {value: NI, line: 52}
+    lending_test_rating: {value: NI, line: 54}
+    cd_test_rating: {null_reason: absent_from_document, line: 51-66, note: OCC Small has no CD test sentence}
+    prior_evaluation_date: {value: 2018-10-01, line: 150}
+    prior_rating: {value: S, line: 150}
+    total_assets_usd: {value: 84700000, line: 121-122}
+    total_assets_asof: {value: 2021-12-31, line: 121-122}
+    avg_ltd_ratio_pct: {value: 54.32, line: 69-70}
+    inside_aa_share_number_pct: {value: 3.4, line: 78-79}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 78-79, note: "'of its total loans'"}
+    n_assessment_areas: {value: 1, line: 110, note: "'The bank delineated one AA'; also line 112"}
+    loan_products_evaluated: {value: [consumer, small_business], line: 162-163}
+    finding_present: {value: false, line: 194-196}
+    rating_lowered: {value: false, line: 194-196}
+
+  OCC_11715_LemontNB_2024_SN:
+    regulator: {value: OCC, line: 15}
+    bank_name: {value: The Lemont National Bank, line: 7}
+    bank_id: {value: "11715", line: 8}
+    exam_date: {value: 2024-04-08, line: 2}
+    exam_method: {value: small, line: 142-143}
+    overall_rating: {value: SN, line: 48}
+    lending_test_rating: {value: SN, line: 50}
+    cd_test_rating: {null_reason: absent_from_document, line: 47-62}
+    prior_evaluation_date: {value: 2021-06-19, line: 134-135}
+    prior_rating: {value: SN, line: 134, note: spelled Substantial Non-Compliance}
+    total_assets_usd: {value: 65400000, line: 121-122}
+    total_assets_asof: {value: 2023-12-31, line: 121-122}
+    avg_ltd_ratio_pct: {value: 10.6, line: 69-70}
+    inside_aa_share_number_pct: {value: 54.5, line: 99, note: the table Total row at line 114 prints 54.4; gold follows the sentence}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 99}
+    n_assessment_areas: {value: 1, line: 222, note: stated only in the State of Illinois section (state scope) and Appendix A; the rules abstain}
+    loan_products_evaluated: {value: [home_mortgage], line: 143-144, note: also lines 150-151}
+    finding_present: {value: false, line: 192-194}
+    rating_lowered: {value: false, line: 192-194}
+
+  OCC_13682_FirstNeighborBank_2024_ISB_O:
+    regulator: {value: OCC, line: 16}
+    bank_name: {value: "First Neighbor Bank, National Association", line: 8}
+    bank_id: {value: "13682", line: 9}
+    exam_date: {value: 2024-08-19, line: 3}
+    exam_method: {value: isb, line: 154-155}
+    overall_rating: {value: O, line: 57}
+    lending_test_rating: {value: O, line: 59}
+    cd_test_rating: {value: O, line: 60}
+    prior_evaluation_date: {null_reason: absent_from_document, line: 120-146, note: no prior evaluation sentence anywhere (labeling guide field 9); the rules abstain}
+    prior_rating: {null_reason: absent_from_document, line: 120-146, note: the rules abstain}
+    total_assets_usd: {value: 593700000, line: 121}
+    total_assets_asof: {null_reason: absent_from_document, line: 121, note: the figure carries no date; line 135-136 belongs to the loan paragraph; the rules abstain}
+    avg_ltd_ratio_pct: {value: 85.5, line: 85}
+    inside_aa_share_number_pct: {value: 87.5, line: 102}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 102}
+    n_assessment_areas: {value: 1, line: 130, note: also line 177}
+    loan_products_evaluated: {value: [consumer, small_business], line: 162-163, note: "'business loans' coded small_business; also lines 166-167"}
+    finding_present: {value: false, line: 205-206}
+    rating_lowered: {value: false, line: 205-206}
+
+  FDIC_12299_SouthStar_2022_ISB_NI_fairlending:
+    regulator: {value: FDIC, line: 22}
+    bank_name: {value: "SouthStar Bank, S.S.B.", line: 13}
+    bank_id: {value: "12299", line: 14}
+    exam_date: {value: 2022-09-12, line: 4}
+    exam_method: {value: isb, line: 203-204}
+    overall_rating: {value: NI, line: 56}
+    lending_test_rating: {value: S, line: 67}
+    cd_test_rating: {value: S, line: 85}
+    prior_evaluation_date: {value: 2019-07-15, line: 106-107}
+    prior_rating: {value: S, line: 106}
+    total_assets_usd: {value: 1159094000, line: 340, note: LTD table in $000s; line 123 says approximately $1.2 billion}
+    total_assets_asof: {value: 2022-06-30, line: 337-338}
+    avg_ltd_ratio_pct: {value: 100.7, line: 322-323}
+    inside_aa_share_number_pct: {value: 75.2, line: 367, note: no Total row (lines 363-368); gold takes the home mortgage subtotal because home mortgage is primary (line 289); the rules abstain}
+    inside_aa_share_product: {value: home_mortgage, line: 367, note: the rules abstain}
+    n_assessment_areas: {value: 5, line: 165}
+    loan_products_evaluated: {value: [home_mortgage, small_business], line: 239-240}
+    finding_present: {value: true, line: 599-601}
+    rating_lowered: {value: true, line: 599, note: lowered from Satisfactory to Needs to Improve under ECOA and FHA}
+
+  FDIC_26816_LibertyBank_2022_SM_SN:
+    regulator: {value: FDIC, line: 22}
+    bank_name: {value: "Liberty Bank, Inc.", line: 13}
+    bank_id: {value: "26816", line: 14}
+    exam_date: {value: 2022-08-09, line: 4}
+    exam_method: {value: small, line: 225-226}
+    overall_rating: {value: SN, line: 51}
+    lending_test_rating: {null_reason: absent_from_document, line: 51-76, note: FDIC Small has no Lending Test sentence}
+    cd_test_rating: {null_reason: absent_from_document, line: 51-76}
+    prior_evaluation_date: {value: 2021-04-12, line: 85-86}
+    prior_rating: {value: SN, line: 85}
+    total_assets_usd: {value: 12614000, line: 300, note: LTD table in $000s; line 100-101 says $12.6 million}
+    total_assets_asof: {value: 2022-06-30, line: 297-298}
+    avg_ltd_ratio_pct: {value: 64.9, line: 281-282, note: not the adjusted 65.5 at line 289}
+    inside_aa_share_number_pct: {value: 0.0, line: 325, note: zero is a value}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 325}
+    n_assessment_areas: {value: 1, line: 128-129}
+    loan_products_evaluated: {value: [consumer, small_business], line: 239-240, note: Tiny Home Loans are consumer; 2 small business loans at line 245}
+    finding_present: {value: true, line: 352-354}
+    rating_lowered: {value: false, line: 358-360, note: UDAP violation did not affect the rating}
+
+  FDIC_6078_OneAmericanBank_2024_ISB_NI:
+    regulator: {value: FDIC, line: 22}
+    bank_name: {value: One American Bank, line: 13}
+    bank_id: {value: "6078", line: 14}
+    exam_date: {value: 2024-08-05, line: 4}
+    exam_method: {value: isb, line: 262-264}
+    overall_rating: {value: NI, line: 51}
+    lending_test_rating: {value: NI, line: 57}
+    cd_test_rating: {value: NI, line: 73}
+    prior_evaluation_date: {value: 2018-12-03, line: 88-89}
+    prior_rating: {value: S, line: 88-90}
+    total_assets_usd: {value: 463000000, line: 104}
+    total_assets_asof: {value: 2024-03-31, line: 104}
+    avg_ltd_ratio_pct: {value: 128.1, line: 349-350}
+    inside_aa_share_number_pct: {value: 0.9, line: 394}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 394}
+    n_assessment_areas: {value: 1, line: 142}
+    loan_products_evaluated: {value: [consumer, home_mortgage, small_business, small_farm], line: 286-287}
+    finding_present: {value: false, line: 658-659}
+    rating_lowered: {value: false, line: 658-659}
+
+  FRB_3664588_FieldPoint_2024_ISB_NI:
+    regulator: {value: FRB, line: 17}
+    bank_name: {value: Fieldpoint Private Bank & Trust, line: 11}
+    bank_id: {value: "3664588", line: 12}
+    exam_date: {value: 2024-01-16, line: 3}
+    exam_method: {value: isb, line: 253-254}
+    overall_rating: {value: NI, line: 98}
+    lending_test_rating: {value: NI, line: 99, note: line 594 repeats the sentence at state scope}
+    cd_test_rating: {value: S, line: 100}
+    prior_evaluation_date: {value: 2018-02-12, line: 201-202}
+    prior_rating: {value: S, line: 201}
+    total_assets_usd: {value: 1700000000, line: 150-151}
+    total_assets_asof: {value: 2023-09-30, line: 150}
+    avg_ltd_ratio_pct: {value: 91.1, line: 374-375}
+    inside_aa_share_number_pct: {value: 40.8, line: 382-383, note: by number; 43.6 is by dollar}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 382-383}
+    n_assessment_areas: {value: 4, line: 221, note: the Miami MD was excluded (lines 218-219); line 213 names the prior evaluation's two areas}
+    loan_products_evaluated: {value: [home_mortgage, small_business], line: 266-267, note: also lines 273-274; construction, consumer and small farm excluded at 277-278}
+    finding_present: {value: false, line: 581-583}
+    rating_lowered: {value: false, line: 581-583}
+
+  FRB_663656_SmallBusinessBank_2024_SM_NI:
+    regulator: {value: FRB, line: 16}
+    bank_name: {value: Small Business Bank, line: 10}
+    bank_id: {value: "663656", line: 11}
+    exam_date: {value: 2024-11-18, line: 3}
+    exam_method: {value: small, line: 69-70}
+    overall_rating: {value: NI, line: 54}
+    lending_test_rating: {null_reason: absent_from_document, line: 54-64, note: FRB Small (Kansas City) has no Lending Test sentence}
+    cd_test_rating: {null_reason: absent_from_document, line: 54-64}
+    prior_evaluation_date: {value: 2020-03-23, line: 125-126}
+    prior_rating: {value: S, line: 125}
+    total_assets_usd: {value: 94200000, line: 91}
+    total_assets_asof: {value: 2024-06-30, line: 91}
+    avg_ltd_ratio_pct: {value: 85.9, line: 382-383}
+    inside_aa_share_number_pct: {value: 21.3, line: 412-413, note: also the Table 7 Total Loans row at line 424}
+    inside_aa_share_product: {value: all_reviewed_combined, line: 412-413}
+    n_assessment_areas: {value: 1, line: 137-138, note: a multistate MSA is one AA; also line 76 'only AA'}
+    loan_products_evaluated: {value: [small_business], line: 80}
+    finding_present: {value: false, line: 531-535, note: names ECOA and the Fair Housing Act inside negated boilerplate}
+    rating_lowered: {value: false, line: 531-535}
