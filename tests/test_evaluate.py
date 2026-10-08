@@ -86,9 +86,25 @@ def test_within_1pct_same_quarter():
     assert not evaluate.values_match(1_000_000_000, 1_011_000_000, spec, "2022-06-30", "2022-06-30")
     # Same number, different quarter: not a match.
     assert not evaluate.values_match(1_000_000_000, 1_000_000_000, spec, "2022-06-30", "2022-09-30")
-    # Missing as-of on either side: numbers only.
-    assert evaluate.values_match(1_000_000_000, 1_000_000_000, spec, "2022-06-30", None)
+    # Gold has an as-of date and the system gives none: the quarter cannot be checked, so wrong.
+    assert not evaluate.values_match(1_000_000_000, 1_000_000_000, spec, "2022-06-30", None)
+    # Gold has no as-of date: numbers only.
+    assert evaluate.values_match(1_000_000_000, 1_000_000_000, spec, None, "2022-06-30")
     assert evaluate.values_match("1,000,000,000", "$1000000000", spec)
+
+
+@pytest.mark.parametrize(
+    "g,p,ok",
+    [
+        ("Bank of Utica", "Bank", False),
+        ("First State Bank", "First State Bank of Nebraska", False),
+        ("Liberty Bank", "Liberty Bank and Trust Company", False),
+        ("SouthStar Bank, S.S.B.", "SouthStar Bank S.S.B", True),
+        ("Fieldpoint Private Bank & Trust", "FieldPoint Private Bank & Trust", True),
+    ],
+)
+def test_name_fuzzy_rejects_prefixes(g, p, ok):
+    assert evaluate.values_match(g, p, field_spec("bank_name")) is ok
 
 
 # ------------------------------------------------------------ metrics table
@@ -165,8 +181,9 @@ def test_metrics_table(synthetic):
     r = _row(t, "overall_rating")
     assert r["n_gold"] == 6 and r["n_answered"] == 3 and r["n_abstain"] == 2
     assert r["n_correct"] == 2 and r["n_wrong"] == 1 and r["n_fabricated_absence"] == 1
-    assert r["accuracy"] == pytest.approx(2 / 3)
-    assert r["accuracy_lo"] < 2 / 3 < r["accuracy_hi"]
+    # The fabricated absence is wrong (design 6.2): 2 correct of 4 non-abstained.
+    assert r["accuracy"] == pytest.approx(2 / 4)
+    assert r["accuracy_lo"] < 2 / 4 < r["accuracy_hi"]
     assert r["abstention_rate"] == pytest.approx(2 / 6)
     assert r["fabrication_denominator"] == 0 and math.isnan(r["fabrication_rate"])
     # groundedness: 3 answered, 1 grounded, one does_not_support, one not_found
@@ -190,8 +207,8 @@ def test_metrics_table(synthetic):
     assert r["precision"] == 0.5 and r["recall"] == 0.5 and r["recall_overall"] == 0.5
     assert r["precision_lo"] < 0.5 < r["precision_hi"]
     assert r["n_abstain"] == 1
-    # no quotes at all for this field: groundedness is not applicable
-    assert math.isnan(r["grounded_rate"])
+    # no grounding information for this field: groundedness is unknown
+    assert math.isnan(r["grounded_rate"]) and r["n_grounding_checked"] == 0
 
     r = _row(t, "loan_products_evaluated")
     assert r["metric_type"] == "set_pr"
@@ -207,6 +224,21 @@ def test_metrics_table(synthetic):
     assert r["n_answered"] == 2 and r["n_correct"] == 1 and r["n_abstain"] == 4
     # Rows ordered as in fields.yaml, then by system.
     assert list(t["field"]).index("overall_rating") < list(t["field"]).index("finding_present")
+
+
+def test_fabricated_absence_is_a_miss_for_pr_fields():
+    d = "OCC_1_20240101"
+    labels = [gold("finding_present", True, doc_id=d), gold("finding_present", True, doc_id="OCC_2_20240101"),
+              gold("laws_cited", "FHA|TILA", doc_id=d), gold("laws_cited", null_reason="not_applicable", doc_id="OCC_2_20240101")]
+    preds = [pred("finding_present", True, doc_id=d), pred("finding_present", status="absent", doc_id="OCC_2_20240101"),
+             pred("laws_cited", status="absent", doc_id=d), pred("laws_cited", "FHA|ECOA_RegB", doc_id="OCC_2_20240101")]
+    t = evaluate.metrics_table(evaluate.score_predictions(labels, preds))
+    r = _row(t, "finding_present")
+    assert (r["tp"], r["fp"], r["fn"]) == (1, 0, 1) and r["recall"] == 0.5
+    r = _row(t, "laws_cited")
+    # absent on a gold value: both gold elements missed; elements fabricated on a gold-null item: fp
+    assert (r["tp"], r["fp"], r["fn"]) == (0, 2, 2) and r["n_fabrication"] == 1 and r["n_fabricated_absence"] == 1
+    assert r["precision"] == 0 and r["recall"] == 0
 
 
 def test_error_table(synthetic):
@@ -270,6 +302,25 @@ def test_risk_flags_and_document_risk():
     calib = evaluate.calibration_table(risk, n_boot=20)
     assert set(calib["n_flags"]) == {0, 1, 2}
     assert calib["ece"].notna().all()
+    # One ECE per system, never pooled.
+    assert set(calib["system"]) == {"llm", "rules"}
+    assert calib.groupby("system")["ece"].nunique().le(1).all()
+
+
+def test_risk_flags_never_read_gold():
+    doc = "OCC_9_20240301"
+    labels = [gold("exam_date", "2024-03-01", doc_id=doc), gold("n_assessment_areas", 2, doc_id=doc),
+              gold("lending_data_period_end", "2023-12-31", doc_id=doc), gold("n_full_scope", 1, doc_id=doc),
+              gold("exam_method", "small", doc_id=doc), gold("overall_rating", "S", doc_id=doc),
+              gold("lending_test_rating", "S", doc_id=doc)]
+    preds = [pred("lending_data_period_end", "2024-06-30", doc_id=doc), pred("n_full_scope", 3, doc_id=doc),
+             pred("lending_test_rating", "NI", doc_id=doc)]
+    risk = evaluate.risk_table(evaluate.score_predictions(labels, preds), preds, labels).set_index("field")
+    # exam_date comes from the doc_id (corpus-wide information), so the period check still runs.
+    assert risk.loc["lending_data_period_end", "consistency_fail"]
+    # n_assessment_areas and exam_method were not answered by the system: no flag from gold.
+    assert not risk.loc["n_full_scope", "consistency_fail"]
+    assert not risk.loc["lending_test_rating", "consistency_fail"]
 
 
 def test_lending_consistency_only_for_occ_small():
@@ -322,9 +373,15 @@ def test_guard_logs_and_refuses_second_run_without_deviation(repo):
     dev.write_text("# Deviations\n\n## 2026-10-12 old\n\n- 2026-10-15: rerun after fixing a label in doc X\n")
     evaluate.check_test_guard("test", root=repo, env={}, now=t0 + timedelta(hours=2))
     assert len(log.read_text().splitlines()) == 2
-    # Replay-only regenerations are always allowed and logged.
-    evaluate.check_test_guard("test", root=repo, env={}, now=t0 + timedelta(hours=3), replay_only=True)
+    # The same single entry does not unlock a third run.
+    with pytest.raises(evaluate.TestGuardError, match="2 time"):
+        evaluate.check_test_guard("test", root=repo, env={}, now=t0 + timedelta(hours=3))
+    dev.write_text(dev.read_text() + "- 2026-10-16: second rerun\n")
+    evaluate.check_test_guard("test", root=repo, env={}, now=t0 + timedelta(days=1))
     assert len(log.read_text().splitlines()) == 3
+    # Replay-only regenerations are always allowed and logged.
+    evaluate.check_test_guard("test", root=repo, env={}, now=t0 + timedelta(days=1, hours=1), replay_only=True)
+    assert len(log.read_text().splitlines()) == 4
 
 
 def test_deviation_dates_parsing(tmp_path):
@@ -440,3 +497,7 @@ def test_predictions_grounding_column_is_used(tmp_path: Path):
     preds, column = evaluate.read_predictions(p)
     assert column == {("FDIC_1_20240101", "overall_rating", "llm"): "quote_out_of_scope", ("FDIC_1_20240101", "cd_test_rating", "llm"): None}
     assert "locator_miss" in preds[0].notes and not preds[1].notes
+    # An unknown category is refused rather than read as grounded.
+    p.write_text(csv.replace("quote_out_of_scope", "not_checked"))
+    with pytest.raises(ValueError, match="not_checked"):
+        evaluate.read_predictions(p)

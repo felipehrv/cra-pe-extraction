@@ -274,7 +274,8 @@ def validate(label_path: Path) -> list[Problem]:
     rows = read_sheet(label_path)
     problems: list[Problem] = []
     fields = load_fields()["fields"]
-    gold_nulls = set(load_fields()["null_vocabulary"]["gold"])
+    # "value" is in the gold vocabulary as the non-null case; it is not a null_reason.
+    gold_nulls = set(load_fields()["null_vocabulary"]["gold"]) - {"value"}
     required = {"doc_id", "field", "value", "null_reason", "evidence_page", "quote", "minutes"}
     present = set(rows[0].keys()) if rows else set()
     missing = required - present
@@ -346,9 +347,15 @@ def validate(label_path: Path) -> list[Problem]:
 def _consistency(
     rows: list[dict[str, str]], values: dict[tuple[str, str], Any], fields: dict[str, Any]
 ) -> list[Problem]:
-    """Cross-field rules named by the ``consistency`` key in fields.yaml, per document."""
+    """Cross-field rules per document: the ``consistency`` keys in fields.yaml, the
+    ``derived`` definition of ``rating_lowered``, the not_applicable conditions stated in
+    the field descriptions (Group C attributes when there is no finding, the downgrade
+    attributes when the rating was not lowered, ``inside_aa_share_product`` when the share
+    is null, ``n_full_scope`` for a single assessment area) and the applicability table
+    for the component ratings."""
     problems: list[Problem] = []
     row_of = {(r["doc_id"], r["field"]): i for i, r in enumerate(rows, start=1)}
+    null_of = {(r["doc_id"], r["field"]): r["null_reason"] for r in rows}
     docs = sorted({r["doc_id"] for r in rows})
     rules = {f: s["consistency"] for f, s in fields.items() if "consistency" in s}
 
@@ -360,6 +367,16 @@ def _consistency(
 
         def bad(field: str, rule: str, msg: str, doc_id: str = doc_id) -> None:
             problems.append(Problem(row_of.get((doc_id, field), 0), doc_id, field, rule, msg))
+
+        def is_na(field: str, doc_id: str = doc_id) -> bool:
+            return null_of.get((doc_id, field)) == "not_applicable"
+
+        def na_iff(field: str, condition: bool, reason: str, doc_id: str = doc_id, v: dict[str, Any] = v) -> None:
+            """``field`` must be not_applicable exactly when ``condition`` holds."""
+            if condition and v[field] is not None:
+                bad(field, "na_iff", f"must be not_applicable when {reason}")
+            if not condition and is_na(field) and (doc_id, field) in row_of:
+                bad(field, "na_iff", f"not_applicable but {reason} does not hold")
 
         for field, rule in rules.items():
             x = v[field]
@@ -386,14 +403,39 @@ def _consistency(
 
         # n_full_scope is not_applicable exactly when the bank has one assessment area.
         n = v["n_assessment_areas"]
-        fs_null = next(
-            (r["null_reason"] for r in rows if (r["doc_id"], r["field"]) == (doc_id, "n_full_scope")),
-            "",
-        )
         if n == 1 and v["n_full_scope"] is not None:
             bad("n_full_scope", "na_when_single_aa", "must be not_applicable when n_assessment_areas is 1")
-        if n is not None and n > 1 and fs_null == "not_applicable":
+        if n is not None and n > 1 and is_na("n_full_scope"):
             bad("n_full_scope", "na_when_single_aa", f"not_applicable but n_assessment_areas is {n}")
+
+        # rating_lowered is derived: rating_effect == substantive_lowered.
+        effect, lowered = v["rating_effect"], v["rating_lowered"]
+        if effect is not None and lowered is not None and lowered != (effect == "substantive_lowered"):
+            bad("rating_lowered", "derived_rating_lowered", f"must equal (rating_effect == substantive_lowered); rating_effect is {effect}")
+
+        # Group C attributes are not_applicable exactly when there is no finding ...
+        finding = v["finding_present"]
+        if finding is not None:
+            for field in ("finding_type", "rating_effect", "laws_cited"):
+                na_iff(field, not finding, "finding_present is false")
+        # ... and the downgrade attributes when the rating was not lowered (rating_before
+        # may be absent_from_document when lowered without from/to).
+        if lowered is not None:
+            for field in ("rating_lowered_level", "rating_before", "rating_after"):
+                na_iff(field, not lowered, "rating_lowered is false")
+
+        # inside_aa_share_product refers to a share that must exist.
+        share_null = null_of.get((doc_id, "inside_aa_share_number_pct"))
+        if (doc_id, "inside_aa_share_number_pct") in row_of:
+            na_iff("inside_aa_share_product", bool(share_null), "inside_aa_share_number_pct is null")
+
+        # Applicability table: a component rating printed in no PE of the cell.
+        method = v["exam_method"]
+        if regulator and method:
+            for field in ("lending_test_rating", "cd_test_rating"):
+                cell = applicability(field, regulator, method)
+                if cell == "absent_from_document" and v[field] is not None:
+                    bad(field, "applicability", f"{regulator}/{method} PEs do not print this rating; expected absent_from_document")
     return problems
 
 

@@ -186,6 +186,12 @@ def test_negated_triggers(text):
     assert hits and all(h.negated for h in hits)
 
 
+def test_sentence_wide_negation_false_negative_class():
+    """Documented weakness: a negated clause silences a finding in the same sentence."""
+    hits = scan("The bank's rating was not lowered as a result of these violations of the Fair Housing Act.")
+    assert hits and all(h.negated for h in hits)
+
+
 def test_negation_only_looks_backwards_within_the_sentence():
     """A negator in an earlier sentence does not rescue a later positive sentence."""
     text = "Examiners did not identify any complaints. The FDIC lowered the CRA rating to Needs to Improve."

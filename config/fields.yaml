@@ -12,6 +12,8 @@
 #
 # metric_type: accuracy | binary_pr | set_pr | counts | not_scored
 # tolerance:   how a system value is compared with gold (see docs/analysis_plan.md)
+# prompt_description: wording shown to the LLM instead of description (system vocabulary,
+#              no evaluation metadata); description is the data dictionary entry.
 
 version: 1
 
@@ -91,6 +93,7 @@ fields:
     verification: frb_csv_for_isb_else_gold
     consistency: equals_overall_for_OCC_small
     description: Lending Test rating. Applicability depends on (regulator, method); see applicability block.
+    prompt_description: Lending Test rating as printed in the institution's rating section.
 
   cd_test_rating:
     group: A_or_B
@@ -101,6 +104,7 @@ fields:
     tolerance: exact
     verification: frb_csv_for_isb_else_gold
     description: Community Development Test rating. Absent in all Small Bank PEs (primary fabrication probe).
+    prompt_description: Community Development Test rating as printed in the institution's rating section.
 
   prior_evaluation_date:
     group: A
@@ -110,6 +114,7 @@ fields:
     tolerance: exact
     verification: previous_index_row
     description: Date of the previous CRA evaluation as stated in the PE; absent_from_document if the PE states there is none.
+    prompt_description: Date of the previous CRA evaluation as stated in the PE; status absent if the PE states there is none.
 
   prior_rating:
     group: A
@@ -148,6 +153,7 @@ fields:
     tolerance: exact
     verification: gold
     description: Start of the lending test data window. absent_from_document when only years are given (then analysis_periods holds them).
+    prompt_description: Start of the lending test data window; status absent when only years are given.
 
   lending_data_period_end:
     group: B
@@ -178,6 +184,7 @@ fields:
     verification: gold
     consistency: lte_n_assessment_areas
     description: Number of assessment areas reviewed with full-scope procedures. not_applicable when n_assessment_areas is 1.
+    prompt_description: Number of assessment areas reviewed with full-scope procedures; status absent when the bank has a single assessment area.
 
   loan_products_evaluated:
     group: B
@@ -207,6 +214,7 @@ fields:
     tolerance: within_0.1pp
     verification: gold
     description: Percent of loans (by number) originated inside the assessment area(s). absent_from_document when narrative only.
+    prompt_description: Percent of loans (by number) originated inside the assessment area(s); status absent when the PE gives no figure.
 
   inside_aa_share_product:
     group: B
@@ -217,6 +225,7 @@ fields:
     tolerance: exact
     verification: gold
     description: Product the inside-AA share refers to. not_applicable when inside_aa_share_number_pct is absent.
+    prompt_description: Product the inside-assessment-area share refers to; status absent when no share figure is stated.
 
   avg_ltd_ratio_pct:
     group: B
@@ -226,6 +235,7 @@ fields:
     tolerance: within_0.1pp
     verification: gold
     description: Average net loan-to-deposit ratio over the evaluation period as stated. absent_from_document when narrative only.
+    prompt_description: Average net loan-to-deposit ratio over the evaluation period as stated; status absent when the PE gives no figure.
 
   # ---------------------------------------------------------------- Group C (census)
   finding_present:
@@ -246,6 +256,7 @@ fields:
     metric_type: counts
     verification: census
     description: Nature of the finding. not_applicable when finding_present is false.
+    prompt_description: Nature of the finding; status absent when finding_present is false.
 
   rating_effect:
     group: C
@@ -255,6 +266,7 @@ fields:
     metric_type: accuracy
     verification: census
     description: Effect of the finding on the rating as stated. not_applicable when finding_present is false.
+    prompt_description: Effect of the finding on the rating as stated; status absent when finding_present is false.
 
   rating_lowered:
     group: C
@@ -274,6 +286,7 @@ fields:
     metric_type: accuracy
     verification: census
     description: Which rating was lowered. not_applicable unless rating_lowered.
+    prompt_description: Which rating was lowered; status absent unless rating_lowered is true.
 
   rating_before:
     group: C
@@ -283,6 +296,7 @@ fields:
     metric_type: accuracy
     verification: census
     description: Rating before the downgrade. not_applicable unless rating_lowered; absent_from_document when lowered without from/to.
+    prompt_description: Rating before the downgrade; status absent unless the PE states a from/to downgrade.
 
   rating_after:
     group: C
@@ -302,6 +316,7 @@ fields:
     metric_type: set_pr
     verification: census
     description: Laws or regulations the finding cites. not_applicable when finding_present is false (fabrication probe); absent_from_document when a finding names no law.
+    prompt_description: Laws or regulations the finding cites; status absent when there is no finding or the finding names no law.
 
   practice_basis:
     group: C

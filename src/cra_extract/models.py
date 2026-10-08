@@ -159,3 +159,5 @@ class Trace(BaseModel):
     latency_s: float | None = None
     called_at: datetime
     error: str | None = None
+    stop_reason: str | None = None
+    response_format: str | None = None

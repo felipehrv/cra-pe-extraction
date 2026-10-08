@@ -203,7 +203,10 @@ def test_portable_schema_rewrites_nullable_slots():
 
 def test_build_prompt_lists_sections_and_rules(doc, sections):
     text = build_prompt(doc, sections, "cover_and_rating")
-    assert "Document: FDIC_12299_20220912" in text
+    # The header conditions on regulator and method only: no doc_id, bank name or date,
+    # which are scored Group A answers (design 6.8).
+    assert "Document: a CRA Performance Evaluation" in text and "FDIC_12299_20220912" not in text
+    assert "SouthStar" not in text.split("=== section")[0] and "2022-09-12" not in text
     assert "Regulator: FDIC" in text
     assert "Exam method: Intermediate Small Bank" in text
     assert "=== section: rating | scope: institution | page 3 ===" in text
@@ -223,6 +226,16 @@ def test_build_prompt_applicability_for_small_bank(doc, sections):
     assert "FDIC Small Bank" in cd_line and "not printed" in cd_line
     lt_line = text.split("- lending_test_rating")[1].split("\n")[0]
     assert "not printed" in lt_line
+
+
+@pytest.mark.parametrize("regulator,method", [("OCC", "small"), ("OCC", "isb"), ("FDIC", "small"), ("FDIC", "isb"), ("FRB", "small"), ("FRB", "isb")])
+def test_prompts_never_leak_evaluation_metadata(doc, sections, regulator, method):
+    """The field lines use the system vocabulary and never name a probe or the gold nulls."""
+    d = doc.model_copy(update={"regulator": regulator, "method": method})
+    for group in ("cover_and_rating", "institution", "lending_tables", "review"):
+        text = build_prompt(d, sections, group).lower()
+        for word in ("probe", "absent_from_document", "not_applicable", "applicability block", "fabrication", "gold"):
+            assert word not in text, (group, regulator, method, word)
 
 
 def test_build_prompt_no_sections(doc):
@@ -284,6 +297,69 @@ def test_extract_maps_values_absent_and_missing(doc, sections, tmp_path):
     assert trace.trace_id == llm.make_trace_id(doc.doc_id, "cover_and_rating", "fake-1", trace.prompt_hash)
     written = llm.read_traces(tmp_path / "dev" / "fake.jsonl")
     assert len(written) == 1 and written[0].trace_id == trace.trace_id
+
+
+def test_extract_propagates_daily_limit(doc, sections, tmp_path):
+    class Exhausted(FakeBackend):
+        def _call(self, *args):
+            raise llm.DailyLimitExceeded("fake: 1 requests today, limit 1")
+
+    with pytest.raises(llm.DailyLimitExceeded):
+        llm.extract(doc, sections, "cover_and_rating", Exhausted({}), "dev", trace_dir=tmp_path)
+    assert not (tmp_path / "dev" / "fake.jsonl").exists()
+
+
+def test_extract_marks_truncated_output(doc, sections, tmp_path):
+    class Truncating(FakeBackend):
+        def _call(self, *args):
+            return llm.BackendResult(text="{\"regulator\": {\"value\": \"FD", parsed_json=None, stop_reason="max_tokens")
+
+    values, trace = llm.extract(doc, sections, "cover_and_rating", Truncating({}), "dev", trace_dir=tmp_path)
+    assert trace.error == "max_tokens" and trace.stop_reason == "max_tokens"
+    assert all(v.status == "abstain" and v.notes == "truncated" for v in values)
+
+
+def test_openai_backend_only_falls_back_on_response_format_errors(monkeypatch):
+    import openai
+
+    monkeypatch.setenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+    backend = llm.OpenAICompatibleBackend("m", name="ollama", num_ctx=100_000)
+    backend.sleep = lambda s: None
+    assert backend.max_output_tokens == llm.DEFAULT_OLLAMA_MAX_OUTPUT_TOKENS
+    calls: list[dict[str, Any]] = []
+
+    def make_client(messages):
+        class Completions:
+            def create(self, **kwargs):
+                calls.append(kwargs)
+                return messages(kwargs)
+
+        return type("C", (), {"chat": type("Chat", (), {"completions": Completions()})()})()
+
+    def bad(message):
+        resp = type("R", (), {"status_code": 400, "headers": {}, "request": None})()
+        return openai.BadRequestError(message, response=resp, body={"error": {"message": message}})
+
+    def ctx_error(kwargs):
+        raise bad("context length exceeded")
+
+    backend.client = make_client(ctx_error)
+    with pytest.raises(openai.BadRequestError):
+        backend.complete("s", "u", {"type": "object"}, "m")
+    assert backend.json_mode == "json_schema" and len(calls) == 1
+
+    def schema_error(kwargs):
+        if kwargs["response_format"]["type"] == "json_schema":
+            raise bad("response_format json_schema is not supported")
+        msg = type("M", (), {"content": "{}"})()
+        choice = type("Ch", (), {"message": msg, "finish_reason": "stop"})()
+        return type("Done", (), {"choices": [choice], "usage": None, "model": "m"})()
+
+    calls.clear()
+    backend.client = make_client(schema_error)
+    result = backend.complete("s", "u", {"type": "object"}, "m")
+    assert backend.json_mode == "json_object" and len(calls) == 2
+    assert result.response_format == "json_object" and result.stop_reason == "stop"
 
 
 def test_extract_rejects_invalid_values(doc, sections, tmp_path):
@@ -357,8 +433,14 @@ def test_extract_call_failure_recorded(doc, sections, tmp_path):
 def test_locate_quote_tolerates_whitespace(sections):
     hit = llm.locate_quote("The Lending   Test is\nrated Satisfactory.", sections)
     assert hit is not None
-    sec, offset = hit
+    sec, offset, end = hit
     assert sec.name == "rating" and sec.text[offset:].startswith("The Lending Test")
+    assert sec.text[offset:end].endswith("Satisfactory.")
+    # The matched span, not len(quote), sets the end when the document has extra whitespace.
+    wide = Section(name="w", doc_id="d", page_start=1, page_end=1, char_start=0, char_end=50,
+                   text="This institution is rated Needs to  Improve.", scope="institution")
+    sec2, start2, end2 = llm.locate_quote("rated Needs to Improve.", {"w": wide})
+    assert sec2.text[start2:end2] == "rated Needs to  Improve."
     assert llm.locate_quote("not in any section", sections) is None
     assert llm.locate_quote("   ", sections) is None
 
@@ -385,6 +467,8 @@ def test_replay_serves_stored_trace_and_raises_on_miss(doc, sections, tmp_path):
     assert [v.model_dump() for v in values_rep] == [v.model_dump() for v in values_live]
     assert trace_rep.trace_id == trace_live.trace_id
     assert trace_rep.response_json == response
+    # A replayed trace carries the original call time and cost, not the replay's.
+    assert trace_rep.called_at == trace_live.called_at and trace_rep.cost_usd == trace_live.cost_usd
     # Replay does not append a second trace.
     assert len(llm.read_traces(tmp_path / "dev" / "fake.jsonl")) == 1
 
@@ -438,6 +522,24 @@ def test_retry_honours_retry_after():
     backend.sleep = sleeps.append
     backend.complete("s", "u", {}, "fake-1")
     assert sleeps == [7.0]
+
+
+def test_retry_after_http_date():
+    exc = StatusError(429, retry_after="Wed, 21 Oct 2026 07:28:00 GMT")
+    base = llm.datetime(2026, 10, 21, 7, 27, 30, tzinfo=llm.UTC).timestamp()
+    assert llm._retry_after(exc, now=lambda: base) == pytest.approx(30.0)
+    assert llm._retry_after(StatusError(429, retry_after="garbage")) is None
+
+
+def test_limiter_counts_every_attempt(tmp_path):
+    rl = llm.RateLimiter("x", per_day=2, cache_dir=tmp_path, clock=lambda: 1_700_000_000.0)
+    backend = FlakyBackend({"a": 1}, lambda: StatusError(503), n_failures=1)
+    backend.limiter = rl
+    backend.sleep = lambda s: None
+    backend.complete("s", "u", {}, "fake-1")  # one failure plus one success: two requests
+    assert rl.daily_count() == 2
+    with pytest.raises(llm.DailyLimitExceeded):
+        backend.complete("s", "u", {}, "fake-1")
 
 
 def test_retry_gives_up_after_max_attempts():
@@ -505,6 +607,15 @@ def test_rate_limiter_sleeps_and_persists_daily_count(tmp_path):
     assert len(sleeps) == 1 and sleeps[0] == pytest.approx(50.0)
     data = json.loads((tmp_path / "ratelimit_gem.json").read_text())
     assert data["count"] == 3 and data["date"] == "2023-11-14"
+    # Without a daily limit nothing is persisted; the day boundary follows reset_tz.
+    rl2 = llm.RateLimiter("nolimit", per_minute=5, cache_dir=tmp_path, clock=lambda: clock["t"])
+    rl2.acquire()
+    assert not (tmp_path / "ratelimit_nolimit.json").exists()
+    from zoneinfo import ZoneInfo
+    rl3 = llm.RateLimiter("pt", per_day=1, cache_dir=tmp_path, clock=lambda: 1_700_000_000.0, reset_tz=ZoneInfo("America/Los_Angeles"))
+    assert rl3._today() == "2023-11-14"
+    rl4 = llm.RateLimiter("utc", per_day=1, cache_dir=tmp_path, clock=lambda: 1_700_020_000.0, reset_tz=ZoneInfo("America/Los_Angeles"))
+    assert rl4._today() == "2023-11-14" and llm.RateLimiter("u", per_day=1, cache_dir=tmp_path, clock=lambda: 1_700_020_000.0)._today() == "2023-11-15"
     assert rl.daily_count() == 3
 
     # Daily budget spent: a fresh limiter reading the same file refuses.
@@ -549,6 +660,9 @@ def test_trace_jsonl_round_trip(tmp_path):
 def test_prompt_hash_and_trace_id_are_stable():
     h1 = llm.prompt_hash("s", "u")
     assert h1 == llm.prompt_hash("s", "u") and h1 != llm.prompt_hash("s", "u2")
+    # The schema is part of the key: a schema-only change never replays a stale trace.
+    assert llm.prompt_hash("s", "u", {"a": 1}) == llm.prompt_hash("s", "u", {"a": 1})
+    assert llm.prompt_hash("s", "u", {"a": 1}) != llm.prompt_hash("s", "u", {"a": 2}) != h1
     tid = llm.make_trace_id("doc", "review", "m", h1)
     assert len(tid) == 16 and tid == llm.make_trace_id("doc", "review", "m", h1)
     assert tid != llm.make_trace_id("doc", "review", "m2", h1)
@@ -632,9 +746,13 @@ def test_make_backend_unknown():
 def test_sample_doc_and_whole_document_sections():
     doc = llm.sample_doc("FDIC_12299_SouthStar_2022_ISB_NI_fairlending")
     assert doc.regulator == "FDIC" and doc.bank_id == "12299" and doc.method == "isb"
+    # Manifest-style doc_id so the smoke trace is reusable by run.py.
+    assert doc.doc_id == "FDIC_12299_20220912" and doc.exam_date == date(2022, 9, 12)
     assert llm.sample_doc("OCC_11715_LemontNB_2024_SN").method == "small"
     secs = llm.sections_from_text(doc.doc_id, "p1\fp2\fp3")
     assert secs["document"].page_end == 3 and secs["document"].char_end == 8
+    # pdftotext output ends with a form feed: the trailing empty page is not counted.
+    assert llm.sections_from_text(doc.doc_id, "p1\fp2\fp3\f")["document"].page_end == 3
 
 
 @pytest.mark.network

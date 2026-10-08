@@ -309,6 +309,30 @@ def test_isb_rating_page_prints_component_ratings():
     assert "inferred" in (by["exam_method"].notes or "")
 
 
+def test_aa_count_skips_geography_nouns():
+    """FRB_663656 lines 241 and 284: '14 AA counties' counts counties, not assessment areas."""
+    from cra_extract.rules import AA_COUNT_RE
+
+    assert AA_COUNT_RE.search("families living below the poverty level in the 14 AA counties ranged from a low") is None
+    assert AA_COUNT_RE.search("Affordability ratios within the 14 AA counties ranged from 33.0 percent") is None
+    assert AA_COUNT_RE.search("The bank has designated two assessment areas.").group("n") == "two"
+    assert AA_COUNT_RE.search("The bank operates in 4 AAs within the state.").group("n") == "4"
+
+
+def test_ltd_rejects_state_average_sentence():
+    """FDIC_6078 lines 354 to 355: the host-state average must not be read as the bank's ratio."""
+    text = (
+        "The report provided an average net loan-to-deposit ratio of 60 percent for South Dakota. "
+        "Given this information, the loan-to-deposit ratio is reasonable.\n"
+    )
+    pages = [Page(number=1, text=text)]
+    by = _by_field(extract("FDIC_1_20240101", pages, {"ltd_ratio": _section("ltd_ratio", text)}, "FDIC"))
+    assert by["avg_ltd_ratio_pct"].status == "abstain"
+    own = "The bank's average net loan-to-deposit ratio is 128.1 percent over the past 22 calendar quarters.\n"
+    by = _by_field(extract("FDIC_1_20240101", [Page(number=1, text=own)], {"ltd_ratio": _section("ltd_ratio", own)}, "FDIC"))
+    assert by["avg_ltd_ratio_pct"].value == 128.1
+
+
 def test_doc_page_of():
     pages = [Page(number=1, text="abc\n"), Page(number=2, text="defg\n"), Page(number=3, text="h\n")]
     doc = Doc("X_1_20240101", "OCC", pages, {})

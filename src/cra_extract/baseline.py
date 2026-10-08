@@ -24,6 +24,16 @@ information ... identified by or provided to the OCC" (no trigger because the re
 needs "was identified"). The FRB "No evidence of ... was identified" paragraph is a negated
 hit. :func:`scan` returns every hit with its negation flag so the census can count how often
 the baseline is saved by the negation rule, per regulator.
+
+The negation rule is sentence-wide: any negator earlier in the sentence negates every later
+trigger. That buys the zero false-positive rate on boilerplate at the price of a false-negative
+class the census report must name when it reads the S0 recall number: a finding stated in the
+same sentence as a negated clause is missed. "The bank's rating was not lowered as a result of
+these violations of the Fair Housing Act" negates both the "lowered" and the "violation of"
+triggers, and "Although no evidence of discrimination was found in prior exams, the OCC
+identified discriminatory practices and lowered the rating" negates both hits. None of the
+eight samples prints such a sentence (the two positives are single-clause findings), so the
+samples do not measure this class.
 """
 
 from __future__ import annotations

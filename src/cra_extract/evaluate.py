@@ -20,10 +20,17 @@ Implements design section 6 (6.1, 6.2, 6.4, 6.5, 6.6). The flow is:
 7. ``check_test_guard`` enforces the work rule of section 6.1 for ``--split test``.
 
 Conventions: a gold label without a prediction for a system counts as an
-abstention of that system. Hallucination rate denominator is every non-abstained
-item; numerator is wrong, fabrication, fabricated absence or a misgrounded quote.
-Precision and recall are conditional on the system answering; ``recall_overall``
-counts abstentions on gold positives as misses.
+abstention of that system. A fabricated absence (gold value, system ``absent``) is
+wrong in every conditional metric: it sits in the accuracy denominator and counts as
+a false negative for binary and set fields; only abstentions are excluded. For set
+fields every element produced on a gold-null item is a false positive, as for binary
+fields. Hallucination rate denominator is every non-abstained item; numerator is
+wrong, fabrication, fabricated absence or a misgrounded quote. Precision and recall
+are conditional on the system answering or saying absent; ``recall_overall`` counts
+abstentions on gold positives as misses. Groundedness is checked for systems that
+quote; a system that never gives a quote has NaN groundedness columns, and a field
+whose grounding is only partly known has a NaN hallucination rate
+(``grounding_checked`` is false).
 """
 
 from __future__ import annotations
@@ -72,6 +79,11 @@ def _norm_enum(value: Any) -> str:
     return RATING_WORDS.get(s, s).casefold()
 
 
+def _norm_name(value: Any) -> str:
+    """Casefolded name without punctuation (``S.S.B.`` and ``S.S.B`` compare equal)."""
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s&]", "", str(value))).strip().casefold()
+
+
 def _to_float(value: Any) -> float | None:
     try:
         return float(str(value).replace(",", "").replace("$", "").replace("%", "").strip())
@@ -91,8 +103,11 @@ def values_match(
     pred_asof: Any = None,
 ) -> bool:
     """Apply the field's tolerance rule. ``*_asof`` are only used by
-    ``within_1pct_same_quarter``: when both are present they must fall in the same
-    calendar quarter; when either is missing only the numbers are compared."""
+    ``within_1pct_same_quarter``: when gold carries an as-of date the system must give
+    one in the same calendar quarter (a figure without a date cannot be shown to be
+    from the same quarter and scores wrong); when gold has no date only the numbers
+    are compared. ``name_fuzzy_90`` compares the punctuation-stripped names with
+    ``token_sort_ratio`` so a prefix or an extension of the name does not match."""
     tol = spec.get("tolerance", "exact")
     ftype = spec.get("type", "str")
     if gold_value is None or pred_value is None:
@@ -113,7 +128,7 @@ def values_match(
             return abs(g - p) <= 0.1 + 1e-9
         if tol == "within_1pct_same_quarter":
             qg, qp = _quarter(grounding.parse_date(gold_asof)), _quarter(grounding.parse_date(pred_asof))
-            if qg is not None and qp is not None and qg != qp:
+            if qg is not None and qg != qp:
                 return False
             return abs(g - p) <= 0.01 * abs(g) + 1e-9
         return abs(g - p) <= 1e-9
@@ -122,7 +137,7 @@ def values_match(
     if tol == "exact_strip_zeros":
         return _norm_str(gold_value).lstrip("0") == _norm_str(pred_value).lstrip("0")
     if tol == "name_fuzzy_90":
-        return fuzz.token_set_ratio(_norm_str(gold_value), _norm_str(pred_value)) >= 90
+        return fuzz.token_sort_ratio(_norm_name(gold_value), _norm_name(pred_value)) >= 90
     return _norm_str(gold_value) == _norm_str(pred_value)
 
 
@@ -200,6 +215,17 @@ def _locate(doc_id: str, pages: list[Page]) -> tuple[list[Page], dict[str, Secti
 
 def _regulator_of(doc_id: str) -> str:
     return doc_id.split("_", 1)[0]
+
+
+def _doc_id_date(doc_id: str) -> date | None:
+    """Exam date encoded in ``{regulator}_{bank_id}_{YYYYMMDD}``."""
+    parts = doc_id.split("_")
+    if len(parts) != 3:
+        return None
+    try:
+        return datetime.strptime(parts[2], "%Y%m%d").date()
+    except ValueError:
+        return None
 
 
 # ---------------------------------------------------------------- scoring
@@ -293,13 +319,15 @@ def _pr_counts(gold: LabelRow, pred: FieldValue | None, spec: Mapping[str, Any])
     """Binary and set-level counts used by ``metrics_table``."""
     out: dict[str, Any] = {"gold_pos": math.nan, "pred_pos": math.nan, "tp": math.nan, "fp": math.nan, "fn": math.nan}
     answered = pred is not None and pred.status == "value"
+    absent = pred is not None and pred.status == "absent"
     if spec.get("metric_type") == "binary_pr":
         pos = spec.get("positive", True)
         g = grounding.parse_bool(gold.value) if not gold.is_null else None
         out["gold_pos"] = g == pos if g is not None else False
         out["pred_pos"] = (grounding.parse_bool(pred.value) == pos) if answered else False
-    elif spec.get("metric_type") == "set_pr" and answered and not gold.is_null:
-        g, p = grounding.parse_set(gold.value), grounding.parse_set(pred.value)
+    elif spec.get("metric_type") == "set_pr" and (answered or absent):
+        g = set() if gold.is_null else grounding.parse_set(gold.value)
+        p = grounding.parse_set(pred.value) if answered else set()
         out.update(tp=len(g & p), fp=len(p - g), fn=len(g - p))
     return out
 
@@ -316,11 +344,14 @@ def _rate(k: float, n: float) -> tuple[float, float, float]:
 
 def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
     """Per (field, system) metrics (design 6.2 and 6.4). One row per pair, ordered
-    as in ``fields.yaml`` and then by system name."""
+    as in ``fields.yaml`` and then by system name. Groundedness columns are NaN for a
+    system that never gives a quote; for a quoting system an answered row without a
+    quote counts as ``quote_not_found``."""
     order = {f: i for i, f in enumerate(load_fields()["fields"])}
     rows: list[dict[str, Any]] = []
     if scored.empty:
         return pd.DataFrame(columns=["field", "system"])
+    system_quotes = scored.groupby("system")["has_quote"].any()
     for (field, system), g in scored.groupby(["field", "system"], sort=False):
         mt = g["metric_type"].iloc[0]
         n = len(g)
@@ -352,14 +383,15 @@ def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
         n_positive = tp = fp = fn = math.nan
         recall_overall = math.nan
         if mt == "accuracy" or mt == "set_pr":
-            acc = _rate(counts["correct"], counts["correct"] + counts["wrong"])
+            acc = _rate(counts["correct"], counts["correct"] + counts["wrong"] + counts["fabricated_absence"])
         if mt == "binary_pr":
             gp = g["gold_pos"].astype(bool)
             pp = g["pred_pos"].astype(bool)
             ans = g["pred_status"] == "value"
+            not_abs = g["pred_status"] != "abstain"
             tp = int((gp & pp & ans).sum())
             fp = int((~gp & pp & ans).sum())
-            fn = int((gp & ~pp & ans).sum())
+            fn = int((gp & ~pp & not_abs).sum())  # a fabricated absence is a miss
             n_positive = int(gp.sum())
             prec = _rate(tp, tp + fp)
             rec = _rate(tp, tp + fn)
@@ -382,8 +414,8 @@ def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
         # Groundedness over answered items whose grounding could be determined.
         known = answered[answered["grounding_failure"].notna() | (answered["grounded"] == True)]  # noqa: E712
         n_known = len(known)
-        has_any_quote = bool(answered["has_quote"].any())
-        if n_known and has_any_quote:
+        row["grounding_checked"] = bool(system_quotes.get(system, False)) and n_known == len(answered)
+        if n_known and system_quotes.get(system, False):
             fails = known["grounding_failure"]
             row["n_grounding_checked"] = n_known
             for cat in GROUNDING_FAILURES:
@@ -395,7 +427,7 @@ def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
             row["correct_misgrounded"] = int(((kv["cell"] == "correct") & ~gr).sum())
             row["wrong_grounded"] = int(((kv["cell"] == "wrong") & gr).sum())
             row["wrong_misgrounded"] = int(((kv["cell"] == "wrong") & ~gr).sum())
-            misgrounded_correct = row["correct_misgrounded"] + int(((known["cell"] == "correct_null") & ~known["grounded"].astype(bool)).sum())
+            misgrounded_correct = row["correct_misgrounded"]
         else:
             row["n_grounding_checked"] = 0
             for cat in GROUNDING_FAILURES:
@@ -406,6 +438,9 @@ def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
             misgrounded_correct = 0
         halluc = counts["wrong"] + counts["fabrication"] + counts["fabricated_absence"] + misgrounded_correct
         row["hallucination_rate"], row["hallucination_lo"], row["hallucination_hi"] = _rate(halluc, len(not_abstained))
+        if 0 < n_known < len(answered):
+            # Grounding only partly known: the misgrounded count is a lower bound.
+            row["hallucination_rate"] = row["hallucination_lo"] = row["hallucination_hi"] = math.nan
         if mt == "counts":
             for k in list(row):
                 if k.endswith(("_rate", "_lo", "_hi")) or k in {"accuracy", "precision", "recall", "recall_overall"}:
@@ -448,9 +483,10 @@ def consistency_fail(
     spec: Mapping[str, Any],
 ) -> bool:
     """Apply the field's ``consistency`` key from ``fields.yaml``. ``lookup(field)``
-    returns the same system's value for another field of the same document, falling
-    back to gold. Keys that need information outside the predictions (the count of
-    assessment-area sections) never flag."""
+    returns the same system's value for another field of the same document (or, for
+    ``exam_date``, the date encoded in the doc_id, which exists corpus-wide); it never
+    reads gold, so the flags are computable at corpus scale. Keys that need information
+    outside the predictions (the count of assessment-area sections) never flag."""
     key = spec.get("consistency")
     if key is None or value is None:
         return False
@@ -474,8 +510,10 @@ def consistency_fail(
     return False
 
 
-def risk_table(scored: pd.DataFrame, preds: list[FieldValue], labels: list[LabelRow]) -> pd.DataFrame:
+def risk_table(scored: pd.DataFrame, preds: list[FieldValue], labels: list[LabelRow] | None = None) -> pd.DataFrame:
     """Risk flags per value (design 6.5) and document risk summed over Group B values.
+    ``labels`` is accepted for call compatibility and not read: the flags use only
+    system output and the doc_id.
 
     Flags: ``locator_miss`` (a ``locator_miss`` note or attribute on the prediction),
     ``disagreement`` (another system answered the same item with a non-matching value),
@@ -485,7 +523,6 @@ def risk_table(scored: pd.DataFrame, preds: list[FieldValue], labels: list[Label
     """
     fields = load_fields()["fields"]
     answered = {(p.doc_id, p.field, p.system): p for p in preds if p.status == "value" and p.field in fields}
-    gold = {(lab.doc_id, lab.field): lab.value for lab in labels if not lab.is_null}
     by_system: dict[str, set[str]] = {}
     for p in preds:
         by_system.setdefault(p.system, set())
@@ -507,7 +544,9 @@ def risk_table(scored: pd.DataFrame, preds: list[FieldValue], labels: list[Label
 
         def lookup(f: str, _doc: str = r.doc_id, _sys: str = r.system) -> Any:
             p = answered.get((_doc, f, _sys))
-            return p.value if p is not None else gold.get((_doc, f))
+            if p is not None:
+                return p.value
+            return _doc_id_date(_doc) if f == "exam_date" else None
 
         cons = bool(pred is not None and consistency_fail(r.field, pred.value, r.doc_id, lookup, spec))
         rows.append({
@@ -529,21 +568,27 @@ def risk_table(scored: pd.DataFrame, preds: list[FieldValue], labels: list[Label
 
 def calibration_table(risk: pd.DataFrame, n_boot: int = 1000) -> pd.DataFrame:
     """Error rate by flag count on answered Group B values plus ECE with a
-    bootstrapped SE (design 6.5; indicative only). Probability = n_flags / 4."""
+    bootstrapped SE (design 6.5; indicative only), one block per system because the
+    flags behave differently per system (a system without quotes never trips the
+    groundedness flag). Probability = n_flags / 4."""
+    cols = ["system", "n_flags", "n", "error_rate", "ece", "ece_se"]
     if risk.empty:
-        return pd.DataFrame(columns=["n_flags", "n", "error_rate", "ece", "ece_se"])
+        return pd.DataFrame(columns=cols)
     sub = risk[risk["answered"] & risk["group"].isin(RISK_GROUPS)]
     if sub.empty:
-        return pd.DataFrame(columns=["n_flags", "n", "error_rate", "ece", "ece_se"])
-    err = (sub["cell"] != "correct").astype(int)
-    rows = []
-    for k, g in sub.assign(err=err).groupby("n_flags"):
-        rows.append({"n_flags": int(k), "n": len(g), "error_rate": float(g["err"].mean())})
-    ece, se = expected_calibration_error((sub["n_flags"] / 4.0).tolist(), err.tolist(), n_bins=5, n_boot=n_boot)
-    df = pd.DataFrame(rows)
-    df["ece"] = ece
-    df["ece_se"] = se
-    return df
+        return pd.DataFrame(columns=cols)
+    frames = []
+    for system, part in sub.groupby("system", sort=True):
+        err = (part["cell"] != "correct").astype(int)
+        rows = []
+        for k, g in part.assign(err=err).groupby("n_flags"):
+            rows.append({"system": system, "n_flags": int(k), "n": len(g), "error_rate": float(g["err"].mean())})
+        ece, se = expected_calibration_error((part["n_flags"] / 4.0).tolist(), err.tolist(), n_bins=5, n_boot=n_boot)
+        df = pd.DataFrame(rows)
+        df["ece"] = ece
+        df["ece_se"] = se
+        frames.append(df)
+    return pd.concat(frames, ignore_index=True)[cols]
 
 
 # --------------------------------------------------------------- test guard
@@ -588,9 +633,10 @@ def check_test_guard(
 
     - the git tag ``plan-v1.0`` must exist (or ``CRA_ALLOW_TEST_EVAL=1`` for CI on traces);
     - every invocation is appended to ``results/test_invocations.log``;
-    - a second scoring run needs an entry in ``docs/deviations.md`` dated on or after
-      the first invocation. ``--replay-only`` regenerations are logged but neither
-      count as a run nor are blocked by this rule.
+    - every scoring run after the first needs its own entry in ``docs/deviations.md``
+      dated on or after the first invocation: the number of such entries must be at
+      least the number of runs already logged. ``--replay-only`` regenerations are
+      logged but neither count as a run nor are blocked by this rule.
     """
     if split != "test":
         return
@@ -609,10 +655,11 @@ def check_test_guard(
     if runs and not replay_only:
         first = runs[0].date()
         newer = [d for d in deviation_dates(root / "docs" / "deviations.md") if d >= first]
-        if not newer:
+        if len(newer) < len(runs):
             raise TestGuardError(
-                f"test split already evaluated on {runs[0].isoformat(timespec='seconds')}; "
-                "add a dated entry to docs/deviations.md before running again"
+                f"test split already evaluated {len(runs)} time(s), first on "
+                f"{runs[0].isoformat(timespec='seconds')}, with {len(newer)} deviation entries since; "
+                "add a dated entry to docs/deviations.md for this run before running again"
             )
     now = now or datetime.now().astimezone()
     log.parent.mkdir(parents=True, exist_ok=True)
@@ -634,7 +681,8 @@ def read_labels(path: Path) -> list[LabelRow]:
 
 def read_predictions(path: Path) -> tuple[list[FieldValue], dict[tuple[str, str, str], str | None] | None]:
     """Predictions as ``FieldValue`` rows plus the optional ``grounding_failure`` column
-    (empty cell = grounded) keyed by (doc_id, field, system)."""
+    (empty cell = grounded) keyed by (doc_id, field, system). A non-empty value outside
+    ``GROUNDING_FAILURES`` raises ``ValueError`` rather than passing as grounded."""
     df = pd.read_csv(path, dtype=str, keep_default_na=False)
     fv_fields = set(FieldValue.model_fields)
     preds, column = [], None
@@ -648,7 +696,12 @@ def read_predictions(path: Path) -> tuple[list[FieldValue], dict[tuple[str, str,
         preds.append(fv)
         if column is not None:
             g = r.get("grounding_failure")
-            column[(fv.doc_id, fv.field, fv.system)] = g if g in GROUNDING_FAILURES else None
+            if g is not None and g not in GROUNDING_FAILURES:
+                raise ValueError(
+                    f"{path}: unknown grounding_failure {g!r} for {fv.doc_id}/{fv.field}/{fv.system}; "
+                    f"expected empty or one of {GROUNDING_FAILURES}"
+                )
+            column[(fv.doc_id, fv.field, fv.system)] = g
     return preds, column
 
 

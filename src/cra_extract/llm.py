@@ -29,18 +29,20 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import logging
 import os
 import re
 import sys
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, tzinfo
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 
 from cra_extract.config import CACHE_DIR, FIXTURES_DIR, TRACE_DIR, field_spec, load_prices
-from cra_extract.models import DocRecord, FieldValue, Section, Trace
+from cra_extract.models import DocRecord, FieldValue, Section, Trace, make_doc_id
 from cra_extract.prompts import (
     PROMPT_VERSION,
     STATUSES,
@@ -51,8 +53,15 @@ from cra_extract.prompts import (
     portable_schema,
 )
 
-DEFAULT_MAX_OUTPUT_TOKENS = 4096
+# Thinking tokens count toward max_tokens on the hosted APIs (always on for the current
+# Claude models, on by default for Gemini), so the API default leaves room for them; the
+# local model gets a smaller budget because it shares num_ctx with the prompt.
+log = logging.getLogger(__name__)
+
+DEFAULT_MAX_OUTPUT_TOKENS = 16000
+DEFAULT_OLLAMA_MAX_OUTPUT_TOKENS = 4096
 DEFAULT_OLLAMA_NUM_CTX = 32768
+TRUNCATION_STOP_REASONS = {"max_tokens", "refusal", "MAX_TOKENS", "SAFETY", "RECITATION", "length", "content_filter"}
 CHARS_PER_TOKEN_LOWER_BOUND = 3.0
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -89,21 +98,29 @@ class BackendResult:
     input_tokens: int | None = None
     output_tokens: int | None = None
     latency_s: float | None = None
+    stop_reason: str | None = None
+    response_format: str | None = None
     from_replay: bool = False
     replay_trace_id: str | None = None
+    replay_called_at: datetime | None = None
+    replay_cost_usd: float | None = None
 
 
 # ----------------------------------------------------------------------------- hashing
 
 
-def prompt_hash(system_prompt: str, user_prompt: str) -> str:
-    """Stable hash of the full prompt (system and user) and the prompt version."""
+def prompt_hash(system_prompt: str, user_prompt: str, json_schema: dict[str, Any] | None = None) -> str:
+    """Stable hash of the prompt version, the full prompt (system and user) and the JSON
+    schema sent with it, so a schema-only change never replays a stale trace."""
     h = hashlib.sha256()
     h.update(PROMPT_VERSION.encode())
     h.update(b"\x00")
     h.update(system_prompt.encode())
     h.update(b"\x00")
     h.update(user_prompt.encode())
+    if json_schema is not None:
+        h.update(b"\x00")
+        h.update(json.dumps(json_schema, sort_keys=True).encode())
     return h.hexdigest()
 
 
@@ -154,8 +171,9 @@ def _status_code(exc: BaseException) -> int | None:
     return None
 
 
-def _retry_after(exc: BaseException) -> float | None:
-    """Seconds from a ``Retry-After`` header when the SDK exposes the response."""
+def _retry_after(exc: BaseException, now: Callable[[], float] = time.time) -> float | None:
+    """Seconds from a ``Retry-After`` header (delay-seconds or an HTTP-date, RFC 9110)
+    when the SDK exposes the response."""
     response = getattr(exc, "response", None)
     headers = getattr(response, "headers", None)
     if not headers:
@@ -166,7 +184,14 @@ def _retry_after(exc: BaseException) -> float | None:
     try:
         return max(0.0, float(raw))
     except ValueError:
+        pass
+    try:
+        when = parsedate_to_datetime(str(raw))
+    except (TypeError, ValueError):
         return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=UTC)
+    return max(0.0, when.timestamp() - now())
 
 
 def is_retryable(exc: BaseException) -> bool:
@@ -229,6 +254,7 @@ class RateLimiter:
         cache_dir: Path = CACHE_DIR,
         sleep: Callable[[float], None] = time.sleep,
         clock: Callable[[], float] = time.time,
+        reset_tz: tzinfo = UTC,
     ) -> None:
         self.backend = backend
         self.per_minute = per_minute
@@ -237,9 +263,11 @@ class RateLimiter:
         self._sleep = sleep
         self._clock = clock
         self._window: list[float] = []
+        # The provider's day boundary (Gemini resets at midnight Pacific time).
+        self.reset_tz = reset_tz
 
     def _today(self) -> str:
-        return datetime.fromtimestamp(self._clock(), tz=UTC).date().isoformat()
+        return datetime.fromtimestamp(self._clock(), tz=self.reset_tz).date().isoformat()
 
     def _load_daily(self) -> dict[str, Any]:
         try:
@@ -266,8 +294,10 @@ class RateLimiter:
                 now = self._clock()
                 self._window = [t for t in self._window if now - t < 60.0]
             self._window.append(now)
+        if not self.per_day:
+            return
         daily = self._load_daily()
-        if self.per_day and daily["count"] >= self.per_day:
+        if daily["count"] >= self.per_day:
             raise DailyLimitExceeded(
                 f"{self.backend}: {daily['count']} requests today, limit {self.per_day}"
             )
@@ -301,14 +331,15 @@ class Backend:
     ) -> BackendResult:
         """Send one structured-output request and return the parsed result."""
         model = model or self.model
-        if self.limiter is not None:
-            self.limiter.acquire()
+
+        def attempt() -> BackendResult:
+            # Every attempt, retries included, counts against the request budget.
+            if self.limiter is not None:
+                self.limiter.acquire()
+            return self._call(system_prompt, user_prompt, json_schema, model)
+
         start = time.perf_counter()
-        result = call_with_retry(
-            lambda: self._call(system_prompt, user_prompt, json_schema, model),
-            max_attempts=self.max_attempts,
-            sleep=self.sleep,
-        )
+        result = call_with_retry(attempt, max_attempts=self.max_attempts, sleep=self.sleep)
         result.latency_s = round(time.perf_counter() - start, 3)
         return result
 
@@ -331,6 +362,13 @@ def _parse_json(text: str) -> dict[str, Any] | None:
     return data if isinstance(data, dict) else None
 
 
+def _enum_name(value: Any) -> str | None:
+    """Name of an SDK enum member (or the string itself); ``None`` when unset."""
+    if value is None:
+        return None
+    return str(getattr(value, "name", value))
+
+
 def estimate_tokens(text: str) -> int:
     """Conservative token estimate (3 characters per token) for context-size assertions."""
     return int(len(text) / CHARS_PER_TOKEN_LOWER_BOUND) + 1
@@ -344,7 +382,8 @@ class GeminiBackend(Backend):
     ``GenerateContentConfig`` in google-genai 2.28, and the field doc says
     ``response_mime_type`` is required when the schema is set). The schema is
     passed through ``portable_schema`` because the documented subset has no
-    type arrays. The API key comes from ``GEMINI_API_KEY``.
+    type arrays. The API key comes from ``GEMINI_API_KEY`` or, failing that,
+    ``GOOGLE_API_KEY`` (the two names the SDK itself resolves).
     """
 
     name = "gemini"
@@ -359,9 +398,9 @@ class GeminiBackend(Backend):
     ) -> None:
         from google import genai
 
-        key = api_key or os.environ.get("GEMINI_API_KEY")
+        key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         if not key:
-            raise LLMError("GEMINI_API_KEY is not set")
+            raise LLMError("GEMINI_API_KEY (or GOOGLE_API_KEY) is not set")
         self.client = genai.Client(api_key=key)
         self.model = model
         self.limiter = limiter
@@ -387,12 +426,16 @@ class GeminiBackend(Backend):
         output_tokens = None
         if usage is not None:
             output_tokens = (usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0)
+        candidates = getattr(response, "candidates", None) or []
+        finish = getattr(candidates[0], "finish_reason", None) if candidates else None
         return BackendResult(
             text=text,
             parsed_json=_parse_json(text),
             model_reported=response.model_version,
             input_tokens=usage.prompt_token_count if usage is not None else None,
             output_tokens=output_tokens,
+            stop_reason=_enum_name(finish),
+            response_format="json_schema",
         )
 
 
@@ -402,8 +445,11 @@ class OpenAICompatibleBackend(Backend):
     ``base_url`` selects the provider. For Ollama (``name="ollama"``) the context
     window is set through ``extra_body={"options": {"num_ctx": N}}`` and the
     prompt size is asserted to fit before the call. ``response_format`` starts as
-    ``json_schema``; a 400 on that parameter switches the instance to
-    ``json_object`` for the rest of its life.
+    ``json_schema``; a 400 whose body names that parameter switches the instance to
+    ``json_object`` for the rest of its life (logged, and recorded per trace in
+    ``response_format``); any other 400 propagates. ``max_output_tokens`` defaults to
+    ``DEFAULT_OLLAMA_MAX_OUTPUT_TOKENS`` for Ollama and ``DEFAULT_MAX_OUTPUT_TOKENS``
+    otherwise.
     """
 
     def __init__(
@@ -414,7 +460,7 @@ class OpenAICompatibleBackend(Backend):
         name: str = "openai_compat",
         limiter: RateLimiter | None = None,
         num_ctx: int | None = None,
-        max_output_tokens: int = DEFAULT_MAX_OUTPUT_TOKENS,
+        max_output_tokens: int | None = None,
         max_attempts: int = 5,
         timeout: float = 600.0,
     ) -> None:
@@ -424,12 +470,14 @@ class OpenAICompatibleBackend(Backend):
         self.model = model
         self.limiter = limiter
         self.max_attempts = max_attempts
-        self.max_output_tokens = max_output_tokens
         self.is_ollama = name == "ollama"
         if self.is_ollama:
             base_url = base_url or os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
             api_key = api_key or "ollama"
             num_ctx = num_ctx or DEFAULT_OLLAMA_NUM_CTX
+            if max_output_tokens is None:
+                max_output_tokens = DEFAULT_OLLAMA_MAX_OUTPUT_TOKENS
+        self.max_output_tokens = max_output_tokens if max_output_tokens is not None else DEFAULT_MAX_OUTPUT_TOKENS
         self.base_url = base_url
         self.num_ctx = num_ctx
         self.json_mode = "json_schema"
@@ -477,9 +525,15 @@ class OpenAICompatibleBackend(Backend):
                 max_tokens=self.max_output_tokens,
                 extra_body=extra_body or None,
             )
-        except openai.BadRequestError:
-            if self.json_mode != "json_schema":
+        except openai.BadRequestError as exc:
+            # Only a rejection of the response_format itself justifies the fallback; any
+            # other 400 (context length, unknown model, malformed message) propagates.
+            if self.json_mode != "json_schema" or not _rejects_response_format(exc):
                 raise
+            log.warning(
+                "%s rejected response_format=json_schema (%s); falling back to json_object for the rest of the run",
+                self.name, exc,
+            )
             self.json_mode = "json_object"
             completion = self.client.chat.completions.create(
                 model=model,
@@ -488,7 +542,8 @@ class OpenAICompatibleBackend(Backend):
                 max_tokens=self.max_output_tokens,
                 extra_body=extra_body or None,
             )
-        text = completion.choices[0].message.content or ""
+        choice = completion.choices[0]
+        text = choice.message.content or ""
         usage = completion.usage
         return BackendResult(
             text=text,
@@ -496,7 +551,16 @@ class OpenAICompatibleBackend(Backend):
             model_reported=completion.model,
             input_tokens=usage.prompt_tokens if usage else None,
             output_tokens=usage.completion_tokens if usage else None,
+            stop_reason=getattr(choice, "finish_reason", None),
+            response_format=self.json_mode,
         )
+
+
+def _rejects_response_format(exc: BaseException) -> bool:
+    """True when a 400 body talks about the response_format / json_schema parameter."""
+    parts = [str(exc), str(getattr(exc, "message", "")), str(getattr(exc, "body", ""))]
+    text = " ".join(parts).lower()
+    return "response_format" in text or "json_schema" in text or "json schema" in text
 
 
 class AnthropicBackend(Backend):
@@ -558,6 +622,8 @@ class AnthropicBackend(Backend):
             model_reported=response.model,
             input_tokens=input_tokens,
             output_tokens=usage.output_tokens,
+            stop_reason=getattr(response, "stop_reason", None),
+            response_format="json_schema",
         )
 
 
@@ -595,8 +661,10 @@ class ReplayBackend(Backend):
     """Serve stored traces; raise ``TraceMissError`` on a miss unless ``allow_api``.
 
     Traces are read from ``{trace_dir}/{split}/{backend_name}.jsonl`` and keyed
-    by (model, prompt_hash). The prompt hash already covers the document id and
-    the section text, so no other key is needed. With ``allow_api=True`` a miss
+    by (model, prompt_hash). The prompt hash covers the document id, the section
+    text and the JSON schema, so no other key is needed. A hit returns the stored
+    call time and cost so that run logs built from replays carry the original
+    values. With ``allow_api=True`` a miss
     is delegated to ``live`` and ``extract()`` records the new trace in the same
     file, so the next replay serves it. ``name`` equals the live backend's name
     so that ``FieldValue.system`` labels stay identical between live and replay.
@@ -633,7 +701,7 @@ class ReplayBackend(Backend):
         model: str | None = None,
     ) -> BackendResult:
         model = model or self.model
-        stored = self._index.get((model, prompt_hash(system_prompt, user_prompt)))
+        stored = self._index.get((model, prompt_hash(system_prompt, user_prompt, json_schema)))
         if stored is not None:
             self.hits += 1
             return BackendResult(
@@ -643,8 +711,12 @@ class ReplayBackend(Backend):
                 input_tokens=stored.input_tokens,
                 output_tokens=stored.output_tokens,
                 latency_s=stored.latency_s,
+                stop_reason=stored.stop_reason,
+                response_format=stored.response_format,
                 from_replay=True,
                 replay_trace_id=stored.trace_id,
+                replay_called_at=stored.called_at,
+                replay_cost_usd=stored.cost_usd,
             )
         self.misses += 1
         if not (self.allow_api and self.live is not None):
@@ -706,11 +778,12 @@ def _normalize_ws(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def locate_quote(quote: str, sections: dict[str, Section]) -> tuple[Section, int] | None:
+def locate_quote(quote: str, sections: dict[str, Section]) -> tuple[Section, int, int] | None:
     """Exact (whitespace-normalized) substring search over the provided sections.
 
-    Returns the section and the character offset of the match within the
-    original section text, or ``None``. Fuzzy matching belongs to evaluate.py.
+    Returns the section and the start and end offsets of the matched span within the
+    original section text (the span may be longer than the quote when the document
+    has extra whitespace), or ``None``. Fuzzy matching belongs to evaluate.py.
     """
     needle = _normalize_ws(quote)
     if not needle:
@@ -718,12 +791,12 @@ def locate_quote(quote: str, sections: dict[str, Section]) -> tuple[Section, int
     for sec in sections.values():
         idx = sec.text.find(quote)
         if idx >= 0:
-            return sec, idx
+            return sec, idx, idx + len(quote)
         # Whitespace-insensitive search: map the normalized hit back to an offset.
         pattern = r"\s+".join(re.escape(tok) for tok in needle.split(" "))
         m = re.search(pattern, sec.text)
         if m:
-            return sec, m.start()
+            return sec, m.start(), m.end()
     return None
 
 
@@ -778,11 +851,11 @@ def map_response(
             fv.page = page
             fv.notes = "quote_missing" if not quote else "quote_not_located"
         else:
-            sec, offset = hit
+            sec, offset, end = hit
             fv.page = _page_of(sec, offset)
             fv.scope = sec.scope
             fv.char_start = sec.char_start + offset
-            fv.char_end = fv.char_start + len(quote or "")
+            fv.char_end = sec.char_start + end
         out.append(fv)
     return out
 
@@ -812,13 +885,16 @@ def extract(
     system_prompt = SYSTEM_PROMPT
     user_prompt = build_prompt(doc, sections, field_group)
     schema = build_schema(field_group)
-    ph = prompt_hash(system_prompt, user_prompt)
+    ph = prompt_hash(system_prompt, user_prompt, schema)
     system = f"llm:{backend.name}:{model}"
     offsets = [(s.char_start, s.char_end) for s in sections.values()]
     called_at = datetime.now(UTC)
     try:
         result = backend.complete(system_prompt, user_prompt, schema, model)
-    except TraceMissError:
+    except (TraceMissError, DailyLimitExceeded):
+        # A replay miss is the caller's decision; an exhausted daily budget would fail
+        # every later call the same way, so the run must stop rather than record
+        # abstentions (run.py halts on it). Other failures become a failed trace.
         raise
     except Exception as exc:
         trace = Trace(
@@ -839,6 +915,13 @@ def extract(
         ]
         return values, trace
 
+    truncated = result.stop_reason in TRUNCATION_STOP_REASONS
+    if truncated:
+        error: str | None = str(result.stop_reason).lower()
+    elif result.parsed_json is None:
+        error = "response_not_json"
+    else:
+        error = None
     trace = Trace(
         trace_id=result.replay_trace_id or make_trace_id(doc.doc_id, field_group, model, ph),
         doc_id=doc.doc_id,
@@ -852,13 +935,24 @@ def extract(
         response_text=result.text,
         input_tokens=result.input_tokens,
         output_tokens=result.output_tokens,
-        cost_usd=compute_cost(model, result.input_tokens, result.output_tokens),
+        cost_usd=result.replay_cost_usd if result.from_replay and result.replay_cost_usd is not None
+        else compute_cost(model, result.input_tokens, result.output_tokens),
         latency_s=result.latency_s,
-        called_at=called_at,
-        error=None if result.parsed_json is not None else "response_not_json",
+        called_at=result.replay_called_at if result.from_replay and result.replay_called_at else called_at,
+        error=error,
+        stop_reason=result.stop_reason,
+        response_format=result.response_format,
     )
     if not result.from_replay:
         append_trace(trace, split, trace_dir)
+    if truncated:
+        # The output was cut off (or refused): not a model abstention, so every field
+        # abstains with a note that evaluate can separate from a real abstention.
+        values = [
+            FieldValue(doc_id=doc.doc_id, field=f, system=system, status="abstain", notes="truncated")
+            for f in llm_field_group(field_group)["fields"]
+        ]
+        return values, trace
     values = map_response(doc, field_group, result.parsed_json, sections, system)
     return values, trace
 
@@ -867,8 +961,11 @@ def extract(
 
 
 def sections_from_text(doc_id: str, text: str) -> dict[str, Section]:
-    """Whole-document fallback: one institution-scope section covering every page."""
-    pages = text.split("\f")
+    """Whole-document fallback: one institution-scope section covering every page
+    (``locate.pages_from_text`` drops the empty element after pdftotext's final form feed)."""
+    from cra_extract.locate import pages_from_text
+
+    pages = pages_from_text(text)
     return {
         "document": Section(
             name="document",
@@ -886,14 +983,22 @@ def sections_from_text(doc_id: str, text: str) -> dict[str, Section]:
 
 
 def sample_doc(stem: str) -> DocRecord:
-    """Build a ``DocRecord`` for one sample under ``tests/fixtures/samples`` from its stem."""
+    """Build a ``DocRecord`` for one sample under ``tests/fixtures/samples`` from its stem.
+
+    The doc_id follows the manifest convention (``strata.FIXTURE_SAMPLES`` carries the
+    exam dates), so a smoke trace is keyed like a pilot trace for the same document.
+    """
+    from cra_extract.strata import FIXTURE_SAMPLES
+
     parts = stem.split("_")
     regulator, bank_id = parts[0], parts[1]
+    exam_date = FIXTURE_SAMPLES[stem][2] if stem in FIXTURE_SAMPLES else None
     return DocRecord(
-        doc_id=f"{regulator}_{bank_id}_{stem}",
+        doc_id=make_doc_id(regulator, bank_id, exam_date) if exam_date else f"{regulator}_{bank_id}_{stem}",
         regulator=regulator,  # type: ignore[arg-type]
         bank_id=bank_id,
         bank_name=" ".join(parts[2:3]),
+        exam_date=exam_date,
         method="isb" if "_ISB_" in stem else "small",
         url=f"file://{FIXTURES_DIR / 'samples' / (stem + '.pdf')}",
         split="dev",

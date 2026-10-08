@@ -1,0 +1,136 @@
+# Written by python -m cra_extract.strata; do not edit by hand.
+version: 1
+manifest: config/corpus.csv
+splits:
+  dev:
+    split: dev
+    seed: 20261007
+    drawn_at: '2026-10-07'
+    n: 10
+    rules:
+      n_dev: 10
+      fixed_doc_ids:
+      - FDIC_12299_20220912
+      - FDIC_26816_20220809
+      - FDIC_6078_20240805
+      - FRB_3664588_20240116
+      - FRB_663656_20241118
+      - OCC_11715_20240408
+      - OCC_13682_20240819
+      - OCC_703395_20230327
+      fill_order:
+      - uncovered_cell
+      - frb_other_district
+      - random_fill
+      frb_district_approximation: district is not in the manifest; an FRB document counts as outside the
+        New York and Kansas City districts when its state in data/index/frb.csv is not one of CO, CT,
+        KS, MO, NE, NJ, NM, NY, OK, WY
+    strata:
+    - name: fixed
+      population: 8
+      pool: 8
+      drawn: 8
+      selection_probability: 1.0
+      weight: null
+      detail: {}
+    - name: frb_other_district
+      population: 282
+      pool: 282
+      drawn: 1
+      selection_probability: 0.003546
+      weight: null
+      detail:
+        state: WV
+    - name: random_fill
+      population: 2793
+      pool: 2783
+      drawn: 1
+      selection_probability: 0.000359
+      weight: null
+      detail: {}
+    docs:
+    - doc_id: FDIC_12299_20220912
+      bank_id: '12299'
+      cell: FDIC/isb
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: FDIC_16733_20240410
+      bank_id: '16733'
+      cell: FDIC/small
+      stratum: random_fill
+      reason: random_fill
+      pool_size: 2783
+      selection_probability: 0.000359
+    - doc_id: FDIC_26816_20220809
+      bank_id: '26816'
+      cell: FDIC/small
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: FDIC_6078_20240805
+      bank_id: '6078'
+      cell: FDIC/isb
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: FRB_3664588_20240116
+      bank_id: '3664588'
+      cell: FRB/isb
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: FRB_663656_20241118
+      bank_id: '663656'
+      cell: FRB/small
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: FRB_722432_20230911
+      bank_id: '722432'
+      cell: FRB/small
+      stratum: frb_other_district
+      reason: frb_state_outside_ny_kc
+      pool_size: 282
+      selection_probability: 0.003546
+    - doc_id: OCC_11715_20240408
+      bank_id: '11715'
+      cell: OCC/small
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: OCC_13682_20240819
+      bank_id: '13682'
+      cell: OCC/isb
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    - doc_id: OCC_703395_20230327
+      bank_id: '703395'
+      cell: OCC/small
+      stratum: fixed
+      reason: fixture_sample
+      pool_size: 8
+      selection_probability: 1.0
+    doc_ids:
+    - FDIC_12299_20220912
+    - FDIC_16733_20240410
+    - FDIC_26816_20220809
+    - FDIC_6078_20240805
+    - FRB_3664588_20240116
+    - FRB_663656_20241118
+    - FRB_722432_20230911
+    - OCC_11715_20240408
+    - OCC_13682_20240819
+    - OCC_703395_20230327
+    doc_id_hash: 982d47dc9aca806dae7b1c9b0677d9daa5cc50aeb21319b08f9e5bb808916546
+    notes:
+    - dev is a development set, not an inference sample; probabilities are recorded for completeness
+    - 'documents removed from the pool by bank exclusivity during the draw: 11'

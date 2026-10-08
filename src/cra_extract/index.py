@@ -684,23 +684,53 @@ def _write_csv(df: pd.DataFrame, path: Path) -> None:
     df.to_csv(path, index=False, quoting=csv.QUOTE_MINIMAL)
 
 
+def side_output_dirs(out: Path, index_dir: Path | None, results_dir: Path | None) -> tuple[Path, Path]:
+    """Where the per-agency index files and the counts table go.
+
+    Explicit directories win. Otherwise the repo paths are used only when the manifest is
+    written to its repo location (``CORPUS_PATH``); a manifest written elsewhere gets its
+    side outputs next to it (``<out dir>/index/`` and ``<out dir>/results/``), so trying the
+    stage with ``--out /tmp/x.csv`` or ``--offline-from-fixtures`` never overwrites the live
+    pull under ``data/index/`` or ``results/corpus_counts.csv``.
+    """
+    out = Path(out)
+    if out.resolve() == Path(CORPUS_PATH).resolve():
+        default_index, default_results = INDEX_DIR, RESULTS_DIR
+    else:
+        default_index, default_results = out.parent / "index", out.parent / "results"
+    return (Path(index_dir) if index_dir else default_index, Path(results_dir) if results_dir else default_results)
+
+
 def run(
-    window: tuple[date, date], prior_from: date, offline: bool, out: Path, from_raw: str | None = None
+    window: tuple[date, date],
+    prior_from: date,
+    offline: bool,
+    out: Path,
+    from_raw: str | None = None,
+    index_dir: Path | None = None,
+    results_dir: Path | None = None,
 ) -> pd.DataFrame:
-    """Build and write the index files, manifest, exclusion log and counts; return the manifest."""
+    """Build and write the index files, manifest, exclusion log and counts; return the manifest.
+    Side outputs go to ``side_output_dirs(out, index_dir, results_dir)``."""
     occ_rows, fdic_payload, frb_text = load_sources(window, prior_from, offline, from_raw)
+    index_out, results_out = side_output_dirs(out, index_dir, results_dir)
+    if offline and index_out.resolve() == Path(INDEX_DIR).resolve():
+        raise ValueError(
+            "--offline-from-fixtures would overwrite the live index files under "
+            f"{INDEX_DIR}; pass --out outside the repo or an explicit --index-dir"
+        )
     occ = occ_index(occ_rows)
     fdic = fdic_index(fdic_payload)
     frb, frb_state = frb_index(frb_text)
     for name, frame in (("occ", occ), ("fdic", fdic), ("frb", frb), ("frb_state_rows", frb_state)):
-        _write_csv(frame, INDEX_DIR / f"{name}.csv")
-        log.info("wrote %s (%d rows)", INDEX_DIR / f"{name}.csv", len(frame))
+        _write_csv(frame, index_out / f"{name}.csv")
+        log.info("wrote %s (%d rows)", index_out / f"{name}.csv", len(frame))
 
     manifest, exclusions = build_manifest(occ, fdic, frb, window)
     _write_csv(manifest[MANIFEST_COLUMNS], out)
-    _write_csv(exclusions, INDEX_DIR / "manifest_exclusions.csv")
+    _write_csv(exclusions, index_out / "manifest_exclusions.csv")
     counts = corpus_counts(manifest)
-    _write_csv(counts, RESULTS_DIR / "corpus_counts.csv")
+    _write_csv(counts, results_out / "corpus_counts.csv")
     log.info("wrote %s (%d documents); counts:\n%s", out, len(manifest), counts.to_string(index=False))
     return manifest
 
@@ -721,6 +751,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--from-raw", metavar="YYYYMMDD",
                         help="rebuild from the raw responses of an earlier pull in data/index/raw/")
     parser.add_argument("--out", type=Path, default=CORPUS_PATH, help="manifest path")
+    parser.add_argument("--index-dir", type=Path, default=None,
+                        help="where the per-agency index files go (default: data/index when --out is the "
+                             "repo manifest, else <out dir>/index)")
+    parser.add_argument("--results-dir", type=Path, default=None,
+                        help="where corpus_counts.csv goes (default: results/ when --out is the repo "
+                             "manifest, else <out dir>/results)")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
@@ -728,7 +764,11 @@ def main(argv: list[str] | None = None) -> int:
     start, end = args.window
     if start > end:
         parser.error("window START must not be after END")
-    run((start, end), args.prior_from, args.offline_from_fixtures, args.out, args.from_raw)
+    try:
+        run((start, end), args.prior_from, args.offline_from_fixtures, args.out, args.from_raw,
+            args.index_dir, args.results_dir)
+    except ValueError as exc:
+        parser.error(str(exc))
     return 0
 
 

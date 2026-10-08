@@ -320,6 +320,7 @@ def test_consistency_equals_overall_when_level_overall(sheet):
     _set(rows, doc, "rating_lowered_level", value="overall", null_reason="", evidence_page="12", quote="q")
     _set(rows, doc, "rating_before", value="S", null_reason="", evidence_page="12", quote="q")
     _set(rows, doc, "rating_after", value="S", null_reason="", evidence_page="12", quote="q")
+    _set(rows, doc, "laws_cited", value="", null_reason="absent_from_document")  # a finding may name no law
     label.write_sheet(rows, path)
     assert "equals_overall_when_level_overall" in _rules(label.validate(path))
     _set(rows, doc, "rating_after", value="NI")
@@ -330,6 +331,62 @@ def test_consistency_equals_overall_when_level_overall(sheet):
     _set(rows, doc, "rating_lowered_level", value="state_or_msa")
     label.write_sheet(rows, path)
     assert "equals_overall_when_level_overall" not in _rules(label.validate(path))
+
+
+def test_validate_rejects_null_reason_value(sheet):
+    rows, path = sheet
+    _set(rows, "OCC_1001_20240304", "prior_rating", value="", null_reason="value", quote="", evidence_page="")
+    label.write_sheet(rows, path)
+    assert "bad_null_reason" in _rules(label.validate(path))
+    with pytest.raises(ValueError, match="bad_null_reason"):
+        label.load_labels(path)
+
+
+def test_consistency_group_c_derived_and_na_rules(sheet):
+    rows, path = sheet
+    doc = "FDIC_2002_20230910"  # overall NI
+    # A positive finding whose attributes are still not_applicable, a rating_lowered that
+    # contradicts rating_effect, and downgrade attributes filled although not lowered.
+    _set(rows, doc, "finding_present", value="true")
+    _set(rows, doc, "rating_effect", value="substantive_lowered", null_reason="", evidence_page="12", quote="q")
+    _set(rows, doc, "rating_lowered", value="false")
+    _set(rows, doc, "rating_lowered_level", value="overall", null_reason="", evidence_page="12", quote="q")
+    _set(rows, doc, "rating_after", value="NI", null_reason="", evidence_page="12", quote="q")
+    label.write_sheet(rows, path)
+    probs = label.validate(path)
+    by_field = {(p.field, p.rule) for p in probs}
+    assert ("rating_lowered", "derived_rating_lowered") in by_field
+    assert ("finding_type", "na_iff") in by_field and ("laws_cited", "na_iff") in by_field
+    assert ("rating_lowered_level", "na_iff") in by_field and ("rating_after", "na_iff") in by_field
+    # A consistent positive finding is clean.
+    _set(rows, doc, "rating_lowered", value="true")
+    _set(rows, doc, "finding_type", value="discrimination", null_reason="", evidence_page="12", quote="q")
+    _set(rows, doc, "laws_cited", value="FHA", null_reason="", evidence_page="12", quote="q")
+    _set(rows, doc, "rating_before", value="", null_reason="absent_from_document")
+    label.write_sheet(rows, path)
+    assert label.validate(path) == []
+    # No finding, but an attribute carries a value.
+    _set(rows, doc, "finding_present", value="false")
+    label.write_sheet(rows, path)
+    assert ("finding_type", "na_iff") in {(p.field, p.rule) for p in label.validate(path)}
+
+
+def test_consistency_inside_aa_share_product(sheet):
+    rows, path = sheet
+    doc = "OCC_1001_20240304"
+    _set(rows, doc, "inside_aa_share_number_pct", value="", null_reason="absent_from_document", quote="", evidence_page="")
+    label.write_sheet(rows, path)
+    assert ("inside_aa_share_product", "na_iff") in {(p.field, p.rule) for p in label.validate(path)}
+    _set(rows, doc, "inside_aa_share_product", value="", null_reason="not_applicable", quote="", evidence_page="")
+    label.write_sheet(rows, path)
+    assert label.validate(path) == []
+
+
+def test_consistency_applicability_small_bank_cd_rating(sheet):
+    rows, path = sheet
+    _set(rows, "OCC_1001_20240304", "cd_test_rating", value="S", null_reason="", evidence_page="1", quote="q")
+    label.write_sheet(rows, path)
+    assert ("cd_test_rating", "applicability") in {(p.field, p.rule) for p in label.validate(path)}
 
 
 def test_problem_str_and_cli_validate(sheet, capsys):

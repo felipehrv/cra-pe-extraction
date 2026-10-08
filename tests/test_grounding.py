@@ -164,7 +164,8 @@ def test_quote_not_containing_the_value(pages):
         ("n_assessment_areas", 2, "The bank has designated two assessment areas", True),
         ("n_assessment_areas", 3, "The bank has designated two assessment areas", False),
         ("exam_method", "isb", "Intermediate Small Bank performance criteria", True),
-        ("exam_method", "small", "Intermediate Small Bank performance criteria", True),  # substring; see note
+        ("exam_method", "small", "Intermediate Small Bank performance criteria", False),  # ISB is not Small
+        ("exam_method", "small", "evaluated under the Small Bank performance criteria", True),
         ("primary_product", "home_mortgage", "home mortgage loans are the primary product", True),
         ("primary_product", "unstated", "no product named", True),
         ("loan_products_evaluated", "home_mortgage|small_business", "home mortgage and small business loans", True),
@@ -176,6 +177,26 @@ def test_quote_not_containing_the_value(pages):
         ("finding_present", True, "No evidence of discriminatory or other illegal credit practices was identified", False),
         ("finding_present", False, "No evidence of discriminatory or other illegal credit practices was identified", True),
         ("finding_present", False, "Examiners identified violations of the Equal Credit Opportunity Act", False),
+        # A finding sentence followed by a negated sentence still asserts the finding.
+        ("finding_present", True, "Examiners identified violations of the Equal Credit Opportunity Act. No evidence of other illegal credit practices was identified.", True),
+        # Numbers inside dates never stand in for an asset figure or a count.
+        ("total_assets_usd", 2_030_000_000, "As of March 31, 2024, the bank", False),
+        ("total_assets_usd", 31_000_000, "As of March 31, 2024, the bank", False),
+        ("n_assessment_areas", 31, "As of March 31, 2024", False),
+        ("total_assets_usd", 1_034_567_000, "Total Assets as of 6/30/2022 (000s) 1,034,567", True),
+        # Group C word forms must not be satisfied by unrelated prose.
+        ("finding_type", "both", "discriminatory lending practices were identified", False),
+        ("finding_type", "both", "discriminatory and other illegal credit practices were identified", True),
+        ("finding_type", "other_illegal_credit_practice", "violations of the Fair Housing Act", False),
+        ("finding_type", "other_illegal_credit_practice", "violations of the Truth in Lending Act", True),
+        ("rating_effect", "affected_unspecified", "did not affect the rating", False),
+        ("rating_effect", "affected_unspecified", "was considered in assigning the rating", True),
+        ("finding_source", "prior_exam_referenced", "prior to the evaluation", False),
+        ("finding_source", "prior_exam_referenced", "cited at the prior evaluation", True),
+        ("finding_source", "enforcement_action_referenced", "in order to meet credit needs", False),
+        ("finding_source", "enforcement_action_referenced", "subject to a consent order", True),
+        ("practice_basis", ["servicing"], "data collection", False),
+        ("practice_basis", ["UDAP_product"], "loan products", False),
     ],
 )
 def test_value_in_quote(field, value, quote, ok):
@@ -269,6 +290,11 @@ def test_matches_template_with_real_templates_module():
     assert not grounding.matches_template(SOUTHSTAR_FINDING, "FDIC")
     # A short genuine finding with no template match is not boilerplate.
     assert not grounding.matches_template("The FDIC lowered the CRA rating.", "FDIC")
+    # The template followed by a short finding sentence is not boilerplate either.
+    assert not grounding.matches_template(
+        "Examiners did not identify any evidence of discriminatory or other illegal credit practices; "
+        "therefore, this consideration did not affect the institution's overall CRA rating. "
+        "The FDIC lowered the CRA rating.", "FDIC")
 
 
 def test_matches_template_uses_templates_module_when_present(monkeypatch):
@@ -279,7 +305,11 @@ def test_matches_template_uses_templates_module_when_present(monkeypatch):
     mod.residual = lambda text, regulator=None: ""  # type: ignore[attr-defined]
     monkeypatch.setitem(sys.modules, "cra_extract.templates", mod)
     assert grounding.matches_template("anything at all", "FDIC")
+    # A residual without a finding sentence is boilerplate whatever its length; one that
+    # asserts a finding is not, however short.
     mod.residual = lambda text, regulator=None: "x" * 100  # type: ignore[attr-defined]
+    assert grounding.matches_template("anything at all", "FDIC")
+    mod.residual = lambda text, regulator=None: "The FDIC lowered the rating."  # type: ignore[attr-defined]
     assert not grounding.matches_template("anything at all", "FDIC")
     # A TemplateMatch-like result: boilerplate only when a template matched and little is left.
     mod.residual = lambda text, regulator=None: types.SimpleNamespace(residual_text="", score=95.0, removed=["t"])  # type: ignore[attr-defined]

@@ -32,7 +32,7 @@ templates:
 
   - id: occ_pursuant_2024
     regulator: OCC
-    source: OCC_11715_LemontNB_2024_SN.txt L184-190 (same wording in OCC_13682_FirstNeighborBank_2024_ISB_O.txt L196-203)
+    source: OCC_11715_LemontNB_2024_SN.txt L184-190 (near-identical wording in OCC_13682_FirstNeighborBank_2024_ISB_O.txt L196-203, which prints "a national banks or"; partial ratio 99.85)
     text: >-
       Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank's
       or federal savings association's (collectively, bank) CRA rating, the OCC considers

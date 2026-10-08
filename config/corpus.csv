@@ -1,14 +1,14 @@
 doc_id,regulator,bank_id,bank_name,exam_date,release_date,method,overall_rating,lending_test_rating,cd_test_rating,total_assets_usd,url,sha256,pages,chars_per_page,text_extractable,split,source_file_id,notes,prior_evaluation_date_index,prior_rating_index
-FDIC_10011_20221219,FDIC,10011,Woodford State Bank,2022-12-19,2023-06-01,small,S,,,379088000,https://crapes.fdic.gov/publish/2022/10011_221219.PDF,,,,,corpus,2022/10011_221219.PDF,,2020-03-02,S
-FDIC_10015_20241104,FDIC,10015,Security Bank,2024-11-04,2025-03-01,small,S,,,204089000,https://crapes.fdic.gov/publish/2024/10015_241104.PDF,,,,,corpus,2024/10015_241104.PDF,,2018-11-05,S
-FDIC_10077_20250218,FDIC,10077,Farmers State Bank of Emden,2025-02-18,2025-06-01,small,S,,,37023000,https://crapes.fdic.gov/publish/2025/10077_250218.PDF,,,,,corpus,2025/10077_250218.PDF,,2019-05-14,S
-FDIC_10101_20230608,FDIC,10101,The Napoleon State Bank,2023-06-08,2023-12-01,isb,S,,,422078000,https://crapes.fdic.gov/publish/2023/10101_230608.PDF,,,,,corpus,2023/10101_230608.PDF,,2020-05-14,S
-FDIC_10111_20250203,FDIC,10111,Ohnward Bank & Trust,2025-02-03,2025-05-01,isb,S,,,439493000,https://crapes.fdic.gov/publish/2025/10111_250203.PDF,,,,,corpus,2025/10111_250203.PDF,,2022-02-28,S
-FDIC_10120_20240716,FDIC,10120,American Trust and Savings Bank,2024-07-16,2024-11-01,small,NI,,,33046000,https://crapes.fdic.gov/publish/2024/10120_240716.PDF,,,,,corpus,2024/10120_240716.PDF,,2018-07-30,S
-FDIC_10121_20250728,FDIC,10121,Liberty Trust & Savings Bank,2025-07-28,2025-11-01,small,S,,,177294000,https://crapes.fdic.gov/publish/2025/10121_250728.PDF,,,,,corpus,2025/10121_250728.PDF,,2019-10-15,S
-FDIC_10122_20250717,FDIC,10122,Farmers Savings Bank & Trust,2025-07-17,2025-11-01,small,S,,,228387000,https://crapes.fdic.gov/publish/2025/10122_250717.PDF,,,,,corpus,2025/10122_250717.PDF,,2019-08-12,S
-FDIC_10123_20230911,FDIC,10123,First Trust and Savings Bank,2023-09-11,2024-01-01,small,NI,,,61211000,https://crapes.fdic.gov/publish/2023/10123_230911.PDF,,,,,corpus,2023/10123_230911.PDF,,2021-08-09,NI
-FDIC_10125_20240401,FDIC,10125,Citizens Savings Bank,2024-04-01,2024-07-01,small,S,,,151071000,https://crapes.fdic.gov/publish/2024/10125_240401.PDF,,,,,corpus,2024/10125_240401.PDF,,2018-02-06,S
+FDIC_10011_20221219,FDIC,10011,Woodford State Bank,2022-12-19,2023-06-01,small,S,,,379088000,https://crapes.fdic.gov/publish/2022/10011_221219.PDF,b123542b01100845bdf79b482597bcd24b013781f3861279ea9b3a83eefcfc4f,27,,,corpus,2022/10011_221219.PDF,,2020-03-02,S
+FDIC_10015_20241104,FDIC,10015,Security Bank,2024-11-04,2025-03-01,small,S,,,204089000,https://crapes.fdic.gov/publish/2024/10015_241104.PDF,022e8c877e483aa0283f79c011a111ab444c8f7a6b88fa65182ee5a8e476acd1,27,,,corpus,2024/10015_241104.PDF,,2018-11-05,S
+FDIC_10077_20250218,FDIC,10077,Farmers State Bank of Emden,2025-02-18,2025-06-01,small,S,,,37023000,https://crapes.fdic.gov/publish/2025/10077_250218.PDF,ead179c48bb45a2e158c044feea2e0a52c2d545eb30bce0a029dde5bf5422e03,16,,,corpus,2025/10077_250218.PDF,,2019-05-14,S
+FDIC_10101_20230608,FDIC,10101,The Napoleon State Bank,2023-06-08,2023-12-01,isb,S,,,422078000,https://crapes.fdic.gov/publish/2023/10101_230608.PDF,afb37cfb4b68ae6db856459af7fc3cc30e67e600a2e6fa159306dd7a56039485,22,,,corpus,2023/10101_230608.PDF,,2020-05-14,S
+FDIC_10111_20250203,FDIC,10111,Ohnward Bank & Trust,2025-02-03,2025-05-01,isb,S,,,439493000,https://crapes.fdic.gov/publish/2025/10111_250203.PDF,8267307440baa3b1239f1423d865b4e6d74a79c4ec3cae63710c76ff457731b6,35,,,corpus,2025/10111_250203.PDF,,2022-02-28,S
+FDIC_10120_20240716,FDIC,10120,American Trust and Savings Bank,2024-07-16,2024-11-01,small,NI,,,33046000,https://crapes.fdic.gov/publish/2024/10120_240716.PDF,e780783e9664012a6f5a528255f59c17ac79ef8c21279ebd444b17b0d7dbe580,17,,,corpus,2024/10120_240716.PDF,,2018-07-30,S
+FDIC_10121_20250728,FDIC,10121,Liberty Trust & Savings Bank,2025-07-28,2025-11-01,small,S,,,177294000,https://crapes.fdic.gov/publish/2025/10121_250728.PDF,3df11d20733b7bf9d7ee6bcdbbc7b16bd05a37214f3b5afbd13f18e038c56bfa,21,,,corpus,2025/10121_250728.PDF,,2019-10-15,S
+FDIC_10122_20250717,FDIC,10122,Farmers Savings Bank & Trust,2025-07-17,2025-11-01,small,S,,,228387000,https://crapes.fdic.gov/publish/2025/10122_250717.PDF,29002c9a24ad6b1faa84090d14723d7ab6f1cca0cc822088502a802c8e2b45c5,21,,,corpus,2025/10122_250717.PDF,,2019-08-12,S
+FDIC_10123_20230911,FDIC,10123,First Trust and Savings Bank,2023-09-11,2024-01-01,small,NI,,,61211000,https://crapes.fdic.gov/publish/2023/10123_230911.PDF,04fdda3bd7d61e406962cae0a1a176bc8d3453a0ca720cdabfb4adef833fa783,18,,,corpus,2023/10123_230911.PDF,,2021-08-09,NI
+FDIC_10125_20240401,FDIC,10125,Citizens Savings Bank,2024-04-01,2024-07-01,small,S,,,151071000,https://crapes.fdic.gov/publish/2024/10125_240401.PDF,4b91c0a62ad03215b69c2d05e9426fa7ceb7b13576c3a3b9d564a26369cfaa73,24,,,corpus,2024/10125_240401.PDF,,2018-02-06,S
 FDIC_10127_20241021,FDIC,10127,Success Bank,2024-10-21,2025-02-01,small,S,,,250580000,https://crapes.fdic.gov/publish/2024/10127_241021.PDF,,,,,corpus,2024/10127_241021.PDF,,2018-11-13,S
 FDIC_10132_20230322,FDIC,10132,Exchange State Bank,2023-03-22,2023-07-01,small,S,,,144642000,https://crapes.fdic.gov/publish/2023/10132_230322.PDF,,,,,corpus,2023/10132_230322.PDF,,,
 FDIC_10145_20221129,FDIC,10145,Hart County Bank and Trust Company,2022-11-29,2023-06-01,small,S,,,32246000,https://crapes.fdic.gov/publish/2022/10145_221129.PDF,,,,,corpus,2022/10145_221129.PDF,,,
@@ -203,7 +203,7 @@ FDIC_12266_20240625,FDIC,12266,Mechanics & Farmers Bank,2024-06-25,2025-01-01,is
 FDIC_12284_20241021,FDIC,12284,Farmers & Merchants Bank,2024-10-21,2025-02-01,small,S,,,18451000,https://crapes.fdic.gov/publish/2024/12284_241021.PDF,,,,,corpus,2024/12284_241021.PDF,,2018-11-05,S
 FDIC_12285_20250721,FDIC,12285,Cattlemens Bank,2025-07-21,2025-12-01,isb,S,,,543271000,https://crapes.fdic.gov/publish/2025/12285_250721.PDF,,,,,corpus,2025/12285_250721.PDF,,2022-04-28,S
 FDIC_12293_20240819,FDIC,12293,Farmers State Bank,2024-08-19,2024-12-01,small,S,,,19545000,https://crapes.fdic.gov/publish/2024/12293_240819.PDF,,,,,corpus,2024/12293_240819.PDF,,2018-09-18,S
-FDIC_12299_20220912,FDIC,12299,"SouthStar Bank, S.S.B.",2022-09-12,2024-04-01,isb,NI,,,1159094000,https://crapes.fdic.gov/publish/2022/12299_220912.PDF,,,,,corpus,2022/12299_220912.PDF,,2019-07-15,S
+FDIC_12299_20220912,FDIC,12299,"SouthStar Bank, S.S.B.",2022-09-12,2024-04-01,isb,NI,,,1159094000,https://crapes.fdic.gov/publish/2022/12299_220912.PDF,,,,,dev,2022/12299_220912.PDF,,2019-07-15,S
 FDIC_12303_20220921,FDIC,12303,Citizens State Bank,2022-09-21,2023-01-01,small,S,,,264075000,https://crapes.fdic.gov/publish/2022/12303_220921.PDF,,,,,corpus,2022/12303_220921.PDF,,,
 FDIC_12305_20250224,FDIC,12305,Columbus State Bank,2025-02-24,2025-06-01,small,NI,,,143275000,https://crapes.fdic.gov/publish/2025/12305_250224.PDF,,,,,corpus,2025/12305_250224.PDF,,2019-02-11,S
 FDIC_12315_20250127,FDIC,12315,The First State Bank,2025-01-27,2025-05-01,small,S,,,142923000,https://crapes.fdic.gov/publish/2025/12315_250127.PDF,,,,,corpus,2025/12315_250127.PDF,,2019-02-11,S
@@ -553,7 +553,7 @@ FDIC_16689_20240513,FDIC,16689,Gibsland Bank & Trust Company,2024-05-13,2024-11-
 FDIC_16695_20240318,FDIC,16695,First State Bank,2024-03-18,2024-07-01,small,S,,,355012000,https://crapes.fdic.gov/publish/2024/16695_240318.PDF,,,,,corpus,2024/16695_240318.PDF,,2018-02-20,S
 FDIC_16720_20250811,FDIC,16720,Western Bank,2025-08-11,2025-12-01,small,S,,,321613000,https://crapes.fdic.gov/publish/2025/16720_250811.PDF,,,,,corpus,2025/16720_250811.PDF,,2019-08-05,S
 FDIC_16723_20220926,FDIC,16723,Carolina Bank & Trust Co.,2022-09-26,2023-04-01,isb,S,,,790549000,https://crapes.fdic.gov/publish/2022/16723_220926.PDF,,,,,corpus,2022/16723_220926.PDF,,2019-08-20,S
-FDIC_16733_20240410,FDIC,16733,North Star Bank,2024-04-10,2024-07-01,small,S,,,352077000,https://crapes.fdic.gov/publish/2024/16733_240410.PDF,,,,,corpus,2024/16733_240410.PDF,,2021-04-05,S
+FDIC_16733_20240410,FDIC,16733,North Star Bank,2024-04-10,2024-07-01,small,S,,,352077000,https://crapes.fdic.gov/publish/2024/16733_240410.PDF,,,,,dev,2024/16733_240410.PDF,,2021-04-05,S
 FDIC_16744_20230301,FDIC,16744,The Peoples State Bank,2023-03-01,2023-06-01,small,S,,,17211000,https://crapes.fdic.gov/publish/2023/16744_230301.PDF,,,,,corpus,2023/16744_230301.PDF,,,
 FDIC_16753_20230605,FDIC,16753,Citizens State Bank,2023-06-05,2023-10-01,isb,S,,,1022116000,https://crapes.fdic.gov/publish/2023/16753_230605.PDF,,,,,corpus,2023/16753_230605.PDF,,2020-05-26,S
 FDIC_16757_20240227,FDIC,16757,The Campbell & Fetter Bank,2024-02-27,2024-06-01,small,S,,,348613000,https://crapes.fdic.gov/publish/2024/16757_240227.PDF,,,,,corpus,2024/16757_240227.PDF,,2021-02-03,S
@@ -950,7 +950,7 @@ FDIC_26738_20230918,FDIC,26738,Texas Financial Bank,2023-09-18,2024-01-01,small,
 FDIC_26760_20240627,FDIC,26760,Green Belt Bank & Trust,2024-06-27,2024-11-01,isb,S,,,677063000,https://crapes.fdic.gov/publish/2024/26760_240627.PDF,,,,,corpus,2024/26760_240627.PDF,,2021-07-26,S
 FDIC_26798_20250331,FDIC,26798,Home Savings Bank,2025-03-31,2025-09-01,small,NI,,,118524000,https://crapes.fdic.gov/publish/2025/26798_250331.PDF,,,,,corpus,2025/26798_250331.PDF,,2019-02-11,S
 FDIC_26799_20220805,FDIC,26799,EvaBank,2022-08-05,2023-01-01,isb,S,,,388919000,https://crapes.fdic.gov/publish/2022/26799_220805.PDF,,,,,corpus,2022/26799_220805.PDF,,2019-05-06,S
-FDIC_26816_20220809,FDIC,26816,"Liberty Bank, Inc.",2022-08-09,2023-05-01,small,SN,,,12614000,https://crapes.fdic.gov/publish/2022/26816_220809.PDF,,,,,corpus,2022/26816_220809.PDF,,2021-04-12,SN
+FDIC_26816_20220809,FDIC,26816,"Liberty Bank, Inc.",2022-08-09,2023-05-01,small,SN,,,12614000,https://crapes.fdic.gov/publish/2022/26816_220809.PDF,,,,,dev,2022/26816_220809.PDF,,2021-04-12,SN
 FDIC_26816_20231023,FDIC,26816,"Liberty Bank, Inc.",2023-10-23,2024-05-01,small,SN,,,10752000,https://crapes.fdic.gov/publish/2023/26816_231023.PDF,,,,,corpus,2023/26816_231023.PDF,,2022-08-09,SN
 FDIC_26912_20230605,FDIC,26912,The Bank of South Carolina,2023-06-05,2023-11-01,isb,S,,,646413000,https://crapes.fdic.gov/publish/2023/26912_230605.PDF,,,,,corpus,2023/26912_230605.PDF,,2020-03-03,S
 FDIC_26922_20230131,FDIC,26922,The Cooperative Bank,2023-01-31,2023-07-01,isb,S,,,515880000,https://crapes.fdic.gov/publish/2023/26922_230131.PDF,,,,,corpus,2023/26922_230131.PDF,,2019-11-12,S
@@ -1541,7 +1541,7 @@ FDIC_59306_20240916,FDIC,59306,Evermore Bank,2024-09-16,2025-04-01,small,S,,,168
 FDIC_5962_20220715,FDIC,5962,Sutton Bank,2022-07-15,2024-03-01,isb,S,,,1380932000,https://crapes.fdic.gov/publish/2022/5962_220715.PDF,,,,,corpus,2022/5962_220715.PDF,,2019-07-08,S
 FDIC_5981_20240304,FDIC,5981,The Community Bank,2024-03-04,2024-09-01,isb,S,,,619312000,https://crapes.fdic.gov/publish/2024/5981_240304.PDF,,,,,corpus,2024/5981_240304.PDF,,2021-02-04,S
 FDIC_5994_20240215,FDIC,5994,Prism Bank,2024-02-15,2025-05-01,small,O,,,303067000,https://crapes.fdic.gov/publish/2024/5994_240215.PDF,,,,,corpus,2024/5994_240215.PDF,,2018-03-19,S
-FDIC_6078_20240805,FDIC,6078,One American Bank,2024-08-05,2025-08-01,isb,NI,,,463949000,https://crapes.fdic.gov/publish/2024/6078_240805.PDF,,,,,corpus,2024/6078_240805.PDF,,2018-12-03,S
+FDIC_6078_20240805,FDIC,6078,One American Bank,2024-08-05,2025-08-01,isb,NI,,,463949000,https://crapes.fdic.gov/publish/2024/6078_240805.PDF,,,,,dev,2024/6078_240805.PDF,,2018-12-03,S
 FDIC_6084_20240604,FDIC,6084,The Farmers State Bank of Turton,2024-06-04,2024-09-01,small,S,,,35599000,https://crapes.fdic.gov/publish/2024/6084_240604.PDF,,,,,corpus,2024/6084_240604.PDF,,2018-08-06,S
 FDIC_6091_20240311,FDIC,6091,Macon Bank and Trust Company,2024-03-11,2024-10-01,isb,S,,,670989000,https://crapes.fdic.gov/publish/2024/6091_240311.PDF,,,,,corpus,2024/6091_240311.PDF,,2021-02-22,S
 FDIC_6100_20240508,FDIC,6100,Lineage Bank,2024-05-08,2025-12-01,small,S,,,321009000,https://crapes.fdic.gov/publish/2024/6100_240508.PDF,,,,,corpus,2024/6100_240508.PDF,,2018-05-07,S
@@ -1928,7 +1928,7 @@ FRB_3603961_20230710,FRB,3603961,"VICTORY BANK, THE",2023-07-10,2024-06-14,isb,S
 FRB_362717_20230925,FRB,362717,"CROGHAN COLONIAL BANK, THE",2023-09-25,2025-04-11,isb,O,S,O,1115462000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/362717_20230925,,,,,corpus,362717_20230925,,2019-06-03,S
 FRB_365745_20221024,FRB,365745,PINNACLE BANK,2022-10-24,2023-01-20,small,S,,,263056000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/365745_20221024,,,,,corpus,365745_20221024,,2018-03-26,S
 FRB_366247_20241028,FRB,366247,TEMPLETON SAVINGS BANK,2024-10-28,2025-01-09,small,S,,,157638000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/366247_20241028,,,,,corpus,366247_20241028,,2019-01-14,S
-FRB_3664588_20240116,FRB,3664588,FIELDPOINT PRIVATE BANK & TRUST,2024-01-16,2024-08-18,isb,NI,NI,S,1656434000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/3664588_20240116,,,,,corpus,3664588_20240116,,2018-02-05,S
+FRB_3664588_20240116,FRB,3664588,FIELDPOINT PRIVATE BANK & TRUST,2024-01-16,2024-08-18,isb,NI,NI,S,1656434000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/3664588_20240116,,,,,dev,3664588_20240116,,2018-02-05,S
 FRB_368054_20230612,FRB,368054,MASON BANK,2023-06-12,2023-09-09,small,S,,,143946000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/368054_20230612,,,,,corpus,368054_20230612,,2018-05-07,O
 FRB_368951_20241104,FRB,368951,"KAW VALLEY STATE BANK AND TRUST COMPANY, OF WAMEGO, KANSAS, THE",2024-11-04,2025-01-19,small,S,,,247690000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/368951_20241104,,,,,corpus,368951_20241104,,2020-05-11,S
 FRB_369453_20250324,FRB,369453,IMPACT BANK,2025-03-24,2025-07-25,small,S,,,161907000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/369453_20250324,,,,,corpus,369453_20250324,,2021-02-01,S
@@ -2058,7 +2058,7 @@ FRB_651541_20230306,FRB,651541,IOWA STATE BANK AND TRUST COMPANY,2023-03-06,2023
 FRB_654300_20230710,FRB,654300,WASHINGTON SAVINGS BANK,2023-07-10,2023-11-30,small,O,,,280346000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/654300_20230710,,,,,corpus,654300_20230710,,2018-03-26,O
 FRB_658924_20230403,FRB,658924,FARMERS AND MINERS BANK,2023-04-03,2023-07-27,small,S,,,175199000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/658924_20230403,,,,,corpus,658924_20230403,,2016-08-15,S
 FRB_662350_20250623,FRB,662350,WAHOO STATE BANK,2025-06-23,2025-09-21,small,S,,,116446000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/662350_20250623,,,,,corpus,662350_20250623,,2021-04-26,S
-FRB_663656_20241118,FRB,663656,SMALL BUSINESS BANK,2024-11-18,2025-08-21,small,NI,,,94182000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/663656_20241118,,,,,corpus,663656_20241118,,2020-03-23,S
+FRB_663656_20241118,FRB,663656,SMALL BUSINESS BANK,2024-11-18,2025-08-21,small,NI,,,94182000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/663656_20241118,,,,,dev,663656_20241118,,2020-03-23,S
 FRB_666358_20221206,FRB,666358,FIRST CITIZENS BANK OF BUTTE,2022-12-06,2023-03-06,small,S,,,85761000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/666358_20221206,,,,,corpus,666358_20221206,,2018-11-26,S
 FRB_667252_20230807,FRB,667252,STOCKMENS BANK,2023-08-07,2023-11-26,small,S,,,44456000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/667252_20230807,,,,,corpus,667252_20230807,,2019-04-16,S
 FRB_667524_20221107,FRB,667524,"BANK OF CHARLOTTE COUNTY, THE",2022-11-07,2023-03-13,small,S,,,186104000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/667524_20221107,,,,,corpus,667524_20221107,,2016-10-17,S
@@ -2081,7 +2081,7 @@ FRB_709143_20230130,FRB,709143,MIDWEST BANK,2023-01-30,2024-01-18,isb,S,S,S,6282
 FRB_711520_20230925,FRB,711520,MINERS EXCHANGE BANK,2023-09-25,2024-07-08,small,O,,,92843000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/711520_20230925,,,,,corpus,711520_20230925,,2017-02-13,S
 FRB_711548_20240226,FRB,711548,CHELSEA STATE BANK,2024-02-26,2024-06-10,isb,S,S,S,403647000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/711548_20240226,,,,,corpus,711548_20240226,,2018-11-12,S
 FRB_715340_20241118,FRB,715340,WEST MICHIGAN COMMUNITY BANK,2024-11-18,2025-06-30,isb,S,S,O,1001481000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/715340_20241118,,,,,corpus,715340_20241118,,2021-07-26,S
-FRB_722432_20230911,FRB,722432,"BANK OF ROMNEY, THE",2023-09-11,2024-01-18,small,O,,,354927000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/722432_20230911,,,,,corpus,722432_20230911,,2017-09-11,O
+FRB_722432_20230911,FRB,722432,"BANK OF ROMNEY, THE",2023-09-11,2024-01-18,small,O,,,354927000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/722432_20230911,,,,,dev,722432_20230911,,2017-09-11,O
 FRB_722816_20230626,FRB,722816,SOLVAY BANK,2023-06-26,2024-02-04,isb,S,S,S,1112602000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/722816_20230626,,,,,corpus,722816_20230626,,2017-06-12,S
 FRB_723653_20230109,FRB,723653,WESTERN BANK,2023-01-09,2023-04-16,small,S,,,284120000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/723653_20230109,,,,,corpus,723653_20230109,,2017-11-27,S
 FRB_724744_20241118,FRB,724744,GNB BANK,2024-11-18,2025-02-08,isb,S,S,S,620567000,https://www.federalreserve.gov/apps/CRAPubWeb/CRA/DownloadPDF/724744_20241118,,,,,corpus,724744_20241118,,2021-11-01,S
@@ -2225,7 +2225,7 @@ OCC_11571_20230911,OCC,11571,The First National Bank of Fleming,2023-09-11,2023-
 OCC_11573_20230905,OCC,11573,The Citizens National Bank of Bluffton,2023-09-05,2024-01-08,isb,S,,,,https://occ.gov/static/cra/craeval/Jan24/11573.pdf,,,,,corpus,/Jan24/11573.pdf,,2020-07-06,S
 OCC_11595_20230501,OCC,11595,The Perryton National Bank,2023-05-01,2023-08-31,small,S,,,,https://occ.gov/static/cra/craeval/Aug23/11595.pdf,,,,,corpus,/Aug23/11595.pdf,,2019-04-09,S
 OCC_11642_20240812,OCC,11642,The Granger National Bank,2024-08-12,2025-03-03,small,O,,,,https://occ.gov/static/cra/craeval/Mar25/11642.pdf,,,,,corpus,/Mar25/11642.pdf,,2020-07-27,S
-OCC_11715_20240408,OCC,11715,The Lemont National Bank,2024-04-08,2024-07-22,small,SN,,,,https://occ.gov/static/cra/craeval/Jul24/11715.pdf,,,,,corpus,/Jul24/11715.pdf,,2021-07-19,SN
+OCC_11715_20240408,OCC,11715,The Lemont National Bank,2024-04-08,2024-07-22,small,SN,,,,https://occ.gov/static/cra/craeval/Jul24/11715.pdf,,,,,dev,/Jul24/11715.pdf,,2021-07-19,SN
 OCC_11754_20250623,OCC,11754,The First National Bank of Okawville,2025-06-23,2025-11-03,small,O,,,,https://occ.gov/static/cra/craeval/Nov25/11754.pdf,,,,,corpus,/Nov25/11754.pdf,,2019-12-30,O
 OCC_11780_20241112,OCC,11780,The Old Exchange National Bank of Okawville,2024-11-12,2025-05-01,small,O,,,,https://occ.gov/static/cra/craeval/May25/11780.pdf,,,,,corpus,/May25/11780.pdf,,2019-07-22,O
 OCC_11798_20220705,OCC,11798,The First National Bank of Louisburg,2022-07-05,2023-03-22,small,S,,,,https://occ.gov/static/cra/craeval/Mar23/11798.pdf,,,,,corpus,/Mar23/11798.pdf,,2018-02-07,S
@@ -2270,7 +2270,7 @@ OCC_13579_20220706,OCC,13579,The First National Bank in Tremont,2022-07-06,2023-
 OCC_13637_20230410,OCC,13637,First National Bank of Eastern Arkansas,2023-04-10,2023-08-08,isb,S,,,,https://occ.gov/static/cra/craeval/Aug23/13637.pdf,,,,,corpus,/Aug23/13637.pdf,,2020-01-06,S
 OCC_13677_20220531,OCC,13677,First National Bank and Trust Company of Ardmore,2022-05-31,2023-11-30,isb,S,,,,https://occ.gov/static/cra/craeval/Nov23/13677.pdf,,,,,corpus,/Nov23/13677.pdf,,2019-04-29,S
 OCC_13678_20240909,OCC,13678,The Brenham National Bank,2024-09-09,2025-03-03,small,S,,,,https://occ.gov/static/cra/craeval/Mar25/13678.pdf,,,,,corpus,/Mar25/13678.pdf,,2021-06-21,S
-OCC_13682_20240819,OCC,13682,"First Neighbor Bank, National Association",2024-08-19,2025-03-03,isb,O,,,,https://occ.gov/static/cra/craeval/Mar25/13682.pdf,,,,,corpus,/Mar25/13682.pdf,,2021-07-26,S
+OCC_13682_20240819,OCC,13682,"First Neighbor Bank, National Association",2024-08-19,2025-03-03,isb,O,,,,https://occ.gov/static/cra/craeval/Mar25/13682.pdf,,,,,dev,/Mar25/13682.pdf,,2021-07-26,S
 OCC_1368_20240102,OCC,1368,Community National Bank,2024-01-02,2024-05-07,isb,O,,,,https://occ.gov/static/cra/craeval/May24/1368.pdf,,,,,corpus,/May24/1368.pdf,,2020-09-28,O
 OCC_13692_20230117,OCC,13692,The Citizens National Bank of Park Rapids,2023-01-17,2023-05-22,small,O,,,,https://occ.gov/static/cra/craeval/May23/13692.pdf,,,,,corpus,/May23/13692.pdf,,2020-01-13,S
 OCC_13706_20221128,OCC,13706,The First National Bank of Trinity,2022-11-28,2023-02-20,small,S,,,,https://occ.gov/static/cra/craeval/Feb23/13706.pdf,,,,,corpus,/Feb23/13706.pdf,,2018-10-09,S
@@ -2641,7 +2641,7 @@ OCC_703235_20230417,OCC,703235,Prevail Bank,2023-04-17,2023-07-18,isb,S,,,,https
 OCC_703293_20221128,OCC,703293,TC Federal Bank,2022-11-28,2023-04-10,small,S,,,,https://occ.gov/static/cra/craeval/Apr23/703293.pdf,,,,,corpus,/Apr23/703293.pdf,,2019-09-16,S
 OCC_703313_20220808,OCC,703313,First FS & LA,2022-08-08,2023-02-20,small,S,,,,https://occ.gov/static/cra/craeval/Feb23/703313.pdf,,,,,corpus,/Feb23/703313.pdf,,2018-07-17,S
 OCC_703367_20230327,OCC,703367,Peru Federal Savings Bank,2023-03-27,2023-06-07,small,S,,,,https://occ.gov/static/cra/craeval/Jun23/703367.pdf,,,,,corpus,/Jun23/703367.pdf,,,
-OCC_703395_20230327,OCC,703395,GN Bank,2023-03-27,2023-07-17,small,NI,,,,https://occ.gov/static/cra/craeval/Jul23/703395.pdf,,,,,corpus,/Jul23/703395.pdf,,2018-10-01,S
+OCC_703395_20230327,OCC,703395,GN Bank,2023-03-27,2023-07-17,small,NI,,,,https://occ.gov/static/cra/craeval/Jul23/703395.pdf,,,,,dev,/Jul23/703395.pdf,,2018-10-01,S
 OCC_703435_20221219,OCC,703435,"Worthington Federal Savings Bank, FSB",2022-12-19,2023-03-23,small,S,,,,https://occ.gov/static/cra/craeval/Mar23/703435.pdf,,,,,corpus,/Mar23/703435.pdf,,2018-04-02,S
 OCC_703519_20230626,OCC,703519,Home FS&LA of Grand Island,2023-06-26,2023-11-17,small,O,,,,https://occ.gov/static/cra/craeval/Nov23/703519.pdf,,,,,corpus,/Nov23/703519.pdf,,2020-07-20,O
 OCC_703534_20230530,OCC,703534,Kingstree FS & LA,2023-05-30,2023-09-18,small,S,,,,https://occ.gov/static/cra/craeval/Sep23/703534.pdf,,,,,corpus,/Sep23/703534.pdf,,2019-02-19,S

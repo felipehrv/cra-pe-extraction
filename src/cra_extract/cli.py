@@ -27,10 +27,13 @@ STAGES: dict[str, tuple[str, str]] = {
     "templates": ("cra_extract.templates", "template-residual census of the review section"),
     "rules": ("cra_extract.rules", "rule-based extraction (system S1)"),
     "baseline": ("cra_extract.baseline", "keyword baseline for Group C (system S0)"),
+    "strata": ("cra_extract.strata", "draw the dev, test and audit splits"),
     "label": ("cra_extract.label", "init, validate and hash gold label sheets"),
     "llm": ("cra_extract.llm", "LLM extraction smoke test"),
+    "run": ("cra_extract.run", "run the extraction systems over a split"),
     "grounding": ("cra_extract.grounding", "check one quote against a text file"),
     "evaluate": ("cra_extract.evaluate", "score predictions against gold"),
+    "freeze": ("cra_extract.freeze", "check the analysis plan and tag plan-v1.0"),
     "stats": ("cra_extract.stats", "binomial confidence intervals"),
 }
 

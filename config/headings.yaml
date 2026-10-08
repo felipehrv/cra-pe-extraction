@@ -67,7 +67,7 @@ sections:
     max_pages: 2
 
   illegal_credit_practices_review:
-    description: The fair lending / illegal credit practices review paragraph(s); 2 to 10 lines in all eight samples.
+    description: The fair lending / illegal credit practices review; one paragraph of 2 to 5 lines (FDIC, FRB) or three boilerplate paragraphs of about 14 lines (OCC, the second paragraph carrying any finding) in the eight samples.
     scope: institution
     OCC: ['^Discriminatory or Other Illegal Credit Practices Review$']
     FDIC: ['^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$']

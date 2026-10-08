@@ -460,9 +460,22 @@ def test_build_manifest_from_fixtures(occ_rows, fdic_payload, frb_frames, monkey
     assert len(ix.frame_to_records(manifest)) == len(manifest)
 
 
-def test_cli_offline_writes_outputs(tmp_path, monkeypatch):
-    monkeypatch.setattr(ix, "INDEX_DIR", tmp_path / "index")
-    monkeypatch.setattr(ix, "RESULTS_DIR", tmp_path / "results")
+def test_side_outputs_follow_out(tmp_path):
+    # The repo manifest keeps the repo side-output dirs; any other --out gets its own.
+    assert ix.side_output_dirs(ix.CORPUS_PATH, None, None) == (ix.INDEX_DIR, ix.RESULTS_DIR)
+    assert ix.side_output_dirs(tmp_path / "x.csv", None, None) == (tmp_path / "index", tmp_path / "results")
+    assert ix.side_output_dirs(tmp_path / "x.csv", tmp_path / "i", None) == (tmp_path / "i", tmp_path / "results")
+
+
+def test_cli_offline_refuses_repo_index_dir(tmp_path):
+    out = tmp_path / "corpus.csv"
+    with pytest.raises(SystemExit):
+        ix.main(["--offline-from-fixtures", "--out", str(out), "--index-dir", str(ix.INDEX_DIR)])
+    assert not out.exists()
+
+
+def test_cli_offline_writes_outputs(tmp_path):
+    # No monkeypatching: with --out outside the repo the side outputs land next to it.
     out = tmp_path / "corpus.csv"
     rc = ix.main(["--window", "2024-01-01", "2024-12-31", "--prior-from", "2018-01-01",
                   "--offline-from-fixtures", "--out", str(out)])
@@ -481,8 +494,6 @@ def test_cli_from_raw_rebuilds_without_network(tmp_path, monkeypatch):
     raw = tmp_path / "raw"
     raw.mkdir()
     monkeypatch.setattr(ix, "RAW_INDEX_DIR", raw)
-    monkeypatch.setattr(ix, "INDEX_DIR", tmp_path / "index")
-    monkeypatch.setattr(ix, "RESULTS_DIR", tmp_path / "results")
     out = tmp_path / "corpus.csv"
     argv = ["--window", "2024-01-01", "2024-12-31", "--out", str(out), "--from-raw", "20260101"]
     with pytest.raises(FileNotFoundError, match="occ_cra_eval_20260101.json"):

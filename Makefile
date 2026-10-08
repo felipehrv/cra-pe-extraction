@@ -1,7 +1,7 @@
 PY ?= .venv/bin/python
 PIP ?= .venv/bin/pip
 
-.PHONY: env index index-replay fetch parse locate templates rules baseline smoke-llm label-init label-validate label-hash pilot eval-dev freeze eval-test scale audit report reproduce test lint
+.PHONY: env index index-replay fetch parse locate templates rules baseline smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot eval-dev freeze eval-test scale audit report reproduce test lint
 
 # Needs a native (arm64 on Apple silicon) Python 3.11+. With an x86_64 Anaconda install,
 # use: CONDA_SUBDIR=osx-arm64 conda create -p ./.venv python=3.12 pip && make env PYTHON=.venv/bin/python
@@ -42,6 +42,25 @@ MODEL ?= claude-haiku-4-5
 smoke-llm:
 	$(PY) -m cra_extract.llm --smoke --backend $(BACKEND) --model $(MODEL) --split smoke
 
+# Split draws (dev < test < audit; a redraw with the same seed is byte-identical).
+SEED ?= 20261007
+DRAW_DATE ?= 2026-10-07
+draw-dev:
+	$(PY) -m cra_extract.strata draw-dev --seed $(SEED) --date $(DRAW_DATE)
+
+# Run after `make scale`: the per-document n_aa_sections column of results/sections_corpus.csv
+# is the multi-AA proxy. With the 25-document fallback add --per-cell 2.
+AA_COUNTS ?= results/sections_corpus.csv
+draw-test:
+	$(PY) -m cra_extract.strata draw-test --seed $(SEED) --date $(DRAW_DATE) --aa-counts $(AA_COUNTS)
+
+RISK ?= results/risk_corpus.csv
+draw-audit:
+	$(PY) -m cra_extract.strata draw-audit --risk $(RISK) --seed $(SEED) --date $(DRAW_DATE)
+
+strata-show:
+	$(PY) -m cra_extract.strata show
+
 SPLIT ?= dev
 label-init:
 	$(PY) -m cra_extract.label init --split $(SPLIT) --out data/gold/labels_$(SPLIT).csv
@@ -52,8 +71,12 @@ label-validate:
 label-hash:
 	$(PY) -m cra_extract.label hash --split $(SPLIT) --labels data/gold/labels_$(SPLIT).csv
 
+# Extraction systems over a split: rules (S1), baseline (S0) and llm:<backend>:<model> entries.
+# LLM calls replay from data/traces/{split}/ by default; add RUN_FLAGS=--allow-api for live calls.
+SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash
+RUN_FLAGS ?=
 pilot:
-	$(PY) -m cra_extract.run --split dev --systems rules,llm
+	$(PY) -m cra_extract.run --split dev --systems $(SYSTEMS) $(RUN_FLAGS)
 
 eval-dev:
 	$(PY) -m cra_extract.evaluate --split dev
@@ -65,7 +88,7 @@ eval-test:
 	$(PY) -m cra_extract.evaluate --split test
 
 scale:
-	$(PY) -m cra_extract.run --split corpus --systems rules,llm
+	$(PY) -m cra_extract.run --split corpus --systems $(SYSTEMS) --parse-missing $(RUN_FLAGS)
 
 audit:
 	$(PY) -m cra_extract.audit --draw --n-per-stratum 10

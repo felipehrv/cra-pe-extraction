@@ -43,7 +43,6 @@ GroundingFailure = Literal["quote_not_found", "quote_out_of_scope", "quote_does_
 
 MIN_LOCATE_SCORE = 90.0
 TEMPLATE_MATCH_SCORE = 90.0
-MAX_TEMPLATE_RESIDUAL = 40  # characters left after removing a template; fewer means boilerplate
 SUPPORTING_SCOPES = {"institution", "unknown"}
 
 FINDING_PREDICATES = ("identified", "lowered", "violation", "substantive", "cited", "downgrade")
@@ -75,54 +74,65 @@ NUMBER_WORDS = {
 
 SCALE_WORDS = {"thousand": 1e3, "million": 1e6, "billion": 1e9}
 
-# Word forms accepted as evidence for an enum code. A code missing here falls back to its
-# own tokens (underscores become spaces), matched as a substring.
+# Word forms accepted as evidence for an enum code, as regular expressions searched in the
+# normalized (lower-cased, whitespace-collapsed) quote. A code missing here falls back to its
+# own tokens (underscores become spaces), matched as a substring. Short acronyms carry word
+# boundaries; forms that would match unrelated prose (bare "order", "product", "prior",
+# "affect", "collection", "violation") are phrased as the multi-word expression a PE prints.
 WORD_FORMS: dict[str, list[str]] = {
     "O": ["outstanding"],
     "S": ["satisfactory"],
     "NI": ["needs to improve"],
     "SN": ["substantial noncompliance", "substantial non-compliance"],
-    "OCC": ["comptroller of the currency", "occ"],
-    "FDIC": ["federal deposit insurance corporation", "fdic"],
-    "FRB": ["federal reserve", "frb"],
-    "small": ["small bank", "small institution"],
+    "OCC": ["comptroller of the currency", r"\bocc\b"],
+    "FDIC": ["federal deposit insurance corporation", r"\bfdic\b"],
+    "FRB": ["federal reserve", r"\bfrb\b"],
+    "small": [r"(?<!intermediate )small (bank|institution)"],
     "isb": ["intermediate small bank", "intermediate small institution"],
-    "home_mortgage": ["home mortgage", "residential", "hmda", "mortgage"],
+    "home_mortgage": ["home mortgage", "residential", r"\bhmda\b", "mortgage"],
     "small_business": ["small business", "commercial"],
     "small_farm": ["small farm", "agricultur"],
     "consumer": ["consumer"],
     "all_reviewed_combined": ["total", "combined", "all loans", "loans reviewed"],
     "discrimination": ["discriminat", "redlining", "fair lending", "fair housing act", "equal credit"],
-    "other_illegal_credit_practice": ["illegal credit practice", "violation", "udap", "unfair", "deceptive"],
-    "both": ["discriminat", "illegal credit practice"],
+    "other_illegal_credit_practice": [
+        "illegal credit practice", r"\budap\b", "unfair", "deceptive",
+        # a violation of a law other than the fair lending statutes
+        r"violations? of (?!(?:the )?(?:fair housing|equal credit|ecoa|fha|regulation b))",
+    ],
     "technical_only_noted": ["technical", "isolated"],
-    "substantive_not_lowered": ["did not affect", "not affect", "did not lower", "not lowered", "no effect"],
+    "substantive_not_lowered": ["did not affect", "not affect", "did not lower", "not lowered", "no effect", "did not result in"],
     "substantive_lowered": ["lowered", "downgrade", "reduced", "lower the"],
-    "affected_unspecified": ["affect", "consider", "impact"],
+    "affected_unspecified": [r"(?<!not )(?<!no )affect", r"\bconsider", r"(?<!no )impact", "taken into account", "weighed"],
     "overall": ["cra rating", "overall"],
     "lending_test": ["lending test"],
     "cd_test": ["community development test"],
-    "state_or_msa": ["state", "msa", "metropolitan"],
-    "ECOA_RegB": ["equal credit opportunity", "ecoa", "regulation b"],
-    "FHA": ["fair housing act", "fha"],
-    "FTC_s5_UDAP": ["federal trade commission act", "section 5", "udap", "unfair or deceptive"],
-    "CFPA_UDAAP": ["consumer financial protection act", "udaap", "abusive"],
-    "HOEPA": ["home ownership and equity protection", "hoepa"],
-    "RESPA_s8": ["real estate settlement procedures", "respa"],
-    "TILA": ["truth in lending", "tila", "regulation z"],
-    "SCRA": ["servicemembers civil relief", "scra"],
-    "MLA": ["military lending act", "mla"],
+    "state_or_msa": [r"\bstate\b", r"\bmsa\b", "metropolitan"],
+    "ECOA_RegB": ["equal credit opportunity", r"\becoa\b", "regulation b"],
+    "FHA": ["fair housing act", r"\bfha\b"],
+    "FTC_s5_UDAP": ["federal trade commission act", "section 5", r"\budap\b", "unfair or deceptive"],
+    "CFPA_UDAAP": ["consumer financial protection act", r"\budaap\b", "abusive"],
+    "HOEPA": ["home ownership and equity protection", r"\bhoepa\b"],
+    "RESPA_s8": ["real estate settlement procedures", r"\brespa\b"],
+    "TILA": ["truth in lending", r"\btila\b", "regulation z"],
+    "SCRA": ["servicemembers civil relief", r"\bscra\b"],
+    "MLA": ["military lending act", r"\bmla\b"],
     "redlining": ["redlining", "redline"],
-    "pricing": ["pricing", "priced", "rate"],
-    "underwriting": ["underwriting", "denial", "approv"],
+    "pricing": ["pricing", "priced", r"\brates?\b"],
+    "underwriting": ["underwriting", "denial", "denied", "approv"],
     "marketing": ["marketing", "advertis"],
-    "servicing": ["servicing", "collection"],
-    "UDAP_product": ["udap", "product", "deceptive", "unfair"],
+    "servicing": ["servicing", "debt collection", "collection practice", "collection activit"],
+    "UDAP_product": [r"\budap\b", "deceptive", "unfair", "add-on product", "ancillary product", "product feature"],
     "this_CRA_exam": ["this evaluation", "evaluation period", "review period", "examiners identified", "examiners cited"],
     "concurrent_compliance_exam": ["compliance exam", "concurrent"],
-    "prior_exam_referenced": ["prior", "previous"],
-    "enforcement_action_referenced": ["consent order", "enforcement", "order"],
-    "DOJ_HUD_referral": ["department of justice", "doj", "hud", "referral"],
+    "prior_exam_referenced": [r"(?:prior|previous) (?:cra )?(?:evaluation|examination|exam)\b"],
+    "enforcement_action_referenced": ["consent order", "enforcement action", "cease and desist", "formal agreement", "civil money penalt"],
+    "DOJ_HUD_referral": ["department of justice", r"\bdoj\b", r"\bhud\b", "referral", "referred"],
+}
+
+# Codes whose evidence is the conjunction of other codes' forms.
+COMPOUND_CODES: dict[str, tuple[str, ...]] = {
+    "both": ("discrimination", "other_illegal_credit_practice"),
 }
 
 # Codes that need no evidence in the quote because they state the absence of information.
@@ -290,11 +300,24 @@ def date_forms(d: date) -> list[str]:
     return [normalize(f) for f in forms]
 
 
-def numbers_in(text: str) -> list[float]:
+UNIT_MARKER_RE = re.compile(r"\(?000s?\)?|thousand|million|billion|\$")
+_MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec"
+DATE_SPAN_RE = re.compile(
+    rf"(?:{_MONTHS})\.? \d{{1,2}},? \d{{4}}|\d{{1,2}}/\d{{1,2}}/\d{{2,4}}|\d{{4}}-\d{{2}}-\d{{2}}|\b(?:19|20)\d{{2}}\b"
+)
+
+
+def numbers_in(text: str, scale_bare: bool = True) -> list[float]:
     """Numbers in ``text`` with their scale words applied (``$1.0 billion`` gives 1e9),
-    plus thousand/million multiples of every bare number to cover ``(000s)`` tables,
-    plus spelled-out small integers."""
+    plus spelled-out small integers. With ``scale_bare`` (the default for dollar and
+    percent fields) and a unit marker in the text (``(000s)``, ``thousand``, ``$``),
+    every bare number also yields its thousand and million multiples to cover
+    ``(000s)`` tables. Numbers that are part of a date (``March 31, 2024``,
+    ``3/31/2024``, ``2024-03-31``, a bare year) are left out, so a date in the quote
+    cannot stand in for an asset figure or an assessment-area count."""
     norm = normalize(text)
+    date_spans = [m.span() for m in DATE_SPAN_RE.finditer(norm)]
+    has_unit = bool(UNIT_MARKER_RE.search(norm))
     out: list[float] = []
     for m in re.finditer(r"(?<![\w.])(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?\s*(thousand|million|billion)?", norm):
         raw = m.group(1).replace(",", "") + (m.group(2) or "")
@@ -302,9 +325,11 @@ def numbers_in(text: str) -> list[float]:
             x = float(raw)
         except ValueError:
             continue
+        if any(a <= m.start() < b for a, b in date_spans):
+            continue
         scale = SCALE_WORDS.get(m.group(3) or "", 1.0)
         out.append(x * scale)
-        if scale == 1.0:
+        if scale == 1.0 and scale_bare and has_unit:
             out.extend([x * 1e3, x * 1e6])
     for word, n in NUMBER_WORDS.items():
         if re.search(rf"\b{word}\b", norm):
@@ -368,17 +393,34 @@ def _has_predicate(norm_quote: str) -> bool:
 
 
 def enum_in_quote(code: str, norm_quote: str) -> bool:
-    """True when one of the code's word forms appears in the normalized quote."""
+    """True when one of the code's word forms (regular expressions) matches the normalized
+    quote. A compound code (``both``) needs every component code to be present."""
     if code in ALWAYS_SUPPORTED:
         return True
+    if code in COMPOUND_CODES:
+        return all(enum_in_quote(part, norm_quote) for part in COMPOUND_CODES[code])
     forms = WORD_FORMS.get(code)
     if forms is None:
         # Ratings may also be given by their long name as the value itself.
-        forms = [normalize(code.replace("_", " "))]
+        forms = [re.escape(normalize(code.replace("_", " ")))]
         for word, short in RATING_WORDS.items():
             if normalize(code) == normalize(word):
                 forms = WORD_FORMS[short]
-    return any(f in norm_quote for f in forms)
+    return any(re.search(f, norm_quote) for f in forms)
+
+
+_SENTENCE_SPLIT_RE = re.compile(r"(?<=[.;!?])\s+")
+
+
+def _sentences(norm_quote: str) -> list[str]:
+    return [part for part in _SENTENCE_SPLIT_RE.split(norm_quote) if part.strip()]
+
+
+def asserts_finding_sentence(norm_quote: str) -> bool:
+    """True when at least one sentence of the quote carries a finding predicate and no
+    negation pattern, so a finding followed by a negated "no other practices" sentence
+    still counts as an assertion."""
+    return any(_has_predicate(sent) and not _has_negation(sent) for sent in _sentences(norm_quote))
 
 
 def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
@@ -395,8 +437,8 @@ def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
         if b is None:
             return False
         if b:
-            return _has_predicate(norm_quote) and not _has_negation(norm_quote)
-        return _has_negation(norm_quote) or not _has_predicate(norm_quote)
+            return asserts_finding_sentence(norm_quote)
+        return not asserts_finding_sentence(norm_quote)
     if ftype == "date":
         d = parse_date(value)
         return d is not None and any(f in norm_quote for f in date_forms(d))
@@ -406,7 +448,8 @@ def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
         except ValueError:
             return False
         abs_tol, rel_tol = number_tolerance(spec)
-        return number_matches(target, numbers_in(quote), abs_tol, rel_tol)
+        scale_bare = not (ftype == "int" and spec.get("tolerance", "exact") == "exact")
+        return number_matches(target, numbers_in(quote, scale_bare=scale_bare), abs_tol, rel_tol)
     # Free strings (bank_name): fuzzy containment.
     return fuzz.partial_ratio(normalize(str(value)), norm_quote) >= MIN_LOCATE_SCORE
 
@@ -423,9 +466,12 @@ def _asserts_finding(value: Any, spec: dict[str, Any]) -> bool:
 
 def matches_template(quote: str, regulator: str) -> bool:
     """True when the quote is boilerplate: a stored template matches it (score at least
-    ``TEMPLATE_MATCH_SCORE``) and ``templates.residual`` leaves fewer than
-    ``MAX_TEMPLATE_RESIDUAL`` characters, or (without that module) the quote carries a
-    negation and no finding predicate outside the negated phrase."""
+    ``TEMPLATE_MATCH_SCORE``) and what ``templates.residual`` leaves carries no finding
+    predicate, or (without that module) the quote carries a negation and no finding
+    predicate outside the negated phrase. A short residual that still asserts a finding
+    is a finding sentence appended to the template (design 4.1(c): the quote is not within
+    edit distance k of the template), not boilerplate; the length of the residual is not
+    used."""
     try:
         templates = importlib.import_module("cra_extract.templates")
     except ImportError:
@@ -433,11 +479,11 @@ def matches_template(quote: str, regulator: str) -> bool:
     if templates is not None and hasattr(templates, "residual"):
         res = templates.residual(quote, regulator)
         if isinstance(res, str):
-            return len(res.strip()) < MAX_TEMPLATE_RESIDUAL
+            return _residual_is_boilerplate(res)
         text = getattr(res, "residual_text", None)
         if isinstance(text, str):
             matched = bool(getattr(res, "removed", None)) or float(getattr(res, "score", 0.0)) >= TEMPLATE_MATCH_SCORE
-            return matched and len(text.strip()) < MAX_TEMPLATE_RESIDUAL
+            return matched and _residual_is_boilerplate(text)
     norm = normalize(quote)
     if not _has_negation(norm):
         return False
@@ -445,6 +491,12 @@ def matches_template(quote: str, regulator: str) -> bool:
     for pat in NEGATION_PATTERNS:
         stripped = re.sub(pat + r"[^.]*\.?", " ", stripped)
     return not _has_predicate(stripped)
+
+
+def _residual_is_boilerplate(residual_text: str) -> bool:
+    """Nothing of substance is left once the template is removed: no sentence of the
+    residual asserts a finding (predicate without negation)."""
+    return not asserts_finding_sentence(normalize(residual_text))
 
 
 # ----------------------------------------------------------------- check

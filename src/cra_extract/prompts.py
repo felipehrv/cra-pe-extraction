@@ -18,7 +18,10 @@ from typing import Any
 from cra_extract.config import applicability, field_spec, load_fields
 from cra_extract.models import DocRecord, Section
 
-PROMPT_VERSION = "v1"
+# v2 (2026-10-07): header no longer carries the doc_id, bank name or evaluation date
+# (scored Group A answers); field lines use prompt_description; the JSON schema is part
+# of the trace key.
+PROMPT_VERSION = "v2"
 
 STATUSES = ["value", "absent", "abstain"]
 
@@ -145,14 +148,20 @@ def portable_schema(schema: Any) -> Any:
 
 
 def _field_lines(field_group: str, doc: DocRecord) -> list[str]:
-    """One bullet per field: type, allowed values, description and the applicability rule."""
+    """One bullet per field: type, allowed values, description and the applicability rule.
+
+    The text comes from ``prompt_description`` when ``fields.yaml`` defines one (fields
+    whose data-dictionary ``description`` names a fabrication probe or uses the gold null
+    vocabulary) and from ``description`` otherwise, so the model never reads evaluation
+    metadata.
+    """
     lines: list[str] = []
     for name in llm_field_group(field_group)["fields"]:
         spec = field_spec(name)
         parts = [f"- {name} ({_TYPE_NOTES.get(spec['type'], spec['type'])}"]
         if spec.get("allowed"):
             parts.append(f"; allowed: {', '.join(spec['allowed'])}")
-        parts.append(f"): {spec.get('description', '').strip()}")
+        parts.append(f"): {spec.get('prompt_description', spec.get('description', '')).strip()}")
         rule = applicability(name, doc.regulator, doc.method)
         if rule == "absent_from_document":
             parts.append(
@@ -175,16 +184,16 @@ def build_prompt(doc: DocRecord, sections: dict[str, Section], field_group: str)
     ``sections`` is the set of located sections the caller wants the model to
     see (normally those listed for the group in ``fields.yaml``, or a single
     whole-document section when the locator missed). Sections are rendered in
-    the order given, each with its scope label and page range.
+    the order given, each with its scope label and page range. The header states
+    only the regulator and exam method, which the applicability rules depend on;
+    the bank name, bank id and evaluation date are scored Group A fields and are
+    not shown (design 6.8), so the model must read them from the cover section.
     """
     header = [
-        f"Document: {doc.doc_id}",
+        "Document: a CRA Performance Evaluation",
         f"Regulator: {doc.regulator}",
         f"Exam method: {_method_label(doc.method)}",
-        f"Bank name (from the index, confirm against the text): {doc.bank_name}",
     ]
-    if doc.exam_date is not None:
-        header.append(f"Evaluation date (from the index): {doc.exam_date.isoformat()}")
 
     body = [
         "\n".join(header),

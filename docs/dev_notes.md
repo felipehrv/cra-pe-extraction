@@ -21,9 +21,12 @@ Makefile, as `python -m cra_extract.<stage>`, or through the `cra` console scrip
 | templates | `make templates` | `data/text/` | `results/census.csv` (Group C template-residual census) |
 | rules | `make rules` | `data/text/` | `results/rules.csv` (system S1) |
 | baseline | `make baseline` | `data/text/` | `results/baseline.csv` (system S0) |
+| strata | `make draw-dev`, `make draw-test`, `make draw-audit`, `make strata-show` | `config/corpus.csv`, `data/index/frb.csv` (dev), the aa-counts CSV (test), `results/risk_corpus.csv` (audit) | `split` column of `config/corpus.csv`, `config/strata.yaml` |
 | label | `make label-init SPLIT=dev`, `make label-validate SPLIT=dev`, `make label-hash SPLIT=test` | `config/corpus.csv`, `data/gold/labels_{split}.csv` | the label sheet, validation problems, `docs/hashes.md` |
 | llm | `make smoke-llm BACKEND=anthropic MODEL=claude-haiku-4-5` | one sample PE, API key from `.env` | `data/traces/smoke/{backend}.jsonl` |
+| run | `make pilot` (dev), `make scale` (corpus), `RUN_FLAGS=--allow-api` for live calls, `SYSTEMS=rules,baseline,llm:gemini:gemini-3.8-flash` | `config/corpus.csv`, `data/text/`, `data/traces/{split}/` | `results/predictions_{split}.csv`, `results/sections_{split}.csv`, `results/run_log_{split}.jsonl`, new traces |
 | evaluate | `make eval-dev`, `make eval-test` | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv`, `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv` |
+| freeze | `make freeze` (`cra freeze --check-only` to rehearse) | `docs/analysis_plan.md`, `docs/hashes.md`, `config/corpus.csv`, git tree | Freeze record in `docs/hashes.md`, commit, annotated tag `plan-v1.0` |
 
 Notes on running:
 
@@ -38,11 +41,23 @@ Notes on running:
   `CRA_ALLOW_TEST_EVAL=1` for CI on traces), every run is appended to
   `results/test_invocations.log`, and a second scoring run needs a dated entry in
   `docs/deviations.md`. `--replay-only` regenerates tables without counting as a run.
-- `make pilot`, `make scale`, `make freeze`, `make audit` and `make report` reference
-  modules that do not exist yet (`run`, `freeze`, `audit`, `report`). The `run` stage must
-  write `results/predictions_{split}.csv` with the `FieldValue` columns plus `system`, and
-  optionally `grounding_failure` (empty means grounded) and `locator_miss` (0 or 1), which
-  `evaluate.read_predictions` honours.
+- `run` writes `results/predictions_{split}.csv` with the `FieldValue` columns plus
+  `grounding_failure` (empty means grounded; any other value must be one of the three
+  categories or `evaluate.read_predictions` refuses the file) and `locator_miss` (0 or 1).
+  Pairs already in the file are skipped; `--force` recomputes the selected pairs; `--limit N`
+  counts documents that still had work. An `llm.DailyLimitExceeded` from a backend
+  propagates out of `llm.extract` and halts the run (`summary.halted`); a truncated or
+  refused response is recorded with `Trace.error` set to the stop reason and abstentions
+  noted `truncated`.
+- `strata` draws the splits in order dev, test, audit (`draw-dev` needs `data/index/frb.csv`
+  for the district rule, `draw-test` the aa-counts CSV from the run stage, `draw-audit` a
+  risk file from evaluate). A split's pool excludes the splits drawn before it, so a redraw
+  with the same seed is byte-identical.
+- `freeze` refuses while `docs/analysis_plan.md` has `TODO` markers, the tree is dirty, the
+  test split is undrawn or its doc_id hash is not in `docs/hashes.md`; on success it commits
+  the Freeze record and creates the annotated tag (`--no-commit` tags the prior HEAD).
+- `make audit` and `make report` still reference modules that do not exist (`audit`,
+  `report`).
 - Tests: `make test` (`pytest -m "not network"`) and `make lint`. Live-service tests are
   marked `network` and run only with `CRA_NETWORK_TESTS=1` (index fetchers) or
   `CRA_LIVE_LLM=1` (LLM smoke test, backend chosen by `CRA_SMOKE_BACKEND` and
@@ -215,8 +230,8 @@ Labeling
   never flags in `evaluate.consistency_fail` because the section count is not in the
   predictions file; the `run` stage should write it, or `risk_table` should take a
   per-document count.
-- `config/corpus.csv` has no dev or test rows yet; the strata step must assign splits
-  before `cra label init --split dev` writes anything.
+- `config/corpus.csv` carries the dev split (seed 20261007, `config/strata.yaml`); test and
+  audit are undrawn until `make draw-test` and `make draw-audit` run.
 
 LLM
 
@@ -226,8 +241,21 @@ LLM
   Gemini receives `portable_schema` (anyOf with null); if Anthropic or the OpenAI-compatible
   endpoint rejects the canonical schema with a 400, route that backend through
   `portable_schema` as well (one line in `_call`).
-- Confirm that Ollama honours `options.num_ctx` on `/v1/chat/completions` (watch the server
-  log); the fallback is a Modelfile with `PARAMETER num_ctx` or the native `/api/chat`.
+- Confirm that Ollama honours `options.num_ctx` on `/v1/chat/completions`: Ollama's
+  OpenAI-compatibility documentation says the OpenAI API cannot set the context size and
+  unknown body fields are ignored, so before any S4 run start the server with
+  `OLLAMA_DEBUG=1`, send one `make smoke-llm BACKEND=ollama` call and check the runner log
+  for `n_ctx=32768` and the absence of `truncating input prompt`. If the default context is
+  used, create a model alias with a Modelfile (`FROM llama3.1:8b-instruct-q4_K_M`,
+  `PARAMETER num_ctx 32768`) and point `--model` at it, or switch the backend to the
+  native `/api/chat` with `options.num_ctx` and `format=<schema>`. The whole S4
+  comparison rests on this.
+- `OpenAICompatibleBackend` falls back from `response_format=json_schema` to
+  `json_object` only when the 400 body names that parameter; the mode used is recorded in
+  `Trace.response_format`. Any other 400 propagates.
+- Output budget: `DEFAULT_MAX_OUTPUT_TOKENS` is 16000 for the hosted APIs (thinking tokens
+  count toward it) and 4096 for Ollama; `Trace.stop_reason` records the stop or finish
+  reason and `max_tokens` or a refusal becomes `Trace.error`.
 - `config/prices.yaml` has null prices and free-tier limits for `gemini-3.8-flash`, so its
   traces carry `cost_usd` 0.0 until filled; wire the free-tier limits into `RateLimiter`
   in the run stage.
@@ -246,10 +274,17 @@ Evaluation
   `docs/analysis_plan.md` before the freeze.
 - `metrics_table` reports recall conditional on answering and `recall_overall` (abstentions
   count as misses) side by side; decide which Table 1 shows.
-- `grounding.WORD_FORMS` for Group C enums and the 40-character template residual threshold
-  (`grounding.MAX_TEMPLATE_RESIDUAL`) are heuristics seeded from two positive samples;
-  revisit after the census positives are labeled. `exam_method` "small" grounds inside a
-  quote that says "Intermediate Small Bank" (affects the groundedness column only).
+- `grounding.WORD_FORMS` for Group C enums are regular expressions seeded from two positive
+  samples; a quote is boilerplate when the template residual has no sentence that asserts
+  a finding (no character threshold). Revisit after the census positives are labeled.
+- Scoring conventions fixed in this pass: a fabricated absence is wrong in accuracy and a
+  false negative in binary and set recall; set elements produced on a gold-null item are
+  false positives; `within_1pct_same_quarter` scores wrong when gold has an as-of date and
+  the system gives none; `name_fuzzy_90` is `token_sort_ratio` on punctuation-stripped
+  names; risk flags never read gold (exam_date comes from the doc_id); calibration is one
+  ECE per system. Copy these into `docs/analysis_plan.md` before the freeze.
+- `evaluate.RISK_GROUPS` is `('B',)`: the A_or_B component ratings are not in `doc_risk`
+  because the applicability cell needs the manifest method; decide whether to add them.
 - `calibration_table` uses probability `n_flags / 4` with 5 bins, so the ECE is
   indicative only (design 6.5).
 - scipy is not installed, so only the stdlib Clopper-Pearson fallback is tested.

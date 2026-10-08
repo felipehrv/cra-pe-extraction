@@ -14,9 +14,13 @@ section was not located, or whose sentence is not where the eight sample PEs pri
 abstains.
 
 Each rule reads prose sentence by sentence (:func:`section_sentences`): table rows are
-skipped, page furniture inside a sentence that straddles a page break is kept so that the
-quote stays one contiguous span, and sentences from state, MSA or assessment-area scope never
-reach a rule because only the institution-scope sections located by ``locate`` are read.
+skipped, and page furniture inside a sentence that straddles a page break is kept so that the
+quote stays one contiguous span. The rules read whatever ``locate`` returns for the
+institution-scope section names: on the eight samples every located section is institution
+scope at confidence 1.0, but ``locate`` falls back to the first heading of any scope at
+confidence 0.5 when no in-scope heading exists (``locate._locate_from_lines``), and that
+section's scope and confidence are carried into ``FieldValue.scope`` so the grounding scope
+check can flag the value.
 
 Known abstentions on the samples, documented in ``tests/test_rules.py``:
 
@@ -634,11 +638,23 @@ def rule_total_assets(doc: Doc, bank_name: str | None) -> list[FieldValue]:
 
 AVERAGE_RE = re.compile(r"\baverage[sd]?\b", re.IGNORECASE)
 LTD_WORD_RE = re.compile(r"\b(?:n?ltd|loan-to-deposit|loan to deposit)\b", re.IGNORECASE)
-COMPARATOR_RE = re.compile(r"peer|similarly|comparison|comparable|competitor|prior|previous", re.IGNORECASE)
+# A sentence about someone else's ratio: peers, the prior evaluation, or a state or
+# host-state average such as "The report provided an average net loan-to-deposit ratio of 60
+# percent for South Dakota" (FDIC_6078_OneAmericanBank_2024_ISB_NI.txt lines 354 to 355).
+# Tested on the text before "average" only: the bank's own sentence often ends with a
+# comparison clause ("which was comparable to the previous evaluation's", FRB_3664588 line
+# 375; "decrease from the 107.9 percent average ... recorded at the prior evaluation",
+# FDIC_12299 line 324).
+COMPARATOR_RE = re.compile(
+    r"peer|similarly|comparison|comparable|competitor|prior|previous|report provided|"
+    r"state average|host-state|interagency",
+    re.IGNORECASE,
+)
 
 
 def rule_ltd(doc: Doc) -> FieldValue:
-    """Average (net) LTD ratio: the first percent after "average" in the bank's own sentence."""
+    """Average (net) LTD ratio: the first percent after "average" in the bank's own sentence
+    (a comparator before "average" disqualifies the sentence)."""
     for s in doc.sentences("ltd_ratio"):
         n = s.norm
         a = AVERAGE_RE.search(n)
@@ -699,8 +715,11 @@ def rule_inside_aa(doc: Doc) -> list[FieldValue]:
 # --------------------------------------------------------------------------- assessment areas
 
 _NUM = "|".join(_NUMBER_WORDS)
+# The AA noun must not be followed by a geography or population noun: "the 14 AA counties"
+# (FRB_663656_SmallBusinessBank_2024_SM_NI.txt lines 241 and 284) counts counties, not areas.
 AA_COUNT_RE = re.compile(
-    rf"(?<!table )\b(?P<n>{_NUM}|a\s+single|single|\d{{1,2}})\s+(?!(?:or|of)\b)(?:[a-z][a-z-]*\s+){{0,3}}?(?:assessment\s+areas?|AAs?)\b",
+    rf"(?<!table )\b(?P<n>{_NUM}|a\s+single|single|\d{{1,2}})\s+(?!(?:or|of)\b)(?:[a-z][a-z-]*\s+){{0,3}}?(?:assessment\s+areas?|AAs?)\b"
+    r"(?!\s+(?:counties|county|census|tracts?|population|families|households|geograph))",
     re.IGNORECASE,
 )
 AA_SINGULAR_RES = [
