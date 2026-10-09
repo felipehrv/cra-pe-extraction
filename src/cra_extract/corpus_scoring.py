@@ -27,9 +27,10 @@ S1 alone and its ``note`` says so. ``scope`` is ``all`` and, once the test split
 figures are in-sample for tuning (plan, Group A at corpus scale, bullet 1).
 ``consistency_check`` is true for regulator and exam_method on S3, and on S5 only when S5
 takes the field from S3 (the S3 prompt states both, so those values check consistency rather
-than measure extraction; an S1-sourced S5 value is extracted). FDIC exam_date has index truth
-only when ``fdic_exam_date_truth`` is set, which the CLI takes from the plan's gate
-(``group_a.fdic_exam_date_gate``, written to ``results/fdic_exam_date_gate.csv``).
+than measure extraction; an S1-sourced S5 value is extracted). FDIC exam_date has no index truth
+and is scored on gold only (plan, "Group A at corpus scale"): the CLI always passes
+``fdic_exam_date_truth=False`` and writes ``group_a.fdic_exam_date_gate`` to
+``results/fdic_exam_date_gate.csv`` as a diagnostic.
 
 "Audit design" and "Risk score" (:func:`write_risk`). Flags per value of the chosen system
 (S5 by default) come from ``evaluate.risk_table`` on a frame built from predictions only;
@@ -511,9 +512,12 @@ def main(argv: list[str] | None = None) -> int:
     gate, gate_table = fdic_exam_date_gate(manifest, args.gold_dir)
     args.gate_out.parent.mkdir(parents=True, exist_ok=True)
     gate_table.to_csv(args.gate_out, index=False)
-    print(f"FDIC exam_date gate: {gate} ({len(gate_table)} FDIC gold documents; {args.gate_out}); "
-          f"FDIC exam_date index truth {'used' if gate == 'pass' else 'not used'}")
-    fdic_truth = gate == "pass"
+    # The plan ("Group A at corpus scale") gives FDIC exam_date no index truth: the file-id
+    # date is a processing date, so FDIC exam_date is scored on gold only. The gate table is
+    # written as a diagnostic and never switches the truth on.
+    print(f"FDIC exam_date gate (diagnostic only): {gate} ({len(gate_table)} FDIC gold documents; "
+          f"{args.gate_out}); FDIC exam_date index truth not used")
+    fdic_truth = False
     if args.cmd == "score":
         missing = [s for s in (systems.s1, systems.s3, systems.s5) if s not in set(preds["system"])]
         table = score(manifest, preds, systems=systems, triage=triage, fdic_exam_date_truth=fdic_truth)

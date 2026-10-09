@@ -746,7 +746,8 @@ def closed_book(split: str = "test", paths: ReportPaths | None = None) -> dict[s
 
     Two accuracies: among answered items (abstentions excluded, as in Table 1) and overall
     (abstentions as misses, comparable with the majority-class rate, which always answers);
-    the plan does not say which one is the bound (docs/plan_gaps.md). The majority class is
+    the plan names accuracy among answered items as the contamination bound and reports the
+    overall figure beside it (plan, Leakage and contamination controls). The majority class is
     the most frequent gold value of the field over the split's gold-value items. Reads
     ``scored_{split}.csv``; writes ``table_closed_book_{split}.csv`` and ``.md``.
     """
