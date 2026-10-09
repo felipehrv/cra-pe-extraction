@@ -1,0 +1,1001 @@
+# Written by python -m cra_extract.locator_check draw; do not edit by hand.
+version: 1
+draw:
+  seed: 20261010
+  drawn_at: '2026-10-08'
+  n: 100
+  manifest: config/corpus.csv
+  pool_rule: documents of split corpus with sha256 present and text_extractable true, minus every document
+    of a bank with a document in split test or audit, minus the tuning documents of config/tuning_documents.yaml;
+    sorted by doc_id
+  stratification: one FRB document per Reserve Bank district in district order (1 Boston to 12 San Francisco),
+    then simple random sampling of the remaining slots from the documents left in the pool; strata.Sampler
+    with numpy default_rng(seed), one document at a time, a drawn bank leaves the pool
+  district_rule: 'approximation: the district is not in the manifest; an FRB document''s district is the
+    district of its state in data/index/frb.csv under locator_check.STATE_DISTRICT, which assigns each
+    state split between two districts to the district holding its larger part'
+  district_map_sha256: ddbc9daceb3851b61740bd3352ffd4adb12649e30f96071c2f5297db976264c7
+  exclusions:
+    held_out_splits:
+    - test
+    - audit
+    rule: no document of split test or audit is in the pool or read by the sheet; corpus documents of
+      a bank with a test or audit document leave the pool; tuning documents leave the pool
+    test_split_drawn: true
+    split_counts:
+      corpus: 2751
+      dev: 10
+      excluded: 2
+      test: 30
+    test_documents_excluded: 30
+    audit_documents_excluded: 0
+    held_out_banks: 30
+    corpus_documents_of_held_out_banks_removed: 4
+    corpus_documents_not_evaluable: 0
+    tuning_documents: 234
+    tuning_documents_hash: a58506ee994cde441cfe4ddc4b5f4898f011b2876506498af637f1936789e48f
+    tuning_documents_removed: 232
+  pool: 2515
+  pool_doc_id_hash: 41193f388f61ef28b956d25b941d219fab5b461b10481c8d05966ab255a3f3f2
+  frb_pool: 331
+  frb_pool_without_district: 0
+  strata:
+  - name: district:Boston
+    population: 11
+    pool: 11
+    drawn: 1
+    selection_probability: 0.090909
+    states:
+    - CT
+    - MA
+    - ME
+    - NH
+    - RI
+    - VT
+  - name: district:New York
+    population: 4
+    pool: 4
+    drawn: 1
+    selection_probability: 0.25
+    states:
+    - NJ
+    - NY
+    - PR
+    - VI
+  - name: district:Philadelphia
+    population: 2
+    pool: 2
+    drawn: 1
+    selection_probability: 0.5
+    states:
+    - DE
+    - PA
+  - name: district:Cleveland
+    population: 9
+    pool: 9
+    drawn: 1
+    selection_probability: 0.111111
+    states:
+    - OH
+  - name: district:Richmond
+    population: 22
+    pool: 22
+    drawn: 1
+    selection_probability: 0.045455
+    states:
+    - DC
+    - MD
+    - NC
+    - SC
+    - VA
+    - WV
+  - name: district:Atlanta
+    population: 29
+    pool: 29
+    drawn: 1
+    selection_probability: 0.034483
+    states:
+    - AL
+    - FL
+    - GA
+    - LA
+    - MS
+    - TN
+  - name: district:Chicago
+    population: 72
+    pool: 72
+    drawn: 1
+    selection_probability: 0.013889
+    states:
+    - IA
+    - IL
+    - IN
+    - MI
+    - WI
+  - name: district:St. Louis
+    population: 51
+    pool: 51
+    drawn: 1
+    selection_probability: 0.019608
+    states:
+    - AR
+    - KY
+    - MO
+  - name: district:Minneapolis
+    population: 15
+    pool: 15
+    drawn: 1
+    selection_probability: 0.066667
+    states:
+    - MN
+    - MT
+    - ND
+    - SD
+  - name: district:Kansas City
+    population: 101
+    pool: 101
+    drawn: 1
+    selection_probability: 0.009901
+    states:
+    - CO
+    - KS
+    - NE
+    - NM
+    - OK
+    - WY
+  - name: district:Dallas
+    population: 13
+    pool: 13
+    drawn: 1
+    selection_probability: 0.076923
+    states:
+    - TX
+  - name: district:San Francisco
+    population: 2
+    pool: 2
+    drawn: 1
+    selection_probability: 0.5
+    states:
+    - AK
+    - AS
+    - AZ
+    - CA
+    - GU
+    - HI
+    - ID
+    - MP
+    - NV
+    - OR
+    - UT
+    - WA
+  - name: simple_random
+    population: 2515
+    pool: 2503
+    drawn: 88
+    selection_probability: 0.035158
+  by_regulator:
+    OCC: 17
+    FDIC: 64
+    FRB: 19
+  by_district:
+    Boston: 1
+    New York: 2
+    Philadelphia: 1
+    Cleveland: 1
+    Richmond: 1
+    Atlanta: 1
+    Chicago: 3
+    St. Louis: 2
+    Minneapolis: 1
+    Kansas City: 3
+    Dallas: 2
+    San Francisco: 1
+  docs:
+  - doc_id: FDIC_10380_20230731
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_10384_20230118
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_10463_20230613
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_1090_20230117
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_11539_20250106
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_11903_20231218
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_12166_20250317
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_12869_20250804
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_13407_20230306
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_13413_20240603
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_14058_20221114
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_14578_20231002
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_15038_20240522
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_15326_20250609
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_15469_20250414
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_15539_20230119
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_16249_20250303
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_16900_20241217
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_17214_20221215
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_17375_20240624
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_17960_20220906
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_18164_20241201
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_18374_20221212
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_18380_20250407
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_1868_20230501
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_1903_20230712
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_19434_20250115
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_21525_20241030
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_22526_20250610
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_22551_20230925
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_23099_20230626
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_26567_20221205
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_27238_20230620
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_2759_20230306
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_28266_20230428
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_28530_20230424
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_304_20240116
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_30976_20241202
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_32277_20221129
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_3293_20250908
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_33026_20240708
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_34108_20240226
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_34685_20250218
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_35417_20231026
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_39_20250520
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5123_20230612
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5197_20250121
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5286_20220919
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5401_20250317
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5676_20230306
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_5709_20250512
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_57162_20231016
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_57740_20221205
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_58281_20230410
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_58484_20240812
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_58626_20250512
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_8011_20230814
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_8432_20231204
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9299_20221212
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9366_20230821
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9526_20250121
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9747_20250127
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9751_20221116
+    regulator: FDIC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FDIC_9769_20240521
+    regulator: FDIC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_101738_20221114
+    regulator: FRB
+    method: small
+    state: MS
+    district: Atlanta
+    stratum: district:Atlanta
+    selection_probability: 0.034483
+  - doc_id: FRB_189129_20240325
+    regulator: FRB
+    method: isb
+    state: OH
+    district: Cleveland
+    stratum: district:Cleveland
+    selection_probability: 0.111111
+  - doc_id: FRB_196800_20230925
+    regulator: FRB
+    method: isb
+    state: MA
+    district: Boston
+    stratum: district:Boston
+    selection_probability: 0.090909
+  - doc_id: FRB_273840_20230821
+    regulator: FRB
+    method: small
+    state: IL
+    district: Chicago
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_2849463_20250519
+    regulator: FRB
+    method: isb
+    state: SC
+    district: Richmond
+    stratum: district:Richmond
+    selection_probability: 0.045455
+  - doc_id: FRB_285740_20250630
+    regulator: FRB
+    method: isb
+    state: KY
+    district: St. Louis
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_2939391_20250818
+    regulator: FRB
+    method: small
+    state: AR
+    district: St. Louis
+    stratum: district:St. Louis
+    selection_probability: 0.019608
+  - doc_id: FRB_3470930_20230508
+    regulator: FRB
+    method: small
+    state: CA
+    district: San Francisco
+    stratum: district:San Francisco
+    selection_probability: 0.5
+  - doc_id: FRB_414102_20221031
+    regulator: FRB
+    method: isb
+    state: NY
+    district: New York
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_475354_20250127
+    regulator: FRB
+    method: isb
+    state: MT
+    district: Minneapolis
+    stratum: district:Minneapolis
+    selection_probability: 0.066667
+  - doc_id: FRB_49148_20250421
+    regulator: FRB
+    method: small
+    state: IL
+    district: Chicago
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_566243_20241007
+    regulator: FRB
+    method: small
+    state: IA
+    district: Chicago
+    stratum: district:Chicago
+    selection_probability: 0.013889
+  - doc_id: FRB_603755_20240226
+    regulator: FRB
+    method: small
+    state: TX
+    district: Dallas
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_645317_20221205
+    regulator: FRB
+    method: isb
+    state: NY
+    district: New York
+    stratum: district:New York
+    selection_probability: 0.25
+  - doc_id: FRB_647759_20230828
+    regulator: FRB
+    method: small
+    state: OK
+    district: Kansas City
+    stratum: district:Kansas City
+    selection_probability: 0.009901
+  - doc_id: FRB_734613_20230814
+    regulator: FRB
+    method: small
+    state: PA
+    district: Philadelphia
+    stratum: district:Philadelphia
+    selection_probability: 0.5
+  - doc_id: FRB_736550_20241209
+    regulator: FRB
+    method: isb
+    state: KS
+    district: Kansas City
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: FRB_844567_20241202
+    regulator: FRB
+    method: isb
+    state: TX
+    district: Dallas
+    stratum: district:Dallas
+    selection_probability: 0.076923
+  - doc_id: FRB_883959_20231002
+    regulator: FRB
+    method: small
+    state: OK
+    district: Kansas City
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_13838_20221121
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_14012_20221121
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_14149_20230123
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_14757_20230410
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_14769_20230306
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_24467_20250224
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_25216_20240205
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_6171_20230601
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_700133_20250728
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_700824_20230508
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_703534_20230530
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_705506_20240819
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_706809_20221031
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_713480_20240408
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_7534_20240401
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_8624_20250630
+    regulator: OCC
+    method: small
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  - doc_id: OCC_9536_20221003
+    regulator: OCC
+    method: isb
+    state: null
+    district: null
+    stratum: simple_random
+    selection_probability: 0.035158
+  doc_ids:
+  - FDIC_10380_20230731
+  - FDIC_10384_20230118
+  - FDIC_10463_20230613
+  - FDIC_1090_20230117
+  - FDIC_11539_20250106
+  - FDIC_11903_20231218
+  - FDIC_12166_20250317
+  - FDIC_12869_20250804
+  - FDIC_13407_20230306
+  - FDIC_13413_20240603
+  - FDIC_14058_20221114
+  - FDIC_14578_20231002
+  - FDIC_15038_20240522
+  - FDIC_15326_20250609
+  - FDIC_15469_20250414
+  - FDIC_15539_20230119
+  - FDIC_16249_20250303
+  - FDIC_16900_20241217
+  - FDIC_17214_20221215
+  - FDIC_17375_20240624
+  - FDIC_17960_20220906
+  - FDIC_18164_20241201
+  - FDIC_18374_20221212
+  - FDIC_18380_20250407
+  - FDIC_1868_20230501
+  - FDIC_1903_20230712
+  - FDIC_19434_20250115
+  - FDIC_21525_20241030
+  - FDIC_22526_20250610
+  - FDIC_22551_20230925
+  - FDIC_23099_20230626
+  - FDIC_26567_20221205
+  - FDIC_27238_20230620
+  - FDIC_2759_20230306
+  - FDIC_28266_20230428
+  - FDIC_28530_20230424
+  - FDIC_304_20240116
+  - FDIC_30976_20241202
+  - FDIC_32277_20221129
+  - FDIC_3293_20250908
+  - FDIC_33026_20240708
+  - FDIC_34108_20240226
+  - FDIC_34685_20250218
+  - FDIC_35417_20231026
+  - FDIC_39_20250520
+  - FDIC_5123_20230612
+  - FDIC_5197_20250121
+  - FDIC_5286_20220919
+  - FDIC_5401_20250317
+  - FDIC_5676_20230306
+  - FDIC_5709_20250512
+  - FDIC_57162_20231016
+  - FDIC_57740_20221205
+  - FDIC_58281_20230410
+  - FDIC_58484_20240812
+  - FDIC_58626_20250512
+  - FDIC_8011_20230814
+  - FDIC_8432_20231204
+  - FDIC_9299_20221212
+  - FDIC_9366_20230821
+  - FDIC_9526_20250121
+  - FDIC_9747_20250127
+  - FDIC_9751_20221116
+  - FDIC_9769_20240521
+  - FRB_101738_20221114
+  - FRB_189129_20240325
+  - FRB_196800_20230925
+  - FRB_273840_20230821
+  - FRB_2849463_20250519
+  - FRB_285740_20250630
+  - FRB_2939391_20250818
+  - FRB_3470930_20230508
+  - FRB_414102_20221031
+  - FRB_475354_20250127
+  - FRB_49148_20250421
+  - FRB_566243_20241007
+  - FRB_603755_20240226
+  - FRB_645317_20221205
+  - FRB_647759_20230828
+  - FRB_734613_20230814
+  - FRB_736550_20241209
+  - FRB_844567_20241202
+  - FRB_883959_20231002
+  - OCC_13838_20221121
+  - OCC_14012_20221121
+  - OCC_14149_20230123
+  - OCC_14757_20230410
+  - OCC_14769_20230306
+  - OCC_24467_20250224
+  - OCC_25216_20240205
+  - OCC_6171_20230601
+  - OCC_700133_20250728
+  - OCC_700824_20230508
+  - OCC_703534_20230530
+  - OCC_705506_20240819
+  - OCC_706809_20221031
+  - OCC_713480_20240408
+  - OCC_7534_20240401
+  - OCC_8624_20250630
+  - OCC_9536_20221003
+  doc_id_hash: 3360b2031eded0a2fe42ffb5d530e8a6945c9dbee33c17e133241e406f265812
+  notes:
+  - recall and precision are reported unweighted; the district stratum gives each FRB district one document
+    whatever its size
+  - 'these documents are read while tuning (plan, Leakage): list them in config/tuning_documents.yaml
+    before draw-audit so that their banks leave the audit pool'
+  - 'documents removed from the pool by bank exclusivity during the draw: 104'

@@ -128,7 +128,12 @@ TUNING_FREE_SPLITS = ("test", "audit")
 # Configuration files whose cited documents count as tuning documents: the locator headings,
 # the review-template library and the hand triage of Group A disagreements (plan, Leakage:
 # the 31 triage entries were read against the PE text, so their banks leave the pools too).
-TUNING_SOURCES: tuple[Path, ...] = (HEADINGS_PATH, TEMPLATES_PATH, HEADINGS_PATH.parent / "group_a_triage.yaml")
+TUNING_SOURCES: tuple[Path, ...] = (
+    HEADINGS_PATH,
+    TEMPLATES_PATH,
+    HEADINGS_PATH.parent / "group_a_triage.yaml",
+    HEADINGS_PATH.parent / "locator_check_sample.yaml",  # the plan lists the locator check as a tuning source
+)
 DOC_ID_PATTERN = re.compile(r"\b(?:OCC|FDIC|FRB)_[0-9A-Za-z]+_\d{8}\b")
 
 

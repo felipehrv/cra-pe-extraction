@@ -42,11 +42,20 @@ documents:
 - doc_id: FDIC_10307_20240311
   source:
   - review_templates.yaml
+- doc_id: FDIC_10380_20230731
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_10384_20230118
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_10434_20230306
   source:
   - headings.yaml
 - doc_id: FDIC_10460_20250602
   note: read 2026-10-08 for mixed-case FDIC state markers (pp10, 18)
+- doc_id: FDIC_10463_20230613
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_10492_20240220
   source:
   - review_templates.yaml
@@ -59,6 +68,9 @@ documents:
 - doc_id: FDIC_10685_20240826
   source:
   - headings.yaml
+- doc_id: FDIC_1090_20230117
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_109_20250224
   source:
   - headings.yaml
@@ -67,6 +79,9 @@ documents:
   - headings.yaml
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp9-11,
     prose p33, rated-area titles pp13, 32'
+- doc_id: FDIC_11539_20250106
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_1164_20240422
   source:
   - review_templates.yaml
@@ -76,9 +91,15 @@ documents:
 - doc_id: FDIC_11891_20250310
   source:
   - review_templates.yaml
+- doc_id: FDIC_11903_20231218
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_12163_20220920
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_12166_20250317
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_12285_20250721
   source:
   - headings.yaml
@@ -95,12 +116,21 @@ documents:
 - doc_id: FDIC_12814_20230717
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p15,
     rated-area titles pp13, 23'
+- doc_id: FDIC_12869_20250804
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_12956_20240116
   source:
   - review_templates.yaml
 - doc_id: FDIC_12969_20230221
   source:
   - headings.yaml
+- doc_id: FDIC_13407_20230306
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_13413_20240603
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_13622_20241202
   source:
   - headings.yaml
@@ -112,21 +142,39 @@ documents:
   - headings.yaml
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp9-11,
     rated-area title p12'
+- doc_id: FDIC_14058_20221114
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_14333_20240520
   source:
   - review_templates.yaml
 - doc_id: FDIC_14546_20230620
   source:
   - review_templates.yaml
+- doc_id: FDIC_14578_20231002
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_14922_20221128
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_15038_20240522
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_15326_20250609
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_15415_20240924
   source:
   - review_templates.yaml
+- doc_id: FDIC_15469_20250414
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_15489_20230206
   source:
   - review_templates.yaml
+- doc_id: FDIC_15539_20230119
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_15629_20241216
   source:
   - review_templates.yaml
@@ -149,6 +197,9 @@ documents:
 - doc_id: FDIC_16243_20230207
   source:
   - headings.yaml
+- doc_id: FDIC_16249_20250303
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_16281_20221219
   source:
   - review_templates.yaml
@@ -163,27 +214,54 @@ documents:
 - doc_id: FDIC_16891_20230117
   source:
   - headings.yaml
+- doc_id: FDIC_16900_20241217
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_17011_20230307
   source:
   - group_a_triage.yaml
 - doc_id: FDIC_17077_20230919
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_17214_20221215
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_17375_20240624
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_17453_20240429
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_1745_20230221
   source:
   - review_templates.yaml
+- doc_id: FDIC_17960_20220906
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_18100_20221003
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_18164_20241201
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_18361_20250310
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp18-39,
     rated-area titles pp14, 37'
+- doc_id: FDIC_18374_20221212
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_18380_20250407
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_18609_20241212
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_1868_20230501
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_1903_20230712
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_19163_20221128
   source:
   - review_templates.yaml
@@ -193,6 +271,9 @@ documents:
 - doc_id: FDIC_19401_20241015
   source:
   - review_templates.yaml
+- doc_id: FDIC_19434_20250115
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_19680_20230417
   source:
   - review_templates.yaml
@@ -213,12 +294,21 @@ documents:
     state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_21292_20230331
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p10'
+- doc_id: FDIC_21525_20241030
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_21606_20250505
   source:
   - review_templates.yaml
 - doc_id: FDIC_2241_20230710
   source:
   - review_templates.yaml
+- doc_id: FDIC_22526_20250610
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_22551_20230925
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_22621_20231120
   source:
   - review_templates.yaml
@@ -228,6 +318,9 @@ documents:
 - doc_id: FDIC_22971_20240624
   source:
   - review_templates.yaml
+- doc_id: FDIC_23099_20230626
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_23376_20230213
   source:
   - review_templates.yaml
@@ -238,20 +331,35 @@ documents:
 - doc_id: FDIC_26530_20220920
   source:
   - review_templates.yaml
+- doc_id: FDIC_26567_20221205
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_26799_20220805
   source:
   - headings.yaml
 - doc_id: FDIC_27074_20230320
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_27238_20230620
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_2759_20230306
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_2787_20221205
   note: read 2026-10-08 while designing the review reset rule (false appendix marker p8)
+- doc_id: FDIC_28266_20230428
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_28348_20240813
   source:
   - group_a_triage.yaml
 - doc_id: FDIC_28401_20230130
   source:
   - review_templates.yaml
+- doc_id: FDIC_28530_20230424
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_29332_20230531
   source:
   - review_templates.yaml
@@ -263,21 +371,42 @@ documents:
 - doc_id: FDIC_29922_20221107
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_304_20240116
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_30976_20241202
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_32277_20221129
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_32908_20240212
   source:
   - review_templates.yaml
+- doc_id: FDIC_3293_20250908
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_32968_20240730
   source:
   - review_templates.yaml
+- doc_id: FDIC_33026_20240708
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_33450_20250602
   source:
   - group_a_triage.yaml
 - doc_id: FDIC_33708_20221114
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
+- doc_id: FDIC_34108_20240226
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_34363_20230515
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
+- doc_id: FDIC_34685_20250218
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_34998_20230911
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa line p5, table rows
     pp22, 28, rated-area titles pp14, 21, 27'
@@ -290,9 +419,15 @@ documents:
 - doc_id: FDIC_35261_20240422
   source:
   - review_templates.yaml
+- doc_id: FDIC_35417_20231026
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_35530_20240715
   source:
   - headings.yaml
+- doc_id: FDIC_39_20250520
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_4160_20241202
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -305,9 +440,24 @@ documents:
 - doc_id: FDIC_5072_20250630
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
+- doc_id: FDIC_5123_20230612
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_5197_20250121
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_5286_20220919
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_5401_20250317
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_5568_20240422
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_5676_20230306
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_5694_20241112
   source:
   - headings.yaml
@@ -319,12 +469,21 @@ documents:
 - doc_id: FDIC_57095_20230620
   source:
   - headings.yaml
+- doc_id: FDIC_5709_20250512
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_57127_20220912
   source:
   - review_templates.yaml
+- doc_id: FDIC_57162_20231016
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_5768_20250414
   source:
   - headings.yaml
+- doc_id: FDIC_57740_20221205
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_57841_20240603
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -337,6 +496,9 @@ documents:
 - doc_id: FDIC_58203_20240116
   source:
   - review_templates.yaml
+- doc_id: FDIC_58281_20230410
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_58377_20240130
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -346,6 +508,12 @@ documents:
 - doc_id: FDIC_58428_20240304
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_58484_20240812
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_58626_20250512
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_58691_20250407
   source:
   - group_a_triage.yaml
@@ -366,11 +534,17 @@ documents:
 - doc_id: FDIC_7614_20250303
   source:
   - headings.yaml
+- doc_id: FDIC_8011_20230814
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_8141_20240304
   source:
   - headings.yaml
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp11-19,
     rated-area title p15'
+- doc_id: FDIC_8432_20231204
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_8527_20250729
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -385,6 +559,12 @@ documents:
 - doc_id: FDIC_903_20230717
   source:
   - review_templates.yaml
+- doc_id: FDIC_9299_20221212
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_9366_20230821
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_9437_20230919
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
@@ -399,12 +579,24 @@ documents:
 - doc_id: FDIC_9465_20230410
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_9526_20250121
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_9632_20240610
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
 - doc_id: FDIC_9737_20240306
   source:
   - headings.yaml
+- doc_id: FDIC_9747_20250127
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_9751_20221116
+  source:
+  - locator_check_sample.yaml
+- doc_id: FDIC_9769_20240521
+  source:
+  - locator_check_sample.yaml
 - doc_id: FDIC_9963_20240122
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
@@ -421,6 +613,9 @@ documents:
 - doc_id: FRB_1015252_20230306
   source:
   - headings.yaml
+- doc_id: FRB_101738_20221114
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_1017425_20240729
   source:
   - review_templates.yaml
@@ -466,9 +661,15 @@ documents:
 - doc_id: FRB_188720_20230508
   source:
   - review_templates.yaml
+- doc_id: FRB_189129_20240325
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_194440_20250519
   source:
   - headings.yaml
+- doc_id: FRB_196800_20230925
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_210256_20250224
   source:
   - headings.yaml
@@ -495,6 +696,9 @@ documents:
 - doc_id: FRB_2736714_20250707
   source:
   - headings.yaml
+- doc_id: FRB_273840_20230821
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_274829_20250303
   source:
   - headings.yaml
@@ -506,6 +710,15 @@ documents:
 - doc_id: FRB_2793593_20240610
   source:
   - review_templates.yaml
+- doc_id: FRB_2849463_20250519
+  source:
+  - locator_check_sample.yaml
+- doc_id: FRB_285740_20250630
+  source:
+  - locator_check_sample.yaml
+- doc_id: FRB_2939391_20250818
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_3052813_20250224
   source:
   - review_templates.yaml
@@ -526,6 +739,9 @@ documents:
 - doc_id: FRB_3370133_20230327
   source:
   - review_templates.yaml
+- doc_id: FRB_3470930_20230508
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_3487947_20230731
   source:
   - review_templates.yaml
@@ -548,12 +764,21 @@ documents:
   source:
   - headings.yaml
   - review_templates.yaml
+- doc_id: FRB_414102_20221031
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_447100_20240304
   source:
   - review_templates.yaml
 - doc_id: FRB_453446_20240903
   source:
   - headings.yaml
+- doc_id: FRB_475354_20250127
+  source:
+  - locator_check_sample.yaml
+- doc_id: FRB_49148_20250421
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_49241_20230605
   source:
   - headings.yaml
@@ -569,6 +794,9 @@ documents:
 - doc_id: FRB_560214_20241113
   source:
   - group_a_triage.yaml
+- doc_id: FRB_566243_20241007
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_568939_20241021
   source:
   - headings.yaml
@@ -576,6 +804,9 @@ documents:
 - doc_id: FRB_580874_20230410
   source:
   - review_templates.yaml
+- doc_id: FRB_603755_20240226
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_613156_20230911
   source:
   - review_templates.yaml
@@ -588,9 +819,15 @@ documents:
 - doc_id: FRB_629353_20241202
   source:
   - headings.yaml
+- doc_id: FRB_645317_20221205
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_645465_20240401
   source:
   - headings.yaml
+- doc_id: FRB_647759_20230828
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_648130_20250203
   source:
   - headings.yaml
@@ -608,6 +845,12 @@ documents:
 - doc_id: FRB_726953_20250218
   source:
   - headings.yaml
+- doc_id: FRB_734613_20230814
+  source:
+  - locator_check_sample.yaml
+- doc_id: FRB_736550_20241209
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_749635_20250303
   source:
   - headings.yaml
@@ -618,9 +861,15 @@ documents:
 - doc_id: FRB_823656_20230814
   source:
   - headings.yaml
+- doc_id: FRB_844567_20241202
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_853112_20220411
   source:
   - group_a_triage.yaml
+- doc_id: FRB_883959_20231002
+  source:
+  - locator_check_sample.yaml
 - doc_id: FRB_884358_20250303
   source:
   - headings.yaml
@@ -659,9 +908,24 @@ documents:
 - doc_id: OCC_13557_20230530
   source:
   - review_templates.yaml
+- doc_id: OCC_13838_20221121
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_14012_20221121
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_14149_20230123
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_14294_20240708
   source:
   - group_a_triage.yaml
+- doc_id: OCC_14757_20230410
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_14769_20230306
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_14821_20220822
   source:
   - review_templates.yaml
@@ -700,38 +964,74 @@ documents:
   - group_a_triage.yaml
 - doc_id: OCC_24349_20220829
   note: read 2026-10-08 for false msa markers (p4 prose line)
+- doc_id: OCC_24467_20250224
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_24685_20221028
   source:
   - group_a_triage.yaml
 - doc_id: OCC_24798_20240226
   source:
   - group_a_triage.yaml
+- doc_id: OCC_25216_20240205
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_4934_20221215
   source:
   - group_a_triage.yaml
+- doc_id: OCC_6171_20230601
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_6488_20230123
   note: read 2026-10-08 while designing the review reset rule (false appendix marker p5)
 - doc_id: OCC_700133_20220801
   source:
   - review_templates.yaml
+- doc_id: OCC_700133_20250728
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_700824_20230508
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_702983_20231023
   source:
   - headings.yaml
+- doc_id: OCC_703534_20230530
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_703997_20240506
   source:
   - group_a_triage.yaml
 - doc_id: OCC_704307_20220922
   source:
   - review_templates.yaml
+- doc_id: OCC_705506_20240819
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_706809_20221031
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_708183_20240304
   source:
   - group_a_triage.yaml
+- doc_id: OCC_713480_20240408
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_713570_20250519
   source:
   - headings.yaml
+- doc_id: OCC_7534_20240401
+  source:
+  - locator_check_sample.yaml
+- doc_id: OCC_8624_20250630
+  source:
+  - locator_check_sample.yaml
 - doc_id: OCC_8694_20231023
   source:
   - group_a_triage.yaml
 - doc_id: OCC_9183_20230213
   source:
   - group_a_triage.yaml
+- doc_id: OCC_9536_20221003
+  source:
+  - locator_check_sample.yaml
