@@ -20,6 +20,9 @@ gemini:
   free_tier:
     requests_per_minute: null
     requests_per_day: null
+    # Daily quota reset (run.gemini_limiter); the llm.py RateLimiter note says midnight Pacific
+    # time. Verify on the AI Studio plan page when the limits are filled in.
+    reset_timezone: America/Los_Angeles
     data_used_for_training: true
     note: free tier terms allow Google to retain and use submitted data; acceptable here because PEs are public records
 

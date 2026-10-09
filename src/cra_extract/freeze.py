@@ -13,8 +13,10 @@ the pre-registration is complete:
    has been drawn (``config/corpus.csv`` has ``split == test`` rows) and the hash of
    its doc_id list (``label.split_hash``) is already recorded in ``docs/hashes.md``
    (``cra label hash --split test``).
-3. ``rules.RULES_VERSION``, ``prompts.PROMPT_VERSION`` and the sha256 of
-   ``config/fields.yaml`` and ``config/headings.yaml`` are appended to
+3. ``rules.RULES_VERSION``, ``prompts.PROMPT_VERSION``,
+   ``prompts.CLOSED_BOOK_PROMPT_VERSION``, the effort per backend (``llm.DEFAULT_EFFORT``,
+   part of the replay key) and the sha256 of ``config/fields.yaml`` and
+   ``config/headings.yaml`` are appended to
    ``docs/hashes.md`` under a dated "Freeze" heading, and that one file is committed
    so the tag points at a commit that contains the record (``--no-commit`` leaves it
    in the working tree instead).
@@ -78,12 +80,20 @@ class FreezeRecord:
     headings_sha256: str
     n_test_docs: int
     test_doc_hash: str
+    closed_book_prompt_version: str = ""
+    effort: str = ""
 
     def lines(self) -> list[str]:
         """The version list as ``key: value`` lines (shared by the record and the tag)."""
+        extra = []
+        if self.closed_book_prompt_version:
+            extra.append(f"closed_book_prompt_version: {self.closed_book_prompt_version}")
+        if self.effort:
+            extra.append(f"effort per backend: {self.effort}")
         return [
             f"rules_version: {self.rules_version}",
             f"prompt_version: {self.prompt_version}",
+            *extra,
             f"fields.yaml sha256: {self.fields_sha256}",
             f"headings.yaml sha256: {self.headings_sha256}",
             f"test split: {self.n_test_docs} documents, doc_id list sha256 {self.test_doc_hash}",
@@ -228,6 +238,14 @@ def check_test_split(manifest: list[DocRecord], hashes_path: Path) -> list[str]:
     return []
 
 
+def effort_line() -> str:
+    """``llm.DEFAULT_EFFORT`` as ``backend=level`` pairs (``none`` when no effort is sent),
+    the effort the run stage uses unless ``--effort`` overrides it."""
+    from cra_extract.llm import DEFAULT_EFFORT
+
+    return ", ".join(f"{b}={v or 'none'}" for b, v in sorted(DEFAULT_EFFORT.items()))
+
+
 def collect_record(root: Path, tag: str, frozen_on: date, manifest: list[DocRecord]) -> FreezeRecord:
     """Gather the versions and hashes that the freeze pins down."""
     return FreezeRecord(
@@ -235,6 +253,8 @@ def collect_record(root: Path, tag: str, frozen_on: date, manifest: list[DocReco
         frozen_on=frozen_on,
         rules_version=rules.RULES_VERSION,
         prompt_version=prompts.PROMPT_VERSION,
+        closed_book_prompt_version=prompts.CLOSED_BOOK_PROMPT_VERSION,
+        effort=effort_line(),
         fields_sha256=sha256_file(root / FIELDS_REL),
         headings_sha256=sha256_file(root / HEADINGS_REL),
         n_test_docs=len(split_docs(manifest, "test")),

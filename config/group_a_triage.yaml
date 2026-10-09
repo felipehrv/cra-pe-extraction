@@ -137,14 +137,17 @@ entries:
     note: Mid-period transition; index small. The 0.2.0 rule abstains.
 
   # ------------------------------------------------------------------ exam_date, FDIC
-  - doc_id: FDIC_445_20280408
+  - doc_id: FDIC_445_20240408
     field: exam_date
     category: source_error
     error_side: index
     correct_value: "2024-04-08"
     note: >-
       The FDIC file id 2024/445_280408.PDF carries an impossible date (2028); the cover and
-      the scope section both print April 8, 2024.
+      the scope section both print April 8, 2024. The manifest override
+      (config/manifest_overrides.yaml) renamed FDIC_445_20280408 to FDIC_445_20240408 with the
+      printed date, so the rules now agree with the manifest; kept as the record of the source
+      error.
   - doc_id: FDIC_9438_20240709
     field: exam_date
     category: source_error

@@ -1271,7 +1271,7 @@ FDIC_4235_20250310,FDIC,True,fdic_laws_reviewed_no_practices,100.0,10.0,False,Fa
 FDIC_4398_20250317,FDIC,True,fdic_laws_reviewed_no_practices,97.3,36.0,False,False,examiners reviewed the institution's
 FDIC_4419_20240903,FDIC,True,fdic_laws_reviewed_no_practices,100.0,10.0,False,False,the bank's
 FDIC_444_20241118,FDIC,True,fdic_examiners_reviewed_no_practices_therefore,100.0,29.0,False,False,examiners reviewed the bank's
-FDIC_445_20280408,FDIC,True,fdic_no_evidence,100.0,0.0,False,False,
+FDIC_445_20240408,FDIC,True,fdic_no_evidence,100.0,0.0,False,False,
 FDIC_4514_20240807,FDIC,True,fdic_laws_reviewed_no_evidence_inconsistent,100.0,0.0,False,False,
 FDIC_4526_20240415,FDIC,True,fdic_no_evidence,100.0,0.0,False,False,
 FDIC_4549_20240812,FDIC,True,fdic_examiners_reviewed_no_evidence,99.2,29.0,False,False,examiners reviewed the bank's
@@ -2103,7 +2103,7 @@ FRB_771140_20250121,FRB,True,frb_consumer_affairs_fair_lending_analysis,99.7,55.
 FRB_77253_20250602,FRB,True,frb_kansas_city_compliance,100.0,0.0,False,False,
 FRB_777441_20231002,FRB,True,frb_consumer_affairs_fair_lending_analysis,99.7,0.0,False,False,
 FRB_78241_20221205,FRB,True,frb_consumer_affairs_fair_lending_analysis,99.7,0.0,False,False,
-FRB_785473_20220418,FRB,False,,,,,True,
+FRB_785473_20220418,FRB,True,frb_consumer_affairs_fair_lending_analysis,99.7,0.0,False,False,
 FRB_786555_20241202,FRB,True,frb_fair_lending_activities_evaluated,100.0,9.0,False,False,minnesota
 FRB_787141_20240212,FRB,True,frb_fair_lending_activities_evaluated,100.0,0.0,False,False,
 FRB_787842_20230410,FRB,True,frb_fair_lending_activities_evaluated,100.0,0.0,False,False,

@@ -1,0 +1,139 @@
+# Documented overrides and exclusions for config/corpus.csv (design section 2; analysis
+# plan, "Exclusions"). Validated and applied by src/cra_extract/overrides.py:
+#
+#   python -m cra_extract.overrides check    # schema and every document quote
+#   python -m cra_extract.overrides apply    # manifest cells, split, exam_date_source, files
+#
+# Pipeline order: index, fetch, parse, then apply (it is idempotent). Every doc_id below is
+# the id the index stage builds; a renamed document is reached through its alias.
+#
+# field_overrides: doc_id, field, old, new (quoted cell text; null is the empty cell),
+#   new_doc_id when regulator, bank_id or exam_date changes, reason, evidence, date, note.
+# exclusions: doc_id, reason, evidence, date, note. The row gets split "excluded".
+# pdf_replacements: a PDF portfolio replaced by its embedded PE; the download is kept as
+#   data/pdfs/{doc_id}.portfolio.pdf. Needs the matching sha256 field override.
+# evidence: a list of {doc, page, quote} (quote verbatim from data/text/{doc}.pages.json,
+#   whitespace collapsed) or {log, detail}.
+#
+# Bump `version` and `updated` with every change; history is in git.
+
+version: 1
+updated: 2026-10-08
+
+field_overrides:
+  # ------------------------------------------------------------------ FDIC_445_20280408
+  - doc_id: FDIC_445_20280408
+    field: exam_date
+    old: "2028-04-08"
+    new: "2024-04-08"
+    new_doc_id: FDIC_445_20240408
+    reason: fdic_file_id_date_impossible
+    evidence:
+      - doc: FDIC_445_20280408
+        page: 1
+        quote: "PUBLIC DISCLOSURE April 8, 2024 COMMUNITY REINVESTMENT ACT PERFORMANCE EVALUATION Mercer County State Bank Certificate Number: 445"
+      - doc: FDIC_445_20280408
+        page: 7
+        quote: "the period from the prior evaluation dated May 10, 2021, to the current evaluation dated April 8, 2024."
+      - log: data/index/fdic.csv
+        detail: >-
+          Cert 445 row with SYS_EXTRN_FILE_ID 2024/445_280408.PDF: the YYMMDD gives exam date
+          2028-04-08 after the release month 2024-09-01. The bank's earlier rows (2018/00445_180226.PDF,
+          2021/445_210510.PDF) follow the cert_YYMMDD pattern, so 280408 is a typo for 240408.
+    date: 2026-10-08
+    note: >-
+      The exam date is the printed cover date, confirmed by the Scope sentence. The doc_id is
+      rebuilt from the corrected date; FDIC_445_20280408 stays as its alias (results written
+      before 2026-10-08 use the old id). Group A triage: config/group_a_triage.yaml (source_error, index).
+  - doc_id: FDIC_445_20280408
+    field: notes
+    old: "index anomaly: exam date is after the release date"
+    new: "exam_date corrected to the printed cover date 2024-04-08 (the file id 2024/445_280408.PDF gives 2028-04-08); alias FDIC_445_20280408; see config/manifest_overrides.yaml"
+    reason: fdic_file_id_date_impossible
+    evidence:
+      - log: config/manifest_overrides.yaml
+        detail: The exam_date override above resolves the anomaly the index stage flagged.
+    date: 2026-10-08
+
+  # ------------------------------------------------------------------ FRB_785473_20220418
+  # The downloaded file is a PDF portfolio, not a scan: its one page is the Adobe Reader
+  # notice and the PE is an embedded file. The manifest cells below are what fetch and
+  # parse record for the extracted PE.
+  - doc_id: FRB_785473_20220418
+    field: sha256
+    old: "34122be6dd834b2a5985d315232eb3824868002b63a6f1aa1c45fb1c5c2eca7d"
+    new: "eb41d455ab2a2bff3e8af59e1f780854396acde3063be4733c6d7c5c98386eae"
+    reason: pdf_portfolio_extracted
+    evidence: &portfolio_evidence
+      - log: data/pdfs/FRB_785473_20220418.portfolio.pdf
+        detail: >-
+          The download (sha256 34122be6...) opened with pymupdf 1.28.2 has 1 page whose text
+          is "For the best experience, open this PDF portfolio in Acrobat X or Adobe Reader X,
+          or later." (118 characters) and embfile_count() 1: "First Savings Bank 04.18.22 CRA
+          Performance Evaluation.pdf.pdf", 1,061,122 bytes, a 42-page born-digital PDF.
+      - doc: FRB_785473_20220418
+        page: 1
+        quote: "PUBLIC DISCLOSURE April 18, 2022 COMMUNITY REINVESTMENT ACT PERFORMANCE EVALUATION First Savings Bank RSSD #785473"
+    date: 2026-10-08
+  - doc_id: FRB_785473_20220418
+    field: pages
+    old: "1"
+    new: "42"
+    reason: pdf_portfolio_extracted
+    evidence: *portfolio_evidence
+    date: 2026-10-08
+  - doc_id: FRB_785473_20220418
+    field: chars_per_page
+    old: "118.0"
+    new: "2020.5"
+    reason: pdf_portfolio_extracted
+    evidence: *portfolio_evidence
+    date: 2026-10-08
+  - doc_id: FRB_785473_20220418
+    field: text_extractable
+    old: "False"
+    new: "True"
+    reason: pdf_portfolio_extracted
+    evidence: *portfolio_evidence
+    date: 2026-10-08
+
+exclusions:
+  - doc_id: OCC_9183_20230213
+    reason: wrong_pdf_link
+    evidence:
+      - doc: OCC_9183_20230213
+        page: 1
+        quote: "PUBLIC DISCLOSURE December 3, 2018 COMMUNITY REINVESTMENT ACT PERFORMANCE EVALUATION The First National Bank of Arenzville Charter Number 9183"
+      - doc: OCC_9183_20230213
+        page: 9
+        quote: "The evaluation period covers the period between the previous CRA PE of April 22, 2013, through December 3, 2018."
+      - log: data/index/occ.csv
+        detail: >-
+          The only charter 9183 row is the 2023-02-13 exam (released 2023-04-27), and its pdf field
+          is /apr19/9183.pdf, the April 2019 release folder. No other index row carries the 2023 PE,
+          and OCC folder names are not derivable from dates (design section 2), so the correct 2023
+          PDF could not be derived from the index.
+    date: 2026-10-08
+    note: Every value read from the linked PDF describes the 2018 exam. Re-point the row if the OCC fixes the link.
+  - doc_id: FRB_614948_20250902
+    reason: pdf_unavailable_http_500
+    evidence:
+      - log: data/index/fetch_failures.csv
+        detail: >-
+          DownloadPDF/614948_20250902 returned HTTP 500 after 6 attempts in each of two fetch runs
+          (2026-10-08T04:00:27Z and 2026-10-08T04:19:26Z); the manifest row has no sha256 and no text.
+    date: 2026-10-08
+    note: 1NB Bank. Drop this entry and fetch the PDF if the Federal Reserve serves it again before the test draw.
+
+pdf_replacements:
+  - doc_id: FRB_785473_20220418
+    method: portfolio_embedded_file
+    embedded_file: "First Savings Bank 04.18.22 CRA Performance Evaluation.pdf.pdf"
+    original_sha256: "34122be6dd834b2a5985d315232eb3824868002b63a6f1aa1c45fb1c5c2eca7d"
+    sha256: "eb41d455ab2a2bff3e8af59e1f780854396acde3063be4733c6d7c5c98386eae"
+    reason: pdf_portfolio_extracted
+    evidence: *portfolio_evidence
+    date: 2026-10-08
+    note: >-
+      The plan's Exclusions list treats this document as the one scanned PE; it is born-digital
+      inside a portfolio. With the embedded PE parsed it is evaluable and is not excluded.

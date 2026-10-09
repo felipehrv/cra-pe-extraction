@@ -20,11 +20,19 @@ category), ``fdic_exam_date_lag.csv`` (file-id date minus printed date, FDIC onl
 abstentions per field with their cause (a rule gap the later version answers, or a locator
 miss: section not found, found on a table-of-contents line, or a text layer of no-break
 spaces). The causes depend on the locator in the working tree.
+
+Shared index comparison. :func:`index_truth` turns the manifest into one truth row per
+(document, Group A field or component rating) and :func:`compare_with_index` scores any
+system's rows against it with ``evaluate.score_cell`` and the field's tolerance
+(``evaluate.values_match``). :func:`join` uses the same tolerance for its ``agree`` column,
+and ``cra_extract.routing`` (S5 routing) and ``cra_extract.corpus_scoring`` (Group A at
+corpus scale, risk validation) build on these helpers, so one comparison serves all three.
 """
 
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import re
 import sys
@@ -35,7 +43,18 @@ from typing import Any
 import pandas as pd
 import yaml
 
-from cra_extract.config import CONFIG_DIR, CORPUS_PATH, RESULTS_DIR, TEXT_DIR
+from cra_extract.config import (
+    CONFIG_DIR,
+    CORPUS_PATH,
+    GOLD_DIR,
+    OVERRIDES_PATH,
+    RESULTS_DIR,
+    TEXT_DIR,
+    applicability,
+    field_spec,
+)
+from cra_extract.evaluate import score_cell, values_match
+from cra_extract.models import FieldValue, LabelRow
 from cra_extract.stats import wilson_ci
 
 # rules field -> manifest column
@@ -57,6 +76,14 @@ def _norm_id(value: str) -> str:
     return value.strip().lstrip("0") or ("0" if value.strip() else "")
 
 
+def index_agrees(field: str, index_value: Any, value: Any) -> bool:
+    """True when ``value`` matches the index value under the field's tolerance
+    (``evaluate.values_match``; an empty string on either side never matches)."""
+    i = None if index_value in ("", None) else index_value
+    v = None if value in ("", None) else value
+    return values_match(i, v, field_spec(field))
+
+
 def join(rules: pd.DataFrame, manifest: pd.DataFrame) -> pd.DataFrame:
     """One row per (document, Group A field) with the rule and index values side by side."""
     columns = [c for c in INDEX_COLUMNS.values() if c != "regulator"]
@@ -74,8 +101,213 @@ def join(rules: pd.DataFrame, manifest: pd.DataFrame) -> pd.DataFrame:
     out.loc[ids, "rule_value"] = out.loc[ids, "rule_value"].map(_norm_id)
     out.loc[ids, "index_value"] = out.loc[ids, "index_value"].map(_norm_id)
     out["answered"] = out["status"] == "value"
-    out["agree"] = out["answered"] & (out["rule_value"] == out["index_value"])
+    out["agree"] = [
+        bool(a) and index_agrees(f, i, r)
+        for a, f, i, r in zip(out["answered"], out["field"], out["index_value"], out["rule_value"], strict=True)
+    ]
     return out
+
+
+# --------------------------------------------------------------------------- index truth
+
+# Group A field (and component rating) -> manifest column that carries the index value.
+INDEX_TRUTH_COLUMNS: dict[str, str] = {
+    "regulator": "regulator",
+    "bank_name": "bank_name",
+    "bank_id": "bank_id",
+    "exam_date": "exam_date",
+    "exam_method": "method",
+    "overall_rating": "overall_rating",
+    "prior_evaluation_date": "prior_evaluation_date_index",
+    "prior_rating": "prior_rating_index",
+    "lending_test_rating": "lending_test_rating",
+    "cd_test_rating": "cd_test_rating",
+}
+COMPONENT_FIELDS = ("lending_test_rating", "cd_test_rating")
+# The only (regulator, method) cell whose index carries the component ratings (FRB CSV ISB main row).
+COMPONENT_INDEX_CELL = ("FRB", "isb")
+PRIOR_FIELDS = ("prior_evaluation_date", "prior_rating")
+# Optional manifest column naming where exam_date came from; these sources are not truth.
+EXAM_DATE_SOURCE_COLUMN = "exam_date_source"
+FILE_ID_DATE_SOURCES = frozenset({"file_id", "fdic_file_id"})
+TRUTH_COLUMNS = [
+    "doc_id", "regulator", "method", "release_year", "split", "field", "index_value", "truth", "truth_reason",
+]
+
+
+def _truth_of(
+    field: str, value: str, rec: dict[str, Any], columns: set[str], fdic_exam_date_truth: bool = False
+) -> tuple[str, str, str]:
+    """(truth, reason, index value) for one manifest row and field. ``truth`` is ``value``,
+    a gold null code (``absent_from_document`` or ``not_applicable``, from the applicability
+    block of ``fields.yaml``) or ``none`` (no index truth)."""
+    reg, method = rec.get("regulator", ""), rec.get("method", "")
+    if field in COMPONENT_FIELDS:
+        app = applicability(field, reg, method)
+        if app != "value":
+            return app, f"applicability {reg}/{method}", ""
+        if (reg, method) != COMPONENT_INDEX_CELL:
+            return "none", "component rating not in the index for this cell", ""
+    if field == "exam_date":
+        source = str(rec.get(EXAM_DATE_SOURCE_COLUMN) or "").strip().casefold()
+        if reg == "FDIC" and not fdic_exam_date_truth:
+            # Plan, Group A bullet 3: the FDIC file-id date is truth only after the gate
+            # (fdic_exam_date_gate) passes; until then no FDIC row has exam_date truth, an
+            # override row included, so every FDIC cell is treated alike.
+            return "none", f"FDIC exam_date: file-id gate not passed (exam_date_source {source or 'empty'})", ""
+        if reg != "FDIC" and source in FILE_ID_DATE_SOURCES:
+            return "none", f"exam_date_source {source}", ""
+    if INDEX_TRUTH_COLUMNS[field] not in columns:
+        return "none", f"manifest has no {INDEX_TRUTH_COLUMNS[field]} column", ""
+    if not value:
+        reason = "no previous index row" if field in PRIOR_FIELDS else "no index value"
+        return "none", reason, ""
+    return "value", "index", value
+
+
+def index_truth(
+    manifest: pd.DataFrame,
+    fields: list[str] | tuple[str, ...] | None = None,
+    fdic_exam_date_truth: bool = False,
+) -> pd.DataFrame:
+    """One row per (manifest document, field) with the index truth (``TRUTH_COLUMNS``).
+
+    Rules (``docs/analysis_plan.md``, "Field groups and truth sources" and "Group A at
+    corpus scale"): the agency index value of the manifest; prior fields only where a
+    previous index row exists; component ratings from the FRB CSV main row in FRB/isb and
+    a gold-null code in the applicability ABS cells (a returned value there is a
+    fabrication), no truth in the other cells. FDIC exam_date is the file-id date (or a
+    hand override, ``exam_date_source`` override) and is truth only when
+    ``fdic_exam_date_truth`` is True, which the caller sets from :func:`fdic_exam_date_gate`
+    (the plan uses the file-id date only after it matches the printed cover date on every
+    FDIC dev and test gold document). Without the gate no FDIC row has exam_date truth.
+    """
+    fields = list(fields or INDEX_TRUTH_COLUMNS)
+    unknown = [f for f in fields if f not in INDEX_TRUTH_COLUMNS]
+    if unknown:
+        raise ValueError(f"no index truth for fields {unknown}")
+    m = manifest.fillna("").astype(str)
+    columns = set(m.columns)
+    rows = []
+    for rec in m.to_dict("records"):
+        year = str(rec.get("release_date", ""))[:4]
+        for field in fields:
+            raw = str(rec.get(INDEX_TRUTH_COLUMNS[field], "")).strip()
+            truth, reason, value = _truth_of(field, raw, rec, columns, fdic_exam_date_truth)
+            rows.append({
+                "doc_id": rec["doc_id"], "regulator": rec.get("regulator", ""), "method": rec.get("method", ""),
+                "release_year": year, "split": rec.get("split", ""), "field": field,
+                "index_value": value, "truth": truth, "truth_reason": reason,
+            })
+    return pd.DataFrame(rows, columns=TRUTH_COLUMNS)
+
+
+GATE_COLUMNS = ["doc_id", "split", "manifest_exam_date", "gold_exam_date", "match"]
+GATE_SPLITS = ("dev", "test")
+
+
+def fdic_exam_date_gate(
+    manifest: pd.DataFrame, gold_dir: Path = GOLD_DIR
+) -> tuple[str, pd.DataFrame]:
+    """The plan's condition for FDIC exam_date index truth (Group A at corpus scale, bullet 3).
+
+    Compares the manifest exam_date of every FDIC document of the dev and test splits with
+    the gold exam_date of ``labels_{split}.csv`` (``evaluate.values_match``). Returns the
+    status and one row per document (``GATE_COLUMNS``): ``pass`` when both splits are drawn
+    and labeled, every FDIC gold document has a gold exam_date and every one matches;
+    ``fail`` when any labeled document differs (the mismatch is triaged and recorded before
+    corpus scoring); ``pending`` otherwise (test not drawn or not labeled yet). Only the
+    exam_date rows of FDIC gold documents are read.
+    """
+    m = manifest.fillna("").astype(str)
+    rows: list[dict[str, Any]] = []
+    complete = True
+    for split in GATE_SPLITS:
+        docs = m[(m["regulator"] == "FDIC") & (m["split"] == split)]
+        path = Path(gold_dir) / f"labels_{split}.csv"
+        if docs.empty or not path.exists():
+            complete = False
+            continue
+        gold = pd.read_csv(path, dtype=str, keep_default_na=False)
+        gold = gold[(gold["field"] == "exam_date") & gold["doc_id"].isin(set(docs["doc_id"]))]
+        by_doc = dict(zip(gold["doc_id"], gold["value"], strict=True))
+        for rec in docs.to_dict("records"):
+            g = by_doc.get(rec["doc_id"], "")
+            if not g:
+                complete = False
+            match = bool(g) and values_match(g, rec["exam_date"], field_spec("exam_date"))
+            rows.append({"doc_id": rec["doc_id"], "split": split, "manifest_exam_date": rec["exam_date"],
+                         "gold_exam_date": g, "match": match})
+    table = pd.DataFrame(rows, columns=GATE_COLUMNS)
+    if any(not r["match"] and r["gold_exam_date"] for r in rows):
+        return "fail", table
+    return ("pass" if complete and rows else "pending"), table
+
+
+def apply_triage(truth: pd.DataFrame, triage_rows: pd.DataFrame) -> pd.DataFrame:
+    """Triaged truth (secondary): ``source_error`` rows take the printed value as truth
+    (the triaged ``rule_value``, which the hand triage read on the page), ``definitional``
+    rows lose their truth, ``our_error`` rows keep the index value. Only rows that have
+    index truth are changed, so a field without index truth (FDIC exam_date) stays
+    without it. The triage covers the S1 (rules) disagreements of ``TRIAGE_FIELDS``, so
+    the triaged truth is S1-triaged truth. The input index is ignored (rows are matched
+    by position after a reset)."""
+    out = truth.reset_index(drop=True).copy()
+    if triage_rows is None or triage_rows.empty:
+        return out
+    t = triage_rows.drop_duplicates(["doc_id", "field"], keep="last").set_index(["doc_id", "field"])
+    keys = list(zip(out["doc_id"], out["field"], strict=True))
+    for i, key in enumerate(keys):
+        if key not in t.index or out.at[i, "truth"] != "value":
+            continue
+        entry = t.loc[key]
+        if entry["category"] == "source_error":
+            out.at[i, "index_value"] = str(entry["rule_value"])
+            out.at[i, "truth_reason"] = "triage: source_error, printed value"
+        elif entry["category"] == "definitional":
+            out.at[i, "index_value"] = ""
+            out.at[i, "truth"] = "none"
+            out.at[i, "truth_reason"] = "triage: definitional"
+    return out
+
+
+@functools.cache
+def index_cell(field: str, truth: str, index_value: str, status: str, value: str) -> str:
+    """Scoring-matrix cell of one system value against the index truth
+    (``evaluate.score_cell`` with the index as the reference); ``no_truth`` without truth."""
+    if truth == "none":
+        return "no_truth"
+    ref = LabelRow(doc_id="", field=field, value=index_value if truth == "value" else None,
+                   null_reason=None if truth == "value" else truth)
+    pred = FieldValue(doc_id="", field=field, system="", status=status, value=value or None)
+    return score_cell(ref, pred, field_spec(field))
+
+
+def compare_with_index(values: pd.DataFrame, truth: pd.DataFrame, systems: list[str] | None = None) -> pd.DataFrame:
+    """Every truth row crossed with each system: the system's status and value (a missing
+    row is an abstention, as in ``evaluate``) and the scoring-matrix ``cell``.
+
+    ``values`` needs ``doc_id``, ``field``, ``system``, ``status`` and ``value``; extra
+    columns are ignored. Duplicate (doc_id, field, system) rows keep the last one.
+    """
+    cols = ["doc_id", "field", "system", "status", "value"]
+    v = values[values["field"].isin(set(truth["field"]))][cols].fillna("").astype(str)
+    systems = sorted(v["system"].unique()) if systems is None else list(systems)
+    frames = []
+    for system in systems:
+        s = v[v["system"] == system].drop_duplicates(["doc_id", "field"], keep="last").drop(columns="system")
+        j = truth.merge(s, on=["doc_id", "field"], how="left")
+        j["system"] = system
+        j["status"] = j["status"].fillna("abstain").replace("", "abstain")
+        j["value"] = j["value"].fillna("")
+        j["cell"] = [
+            index_cell(f, t, str(i), st, str(val))
+            for f, t, i, st, val in zip(j["field"], j["truth"], j["index_value"], j["status"], j["value"], strict=True)
+        ]
+        frames.append(j)
+    if not frames:
+        return pd.DataFrame(columns=[*TRUTH_COLUMNS, "status", "value", "system", "cell"])
+    return pd.concat(frames, ignore_index=True)
 
 
 def agreement_table(joined: pd.DataFrame, version: str) -> pd.DataFrame:
@@ -124,15 +356,30 @@ def fdic_date_lag(joined: pd.DataFrame) -> pd.DataFrame:
 # --------------------------------------------------------------------------- triage
 
 
-def load_hand_triage(path: Path = TRIAGE_PATH) -> dict[tuple[str, str], dict[str, Any]]:
-    """Hand entries keyed by (doc_id, field)."""
+def manifest_aliases(path: Path = OVERRIDES_PATH) -> dict[str, str]:
+    """Original doc_id -> renamed doc_id from ``config/manifest_overrides.yaml`` (empty
+    when the file does not exist)."""
+    if not Path(path).exists():
+        return {}
+    from cra_extract.overrides import load_overrides
+
+    return load_overrides(path).aliases()
+
+
+def load_hand_triage(
+    path: Path = TRIAGE_PATH, aliases: dict[str, str] | None = None
+) -> dict[tuple[str, str], dict[str, Any]]:
+    """Hand entries keyed by (doc_id, field); a doc_id renamed by the manifest overrides
+    (``aliases``, original -> current) is keyed by its current id."""
+    aliases = aliases or {}
     with open(path, encoding="utf-8") as fh:
         entries = (yaml.safe_load(fh) or {}).get("entries", [])
     out = {}
     for e in entries:
         if e["category"] not in CATEGORIES:
             raise ValueError(f"{e['doc_id']} {e['field']}: unknown category {e['category']!r}")
-        out[(e["doc_id"], e["field"])] = e
+        doc_id = aliases.get(e["doc_id"], e["doc_id"])
+        out[(doc_id, e["field"])] = {**e, "doc_id": doc_id}
     return out
 
 
@@ -348,7 +595,7 @@ def main(argv: list[str] | None = None) -> int:
         before = join(before_rules, manifest)
         tables.insert(0, agreement_table(before, _version(before_rules, "before")))
     agreement = pd.concat(tables, ignore_index=True)
-    tri = triage(before, after, load_hand_triage(args.triage), args.text_dir)
+    tri = triage(before, after, load_hand_triage(args.triage, manifest_aliases()), args.text_dir)
     summary = triage_summary(tri)
     lag = fdic_date_lag(after)
 

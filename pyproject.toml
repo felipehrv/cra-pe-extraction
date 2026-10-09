@@ -21,6 +21,7 @@ dependencies = [
     "requests>=2.31",
     "google-genai>=1.0",
     "openai>=1.40",
+    "matplotlib>=3.8",
 ]
 
 [project.optional-dependencies]

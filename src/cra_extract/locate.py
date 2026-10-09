@@ -21,6 +21,11 @@ records with page and character offsets. It works line by line:
    recur at the top or bottom of many pages). A section whose spec sets ``end_at_table_run``
    also ends where a one-cell-per-line table begins (:func:`table_run_start`): pymupdf can
    print a table after the review paragraph on the same page.
+4. The ``scope_rules`` of the YAML then set the scope of the located :class:`Section` (not of
+   its lines or pages): the review section is institution scope wherever its heading sits
+   (``reset_to_institution``), and in a document with exactly one assessment-area unit the LTD
+   ratio and AA concentration sections found in that unit's scope are institution scope
+   (``lone_aa_institution``, see :func:`lone_aa_unit`). Both get confidence 1.0.
 
 Character offsets index the document text defined as the pages joined by a form feed,
 as defined by ``parse.doc_text``; this module imports that function and the separator so
@@ -35,6 +40,7 @@ import json
 import re
 import sys
 from collections import Counter
+from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
@@ -65,6 +71,8 @@ PERIOD_ROW = re.compile(
 # page 3).
 PERIOD_HEADER = re.compile(r"^(Time|Evaluation|Review) Period$", re.IGNORECASE)
 LONE_BULLET = re.compile(r"^[\u2022\u25aa\u25e6\u00b7*\-\uf000-\uf8ff]$")
+# An MSA or MD code in a scope-marker heading ("MSA 45060 (Syracuse, NY)"), see lone_aa_unit.
+AA_UNIT_CODE = re.compile(r"\b(\d{4,5})\b")
 _HEADING_END = re.compile(r"[.!?:;,]$")  # a line ending a sentence does not wrap a heading
 COLUMN_GAP = re.compile(r"\S {3,}\S")  # pdftotext column gap: a table row or a running header
 FURNITURE_PATTERNS = [  # page furniture, matched against a normalized line
@@ -166,6 +174,9 @@ class _Patterns:
     end_at_table_run: dict[str, bool]
     boundaries: list[re.Pattern[str]]
     markers: list[tuple[str, list[re.Pattern[str]]]]
+    reset_sections: frozenset[str]  # scope_rules.reset_to_institution.sections
+    lone_aa_sections: frozenset[str]  # scope_rules.lone_aa_institution.sections
+    aa_unit_scopes: frozenset[str]  # scope_rules.lone_aa_institution.unit_scopes
 
 
 def _compile(patterns: list[str]) -> list[re.Pattern[str]]:
@@ -176,6 +187,9 @@ def _compile(patterns: list[str]) -> list[re.Pattern[str]]:
 def _patterns(regulator: str) -> _Patterns:
     cfg = load_headings()
     sections = cfg["sections"]
+    rules = cfg.get("scope_rules", {})
+    reset = rules.get("reset_to_institution", {})
+    lone = rules.get("lone_aa_institution", {})
     return _Patterns(
         toc=_compile(cfg["toc_line_patterns"]),
         sections={name: _compile(spec.get(regulator, [])) for name, spec in sections.items()},
@@ -189,6 +203,9 @@ def _patterns(regulator: str) -> _Patterns:
             (scope, _compile(spec.get(regulator, [])))
             for scope, spec in cfg.get("scope_markers", {}).items()
         ],
+        reset_sections=frozenset(reset.get("sections", [])),
+        lone_aa_sections=frozenset(lone.get("sections", [])),
+        aa_unit_scopes=frozenset(lone.get("unit_scopes", [])),
     )
 
 
@@ -522,6 +539,77 @@ def _trim_end(lines: list[_Line], start_idx: int, end_idx: int) -> int:
     return end_idx
 
 
+# Assessment-area unit names (aa_unit_name): FDIC prints the area twice ("AUSTIN MSA AA - Full-Scope
+# Review" and "DESCRIPTION OF INSTITUTION'S OPERATIONS IN AUSTIN MSA AA"), both reduced to "austin msa".
+_AA_PREFIX_RE = re.compile(r"^description of (?:the )?institution'?s operations in (?:the )?", re.IGNORECASE)
+_AA_SUFFIX_RE = re.compile(r"\s*(?:[-–:]\s*)?(?:full|limited)[- ]scope review\s*$", re.IGNORECASE)
+_AA_WORD_RE = re.compile(r"\b(?:aa|assessment area)s?\b", re.IGNORECASE)
+# A marker that names no area: the bare Dallas heading (FRB_709143_20230130 pp12, 29 and 44).
+_AA_GENERIC_RE = re.compile(r"^description of (?:the )?institution'?s operations$", re.IGNORECASE)
+
+
+def aa_unit_name(heading: str) -> str:
+    """The unit a scope-marker heading opens: its MSA or MD code when it carries one (FRB
+    "MD 35614 (NEW YORK-...) FULL SCOPE REVIEW" and "... OPERATIONS IN MD 35614 ..." both give
+    ``35614``), else the area name with the operations prefix, the scope-review suffix and the
+    words AA and assessment area removed, casefolded. Empty for a marker that names no area
+    (the bare "DESCRIPTION OF THE INSTITUTION'S OPERATIONS", or a bare "Full-Scope Review")."""
+    text = normalize_line(heading)
+    m = AA_UNIT_CODE.search(text)
+    if m:
+        return m.group(1)
+    if _AA_GENERIC_RE.match(text.strip()):
+        return ""
+    text = _AA_PREFIX_RE.sub("", text)
+    text = _AA_SUFFIX_RE.sub("", text)
+    text = _AA_WORD_RE.sub("", text)
+    return re.sub(r"\s+", " ", text).strip(" -–:").casefold()
+
+
+def aa_units(lines: list[_Line], unit_scopes: Iterable[str]) -> tuple[set[str], bool]:
+    """Assessment-area units opened by scope markers, and whether a state marker opened a scope.
+
+    One rule for the lone-AA scope rule (:func:`lone_aa_unit`) and the multi-AA strata count
+    (``run.count_aa_sections``). A unit is a marker event that opened a scope in
+    ``unit_scopes``; markers read while the sticky appendix scope is in effect open nothing and
+    are ignored (glossary prose such as "the multistate metropolitan area." on FDIC_58220_20250512
+    p23). Markers with the same :func:`aa_unit_name` are one unit; a marker with an empty name
+    counts once per occurrence, so three bare Dallas headings are three units.
+    """
+    scopes = frozenset(unit_scopes)
+    units: set[str] = set()
+    has_state = False
+    for i, line in enumerate(lines):
+        if line.event is None or line.event[0] != "marker":
+            continue
+        if line.scope == "state":
+            has_state = True
+        if line.scope in scopes:
+            name = aa_unit_name(line.text)
+            units.add(name or f"line {i}")
+    return units, has_state
+
+
+def lone_aa_unit(lines: list[_Line], unit_scopes: frozenset[str]) -> bool:
+    """True when the document opens exactly one assessment-area unit (:func:`aa_units`) and no
+    state. New York single-AA PEs repeat the MSA title over their tables ("MSA 45060 (Syracuse,
+    NY)" five times, FRB_722816_20230626 pages 7 to 13), which is one unit; two Dallas AAs that
+    both print the bare "DESCRIPTION OF THE INSTITUTION'S OPERATIONS" are two units. This is the
+    rule of ``scope_rules.lone_aa_institution`` in ``config/headings.yaml``.
+    """
+    units, has_state = aa_units(lines, unit_scopes)
+    return not has_state and len(units) == 1
+
+
+def _section_scope(name: str, line_scope: str, pats: _Patterns, lone_aa: bool) -> str:
+    """Scope of a section whose heading sits on a line of ``line_scope`` (``scope_rules``)."""
+    if name in pats.reset_sections:
+        return "institution"
+    if name in pats.lone_aa_sections and lone_aa and line_scope in pats.aa_unit_scopes:
+        return "institution"
+    return line_scope
+
+
 def _locate_from_lines(
     name: str, doc_id: str, pages: list[Page], lines: list[_Line], text: str, regulator: str
 ) -> Section | None:
@@ -530,8 +618,11 @@ def _locate_from_lines(
     if not hits:
         return None
     wanted = pats.section_scope[name]
-    in_scope = [i for i in hits if lines[i].scope == wanted]
-    start_idx = in_scope[0] if in_scope else hits[0]
+    lone_aa = name in pats.lone_aa_sections and lone_aa_unit(lines, pats.aa_unit_scopes)
+    scopes = [_section_scope(name, lines[i].scope, pats, lone_aa) for i in hits]
+    first = next((k for k, scope in enumerate(scopes) if scope == wanted), 0)
+    start_idx = hits[first]
+    scope = scopes[first]
     start = lines[start_idx]
     end_idx = next(
         (
@@ -556,9 +647,9 @@ def _locate_from_lines(
         char_start=start.offset,
         char_end=end_offset,
         text=text[start.offset : end_offset],
-        scope=start.scope,  # type: ignore[arg-type]
+        scope=scope,  # type: ignore[arg-type]
         heading_matched=start.heading or start.text,
-        confidence=1.0 if start.scope == wanted else 0.5,
+        confidence=1.0 if scope == wanted else 0.5,
     )
 
 

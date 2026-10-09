@@ -46,6 +46,7 @@ from cra_extract.config import (
     ensure_dirs,
 )
 from cra_extract.models import RATING_WORDS, DocRecord, make_doc_id
+from cra_extract.overrides import default_exam_date_source
 
 log = logging.getLogger(__name__)
 
@@ -97,7 +98,10 @@ INDEX_COLUMNS = [
     "frb_service_raw",
 ]
 
-MANIFEST_EXTRA_COLUMNS = ["prior_evaluation_date_index", "prior_rating_index"]
+PRIOR_COLUMNS = ["prior_evaluation_date_index", "prior_rating_index"]
+# exam_date_source says where the manifest exam_date comes from (see cra_extract.overrides):
+# the index exam date (OCC, FRB), the date in the FDIC file id, or a documented override.
+MANIFEST_EXTRA_COLUMNS = PRIOR_COLUMNS + ["exam_date_source"]
 MANIFEST_COLUMNS = list(DocRecord.model_fields) + MANIFEST_EXTRA_COLUMNS
 
 # Rating codes used by the FRB CSV in addition to the words in models.RATING_WORDS.
@@ -491,7 +495,7 @@ def prior_lookup(manifest: pd.DataFrame, index: pd.DataFrame) -> pd.DataFrame:
     ``prior_evaluation_date_index`` (ISO string or None) and ``prior_rating_index``."""
     out = pd.DataFrame(
         {c: pd.Series([None] * len(manifest), index=manifest.index, dtype=object)
-         for c in MANIFEST_EXTRA_COLUMNS}
+         for c in PRIOR_COLUMNS}
     )
     if manifest.empty or index.empty:
         return out
@@ -544,7 +548,8 @@ def build_manifest(
     if dup.any():
         raise ValueError(f"duplicate doc_ids in manifest: {manifest.loc[dup, 'doc_id'].tolist()[:5]}")
     all_index = pd.concat([occ, fdic, frb], ignore_index=True)
-    manifest[MANIFEST_EXTRA_COLUMNS] = prior_lookup(manifest, all_index)
+    manifest[PRIOR_COLUMNS] = prior_lookup(manifest, all_index)
+    manifest["exam_date_source"] = manifest["regulator"].map(default_exam_date_source)
     manifest = manifest.sort_values("doc_id").reset_index(drop=True)
     return manifest, exclusions
 

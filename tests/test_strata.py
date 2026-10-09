@@ -40,6 +40,8 @@ def _doc(regulator: str, method: str, i: int, **kw) -> DocRecord:
     bank_id = kw.pop("bank_id", f"{regulator[0]}{method[0]}{i:03d}")
     exam = date(2024, 1, 1) + timedelta(days=i)
     assets = kw.pop("total_assets_usd", None if regulator == "OCC" else 10_000_000 * (i + 1))
+    kw.setdefault("sha256", f"{i:064x}")
+    kw.setdefault("text_extractable", True)
     return DocRecord(
         doc_id=make_doc_id(regulator, bank_id, exam),
         regulator=regulator,
@@ -286,6 +288,54 @@ def test_exclusivity_problems_and_pool(manifest):
     assert b.doc_id not in {d.doc_id for d in pool}, "dev bank excluded from the test pool"
     pool_dev = strata.eligible_pool(m, "dev")
     assert b.doc_id in {d.doc_id for d in pool_dev}, "later splits do not shrink the dev pool"
+
+
+def test_tuning_documents_leave_the_test_and_audit_pools(manifest):
+    tuned = manifest[0]  # FDIC bank Fs000, which has a second exam (manifest[-2])
+    second = manifest[-2]
+    assert strata.bank_key(tuned) == strata.bank_key(second)
+    for split in ("test", "audit"):
+        pool = {d.doc_id for d in strata.eligible_pool(manifest, split, [tuned.doc_id])}
+        assert tuned.doc_id not in pool and second.doc_id not in pool, split
+    assert tuned.doc_id in {d.doc_id for d in strata.eligible_pool(manifest, "dev", [tuned.doc_id])}
+    draw = strata.draw_test(manifest, SEED, DRAWN_AT, tuning=[tuned.doc_id])
+    assert tuned.doc_id not in draw.doc_ids and second.doc_id not in draw.doc_ids
+    assert draw.rules["tuning_documents"] == 1
+    assert draw.rules["tuning_documents_removed_from_pool"] == 2
+    assert strata.draw_test(manifest, SEED, DRAWN_AT).rules.get("tuning_documents") is None
+
+
+def test_cli_refuses_draws_while_a_non_evaluable_row_is_not_excluded(manifest, tmp_path, capsys):
+    mpath, spath = tmp_path / "m.csv", tmp_path / "strata.yaml"
+    bad = manifest[5].model_copy(update={"sha256": None, "text_extractable": False})
+    _write_manifest(mpath, [bad, *manifest[:5], *manifest[6:]])
+    rc = strata.main(["--manifest", str(mpath), "--strata", str(spath), "draw-test", "--seed", "1", "--date", DRAWN_AT])
+    assert rc == 1 and bad.doc_id in capsys.readouterr().err
+    assert not spath.exists()
+    excluded = bad.model_copy(update={"split": "excluded"})
+    _write_manifest(mpath, [excluded, *manifest[:5], *manifest[6:]])
+    assert strata.main(["--manifest", str(mpath), "--strata", str(spath), "draw-test", "--seed", "1", "--date", DRAWN_AT]) == 0
+
+
+def test_tuning_file_round_trip(tmp_path):
+    path = tmp_path / "tuning.yaml"
+    entries = {"FRB_1_20240101": {"doc_id": "FRB_1_20240101", "source": ["headings.yaml"]},
+               "OCC_2_20240101": {"doc_id": "OCC_2_20240101", "note": "read while tuning"}}
+    strata.write_tuning_documents(entries, path)
+    assert strata.load_tuning_documents(path) == entries
+    assert strata.load_tuning_documents(tmp_path / "none.yaml") == {}
+    assert strata.missing_tuning_documents(entries, {"FRB_1_20240101": ["x"], "FDIC_3_20240101": ["y"]}) == ["FDIC_3_20240101"]
+    assert strata.doc_id_bank_key("FDIC_0445_20240408") == ("FDIC", "445")
+
+
+def test_live_tuning_file_lists_every_cited_document():
+    recorded = strata.load_tuning_documents()
+    assert strata.missing_tuning_documents(recorded) == []
+    manifest = strata.to_records(strata.read_rows(CORPUS_PATH)[1])
+    splits = {d.doc_id: d.split for d in manifest}
+    assert all(splits.get(d) not in ("test", "audit") for d in recorded)
+    tuned_banks = {strata.doc_id_bank_key(d) for d in recorded}
+    assert all(strata.bank_key(d) not in tuned_banks for d in manifest if d.split in ("test", "audit"))
 
 
 def test_assign_resets_previous_members():

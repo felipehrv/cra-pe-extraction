@@ -14,17 +14,21 @@ has four (line 221), one MSA or MD block each (lines 647, 1219, 1741, 2210).
 from __future__ import annotations
 
 import csv
+import dataclasses
+import hashlib
 import json
 import shutil
+import socket
 from datetime import date
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pytest
 from conftest import SAMPLE_META, SAMPLES
 
-from cra_extract import llm, parse, run
+from cra_extract import llm, parse, prompts, run
 from cra_extract.config import load_fields
 from cra_extract.models import make_doc_id
 from cra_extract.rules import RULE_FIELDS
@@ -90,18 +94,37 @@ def root(workspace: Path, tmp_path: Path) -> Path:
 
 
 class FakeBackend(llm.Backend):
-    """Canned structured response; the rating quote is on SouthStar page 3."""
+    """Canned structured response; the rating quote is on SouthStar page 3.
+
+    ``prompts`` (shared between instances when passed in) records every prompt sent. The
+    closed-book schema gets a closed-book answer (S, no finding).
+    """
 
     name = "fake"
 
-    def __init__(self, model: str = "fake-1") -> None:
+    def __init__(
+        self,
+        model: str = "fake-1",
+        prompts: list[dict[str, Any]] | None = None,
+        effort: str | None = None,
+        limiter: llm.RateLimiter | None = None,
+    ) -> None:
         self.model = model
         self.calls = 0
+        self.prompts = prompts if prompts is not None else []
+        self.effort = effort
+        self.limiter = limiter
 
     def _call(self, system_prompt, user_prompt, json_schema, model):
         self.calls += 1
+        self.prompts.append({"system": system_prompt, "user": user_prompt, "schema": json_schema})
         data: dict[str, Any] = {}
-        if "overall_rating" in json_schema["properties"]:
+        if json_schema.get("title") == "cra_pe_closedbook":
+            data = {
+                "overall_rating": {"status": "value", "value": "S"},
+                "finding_present": {"status": "value", "value": False},
+            }
+        elif "overall_rating" in json_schema["properties"]:
             data["overall_rating"] = {
                 "status": "value", "value": "NI",
                 "quote": "This institution is rated Needs to Improve.", "page": 3,
@@ -112,8 +135,30 @@ class FakeBackend(llm.Backend):
 
 def fake_factory(spec: run.SystemSpec, split: str, allow_api: bool, paths: run.Paths) -> llm.Backend:
     """Backend factory for tests: replay over the traces with a FakeBackend as the live backend."""
-    live = FakeBackend(spec.model) if allow_api else None
-    return llm.ReplayBackend(spec.backend, split, spec.model, live=live, allow_api=allow_api, trace_dir=paths.trace_dir)
+    live = FakeBackend(spec.model, effort=spec.effort) if allow_api else None
+    return llm.ReplayBackend(
+        spec.backend, split, spec.model, live=live, allow_api=allow_api, trace_dir=paths.trace_dir,
+        effort=spec.effort,
+    )
+
+
+def recording_factory(prompts: list[dict[str, Any]], limiter: llm.RateLimiter | None = None) -> run.BackendFactory:
+    """Like ``fake_factory`` but every live call is recorded in ``prompts`` (and rate limited)."""
+
+    def factory(spec: run.SystemSpec, split: str, allow_api: bool, paths: run.Paths) -> llm.Backend:
+        live = FakeBackend(spec.model, prompts, spec.effort, limiter) if allow_api else None
+        return llm.ReplayBackend(
+            spec.backend, split, spec.model, live=live, allow_api=allow_api, trace_dir=paths.trace_dir,
+            effort=spec.effort,
+        )
+
+    return factory
+
+
+FAKE = run.llm_spec("fake", "fake-1")
+FAKE_WHOLE = run.llm_spec("fake", "fake-1", run.WHOLE)
+FAKE_CLOSED = run.llm_spec("fake", "fake-1", run.CLOSED_BOOK)
+N_GROUPS = len(load_fields()["llm_field_groups"])
 
 
 def read_predictions(root: Path, split: str = "dev") -> pd.DataFrame:
@@ -126,11 +171,43 @@ def read_predictions(root: Path, split: str = "dev") -> pd.DataFrame:
 def test_parse_systems():
     specs = run.parse_systems("rules,baseline,llm:gemini:gemini-3.8-flash")
     assert [s.name for s in specs] == ["rules", "baseline", "llm:gemini:gemini-3.8-flash"]
-    assert specs[2] == run.SystemSpec("llm:gemini:gemini-3.8-flash", "llm", "gemini", "gemini-3.8-flash")
+    # Hosted backends default to effort low; the effort is not part of the system name.
+    assert specs[2] == run.SystemSpec(
+        "llm:gemini:gemini-3.8-flash", "llm", "gemini", "gemini-3.8-flash", "located", "low"
+    )
     assert run.parse_systems(["rules", " baseline "])[1].kind == "baseline"
-    for bad in ("llm", "llm:gemini", "llm:nope:model", "s3", "", "rules,rules"):
+    for bad in ("llm", "llm:gemini", "llm:nope:model", "s3", "", "rules,rules", "llm:gemini::whole"):
         with pytest.raises(ValueError):
             run.parse_systems(bad)
+
+
+def test_parse_systems_modes_effort_and_colon_models():
+    # Ollama tags carry a colon (analysis plan, S4 row): everything after the backend is the model.
+    ollama = run.parse_systems("llm:ollama:llama3.1:8b-instruct-q4_K_M")[0]
+    assert (ollama.backend, ollama.model, ollama.mode, ollama.effort) == ("ollama", "llama3.1:8b-instruct-q4_K_M", "located", None)
+    whole = run.parse_systems("llm:gemini:gemini-3.8-flash:whole")[0]
+    assert (whole.name, whole.model, whole.mode) == ("llm:gemini:gemini-3.8-flash:whole", "gemini-3.8-flash", "whole")
+    closed = run.parse_systems("llm:ollama:qwen2.5:7b:closedbook")[0]
+    assert (closed.model, closed.mode, closed.name) == ("qwen2.5:7b", "closedbook", "llm:ollama:qwen2.5:7b:closedbook")
+    assert run.parse_systems("llm:anthropic:claude-haiku-4-5", effort="high")[0].effort == "high"
+    assert run.parse_systems("llm:anthropic:claude-haiku-4-5", effort="none")[0].effort is None
+    assert run.parse_systems("llm:ollama:llama3.1", effort="low")[0].effort == "low"
+    with pytest.raises(ValueError):
+        run.parse_systems("llm:gemini:m", effort="extreme")
+    # --whole-document / --closed-book switch located LLM systems only, keeping the effort.
+    specs = run.with_mode(run.parse_systems("rules,llm:gemini:m,llm:ollama:l:closedbook", effort="medium"), run.WHOLE)
+    assert [s.name for s in specs] == ["rules", "llm:gemini:m:whole", "llm:ollama:l:closedbook"]
+    assert specs[1].effort == "medium" and specs[1].mode == "whole"
+    with pytest.raises(ValueError):
+        run.with_mode(run.parse_systems("llm:gemini:m,llm:gemini:m:whole"), run.WHOLE)
+
+
+def test_hash_sample_orders_by_sha256_of_doc_id():
+    ids = ["FDIC_12299_20220912", "FRB_3664588_20240116", "OCC_11715_20240408", "FDIC_6078_20240805"]
+    records = [llm.sample_doc("FDIC_12299_SouthStar_2022_ISB_NI_fairlending").model_copy(update={"doc_id": i}) for i in ids]
+    expected = sorted(ids, key=lambda i: hashlib.sha256(i.encode("utf-8")).hexdigest())
+    assert [d.doc_id for d in run.hash_sample(records, 3)] == expected[:3]
+    assert run.hash_sample(records, 0) == []
 
 
 def test_aa_unit_key_normalizes_fdic_and_frb_headings():
@@ -141,12 +218,51 @@ def test_aa_unit_key_normalizes_fdic_and_frb_headings():
     assert run.aa_unit_key("DESCRIPTION OF INSTITUTION’S OPERATIONS IN MD 35614 (NEW YORK") == "35614"
 
 
+def _pages(*texts: str) -> list:
+    from cra_extract.models import Page
+
+    return [Page(number=i, text=t) for i, t in enumerate(texts, start=1)]
+
+
+def test_count_aa_sections_counts_bare_dallas_markers_per_occurrence():
+    # FRB_709143_20230130 prints the bare heading once per AA (pp12, 29, 44): three units.
+    body = "The bank operates branches in the area.\n"
+    pages = _pages(
+        "PUBLIC DISCLOSURE\n",
+        "DESCRIPTION OF INSTITUTION'S OPERATIONS\n\n" + body,
+        "DESCRIPTION OF INSTITUTION'S OPERATIONS\n\n" + body,
+        "DESCRIPTION OF INSTITUTION'S OPERATIONS\n\n" + body,
+    )
+    assert run.aa_unit_key("DESCRIPTION OF THE INSTITUTION'S OPERATIONS") == ""
+    assert run.count_aa_sections(pages, "FRB") == 3
+
+
+def test_count_aa_sections_dedups_fdic_names_and_ignores_appendix_prose():
+    # FDIC_12303_20220921: two AAs, each printed twice (pp9, 14); glossary prose on p21 is in
+    # the appendix scope and opens nothing.
+    body = "The bank operates branches in the area.\n"
+    pages = _pages(
+        "PUBLIC DISCLOSURE\n",
+        "NON-MSA AA – Full-Scope Review\n\nDESCRIPTION OF INSTITUTION'S OPERATIONS IN NON-MSA AA\n\n" + body,
+        "WACO MSA AA – Full-Scope Review\n\nDESCRIPTION OF INSTITUTION'S OPERATIONS IN WACO MSA AA\n\n" + body,
+        "GLOSSARY\n\nbranches in two or more states within a multistate metropolitan area, the institution will\n"
+        "rating for the multistate metropolitan area.\n",
+    )
+    assert run.count_aa_sections(pages, "FDIC") == 2
+
+
 def test_gemini_limiter_reads_free_tier_from_prices(tmp_path, monkeypatch):
     prices = {"gemini": {"free_tier": {"requests_per_minute": 5, "requests_per_day": 20}}}
     monkeypatch.setattr(run, "load_prices", lambda: prices)
     limiter = run.gemini_limiter(tmp_path)
     assert (limiter.backend, limiter.per_minute, limiter.per_day) == ("gemini", 5, 20)
     assert limiter.path == tmp_path / "ratelimit_gemini.json"
+    # The quota day ends at midnight Pacific time: 2023-11-15 05:00 UTC is still 11-14 there.
+    assert limiter.reset_tz == ZoneInfo("America/Los_Angeles")
+    limiter._clock = lambda: 1_700_024_400.0
+    assert limiter._today() == "2023-11-14"
+    prices["gemini"]["free_tier"]["reset_timezone"] = "UTC"
+    assert run.gemini_limiter(tmp_path).reset_tz == ZoneInfo("UTC")
     monkeypatch.setattr(run, "load_prices", lambda: {"gemini": {"free_tier": {}}})
     assert run.gemini_limiter(tmp_path).per_minute is None
 
@@ -156,20 +272,21 @@ def test_build_llm_backend_wires_limiter_only_with_allow_api(tmp_path, monkeypat
 
     def fake_make_backend(name, model, **kwargs):
         captured.update(name=name, model=model, **kwargs)
-        return FakeBackend(model)
+        return FakeBackend(model, effort=kwargs.get("effort"))
 
     monkeypatch.setattr(llm, "make_backend", fake_make_backend)
     paths = run.Paths.under(tmp_path)
     spec = run.parse_systems("llm:gemini:gemini-3.8-flash")[0]
     replay = run.build_llm_backend(spec, "dev", allow_api=False, paths=paths)
     assert isinstance(replay, llm.ReplayBackend) and replay.live is None and not captured
-    assert replay.path == paths.trace_dir / "dev" / "gemini.jsonl"
+    assert replay.path == paths.trace_dir / "dev" / "gemini.jsonl" and replay.effort == "low"
     live = run.build_llm_backend(spec, "dev", allow_api=True, paths=paths)
     assert isinstance(live.live, FakeBackend)
     assert isinstance(captured["limiter"], llm.RateLimiter) and captured["limiter"].backend == "gemini"
+    assert captured["effort"] == "low" and live.live.effort == "low"
     captured.clear()
     run.build_llm_backend(run.parse_systems("llm:ollama:llama3.1")[0], "dev", True, paths)
-    assert "limiter" not in captured and captured["name"] == "ollama"
+    assert "limiter" not in captured and captured["name"] == "ollama" and captured["effort"] is None
 
 
 def test_csv_table_append_drop_and_header_guard(tmp_path):
@@ -343,3 +460,267 @@ def test_makefile_targets_use_real_flags():
     assert "cra_extract.run --split corpus --systems $(SYSTEMS)" in scale
     assert "SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash" in text
     assert "--systems rules,llm" not in text
+
+
+# ----------------------------------------------------------------------------- LLM modes
+
+
+def sample_text(doc_id: str) -> str:
+    stem = next(r["stem"] for r in sample_rows() if r["doc_id"] == doc_id)
+    return (SAMPLES / f"{stem}.txt").read_text(encoding="utf-8")
+
+
+def test_whole_document_mode_sends_whole_text_and_marks_locator_na(root: Path):
+    paths = run.Paths.under(root)
+    sent: list[dict[str, Any]] = []
+    summary = run.run_split(
+        "dev", [FAKE, FAKE_WHOLE], paths=paths, allow_api=True, backend_factory=recording_factory(sent)
+    )
+    assert summary.n_errors == 0 and summary.n_pairs_written == 16
+    preds = read_predictions(root)
+    whole = preds[preds["system"] == "llm:fake:fake-1:whole"]
+    located = preds[preds["system"] == "llm:fake:fake-1"]
+    assert len(whole) == len(located) == 8 * N_LLM_FIELDS
+    assert set(whole["locator_miss"]) == {run.LOCATOR_MISS_NA} and set(located["locator_miss"]) == {"0"}
+    # The whole document goes to every field group: one "document" section of all pages.
+    whole_prompts = [p["user"] for p in sent if "=== section: document | scope: institution" in p["user"]]
+    assert len(whole_prompts) == 8 * N_GROUPS
+    pages = parse.load_pages(SOUTHSTAR, root / "data" / "text")
+    text = parse.doc_text(pages)
+    traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
+    ss_whole = [t for t in traces if t.doc_id == SOUTHSTAR and t.section_offsets == [(0, len(text))]]
+    assert len(ss_whole) == N_GROUPS
+    # Trace.mode attributes each call to its run system (cost accounting).
+    assert {t.mode for t in ss_whole} == {"whole"}
+    assert {t.mode for t in traces} == {"whole", "located"}
+    # Every SouthStar whole-document prompt holds the full text, every page joined.
+    ss_prompts = [p for p in whole_prompts if pages[0].text.strip()[:80] in p]
+    assert len(ss_prompts) == N_GROUPS and all(text.strip() in p for p in ss_prompts)
+    ss = whole[whole["doc_id"] == SOUTHSTAR].set_index("field")
+    assert ss.loc["overall_rating", "value"] == "NI" and ss.loc["overall_rating", "page"] == "3"
+    assert ss.loc["overall_rating", "grounding_failure"] == ""
+    # Tokens are recorded per (document, system) in the run log.
+    entries = [e for e in run.read_run_log(paths.run_log("dev")) if e["system"] == "llm:fake:fake-1:whole"]
+    assert len(entries) == 8 and all(e["input_tokens"] == N_GROUPS * 100 and e["mode"] == "whole" for e in entries)
+    assert all(e["n_locator_fallbacks"] == 0 for e in entries)
+    # evaluate reads "na" as no locator flag.
+    from cra_extract.evaluate import read_predictions as eval_read
+
+    fvs, _ = eval_read(paths.predictions("dev"))
+    assert not any("locator_miss" in (f.notes or "") for f in fvs if f.system.endswith(":whole"))
+
+
+def test_closed_book_prompts_contain_no_pe_text(root: Path):
+    paths = run.Paths.under(root)
+    # No text and no PDFs: the closed-book path never loads the document.
+    shutil.rmtree(root / "data" / "text")
+    shutil.rmtree(root / "data" / "pdfs")
+    sent: list[dict[str, Any]] = []
+    summary = run.run_split("dev", [FAKE_CLOSED], paths=paths, allow_api=True, backend_factory=recording_factory(sent))
+    assert summary.n_errors == 0 and summary.n_pairs_written == 8 and len(sent) == 8
+    rows = {r["doc_id"]: r for r in sample_rows()}
+    for p in sent:
+        prompt = p["system"] + "\n" + p["user"]
+        doc_id = next(d for d, r in rows.items() if f"Bank: {r['bank_name']}" in p["user"])
+        r = rows[doc_id]
+        assert f"Evaluation date: {r['exam_date']}" in p["user"]
+        assert doc_id not in prompt and r["regulator"] not in prompt
+        assert "Federal Reserve" not in prompt and "Comptroller" not in prompt
+        assert "Small Bank" not in prompt and "Regulator" not in prompt
+        lines = {ln.strip() for ln in sample_text(doc_id).splitlines() if len(ln.strip()) >= 25}
+        assert lines and not [ln for ln in lines if ln in prompt]
+        assert set(p["schema"]["properties"]) == {"overall_rating", "finding_present"}
+    preds = read_predictions(root)
+    assert set(preds["system"]) == {"llm:fake:fake-1:closedbook"}
+    assert set(preds["field"]) == {"overall_rating", "finding_present"} and len(preds) == 16
+    assert set(preds["locator_miss"]) == {run.LOCATOR_MISS_NA}
+    assert set(preds["grounding_failure"]) == {"quote_not_found"}
+    assert set(preds.loc[preds["field"] == "finding_present", "value"]) == {"false"}
+    assert not paths.sections("dev").exists()
+    traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
+    assert {t.field_group for t in traces} == {"closedbook"} and all(t.section_offsets == [] for t in traces)
+    assert {t.mode for t in traces} == {"closedbook"}
+    assert traces[0].prompt_hash == llm.prompt_hash(
+        sent[0]["system"], sent[0]["user"], sent[0]["schema"], prompts.CLOSED_BOOK_PROMPT_VERSION
+    )
+    # A forced rerun replays every closed-book call.
+    summary = run.run_split("dev", [FAKE_CLOSED], paths=paths, force=True, backend_factory=recording_factory(sent))
+    assert summary.n_pairs_written == 8 and len(sent) == 8
+
+
+def test_trace_dir_isolates_a_second_live_run_and_agreement(root: Path):
+    first = run.Paths.under(root)
+    sent: list[dict[str, Any]] = []
+    run.run_split("dev", [FAKE], paths=first, allow_api=True, backend_factory=recording_factory(sent))
+    assert len(sent) == 8 * N_GROUPS
+    first_traces = (first.trace_dir / "dev" / "fake.jsonl").read_text(encoding="utf-8")
+
+    second = dataclasses.replace(
+        first, trace_dir=root / "data" / "traces" / "dev_rerun", results_dir=root / "results" / "dev_rerun"
+    )
+    # Without --allow-api the second directory has nothing to replay: the first run is not served.
+    summary = run.run_split("dev", [FAKE], paths=second, backend_factory=recording_factory(sent))
+    assert summary.n_errors == 8 and summary.n_pairs_written == 0
+    summary = run.run_split("dev", [FAKE], paths=second, allow_api=True, backend_factory=recording_factory(sent))
+    assert summary.n_pairs_written == 8 and len(sent) == 2 * 8 * N_GROUPS
+    assert (first.trace_dir / "dev" / "fake.jsonl").read_text(encoding="utf-8") == first_traces
+    assert len(llm.read_traces(second.trace_dir / "dev" / "fake.jsonl")) == 8 * N_GROUPS
+    assert second.predictions("dev").exists() and len(read_predictions(root)) == 8 * N_LLM_FIELDS
+
+    out = root / "results" / "run_agreement_dev.csv"
+    table = run.agreement(first.predictions("dev"), second.predictions("dev"), out)
+    assert list(table.columns) == run.AGREEMENT_COLUMNS and out.exists()
+    assert set(table["system"]) == {"llm:fake:fake-1"} and len(table) == N_LLM_FIELDS
+    assert (table["n"] == 8).all() and (table["agreement"] == 1.0).all()
+    lo, hi = run.wilson_ci(8, 8)
+    assert table["ci_low"].iloc[0] == pytest.approx(lo) and table["ci_high"].iloc[0] == pytest.approx(hi)
+    # Traces pair by prompt hash and give the same table.
+    by_traces = run.agreement(first.trace_dir / "dev", second.trace_dir / "dev")
+    assert by_traces[["field", "n", "n_agree"]].equals(table[["field", "n", "n_agree"]])
+    with pytest.raises(ValueError):
+        run.agreement(first.predictions("dev"), second.trace_dir)
+
+    # One changed value and one changed status in the second run; one item only in the first.
+    df = pd.read_csv(second.predictions("dev"), dtype=str, keep_default_na=False)
+    rating = (df["doc_id"] == SOUTHSTAR) & (df["field"] == "overall_rating")
+    df.loc[rating, "value"] = "S"
+    df.loc[(df["doc_id"] == LIBERTY) & (df["field"] == "overall_rating"), "status"] = "abstain"
+    df = df[~((df["doc_id"] == FIELDPOINT) & (df["field"] == "overall_rating"))]
+    df.to_csv(second.predictions("dev"), index=False)
+    row = run.agreement(first.predictions("dev"), second.predictions("dev")).set_index("field").loc["overall_rating"]
+    assert (row["n"], row["n_agree"], row["n_value_mismatch"], row["n_status_mismatch"]) == (7, 5, 1, 1)
+    assert (row["n_only_a"], row["n_only_b"]) == (1, 0)
+    assert row["agreement"] == pytest.approx(5 / 7)
+    assert (row["ci_low"], row["ci_high"]) == pytest.approx(run.wilson_ci(5, 7))
+
+
+def test_agreement_cli_and_trace_dir_refused_on_test(root: Path, capsys):
+    paths = run.Paths.under(root)
+    run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=fake_factory)
+    out = root / "agree.csv"
+    pred = str(paths.predictions("dev"))
+    assert run.main(["agreement", pred, pred, "--out", str(out)]) == 0
+    assert pd.read_csv(out)["agreement"].eq(1.0).all()
+    assert run.main(["agreement", pred, str(root / "missing.csv")]) == 2
+    with pytest.raises(SystemExit) as exc:
+        run.main(["--split", "test", "--systems", "llm:gemini:m", "--trace-dir", str(root / "x"), "--root", str(root)])
+    assert exc.value.code == 2
+    assert "refused on test" in capsys.readouterr().err
+
+
+def test_main_passes_effort_trace_dir_and_results_dir(root: Path, monkeypatch, capsys):
+    made: list[dict[str, Any]] = []
+
+    def fake_make_backend(name, model, **kwargs):
+        made.append({"name": name, "model": model, **kwargs})
+        return FakeBackend(model, effort=kwargs.get("effort"), limiter=kwargs.get("limiter"))
+
+    monkeypatch.setattr(llm, "make_backend", fake_make_backend)
+    monkeypatch.setattr(run, "load_prices", lambda: {"gemini": {"free_tier": {"requests_per_minute": None, "requests_per_day": 100}}})
+    traces, results = root / "data" / "traces" / "dev_rerun", root / "results" / "dev_rerun"
+    args = [
+        "--split", "dev", "--systems", "llm:gemini:gemini-3.8-flash", "--allow-api", "--doc-id", SOUTHSTAR,
+        "--root", str(root), "--trace-dir", str(traces), "--results-dir", str(results),
+    ]
+    assert run.main(args) == 0
+    assert made[0]["effort"] == "low" and made[0]["limiter"].reset_tz == ZoneInfo("America/Los_Angeles")
+    written = llm.read_traces(traces / "dev" / "gemini.jsonl")
+    assert len(written) == N_GROUPS and {t.effort for t in written} == {"low"}
+    assert not (root / "data" / "traces" / "dev").exists() and not (root / "results" / "predictions_dev.csv").exists()
+    assert (results / "predictions_dev.csv").exists() and (results / "run_log_dev.jsonl").exists()
+    # The daily count is persisted under the root's cache directory.
+    assert json.loads((root / "data" / "cache" / "ratelimit_gemini.json").read_text())["count"] == N_GROUPS
+    # Another effort is another replay key: a replay-only run at effort high misses.
+    assert run.main([*args[:4], "--doc-id", SOUTHSTAR, "--root", str(root), "--trace-dir", str(traces),
+                     "--results-dir", str(root / "results" / "high"), "--effort", "high"]) == 1
+    entry = run.read_run_log(root / "results" / "high" / "run_log_dev.jsonl")[0]
+    assert entry["error"].startswith("TraceMissError") and entry["effort"] == "high"
+    capsys.readouterr()
+    # --whole-document renames the system; replay of a whole run without traces misses.
+    assert run.main([*args[:4], "--whole-document", "--doc-id", SOUTHSTAR, "--root", str(root),
+                     "--results-dir", str(root / "results" / "w")]) == 1
+    entry = run.read_run_log(root / "results" / "w" / "run_log_dev.jsonl")[0]
+    assert entry["system"] == "llm:gemini:gemini-3.8-flash:whole" and entry["mode"] == "whole"
+
+
+def test_daily_limit_halt_resumes_without_repeating_calls(root: Path, tmp_path: Path):
+    paths = run.Paths.under(root)
+    clock = {"t": 1_700_000_000.0}
+    limiter = llm.RateLimiter(
+        "fake", per_day=14, cache_dir=tmp_path, clock=lambda: clock["t"], reset_tz=ZoneInfo("America/Los_Angeles")
+    )
+    sent: list[dict[str, Any]] = []
+    factory = recording_factory(sent, limiter)
+
+    # Day 1: 14 calls = 3 documents (12 calls) and half of the fourth, then the halt.
+    s1 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    assert s1.halted and s1.n_pairs_written == 3 and s1.exit_code == 1 and len(sent) == 14
+    assert read_predictions(root)["doc_id"].nunique() == 3
+    assert run.read_run_log(paths.run_log("dev"))[-1]["error"].startswith("DailyLimitExceeded")
+    # Same day: nothing new can be sent; the stored traces of the half document replay.
+    s2 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    assert s2.halted and s2.n_pairs_written == 0 and len(sent) == 14
+    # Next quota day: the fourth document finishes from 2 stored + 2 new calls.
+    clock["t"] += 86_400
+    s3 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    assert s3.halted and s3.n_pairs_written == 4 and s3.n_skipped == 3 and len(sent) == 28
+    clock["t"] += 86_400
+    s4 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    assert not s4.halted and s4.n_pairs_written == 1 and s4.exit_code == 0
+    # Every prompt was sent exactly once and every trace written once.
+    assert len(sent) == 8 * N_GROUPS
+    traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
+    assert len(traces) == 8 * N_GROUPS == len({t.prompt_hash for t in traces})
+    assert len(read_predictions(root)) == 8 * N_LLM_FIELDS
+
+
+# ----------------------------------------------------------------------------- projection
+
+
+def test_projection_needs_no_network_and_counts_calls(root: Path, monkeypatch, capsys):
+    def no_network(*args, **kwargs):
+        raise AssertionError("the projection must not open a connection")
+
+    monkeypatch.setattr(socket.socket, "connect", no_network)
+    monkeypatch.setattr(llm, "make_backend", no_network)
+    monkeypatch.setattr(llm.GeminiBackend, "__init__", no_network)
+    monkeypatch.setattr(run, "load_prices", lambda: {"gemini": {"free_tier": {"requests_per_day": 10}}})
+    rc = run.main(["--split", "dev", "--systems", "rules,llm:gemini:gemini-3.8-flash", "--project", "--root", str(root)])
+    assert rc == 0
+    assert "32 calls (0 in traces)" in capsys.readouterr().out
+    table = pd.read_csv(root / "results" / "cost_projection_dev.csv")
+    assert list(table.columns) == run.PROJECTION_COLUMNS and len(table) == 1
+    row = table.iloc[0]
+    assert (row["n_docs"], row["n_calls"], row["n_calls_cached"], row["n_calls_new"]) == (8, 32, 0, 32)
+    assert row["effort"] == "low" and row["days_at_free_tier"] == 4 and not row["priced"]
+    # chars / 4 of the prompts, which hold the located sections.
+    assert row["input_tokens_all"] == row["input_tokens_new"] >= row["prompt_chars"] / 4 > row["section_chars"] / 4
+    assert not (root / "results" / "predictions_dev.csv").exists() and not (root / "data" / "traces" / "dev").exists()
+
+
+def test_projection_independent_count_cache_prices_and_modes(root: Path, monkeypatch):
+    paths = run.Paths.under(root)
+    doc = run.select_documents(paths, "dev", SOUTHSTAR)[0]
+    located = run.locate_document(SOUTHSTAR, parse.load_pages(SOUTHSTAR, paths.text_dir), "FDIC")
+    expected = 0
+    for group, secs, _ in run.llm_inputs(doc, located):
+        chars = len(prompts.SYSTEM_PROMPT) + len(prompts.build_prompt(doc, secs, group)) + len(json.dumps(prompts.build_schema(group)))
+        expected += -(-chars // 4)
+    one = run.project("dev", [FAKE], paths=paths, doc_id=SOUTHSTAR, write=False).iloc[0]
+    assert one["input_tokens_all"] == expected and one["n_calls"] == N_GROUPS
+    assert one["output_tokens_source"] == "none" and one["cost_usd_new"] == 0
+
+    # After a live run every call is cached and output tokens come from the traces.
+    run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=fake_factory)
+    monkeypatch.setattr(llm, "load_prices", lambda: {"x": {"models": {"fake-1": {"input": 1.0, "output": 2.0}}}})
+    after = run.project("dev", [FAKE, FAKE_WHOLE, FAKE_CLOSED], paths=paths).set_index("system")
+    loc, whole, closed = after.loc[FAKE.name], after.loc[FAKE_WHOLE.name], after.loc[FAKE_CLOSED.name]
+    assert (loc["n_calls_cached"], loc["n_calls_new"], loc["input_tokens_new"], loc["cost_usd_new"]) == (32, 0, 0, 0)
+    assert loc["output_tokens_per_call"] == 20 and loc["output_tokens_source"] == "traces" and loc["priced"]
+    assert whole["n_calls_new"] == 32 and whole["input_tokens_all"] > loc["input_tokens_all"]
+    assert whole["cost_usd_new"] == pytest.approx(round((whole["input_tokens_new"] + 2 * 20 * 32) / 1e6, 4))
+    assert closed["n_calls"] == 8 and closed["output_tokens_source"] == "none"
+    assert closed["input_tokens_all"] < loc["input_tokens_all"] / 10
+    assert paths.cost_projection("dev").exists()
+    with pytest.raises(ValueError):
+        run.project("dev", run.parse_systems("rules"), paths=paths)

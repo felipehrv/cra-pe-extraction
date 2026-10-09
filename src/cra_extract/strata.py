@@ -30,6 +30,15 @@ Draws
   the risk read from ``--risk`` (doc_id, doc_risk). Tertiles are rank thirds of the
   pool with ties broken at random, so the three strata are equal in size.
 
+Tuning documents (``config/tuning_documents.yaml``): every corpus document cited as evidence
+in a tuning configuration (``config/headings.yaml``, ``config/review_templates.yaml``) or
+recorded there as read while tuning. The plan (Leakage) allows tuning only on dev, the
+locator check and corpus-wide index agreement, never on test or audit documents, so the test
+and audit pools drop the banks of these documents; the draw records their count and hash.
+``tuning-docs`` lists the cited documents that the file does not hold yet and ``--write``
+adds them. The CLI refuses ``draw-test`` and ``draw-audit`` while a non-evaluable row (no
+sha256, or ``text_extractable`` not true) is outside split ``excluded`` (plan, Exclusions).
+
 Every draw uses one ``numpy.random.default_rng(seed)`` and draws one document at a
 time; after a document is drawn every other document of the same bank leaves the
 pool, so a bank never sits in two splits (design 6.8) and never twice in one. The
@@ -41,15 +50,19 @@ CLI::
     python -m cra_extract.strata draw-test --seed 20261013 --date 2026-10-13 [--aa-counts PATH]
     python -m cra_extract.strata draw-audit --risk PATH --seed 20261016 --date 2026-10-16
     python -m cra_extract.strata show
+    python -m cra_extract.strata tuning-docs [--write]
 """
 
 from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import os
+import re
 import sys
 from collections import Counter
+from collections.abc import Collection
 from dataclasses import asdict, dataclass, field
 from datetime import date
 from pathlib import Path
@@ -58,9 +71,17 @@ from typing import Any
 import numpy as np
 import yaml
 
-from cra_extract.config import CORPUS_PATH, INDEX_DIR, STRATA_PATH
+from cra_extract.config import (
+    CORPUS_PATH,
+    HEADINGS_PATH,
+    INDEX_DIR,
+    STRATA_PATH,
+    TEMPLATES_PATH,
+    TUNING_DOCS_PATH,
+)
 from cra_extract.label import split_hash
 from cra_extract.models import DocRecord, make_doc_id
+from cra_extract.overrides import non_evaluable_unexcluded
 
 Cell = tuple[str, str]
 
@@ -99,6 +120,13 @@ DEFAULTS = {
     "n_per_tertile": 10,
     "assets_quantile": 0.9,
 }
+
+
+# Splits whose pool drops the banks of tuning documents (plan, Leakage).
+TUNING_FREE_SPLITS = ("test", "audit")
+# Configuration files whose cited doc_ids are tuning documents.
+TUNING_SOURCES: tuple[Path, ...] = (HEADINGS_PATH, TEMPLATES_PATH)
+DOC_ID_PATTERN = re.compile(r"\b(?:OCC|FDIC|FRB)_[0-9A-Za-z]+_\d{8}\b")
 
 
 class DrawError(ValueError):
@@ -248,16 +276,27 @@ def exclusivity_problems(manifest: list[DocRecord]) -> list[str]:
     ]
 
 
-def eligible_pool(manifest: list[DocRecord], split: str) -> list[DocRecord]:
+def doc_id_bank_key(doc_id: str) -> tuple[str, str]:
+    """Bank key ``(regulator, bank_id without leading zeros)`` read from a doc_id."""
+    regulator, bank_id, _date = doc_id.split("_")
+    return regulator, bank_id.lstrip("0")
+
+
+def eligible_pool(
+    manifest: list[DocRecord], split: str, tuning: Collection[str] = ()
+) -> list[DocRecord]:
     """Documents a draw for ``split`` may use, sorted by doc_id so draws are deterministic.
 
     The pool excludes ``excluded`` rows and every document of a bank that sits in a split
     drawn earlier in the order dev, test, audit. Splits drawn later do not shrink the
     pool, so redrawing a split with its seed reproduces it; a clash with a later split
-    is caught by ``commit_draw`` and means the later split must be redrawn.
+    is caught by ``commit_draw`` and means the later split must be redrawn. For the test
+    and audit splits the banks of the ``tuning`` doc_ids leave the pool too (plan, Leakage).
     """
     earlier = GOLD_SPLITS[: GOLD_SPLITS.index(split)]
     taken = {bank_key(d) for d in manifest if d.split in earlier}
+    if split in TUNING_FREE_SPLITS:
+        taken |= {doc_id_bank_key(d) for d in tuning}
     return sorted(
         (d for d in manifest if d.split != "excluded" and bank_key(d) not in taken),
         key=lambda d: d.doc_id,
@@ -496,9 +535,12 @@ def draw_test(
     n_multi_aa: int = DEFAULTS["n_multi_aa"],
     aa_min: int = DEFAULTS["aa_min"],
     assets_quantile: float = DEFAULTS["assets_quantile"],
+    tuning: Collection[str] = (),
 ) -> Draw:
-    """Draw the test split by cells, then low ratings, then multi-assessment-area documents."""
-    pool = eligible_pool(manifest, "test")
+    """Draw the test split by cells, then low ratings, then multi-assessment-area documents.
+
+    ``tuning`` lists the tuning documents whose banks leave the pool (plan, Leakage)."""
+    pool = eligible_pool(manifest, "test", tuning)
     sampler = Sampler(pool, seed)
     sizes = Counter(cell_of(d) for d in manifest)
     strata: list[Stratum] = []
@@ -558,6 +600,7 @@ def draw_test(
         "multi_aa_rule": rule,
         "cell_allocation": {cell_name(c): n for c, n in sorted(alloc.items())},
         "order": ["cell", "low_rating", "multi_aa"],
+        **tuning_record(manifest, "test", tuning),
     }
     notes.append(
         "strata are drawn in sequence; a document eligible for a later stratum that was not "
@@ -588,9 +631,12 @@ def draw_audit(
     seed: int,
     drawn_at: str,
     n_per_tertile: int = DEFAULTS["n_per_tertile"],
+    tuning: Collection[str] = (),
 ) -> Draw:
-    """Draw the audit split: ``n_per_tertile`` documents per document-risk tertile."""
-    pool = eligible_pool(manifest, "audit")
+    """Draw the audit split: ``n_per_tertile`` documents per document-risk tertile.
+
+    ``tuning`` lists the tuning documents whose banks leave the pool (plan, Leakage)."""
+    pool = eligible_pool(manifest, "audit", tuning)
     with_risk = [d for d in pool if d.doc_id in risk]
     n_missing = len(pool) - len(with_risk)
     if not with_risk:
@@ -619,9 +665,87 @@ def draw_audit(
         "n_per_tertile": n_per_tertile,
         "tertiles": "rank thirds of the eligible corpus documents by doc_risk, ties broken at random",
         "weight": "N_h / n_h at document level (design 5.3)",
+        **tuning_record(manifest, "audit", tuning),
     }
     notes = [f"eligible corpus documents without a doc_risk value, excluded from the pool: {n_missing}"]
     return _finish("audit", seed, drawn_at, rules, strata, sampler, manifest, notes)
+
+
+# ----------------------------------------------------------------------------- tuning documents
+
+
+def tuning_record(manifest: list[DocRecord], split: str, tuning: Collection[str]) -> dict[str, Any]:
+    """Draw-record entries for the tuning documents (empty when there are none)."""
+    if not tuning:
+        return {}
+    ids = sorted(set(tuning))
+    keys = {doc_id_bank_key(d) for d in ids}
+    earlier = GOLD_SPLITS[: GOLD_SPLITS.index(split)]
+    taken = {bank_key(d) for d in manifest if d.split in earlier}
+    removed = sum(1 for d in manifest if d.split != "excluded" and bank_key(d) in keys and bank_key(d) not in taken)
+    return {
+        "tuning_documents": len(ids),
+        "tuning_documents_hash": hashlib.sha256("\n".join(ids).encode("utf-8")).hexdigest(),
+        "tuning_documents_removed_from_pool": removed,
+    }
+
+
+def cited_doc_ids(paths: Collection[Path] = TUNING_SOURCES) -> dict[str, list[str]]:
+    """doc_id -> sorted file names of the tuning configuration files that cite it."""
+    out: dict[str, set[str]] = {}
+    for path in paths:
+        text = Path(path).read_text(encoding="utf-8")
+        for doc_id in DOC_ID_PATTERN.findall(text):
+            out.setdefault(doc_id, set()).add(Path(path).name)
+    return {d: sorted(v) for d, v in sorted(out.items())}
+
+
+def load_tuning_documents(path: Path = TUNING_DOCS_PATH) -> dict[str, dict[str, Any]]:
+    """doc_id -> entry (``source``, optional ``note``) of ``config/tuning_documents.yaml``;
+    empty when the file does not exist."""
+    if not Path(path).exists():
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        data = yaml.safe_load(fh) or {}
+    out: dict[str, dict[str, Any]] = {}
+    for entry in data.get("documents") or []:
+        doc_id = entry["doc_id"]
+        if not DOC_ID_PATTERN.fullmatch(doc_id):
+            raise DrawError(f"{path}: malformed doc_id {doc_id!r}")
+        if doc_id in out:
+            raise DrawError(f"{path}: {doc_id} listed twice")
+        out[doc_id] = entry
+    return out
+
+
+def write_tuning_documents(entries: dict[str, dict[str, Any]], path: Path = TUNING_DOCS_PATH) -> None:
+    """Write ``config/tuning_documents.yaml`` sorted by doc_id."""
+    docs = [{"doc_id": d, **{k: v for k, v in entries[d].items() if k != "doc_id"}} for d in sorted(entries)]
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(
+            "# Corpus documents read while tuning rules, locator scope rules, templates or thresholds\n"
+            "# (plan, Leakage). Their banks leave the test and audit pools (strata.eligible_pool).\n"
+            "# Entries with source config files are cited there as evidence and are added by\n"
+            "# `python -m cra_extract.strata tuning-docs --write`; entries with a note were read\n"
+            "# while tuning without being cited. Fix this list before draw-test; it is recorded\n"
+            "# in the test and audit draws by count and hash.\n"
+        )
+        yaml.safe_dump({"version": 1, "documents": docs}, fh, sort_keys=False, allow_unicode=True, width=100)
+
+
+def missing_tuning_documents(
+    recorded: Collection[str], cited: dict[str, list[str]] | None = None
+) -> list[str]:
+    """Cited doc_ids (:func:`cited_doc_ids`) that the tuning file does not list."""
+    cited = cited_doc_ids() if cited is None else cited
+    have = set(recorded)
+    return [d for d in cited if d not in have]
+
+
+def evaluability_problems(rows: list[dict[str, str]]) -> list[str]:
+    """Non-evaluable rows outside split ``excluded`` (plan, Exclusions: none may remain
+    before ``draw-test``); see :func:`cra_extract.overrides.non_evaluable_unexcluded`."""
+    return non_evaluable_unexcluded(rows)
 
 
 # ----------------------------------------------------------------------------- strata.yaml
@@ -733,13 +857,58 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("show", help="print split counts and the draws on record")
 
+    s = sub.add_parser("tuning-docs", help="list cited tuning documents missing from the tuning file")
+    s.add_argument("--write", action="store_true", help="add the missing documents to the file")
+
+    for name in ("draw-test", "draw-audit"):
+        sub.choices[name].add_argument(
+            "--tuning", type=Path, default=TUNING_DOCS_PATH, help="tuning documents whose banks leave the pool"
+        )
+
     a = p.parse_args(argv)
+
+    if a.cmd == "tuning-docs":
+        recorded = load_tuning_documents(TUNING_DOCS_PATH)
+        cited = cited_doc_ids()
+        missing = missing_tuning_documents(recorded, cited)
+        for d in missing:
+            print(f"{d}: cited in {', '.join(cited[d])}")
+        if a.write and missing:
+            for d in missing:
+                recorded[d] = {"doc_id": d, "source": cited[d]}
+            write_tuning_documents(recorded, TUNING_DOCS_PATH)
+            print(f"wrote {TUNING_DOCS_PATH} ({len(recorded)} documents)")
+            return 0
+        print(f"{len(recorded)} tuning documents recorded, {len(missing)} cited and missing")
+        return 1 if missing else 0
+
     columns, rows = read_rows(a.manifest)
     manifest = to_records(rows)
 
     if a.cmd == "show":
         print(summary(manifest, load_strata(a.strata)))
         return 1 if exclusivity_problems(manifest) else 0
+
+    tuning: list[str] = []
+    if a.cmd in ("draw-test", "draw-audit"):
+        problems = evaluability_problems(rows)
+        if problems:
+            print(
+                "error: non-evaluable rows are not excluded (plan, Exclusions); run "
+                "`python -m cra_extract.overrides apply` after documenting them: " + ", ".join(problems),
+                file=sys.stderr,
+            )
+            return 1
+        recorded = load_tuning_documents(a.tuning)
+        missing = missing_tuning_documents(recorded)
+        if missing:
+            print(
+                "error: tuning documents cited in the config are missing from "
+                f"{a.tuning} (run `python -m cra_extract.strata tuning-docs --write`): " + ", ".join(missing),
+                file=sys.stderr,
+            )
+            return 1
+        tuning = sorted(recorded)
 
     try:
         if a.cmd == "draw-dev":
@@ -749,11 +918,11 @@ def main(argv: list[str] | None = None) -> int:
             draw = draw_test(
                 manifest, a.seed, a.date, aa,
                 n_test=a.n_test, per_cell=a.per_cell, min_cell=a.min_cell,
-                n_rating=a.n_rating, n_multi_aa=a.n_multi_aa,
+                n_rating=a.n_rating, n_multi_aa=a.n_multi_aa, tuning=tuning,
             )
         else:
             risk = read_two_column_csv(a.risk, "doc_risk", float)
-            draw = draw_audit(manifest, risk, a.seed, a.date, n_per_tertile=a.n_per_tertile)
+            draw = draw_audit(manifest, risk, a.seed, a.date, n_per_tertile=a.n_per_tertile, tuning=tuning)
         commit_draw(draw, columns, rows, a.manifest, a.strata)
     except DrawError as e:
         print(f"error: {e}", file=sys.stderr)

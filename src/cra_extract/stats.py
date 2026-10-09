@@ -22,7 +22,9 @@ from __future__ import annotations
 
 import argparse
 import math
+from collections import Counter
 from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -195,6 +197,26 @@ def stratified_weighted_mean(
         reps[b] = num / den if den > 0 else math.nan
     lo, hi = np.nanpercentile(reps, [100 * alpha / 2.0, 100 * (1.0 - alpha / 2.0)])
     return (point, float(lo), float(hi))
+
+
+def cohen_kappa(a: Sequence[Any], b: Sequence[Any]) -> float:
+    """Cohen's kappa of two codings of the same items; NaN when chance agreement is 1.
+
+    ``(p_o - p_e) / (1 - p_e)`` with ``p_o`` the observed agreement and ``p_e`` the sum over
+    categories of the product of the two codings' marginal shares. Categories are compared
+    with ``==``, so a null code is a category of its own.
+    """
+    if len(a) != len(b):
+        raise ValueError("codings must have the same length")
+    n = len(a)
+    if n == 0:
+        return math.nan
+    po = sum(x == y for x, y in zip(a, b, strict=True)) / n
+    ca, cb = Counter(a), Counter(b)
+    pe = sum(ca[c] * cb[c] for c in set(ca) | set(cb)) / (n * n)
+    if pe >= 1.0:
+        return math.nan
+    return (po - pe) / (1.0 - pe)
 
 
 # ---------------------------------------------------------------- calibration

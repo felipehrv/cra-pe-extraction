@@ -35,6 +35,8 @@ PRICES_PATH = CONFIG_DIR / "prices.yaml"
 TEMPLATES_PATH = CONFIG_DIR / "review_templates.yaml"
 CORPUS_PATH = CONFIG_DIR / "corpus.csv"
 STRATA_PATH = CONFIG_DIR / "strata.yaml"
+OVERRIDES_PATH = CONFIG_DIR / "manifest_overrides.yaml"
+TUNING_DOCS_PATH = CONFIG_DIR / "tuning_documents.yaml"
 
 load_dotenv(ROOT / ".env")
 

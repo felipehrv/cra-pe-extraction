@@ -9,6 +9,11 @@ for the document's (regulator, exam method) cell.
 
 ``PROMPT_VERSION`` is bumped whenever the wording changes so that traces from
 different prompt versions never get mixed up.
+
+The closed-book contamination baseline (analysis plan, "Leakage and contamination
+controls") has its own prompt, schema and ``CLOSED_BOOK_PROMPT_VERSION``: the model sees
+only the bank name and the exam date, never PE text, and is asked for ``overall_rating``
+and ``finding_present``. Changing it leaves ``PROMPT_VERSION`` untouched.
 """
 
 from __future__ import annotations
@@ -218,3 +223,83 @@ def build_prompt(doc: DocRecord, sections: dict[str, Section], field_group: str)
     body.append("\n=== end of sections ===")
     body.append(f"\nReturn the JSON object now. (prompt {PROMPT_VERSION})")
     return "\n".join(body)
+
+
+# ----------------------------------------------------------------------------- closed book
+
+# cb1 (2026-10-08): first version. Bank name and exam date only; best answer requested,
+# abstain allowed when the model has no basis at all.
+CLOSED_BOOK_PROMPT_VERSION = "cb1"
+CLOSED_BOOK_GROUP = "closedbook"
+CLOSED_BOOK_FIELDS = ("overall_rating", "finding_present")
+CLOSED_BOOK_STATUSES = ["value", "abstain"]
+
+CLOSED_BOOK_SYSTEM_PROMPT = """You answer questions about Community Reinvestment Act (CRA) \
+Performance Evaluations of US banks from your own knowledge. No document is provided.
+
+Rules:
+1. For every field return an object with "value" and "status".
+2. status "value": give your best answer in "value", even when you are not certain.
+3. status "abstain": use it only when you cannot give any answer. Set value to null.
+4. Ratings use the codes O (Outstanding), S (Satisfactory), NI (Needs to Improve), \
+SN (Substantial Noncompliance).
+5. Return only the JSON object."""
+
+_CLOSED_BOOK_QUESTIONS: dict[str, str] = {
+    "overall_rating": "(one of O, S, NI, SN): the institution's overall CRA rating in the "
+    "Performance Evaluation with this evaluation date.",
+    "finding_present": "(true or false): whether that Performance Evaluation states that "
+    "examiners identified discriminatory or other illegal credit practices that were "
+    "considered in the rating.",
+}
+
+
+def build_closed_book_schema() -> dict[str, Any]:
+    """JSON schema for the closed-book call: ``{value, status}`` per field, no quote or page.
+
+    The value slots come from ``fields.yaml`` (the same enum and boolean types as the main
+    schema); status is restricted to ``value`` and ``abstain``, since a document-absence
+    status has no meaning without a document.
+    """
+    properties: dict[str, Any] = {}
+    for name in CLOSED_BOOK_FIELDS:
+        spec = field_spec(name)
+        properties[name] = {
+            "type": "object",
+            "description": _CLOSED_BOOK_QUESTIONS[name],
+            "properties": {
+                "value": _value_schema(spec),
+                "status": {"type": "string", "enum": list(CLOSED_BOOK_STATUSES)},
+            },
+            "required": ["value", "status"],
+            "additionalProperties": False,
+        }
+    return {
+        "type": "object",
+        "title": f"cra_pe_{CLOSED_BOOK_GROUP}",
+        "properties": properties,
+        "required": list(CLOSED_BOOK_FIELDS),
+        "additionalProperties": False,
+    }
+
+
+def build_closed_book_prompt(doc: DocRecord) -> str:
+    """User prompt for the closed-book baseline: the bank name and the exam date only.
+
+    No regulator, exam method, doc_id or PE text is shown (analysis plan, "Leakage and
+    contamination controls"). Raises ``ValueError`` when the record has no exam date.
+    """
+    if doc.exam_date is None:
+        raise ValueError(f"{doc.doc_id}: the closed-book prompt needs an exam date")
+    lines = [
+        "No document is provided. Answer from what you know about this bank's CRA "
+        "Performance Evaluation.",
+        f"Bank: {doc.bank_name.strip()}",
+        f"Evaluation date: {doc.exam_date.isoformat()}",
+        "",
+        "Fields:",
+        *(f"- {name} {_CLOSED_BOOK_QUESTIONS[name]}" for name in CLOSED_BOOK_FIELDS),
+        "",
+        f"Return the JSON object now. (closed-book prompt {CLOSED_BOOK_PROMPT_VERSION})",
+    ]
+    return "\n".join(lines)

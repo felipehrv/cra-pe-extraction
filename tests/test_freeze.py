@@ -230,6 +230,8 @@ def test_freeze_creates_tag_record_and_commit(repo: Path, capsys):
     assert msg.startswith("Freeze plan-v1.0 (2026-10-13)\n\n")
     assert f"rules_version: {rules.RULES_VERSION}" in msg
     assert f"prompt_version: {prompts.PROMPT_VERSION}" in msg
+    assert f"closed_book_prompt_version: {prompts.CLOSED_BOOK_PROMPT_VERSION}" in msg
+    assert "effort per backend: anthropic=low, gemini=low" in msg
     assert f"fields.yaml sha256: {fields_sha}" in msg
     assert f"headings.yaml sha256: {headings_sha}" in msg
     assert f"test split: 3 documents, doc_id list sha256 {expected_hash}" in msg

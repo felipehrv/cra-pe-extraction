@@ -17,16 +17,30 @@ Makefile, as `python -m cra_extract.<stage>`, or through the `cra` console scrip
 | index | `make index` (live) or `make index-replay` (saved raw pull, `RAW_STAMP=20261007`) | agency APIs, or `data/index/raw/*_{stamp}.*` | `data/index/{occ,fdic,frb,frb_state_rows}.csv`, `config/corpus.csv`, `data/index/manifest_exclusions.csv`, `results/corpus_counts.csv` |
 | fetch | `make fetch` | `config/corpus.csv` | `data/pdfs/{doc_id}.pdf`, sha256 and pages in the manifest, `data/index/fetch_failures.csv` |
 | parse | `make parse` | `data/pdfs/` | `data/text/{doc_id}.pages.json`, `data/text/{doc_id}.txt`, pages, chars_per_page, text_extractable in the manifest |
+| overrides | `make overrides`, `make overrides-check` | `config/manifest_overrides.yaml`, `config/corpus.csv`, `data/pdfs/`, `data/text/` | `config/corpus.csv` (corrected cells, renamed doc_ids, split `excluded`, `exam_date_source`), renamed and replaced data files |
 | locate | `make locate` | `data/text/` | `results/locator_coverage.csv` |
 | templates | `make templates` | `data/text/` | `results/census.csv` (Group C template-residual census) |
 | rules | `make rules` | `data/text/` | `results/rules.csv` (system S1) |
 | baseline | `make baseline` | `data/text/` | `results/baseline.csv` (system S0) |
-| strata | `make draw-dev`, `make draw-test`, `make draw-audit`, `make strata-show` | `config/corpus.csv`, `data/index/frb.csv` (dev), the aa-counts CSV (test), `results/risk_corpus.csv` (audit) | `split` column of `config/corpus.csv`, `config/strata.yaml` |
+| census | `make census-draw CENSUS_SEED=.. CENSUS_DATE=..`, `make census-sheet`, `make census-validate`, `make census-score`, `make census-double DOUBLE_SEED=.. DOUBLE_DATE=..`, `make census-compare` | `results/census.csv`, `config/corpus.csv`, `results/baseline.csv`, `results/predictions_corpus.csv` (when present, `llm:` and `s5` rows) | `config/census_sample.yaml`, `data/gold/census_sheet.csv`, `data/gold/census_double.csv`, `results/census_summary.csv`, `results/census_positives.csv`, `results/census_reliability.csv` |
+| group-a | `make group-a` | `results/rules.csv`, `config/corpus.csv`, `config/group_a_triage.yaml` (doc_ids resolved through the override aliases) | `results/group_a_agreement.csv`, `group_a_triage.csv`, `group_a_triage_summary.csv`, `fdic_exam_date_lag.csv`, `group_a_abstention_sample.csv` |
+| strata | `make draw-dev`, `make draw-test DRAW_DATE=..` (seed 20261013), `make draw-audit DRAW_DATE=..` (seed 20261016), `make strata-show`, `make tuning-docs` | `config/corpus.csv`, `data/index/frb.csv` (dev), the aa-counts CSV (test), `results/risk_corpus.csv` (audit), `config/tuning_documents.yaml` (test, audit) | `split` column of `config/corpus.csv`, `config/strata.yaml` |
 | label | `make label-init SPLIT=dev`, `make label-validate SPLIT=dev`, `make label-hash SPLIT=test` | `config/corpus.csv`, `data/gold/labels_{split}.csv` | the label sheet, validation problems, `docs/hashes.md` |
 | llm | `make smoke-llm BACKEND=anthropic MODEL=claude-haiku-4-5` | one sample PE, API key from `.env` | `data/traces/smoke/{backend}.jsonl` |
-| run | `make pilot` (dev), `make scale` (corpus), `RUN_FLAGS=--allow-api` for live calls, `SYSTEMS=rules,baseline,llm:gemini:gemini-3.8-flash` | `config/corpus.csv`, `data/text/`, `data/traces/{split}/` | `results/predictions_{split}.csv`, `results/sections_{split}.csv`, `results/run_log_{split}.jsonl`, new traces |
-| evaluate | `make eval-dev`, `make eval-test` | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv`, `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv` |
-| freeze | `make freeze` (`cra freeze --check-only` to rehearse) | `docs/analysis_plan.md`, `docs/hashes.md`, `config/corpus.csv`, git tree | Freeze record in `docs/hashes.md`, commit, annotated tag `plan-v1.0` |
+| run | `make pilot` (dev), `make scale` (corpus), `make project` (cost projection, no calls), `make dev-rerun` (second live dev run and agreement), `make ablation` and `make closed-book` (test), `RUN_FLAGS=--allow-api` for live calls | `config/corpus.csv`, `data/text/`, `data/traces/{split}/` | `results/predictions_{split}.csv`, `results/sections_{split}.csv`, `results/run_log_{split}.jsonl`, `results/cost_projection_{split}.csv`, `results/run_agreement_dev.csv`, new traces (with `Trace.mode` and `Trace.effort`) |
+| routing | `make s5-routing` (after draw-test), `make s5-routing-provisional`, `make s5-apply` (corpus), `make s5-test` (test, before eval-test) | `results/rules.csv` or a predictions file, `config/corpus.csv`, `config/s5_routing.yaml` | `results/s5_routing.{csv,md}`, `config/s5_routing.yaml` (provisional tables under `results/provisional/`), `results/predictions_corpus_s5.csv`, S5 rows appended to `results/predictions_test.csv` |
+| corpus-scoring | `make group-a-corpus`, `make risk-corpus` | predictions files, `config/corpus.csv`, `results/group_a_triage.csv`, `results/sections_corpus.csv`, `config/s5_routing.yaml`, `data/gold/labels_{dev,test}.csv` (FDIC exam_date gate only) | `results/group_a_corpus.csv`, `results/fdic_exam_date_gate.csv`, `results/risk_corpus.csv`, `results/risk_values_corpus.csv`, `results/risk_validation_group_a.csv` |
+| evaluate | `make eval-dev`, `make eval-test`, `make eval-pair` (S1 and S3 pair for the calibration input) | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv`, `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv`; the pair run writes the same names under `results/pair/` |
+| audit | `make audit-sheet`, `cra audit validate`, `make audit` (`AUDIT_SYSTEM=s5`) | `config/strata.yaml` (audit draw), `results/predictions_corpus.csv`, `results/predictions_corpus_s5.csv`, `data/gold/audit_sheet.csv`, `results/risk_values_corpus.csv`, `results/risk_corpus.csv` | `data/gold/audit_sheet.csv`, `results/audit_summary.csv`, `audit_by_field.csv`, `audit_by_tertile.csv`, `review_curve_group_b.csv` |
+| reliability | `make reliability-draw REL_BRANCH=outside REL_SEED=.. REL_DATE=..`, `make reliability-sheet`, `make reliability-compare` | `config/corpus.csv`, `data/gold/labels_{test,dev}.csv`, `data/gold/reliability_sheet.csv` | `config/reliability_sample.yaml`, `data/gold/reliability_sheet.csv`, `results/reliability.csv` |
+| freeze | `make freeze` (`cra freeze --check-only` to rehearse) | `docs/analysis_plan.md`, `docs/hashes.md`, `config/corpus.csv`, git tree | Freeze record in `docs/hashes.md` (RULES_VERSION, PROMPT_VERSION, CLOSED_BOOK_PROMPT_VERSION, effort per backend, config hashes), commit, annotated tag `plan-v1.0` |
+| report | `make report` (`REPORT_SPLIT=test`, `CORPUS_SYSTEM=..`), `make reproduce` | `results/*` (Table 1 inputs, `pair/calibration_{split}.csv`, review curves, `reliability.csv`, census and audit outputs), `config/corpus.csv`, `data/index/frb.csv`, `data/gold/labels_{dev,test}.csv`, `data/gold/audit_sheet.csv`, `data/traces/{split}/`, `config/prices.yaml` | `table1_{split}_report.csv`, `table1_{split}.md`, `table_probes_{split}.*`, `table1_{split}_appendix.csv`, `table_grounding_{split}.csv`, `table_ablation_{split}.*`, `table_closed_book_{split}.*`, `figure1.*`, `table2.*`, `table3_{split}*`, descriptive tables |
+
+Order before the freeze: index, fetch, parse, overrides, locate, templates, rules, baseline,
+group-a, tuning-docs, scale (run on the corpus), draw-test, s5-routing, census-draw, then the
+plan TODOs and `make freeze`. After the freeze: label test, run test once (pilot systems,
+ablation, closed-book, s5-test), eval-test, eval-pair, risk-corpus, draw-audit, audit,
+reliability, report.
 
 Notes on running:
 
@@ -56,8 +70,15 @@ Notes on running:
 - `freeze` refuses while `docs/analysis_plan.md` has `TODO` markers, the tree is dirty, the
   test split is undrawn or its doc_id hash is not in `docs/hashes.md`; on success it commits
   the Freeze record and creates the annotated tag (`--no-commit` tags the prior HEAD).
-- `make audit` and `make report` still reference modules that do not exist (`audit`,
-  `report`).
+- `draw-test` and `draw-audit` refuse while a non-evaluable row (no sha256 or
+  `text_extractable` not true) is outside split `excluded`, or a doc_id cited in
+  `config/headings.yaml` or `config/review_templates.yaml` is missing from
+  `config/tuning_documents.yaml`; the banks of the tuning documents leave the test and audit
+  pools. `routing compute` and `census draw` refuse before the test draw unless
+  `--provisional` (routing, output under `results/provisional/`) or `--before-test-draw`
+  (census) is passed.
+- Open plan decisions the code needed are listed with proposed wording in
+  `docs/plan_gaps.md`.
 - Tests: `make test` (`pytest -m "not network"`) and `make lint`. Live-service tests are
   marked `network` and run only with `CRA_NETWORK_TESTS=1` (index fetchers) or
   `CRA_LIVE_LLM=1` (LLM smoke test, backend chosen by `CRA_SMOKE_BACKEND` and
@@ -137,10 +158,11 @@ Corpus and index
 
 - Live corpus is 2,793 documents (FDIC 1,770, OCC 605, FRB 418); the design estimate was
   2,600 to 2,800. `results/corpus_counts.csv` has the regulator x method x year table.
-- Manifest row `FDIC_445_20280408` (Mercer County State Bank) carries an impossible exam
-  date from the FDIC file id `2024/445_280408.PDF`; keep it until the cover date is read, or
-  hand-correct to 2024-04-08. Record it, and the 8 FRB rows (2006 to 2017) whose exam date
-  is after the public date, in the data-quality table of `docs/design.md`.
+- Manifest row `FDIC_445_20280408` (Mercer County State Bank) carried an impossible exam
+  date from the FDIC file id `2024/445_280408.PDF`. Corrected on 2026-10-08 by
+  `config/manifest_overrides.yaml`: exam_date 2024-04-08 (cover p1, Scope p7) and doc_id
+  regenerated to `FDIC_445_20240408` (alias kept, `exam_date_source` override). The 8 FRB
+  rows (2006 to 2017) whose exam date is after the public date stay in the data-quality table.
 - FDIC cert 22081 (Magnolia State Bank, file id `2022/PPE22081-000000008.PDF`) was dropped
   for having no parseable exam date; it only affects the prior lookup.
 - The OCC API returns no release date for 642 rows with 2018 to 2019 exams and 3 rows with
@@ -225,11 +247,12 @@ Rules and baseline
   than 90 days, 9 of those on the first of a month, one impossible 2028 date). The
   recommendation is to carry the printed evaluation date (cover, cross-checked with the
   Scope "current evaluation dated" sentence) as `exam_date` and keep the file-id date as a
-  separate provenance column; doc_ids stay as they are. 25 FDIC PEs print a Scope date that
+  separate provenance column; doc_ids stay as they are (one exception: FDIC_445, renamed by
+  the manifest overrides because its file-id date was impossible). 25 FDIC PEs print a Scope date that
   differs from their own cover (9 by exactly one year); the rules note it.
 - OCC_9183_20230213: the OCC index row (2023-02-13 exam) links `/apr19/9183.pdf`, the PE of
-  the December 3, 2018 exam, so every value read from that document describes 2018. Re-point
-  or exclude the manifest row before the test draw.
+  the December 3, 2018 exam, so every value read from that document describes 2018. Excluded
+  on 2026-10-08 (`config/manifest_overrides.yaml`, reason wrong_pdf_link).
 - Baseline false positives on boilerplate are zero on the samples because negated hits are
   absorbed; the corpus-wide negated-hit count per regulator (`n_negated_hits` in
   `results/baseline.csv`) is what the OCC-separate false-positive rate should use.

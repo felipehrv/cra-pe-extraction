@@ -248,3 +248,49 @@ scope_markers:
     FRB:
       - "^DESCRIPTION OF (THE )?INSTITUTION'?S'? OPERATIONS( IN |$)"
       - '^(?-i:DESCRIPTION OF OPERATIONS IN )'
+
+# Section-level scope rules (2026-10-08, single-AA scope decision of docs/corpus_pass_2.md).
+# The scope markers above describe the layout: every line after a marker inherits its scope.
+# Two institution-level sections are printed after an assessment-area or MSA marker in some
+# layouts, and the marker scope would then mark grounding quotes taken from them as
+# quote_out_of_scope (grounding.in_supporting_scope). These rules override the scope of the
+# located Section record only; the line and page scopes (tag_pages, scope_spans) and the
+# marker events counted by run.count_aa_sections are unchanged.
+scope_rules:
+  # (1) The fair lending / illegal credit practices review is institution-wide in all three
+  # formats: its heading resets the scope of its own section to institution (confidence 1.0)
+  # whatever scope is in effect, including appendix. Chicago multi-AA PEs print the review
+  # after the last assessment-area section ("FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES
+  # REVIEW" on page 56 after "DESCRIPTION OF INSTITUTION'S OPERATIONS IN PEORIA, IL MSA" on
+  # page 50, the fourth AA, FRB_930442_20240715); single-AA PEs print it after the one AA
+  # marker (FRB_3150205_20250407 p18). The rule never moves the section: the first heading
+  # in the document is used, as before.
+  reset_to_institution:
+    sections: [illegal_credit_practices_review]
+    evidence: [FRB_930442_20240715, FRB_3150205_20250407]
+  # (2) In a document with exactly one assessment-area unit, the LTD ratio and AA
+  # concentration sections found after that unit's marker are the institution's (one AA is
+  # the whole delineation) and get scope institution at confidence 1.0. Units are counted over
+  # the marker events of the unit_scopes below: a marker carrying an MSA or MD code (four or
+  # five digits) counts once per distinct code, because New York repeats the MSA title over
+  # its tables ("MSA 45060 (Syracuse, NY)" five times, FRB_722816_20230626 pages 7 to 13);
+  # any other marker counts once per occurrence. A document with any state marker is never a
+  # lone-unit document. In multi-AA documents the two sections keep the scope where they
+  # were found at confidence 0.5.
+  # Evidence, one assessment-area marker and the sections after it:
+  #   Dallas   FRB_3150205_20250407: "DESCRIPTION OF THE INSTITUTION'S OPERATIONS IN THE DFW
+  #            METROPOLITAN" (p5, "DFW Metropolitan AA consists of Denton and Tarrant
+  #            Counties"), "Net Loan-to-Deposit Ratio" p10, "Assessment Area Concentration" p11.
+  #   Dallas   FRB_726953_20250218: "... OPERATIONS IN THE DALLAS METROPOLITAN ASSESSMENT" (p5,
+  #            "The Dallas Metropolitan AA consists of Dallas, Denton, and Collin counties"),
+  #            "Net Loan-to-Deposit Ratio" p9, "Assessment Area Concentration" p9.
+  #   Atlanta  FRB_648130_20250203: "DESCRIPTION OF INSTITUTION'S OPERATIONS IN THE MIAMI,
+  #            FLORIDA AA" (p7), "LTD Ratio" p9, "AA Concentration" p9.
+  #   New York FRB_722816_20230626: "Solvay has one assessment area" (p6), MSA title p7,
+  #            "Loan-to-Deposit Ratio" and "Lending in the Assessment Area" p15.
+  # Counter-example kept at 0.5: FRB_568939_20241021 (Atlanta, Pearl River AA p8 and
+  # Gulfport-Biloxi AA p20; LTD and AA concentration p12).
+  lone_aa_institution:
+    sections: [ltd_ratio, aa_concentration]
+    unit_scopes: [assessment_area, msa]
+    evidence: [FRB_3150205_20250407, FRB_726953_20250218, FRB_648130_20250203, FRB_722816_20230626]

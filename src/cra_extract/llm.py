@@ -11,9 +11,18 @@ One ``Backend`` interface with four implementations:
 - ``AnthropicBackend``: anthropic SDK structured outputs via
   ``output_config={"format": {"type": "json_schema", "schema": ...}}``. The
   package is optional; the class imports it lazily.
-- ``ReplayBackend``: serves stored traces keyed by (model, prompt_hash) and
-  raises ``TraceMissError`` on a miss unless ``allow_api`` is set, in which case
-  it delegates to a live backend.
+- ``ReplayBackend``: serves stored traces keyed by (model, effort, prompt_hash)
+  and raises ``TraceMissError`` on a miss unless ``allow_api`` is set, in which
+  case it delegates to a live backend.
+
+Effort: every backend carries an optional ``effort`` level, sent as the Gemini
+thinking level, the Anthropic ``output_config.effort`` or the OpenAI-compatible
+``reasoning_effort``, and recorded in ``Trace.effort``. ``DEFAULT_EFFORT`` gives
+the run stage's default per backend (``low`` for hosted backends, none for Ollama).
+
+The closed-book contamination baseline (``extract_closed_book``) uses its own
+prompt and ``CLOSED_BOOK_PROMPT_VERSION`` and records its traces under the field
+group ``closedbook``.
 
 Every call goes through a rate limiter (optional) and a retry loop with
 exponential backoff that honours ``Retry-After``. ``extract()`` builds the
@@ -44,9 +53,16 @@ from typing import Any
 from cra_extract.config import CACHE_DIR, FIXTURES_DIR, TRACE_DIR, field_spec, load_prices
 from cra_extract.models import DocRecord, FieldValue, Section, Trace, make_doc_id
 from cra_extract.prompts import (
+    CLOSED_BOOK_FIELDS,
+    CLOSED_BOOK_GROUP,
+    CLOSED_BOOK_PROMPT_VERSION,
+    CLOSED_BOOK_STATUSES,
+    CLOSED_BOOK_SYSTEM_PROMPT,
     PROMPT_VERSION,
     STATUSES,
     SYSTEM_PROMPT,
+    build_closed_book_prompt,
+    build_closed_book_schema,
     build_prompt,
     build_schema,
     llm_field_group,
@@ -64,6 +80,15 @@ DEFAULT_OLLAMA_NUM_CTX = 32768
 TRUNCATION_STOP_REASONS = {"max_tokens", "refusal", "MAX_TOKENS", "SAFETY", "RECITATION", "length", "content_filter"}
 CHARS_PER_TOKEN_LOWER_BOUND = 3.0
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Effort sent by the run stage when --effort is not given: low for the hosted APIs, none
+# for the local model (Ollama has no effort setting for the S4 models).
+DEFAULT_EFFORT: dict[str, str | None] = {
+    "gemini": "low",
+    "anthropic": "low",
+    "openai_compat": "low",
+    "ollama": None,
+}
+GEMINI_THINKING_LEVELS = ("minimal", "low", "medium", "high")
 
 
 # ----------------------------------------------------------------------------- errors
@@ -109,11 +134,17 @@ class BackendResult:
 # ----------------------------------------------------------------------------- hashing
 
 
-def prompt_hash(system_prompt: str, user_prompt: str, json_schema: dict[str, Any] | None = None) -> str:
+def prompt_hash(
+    system_prompt: str,
+    user_prompt: str,
+    json_schema: dict[str, Any] | None = None,
+    version: str = PROMPT_VERSION,
+) -> str:
     """Stable hash of the prompt version, the full prompt (system and user) and the JSON
-    schema sent with it, so a schema-only change never replays a stale trace."""
+    schema sent with it, so a schema-only change never replays a stale trace. The
+    closed-book baseline passes ``CLOSED_BOOK_PROMPT_VERSION`` as ``version``."""
     h = hashlib.sha256()
-    h.update(PROMPT_VERSION.encode())
+    h.update(version.encode())
     h.update(b"\x00")
     h.update(system_prompt.encode())
     h.update(b"\x00")
@@ -124,10 +155,16 @@ def prompt_hash(system_prompt: str, user_prompt: str, json_schema: dict[str, Any
     return h.hexdigest()
 
 
-def make_trace_id(doc_id: str, field_group: str, model: str, prompt_hash_: str) -> str:
-    """Trace key: sha256 of (doc_id, field_group, model, prompt_hash), first 16 hex chars."""
-    raw = "|".join([doc_id, field_group, model, prompt_hash_])
-    return hashlib.sha256(raw.encode()).hexdigest()[:16]
+def make_trace_id(
+    doc_id: str, field_group: str, model: str, prompt_hash_: str, effort: str | None = None
+) -> str:
+    """Trace key: sha256 of (doc_id, field_group, model, prompt_hash[, effort]), first 16
+    hex chars. ``effort`` joins the key only when one was sent, so ids of calls without
+    an effort are unchanged."""
+    parts = [doc_id, field_group, model, prompt_hash_]
+    if effort is not None:
+        parts.append(effort)
+    return hashlib.sha256("|".join(parts).encode()).hexdigest()[:16]
 
 
 # ----------------------------------------------------------------------------- cost
@@ -313,11 +350,14 @@ class Backend:
     """Interface shared by all backends.
 
     Subclasses implement ``_call`` (one raw request) and inherit ``complete``,
-    which applies the rate limiter, the retry loop and timing.
+    which applies the rate limiter, the retry loop and timing. ``effort`` is the
+    level sent with every call (``None``: no effort parameter) and is recorded in
+    each trace.
     """
 
     name: str = "base"
     model: str = ""
+    effort: str | None = None
     limiter: RateLimiter | None = None
     max_attempts: int = 5
     sleep: Callable[[float], None] = staticmethod(time.sleep)
@@ -328,8 +368,13 @@ class Backend:
         user_prompt: str,
         json_schema: dict[str, Any],
         model: str | None = None,
+        key: str | None = None,
     ) -> BackendResult:
-        """Send one structured-output request and return the parsed result."""
+        """Send one structured-output request and return the parsed result.
+
+        ``key`` is the caller's prompt hash; live backends ignore it and
+        ``ReplayBackend`` looks the trace up by it.
+        """
         model = model or self.model
 
         def attempt() -> BackendResult:
@@ -383,7 +428,9 @@ class GeminiBackend(Backend):
     ``response_mime_type`` is required when the schema is set). The schema is
     passed through ``portable_schema`` because the documented subset has no
     type arrays. The API key comes from ``GEMINI_API_KEY`` or, failing that,
-    ``GOOGLE_API_KEY`` (the two names the SDK itself resolves).
+    ``GOOGLE_API_KEY`` (the two names the SDK itself resolves). ``effort`` is sent
+    as ``ThinkingConfig.thinking_level`` (minimal, low, medium or high; the Gemini 3
+    control, google-genai 2.28 ``types.ThinkingLevel``).
     """
 
     name = "gemini"
@@ -393,9 +440,14 @@ class GeminiBackend(Backend):
         model: str,
         api_key: str | None = None,
         limiter: RateLimiter | None = None,
+        effort: str | None = None,
         max_output_tokens: int = DEFAULT_MAX_OUTPUT_TOKENS,
         max_attempts: int = 5,
     ) -> None:
+        if effort is not None and effort not in GEMINI_THINKING_LEVELS:
+            raise LLMError(
+                f"gemini effort must be one of {', '.join(GEMINI_THINKING_LEVELS)}; got {effort!r}"
+            )
         from google import genai
 
         key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
@@ -404,20 +456,27 @@ class GeminiBackend(Backend):
         self.client = genai.Client(api_key=key)
         self.model = model
         self.limiter = limiter
+        self.effort = effort
         self.max_output_tokens = max_output_tokens
         self.max_attempts = max_attempts
 
-    def _call(
-        self, system_prompt: str, user_prompt: str, json_schema: dict[str, Any], model: str
-    ) -> BackendResult:
+    def _config(self, system_prompt: str, json_schema: dict[str, Any]) -> Any:
+        """``GenerateContentConfig`` for one call (separate so tests can inspect it offline)."""
         from google.genai import types
 
-        config = types.GenerateContentConfig(
+        thinking = types.ThinkingConfig(thinking_level=self.effort.upper()) if self.effort else None
+        return types.GenerateContentConfig(
             system_instruction=system_prompt,
             response_mime_type="application/json",
             response_json_schema=portable_schema(json_schema),
             max_output_tokens=self.max_output_tokens,
+            thinking_config=thinking,
         )
+
+    def _call(
+        self, system_prompt: str, user_prompt: str, json_schema: dict[str, Any], model: str
+    ) -> BackendResult:
+        config = self._config(system_prompt, json_schema)
         response = self.client.models.generate_content(
             model=model, contents=user_prompt, config=config
         )
@@ -449,7 +508,8 @@ class OpenAICompatibleBackend(Backend):
     ``json_object`` for the rest of its life (logged, and recorded per trace in
     ``response_format``); any other 400 propagates. ``max_output_tokens`` defaults to
     ``DEFAULT_OLLAMA_MAX_OUTPUT_TOKENS`` for Ollama and ``DEFAULT_MAX_OUTPUT_TOKENS``
-    otherwise.
+    otherwise. ``effort``, when set, is sent as ``reasoning_effort``; a provider whose
+    model has no reasoning setting may reject it with a 400, which propagates.
     """
 
     def __init__(
@@ -459,6 +519,7 @@ class OpenAICompatibleBackend(Backend):
         api_key: str | None = None,
         name: str = "openai_compat",
         limiter: RateLimiter | None = None,
+        effort: str | None = None,
         num_ctx: int | None = None,
         max_output_tokens: int | None = None,
         max_attempts: int = 5,
@@ -469,6 +530,7 @@ class OpenAICompatibleBackend(Backend):
         self.name = name
         self.model = model
         self.limiter = limiter
+        self.effort = effort
         self.max_attempts = max_attempts
         self.is_ollama = name == "ollama"
         if self.is_ollama:
@@ -517,6 +579,7 @@ class OpenAICompatibleBackend(Backend):
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ]
+        extra: dict[str, Any] = {"reasoning_effort": self.effort} if self.effort else {}
         try:
             completion = self.client.chat.completions.create(
                 model=model,
@@ -524,6 +587,7 @@ class OpenAICompatibleBackend(Backend):
                 response_format=self._response_format(json_schema),
                 max_tokens=self.max_output_tokens,
                 extra_body=extra_body or None,
+                **extra,
             )
         except openai.BadRequestError as exc:
             # Only a rejection of the response_format itself justifies the fallback; any
@@ -541,6 +605,7 @@ class OpenAICompatibleBackend(Backend):
                 response_format=self._response_format(json_schema),
                 max_tokens=self.max_output_tokens,
                 extra_body=extra_body or None,
+                **extra,
             )
         choice = completion.choices[0]
         text = choice.message.content or ""
@@ -661,13 +726,16 @@ class ReplayBackend(Backend):
     """Serve stored traces; raise ``TraceMissError`` on a miss unless ``allow_api``.
 
     Traces are read from ``{trace_dir}/{split}/{backend_name}.jsonl`` and keyed
-    by (model, prompt_hash). The prompt hash covers the document id, the section
-    text and the JSON schema, so no other key is needed. A hit returns the stored
-    call time and cost so that run logs built from replays carry the original
-    values. With ``allow_api=True`` a miss
-    is delegated to ``live`` and ``extract()`` records the new trace in the same
-    file, so the next replay serves it. ``name`` equals the live backend's name
-    so that ``FieldValue.system`` labels stay identical between live and replay.
+    by (model, effort, prompt_hash). The prompt hash covers the prompt version,
+    the section text and the JSON schema, and the effort level changes what the
+    model does, so a trace recorded at another effort is never replayed. A hit
+    returns the stored call time and cost so that run logs built from replays
+    carry the original values. With ``allow_api=True`` a miss is delegated to
+    ``live`` and ``extract()`` records the new trace in the same file and in this
+    backend's index (``remember``), so a repeated prompt in the same run is served
+    from it. ``name`` equals the live backend's name so that ``FieldValue.system``
+    labels stay identical between live and replay. Pointing ``trace_dir`` at an
+    empty directory gives a second live run that never replays the first.
     """
 
     def __init__(
@@ -678,20 +746,37 @@ class ReplayBackend(Backend):
         live: Backend | None = None,
         allow_api: bool = False,
         trace_dir: Path = TRACE_DIR,
+        effort: str | None = None,
     ) -> None:
+        if live is not None and live.effort != effort:
+            # A live trace would be indexed under an effort it was not called with.
+            raise LLMError(f"replay effort {effort!r} differs from the live backend's {live.effort!r}")
         self.name = backend_name
         self.split = split
         self.model = model
         self.live = live
         self.allow_api = allow_api
+        self.effort = effort
         self.trace_dir = Path(trace_dir)
         self.path = trace_path(split, backend_name, self.trace_dir)
         self.hits = 0
         self.misses = 0
-        self._index: dict[tuple[str, str], Trace] = {}
+        self._index: dict[tuple[str, str | None, str], Trace] = {}
         for tr in read_traces(self.path):
-            if tr.error is None:
-                self._index[(tr.model, tr.prompt_hash)] = tr
+            self.remember(tr)
+
+    def remember(self, trace: Trace) -> None:
+        """Index a trace (error traces are never served)."""
+        if trace.error is None:
+            self._index[(trace.model, trace.effort, trace.prompt_hash)] = trace
+
+    def has(self, model: str, key: str) -> bool:
+        """True when a stored trace for (model, this effort, prompt hash) exists."""
+        return (model, self.effort, key) in self._index
+
+    def stored(self) -> list[Trace]:
+        """Every indexed (non-error) trace."""
+        return list(self._index.values())
 
     def complete(
         self,
@@ -699,9 +784,11 @@ class ReplayBackend(Backend):
         user_prompt: str,
         json_schema: dict[str, Any],
         model: str | None = None,
+        key: str | None = None,
     ) -> BackendResult:
         model = model or self.model
-        stored = self._index.get((model, prompt_hash(system_prompt, user_prompt, json_schema)))
+        key = key or prompt_hash(system_prompt, user_prompt, json_schema)
+        stored = self._index.get((model, self.effort, key))
         if stored is not None:
             self.hits += 1
             return BackendResult(
@@ -806,7 +893,7 @@ def _page_of(sec: Section, offset: int) -> int:
 
 
 def map_response(
-    doc: DocRecord,
+    doc: DocRecord | str,
     field_group: str,
     data: dict[str, Any] | None,
     sections: dict[str, Section],
@@ -817,14 +904,16 @@ def map_response(
     Missing fields, malformed entries and values that violate the field spec
     become abstentions with the reason in ``notes``. ``page`` and ``scope`` come
     from the section where the quote is found; when the quote is not found the
-    model's page is kept and ``notes`` says ``quote_not_located``.
+    model's page is kept and ``notes`` says ``quote_not_located``. ``doc`` may be
+    the record or its doc_id (only the id is used).
     """
+    doc_id = doc if isinstance(doc, str) else doc.doc_id
     out: list[FieldValue] = []
     data = data or {}
     for name in llm_field_group(field_group)["fields"]:
         spec = field_spec(name)
         entry = data.get(name)
-        base = {"doc_id": doc.doc_id, "field": name, "system": system}
+        base = {"doc_id": doc_id, "field": name, "system": system}
         if not isinstance(entry, dict):
             out.append(FieldValue(**base, status="abstain", notes="missing_from_response"))
             continue
@@ -863,34 +952,42 @@ def map_response(
 # ----------------------------------------------------------------------------- extract
 
 
-def extract(
-    doc: DocRecord,
-    sections: dict[str, Section],
+def _call_and_trace(
+    doc_id: str,
     field_group: str,
+    system_prompt: str,
+    user_prompt: str,
+    schema: dict[str, Any],
+    version: str,
     backend: Backend,
     split: str,
-    trace_dir: Path = TRACE_DIR,
-) -> tuple[list[FieldValue], Trace]:
-    """Run one LLM extraction for one field group and record its trace.
+    trace_dir: Path,
+    offsets: list[tuple[int, int]],
+    mode: str | None = None,
+) -> tuple[BackendResult | None, Trace]:
+    """One backend call and its trace, shared by ``extract`` and ``extract_closed_book``.
 
-    Builds the prompt and schema, calls ``backend.complete``, validates the
-    response and maps it to ``FieldValue`` records with
-    ``system = "llm:{backend.name}:{model}"``. The trace is appended to
-    ``{trace_dir}/{split}/{backend.name}.jsonl`` unless the result came from a
-    replay. A failed call (after retries) is recorded with ``error`` set and
-    every field is returned as an abstention; the caller decides whether to
-    stop.
+    Returns ``(None, trace)`` when the call failed after retries (the trace carries the
+    error). ``TraceMissError`` and ``DailyLimitExceeded`` propagate. A live trace is
+    appended to ``{trace_dir}/{split}/{backend.name}.jsonl`` and, for a replay backend,
+    added to its index; a replayed trace is not written again.
     """
     model = backend.model
-    system_prompt = SYSTEM_PROMPT
-    user_prompt = build_prompt(doc, sections, field_group)
-    schema = build_schema(field_group)
-    ph = prompt_hash(system_prompt, user_prompt, schema)
-    system = f"llm:{backend.name}:{model}"
-    offsets = [(s.char_start, s.char_end) for s in sections.values()]
+    effort = backend.effort
+    ph = prompt_hash(system_prompt, user_prompt, schema, version)
     called_at = datetime.now(UTC)
+    base: dict[str, Any] = {
+        "doc_id": doc_id,
+        "field_group": field_group,
+        "backend": backend.name,
+        "model": model,
+        "prompt_hash": ph,
+        "section_offsets": offsets,
+        "effort": effort,
+        "mode": mode,
+    }
     try:
-        result = backend.complete(system_prompt, user_prompt, schema, model)
+        result = backend.complete(system_prompt, user_prompt, schema, model, key=ph)
     except (TraceMissError, DailyLimitExceeded):
         # A replay miss is the caller's decision; an exhausted daily budget would fail
         # every later call the same way, so the run must stop rather than record
@@ -898,22 +995,13 @@ def extract(
         raise
     except Exception as exc:
         trace = Trace(
-            trace_id=make_trace_id(doc.doc_id, field_group, model, ph),
-            doc_id=doc.doc_id,
-            field_group=field_group,
-            backend=backend.name,
-            model=model,
-            prompt_hash=ph,
-            section_offsets=offsets,
+            trace_id=make_trace_id(doc_id, field_group, model, ph, effort),
             called_at=called_at,
             error=f"{type(exc).__name__}: {exc}",
+            **base,
         )
         append_trace(trace, split, trace_dir)
-        values = [
-            FieldValue(doc_id=doc.doc_id, field=f, system=system, status="abstain", notes="call_failed")
-            for f in llm_field_group(field_group)["fields"]
-        ]
-        return values, trace
+        return None, trace
 
     truncated = result.stop_reason in TRUNCATION_STOP_REASONS
     if truncated:
@@ -923,14 +1011,8 @@ def extract(
     else:
         error = None
     trace = Trace(
-        trace_id=result.replay_trace_id or make_trace_id(doc.doc_id, field_group, model, ph),
-        doc_id=doc.doc_id,
-        field_group=field_group,
-        backend=backend.name,
-        model=model,
+        trace_id=result.replay_trace_id or make_trace_id(doc_id, field_group, model, ph, effort),
         model_reported=result.model_reported,
-        prompt_hash=ph,
-        section_offsets=offsets,
         response_json=result.parsed_json,
         response_text=result.text,
         input_tokens=result.input_tokens,
@@ -942,19 +1024,144 @@ def extract(
         error=error,
         stop_reason=result.stop_reason,
         response_format=result.response_format,
+        **base,
     )
     if not result.from_replay:
         append_trace(trace, split, trace_dir)
-    if truncated:
+        remember = getattr(backend, "remember", None)
+        if callable(remember):
+            remember(trace)
+    return result, trace
+
+
+def _all_abstain(doc_id: str, fields: list[str] | tuple[str, ...], system: str, note: str) -> list[FieldValue]:
+    return [FieldValue(doc_id=doc_id, field=f, system=system, status="abstain", notes=note) for f in fields]
+
+
+def system_name(backend: Backend, mode: str | None = None) -> str:
+    """``llm:{backend}:{model}``, with ``:{mode}`` appended for the whole-document and
+    closed-book variants (``FieldValue.system``)."""
+    name = f"llm:{backend.name}:{backend.model}"
+    return f"{name}:{mode}" if mode else name
+
+
+def extract(
+    doc: DocRecord,
+    sections: dict[str, Section],
+    field_group: str,
+    backend: Backend,
+    split: str,
+    trace_dir: Path = TRACE_DIR,
+    system: str | None = None,
+    mode: str = "located",
+) -> tuple[list[FieldValue], Trace]:
+    """Run one LLM extraction for one field group and record its trace.
+
+    Builds the prompt and schema, calls ``backend.complete``, validates the
+    response and maps it to ``FieldValue`` records with ``system`` (default
+    ``llm:{backend.name}:{model}``; the run stage passes the ``:whole`` name for
+    the whole-document mode). The trace, with the backend's effort, is appended
+    to ``{trace_dir}/{split}/{backend.name}.jsonl`` unless the result came from a
+    replay. A failed call (after retries) is recorded with ``error`` set and
+    every field is returned as an abstention; the caller decides whether to
+    stop. ``mode`` (``located`` or ``whole``) is recorded in ``Trace.mode`` so the
+    cost accounting can attribute the call to its run system.
+    """
+    system = system or system_name(backend)
+    fields = llm_field_group(field_group)["fields"]
+    offsets = [(s.char_start, s.char_end) for s in sections.values()]
+    result, trace = _call_and_trace(
+        doc.doc_id, field_group, SYSTEM_PROMPT, build_prompt(doc, sections, field_group),
+        build_schema(field_group), PROMPT_VERSION, backend, split, trace_dir, offsets, mode,
+    )
+    if result is None:
+        return _all_abstain(doc.doc_id, fields, system, "call_failed"), trace
+    if result.stop_reason in TRUNCATION_STOP_REASONS:
         # The output was cut off (or refused): not a model abstention, so every field
         # abstains with a note that evaluate can separate from a real abstention.
-        values = [
-            FieldValue(doc_id=doc.doc_id, field=f, system=system, status="abstain", notes="truncated")
-            for f in llm_field_group(field_group)["fields"]
-        ]
-        return values, trace
-    values = map_response(doc, field_group, result.parsed_json, sections, system)
-    return values, trace
+        return _all_abstain(doc.doc_id, fields, system, "truncated"), trace
+    return map_response(doc, field_group, result.parsed_json, sections, system), trace
+
+
+# ----------------------------------------------------------------------------- closed book
+
+
+def map_closed_book(doc_id: str, data: dict[str, Any] | None, system: str) -> list[FieldValue]:
+    """Map a closed-book response to one ``FieldValue`` per closed-book field.
+
+    Statuses other than ``value`` and ``abstain``, missing entries and values that
+    violate the field spec become abstentions with the reason in ``notes``. Values
+    carry no quote, page or scope: the model saw no document.
+    """
+    out: list[FieldValue] = []
+    data = data or {}
+    for name in CLOSED_BOOK_FIELDS:
+        base = {"doc_id": doc_id, "field": name, "system": system}
+        entry = data.get(name)
+        if not isinstance(entry, dict):
+            out.append(FieldValue(**base, status="abstain", notes="missing_from_response"))
+            continue
+        status, value = entry.get("status"), entry.get("value")
+        if status not in CLOSED_BOOK_STATUSES:
+            out.append(FieldValue(**base, status="abstain", notes=f"invalid_status:{status!r}"))
+        elif status == "abstain":
+            out.append(FieldValue(**base, status="abstain"))
+        elif value is None:
+            out.append(FieldValue(**base, status="abstain", notes="value_missing"))
+        elif err := _check_value(field_spec(name), value):
+            out.append(FieldValue(**base, status="abstain", notes=f"invalid_value:{err}"))
+        else:
+            out.append(FieldValue(**base, status="value", value=value, notes="closed_book"))
+    return out
+
+
+def extract_closed_book(
+    doc: DocRecord,
+    backend: Backend,
+    split: str,
+    trace_dir: Path = TRACE_DIR,
+    system: str | None = None,
+) -> tuple[list[FieldValue], Trace]:
+    """Closed-book contamination baseline for one document (analysis plan, "Leakage and
+    contamination controls").
+
+    The prompt carries only the bank name and the exam date
+    (``prompts.build_closed_book_prompt``), the answers are ``overall_rating`` and
+    ``finding_present``, and the trace is recorded under the field group
+    ``closedbook`` with no section offsets and the hash of
+    ``CLOSED_BOOK_PROMPT_VERSION``. ``system`` defaults to ``llm:{backend}:{model}:closedbook``.
+    """
+    system = system or system_name(backend, CLOSED_BOOK_GROUP)
+    result, trace = _call_and_trace(
+        doc.doc_id, CLOSED_BOOK_GROUP, CLOSED_BOOK_SYSTEM_PROMPT, build_closed_book_prompt(doc),
+        build_closed_book_schema(), CLOSED_BOOK_PROMPT_VERSION, backend, split, trace_dir, [],
+        CLOSED_BOOK_GROUP,
+    )
+    if result is None:
+        return _all_abstain(doc.doc_id, CLOSED_BOOK_FIELDS, system, "call_failed"), trace
+    if result.stop_reason in TRUNCATION_STOP_REASONS:
+        return _all_abstain(doc.doc_id, CLOSED_BOOK_FIELDS, system, "truncated"), trace
+    return map_closed_book(doc.doc_id, result.parsed_json, system), trace
+
+
+def trace_values(trace: Trace, system: str | None = None) -> list[FieldValue]:
+    """The ``FieldValue`` rows a stored trace stands for, as ``extract`` produced them.
+
+    An error trace (failed call, truncation, non-JSON output) gives abstentions for
+    every field of its group; a closed-book trace is mapped with ``map_closed_book``.
+    Quotes are not located (no sections), so page and scope are not set. Used by
+    run-to-run agreement on traces. ``system`` defaults to ``llm:{backend}:{model}``
+    (``:closedbook`` for the closed-book group).
+    """
+    closed = trace.field_group == CLOSED_BOOK_GROUP
+    if system is None:
+        system = f"llm:{trace.backend}:{trace.model}" + (f":{CLOSED_BOOK_GROUP}" if closed else "")
+    fields = list(CLOSED_BOOK_FIELDS) if closed else llm_field_group(trace.field_group)["fields"]
+    if trace.error is not None:
+        return _all_abstain(trace.doc_id, fields, system, trace.error)
+    if closed:
+        return map_closed_book(trace.doc_id, trace.response_json, system)
+    return map_response(trace.doc_id, trace.field_group, trace.response_json, {}, system)
 
 
 # ----------------------------------------------------------------------------- CLI
@@ -1006,7 +1213,8 @@ def sample_doc(stem: str) -> DocRecord:
 
 
 def make_backend(name: str, model: str, **kwargs: Any) -> Backend:
-    """Instantiate a live backend by CLI name."""
+    """Instantiate a live backend by CLI name (``kwargs`` such as ``limiter`` and
+    ``effort`` go to the backend's constructor)."""
     if name == "gemini":
         return GeminiBackend(model, **kwargs)
     if name == "anthropic":
@@ -1029,6 +1237,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--sample", default="FDIC_12299_SouthStar_2022_ISB_NI_fairlending")
     ap.add_argument("--field-group", default="cover_and_rating")
     ap.add_argument("--split", default="dev")
+    ap.add_argument(
+        "--effort", default=None,
+        help="effort level (default: DEFAULT_EFFORT for the backend; 'none' sends no effort parameter)",
+    )
     args = ap.parse_args(argv)
     if not args.smoke:
         ap.error("only --smoke is implemented; the pipeline calls extract() from run.py")
@@ -1036,14 +1248,15 @@ def main(argv: list[str] | None = None) -> int:
     text = (FIXTURES_DIR / "samples" / f"{args.sample}.txt").read_text(encoding="utf-8")
     doc = sample_doc(args.sample)
     sections = sections_from_text(doc.doc_id, text)
-    backend = make_backend(args.backend, args.model)
+    effort = DEFAULT_EFFORT.get(args.backend) if args.effort is None else (None if args.effort == "none" else args.effort)
+    backend = make_backend(args.backend, args.model, effort=effort)
     values, trace = extract(doc, sections, args.field_group, backend, args.split)
     for fv in values:
         print(f"{fv.field:28s} {fv.status:8s} {fv.value!r:30s} p{fv.page} {fv.scope} | {fv.quote}")
     print(
         f"\nmodel={trace.model} reported={trace.model_reported} "
         f"in={trace.input_tokens} out={trace.output_tokens} "
-        f"cost=${trace.cost_usd:.4f} latency={trace.latency_s}s error={trace.error}"
+        f"cost=${trace.cost_usd:.4f} latency={trace.latency_s}s effort={trace.effort} error={trace.error}"
     )
     return 0
 

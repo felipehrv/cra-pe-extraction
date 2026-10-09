@@ -20,9 +20,13 @@ from cra_extract import llm
 from cra_extract.config import load_fields
 from cra_extract.models import DocRecord, Section, Trace
 from cra_extract.prompts import (
+    CLOSED_BOOK_PROMPT_VERSION,
+    CLOSED_BOOK_SYSTEM_PROMPT,
     PROMPT_VERSION,
     STATUSES,
     SYSTEM_PROMPT,
+    build_closed_book_prompt,
+    build_closed_book_schema,
     build_prompt,
     build_schema,
 )
@@ -763,3 +767,153 @@ def test_smoke_live_backend():
     backend = os.environ.get("CRA_SMOKE_BACKEND", "anthropic")
     model = os.environ.get("CRA_SMOKE_MODEL", "claude-haiku-4-5")
     assert llm.main(["--smoke", "--backend", backend, "--model", model]) == 0
+
+
+# ----------------------------------------------------------------------------- effort
+
+
+def test_trace_round_trip_with_effort(tmp_path):
+    trace = Trace(
+        trace_id="abc", doc_id="d", field_group="review", backend="fake", model="m",
+        prompt_hash="h" * 64, called_at=llm.datetime(2026, 10, 8, tzinfo=llm.UTC), effort="low",
+    )
+    path = llm.append_trace(trace, "dev", tmp_path)
+    back = llm.read_traces(path)[0]
+    assert back == trace and back.effort == "low"
+    assert json.loads(path.read_text().splitlines()[0])["effort"] == "low"
+    # A trace written before the field existed reads back with effort None.
+    old = json.loads(trace.model_dump_json())
+    del old["effort"]
+    assert Trace.model_validate_json(json.dumps(old)).effort is None
+
+
+def test_extract_records_effort_and_replay_keys_on_it(doc, sections, tmp_path):
+    response = {"overall_rating": entry("NI", quote=RATING_QUOTE, page=3)}
+    live = FakeBackend(response)
+    live.effort = "low"
+    replay = llm.ReplayBackend("fake", "dev", "fake-1", live=live, allow_api=True, trace_dir=tmp_path, effort="low")
+    _, trace = llm.extract(doc, sections, "cover_and_rating", replay, "dev", trace_dir=tmp_path)
+    assert trace.effort == "low" and len(live.calls) == 1
+    assert trace.trace_id == llm.make_trace_id(doc.doc_id, "cover_and_rating", "fake-1", trace.prompt_hash, "low")
+    assert trace.trace_id != llm.make_trace_id(doc.doc_id, "cover_and_rating", "fake-1", trace.prompt_hash)
+    # The live trace joined the replay index: the same prompt in the same run is not resent.
+    _, again = llm.extract(doc, sections, "cover_and_rating", replay, "dev", trace_dir=tmp_path)
+    assert len(live.calls) == 1 and replay.hits == 1 and again.trace_id == trace.trace_id
+    assert len(llm.read_traces(tmp_path / "dev" / "fake.jsonl")) == 1
+    # A replay at another effort never serves the low-effort trace.
+    high = llm.ReplayBackend("fake", "dev", "fake-1", trace_dir=tmp_path, effort="high")
+    with pytest.raises(llm.TraceMissError):
+        llm.extract(doc, sections, "cover_and_rating", high, "dev", trace_dir=tmp_path)
+    low = llm.ReplayBackend("fake", "dev", "fake-1", trace_dir=tmp_path, effort="low")
+    values, served = llm.extract(doc, sections, "cover_and_rating", low, "dev", trace_dir=tmp_path)
+    assert served.effort == "low" and low.hits == 1 and low.has("fake-1", trace.prompt_hash)
+    assert {v.field: v.value for v in values}["overall_rating"] == "NI"
+    # The live backend must run at the replay's effort.
+    with pytest.raises(llm.LLMError):
+        llm.ReplayBackend("fake", "dev", "fake-1", live=FakeBackend(response), allow_api=True, trace_dir=tmp_path, effort="low")
+
+
+def test_extract_system_name_override(doc, sections, tmp_path):
+    backend = FakeBackend({"overall_rating": entry("NI", quote=RATING_QUOTE, page=3)})
+    values, _ = llm.extract(doc, sections, "cover_and_rating", backend, "dev", trace_dir=tmp_path, system="llm:fake:fake-1:whole")
+    assert {v.system for v in values} == {"llm:fake:fake-1:whole"}
+    assert llm.system_name(backend) == "llm:fake:fake-1" and llm.system_name(backend, "whole") == "llm:fake:fake-1:whole"
+
+
+def test_default_effort_per_backend():
+    assert llm.DEFAULT_EFFORT == {"gemini": "low", "anthropic": "low", "openai_compat": "low", "ollama": None}
+
+
+@pytest.mark.skipif(importlib.util.find_spec("google.genai") is None, reason="google-genai not installed")
+def test_gemini_backend_sends_effort_as_thinking_level(monkeypatch):
+    """Offline: the client is built with a dummy key and never called."""
+    from google.genai import types
+
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key-not-real")
+    backend = llm.GeminiBackend("gemini-3.8-flash", effort="low")
+    config = backend._config("sys", build_schema("review"))
+    assert config.thinking_config.thinking_level == types.ThinkingLevel.LOW
+    assert config.response_mime_type == "application/json" and config.system_instruction == "sys"
+    assert llm.GeminiBackend("gemini-3.8-flash")._config("s", {}).thinking_config is None
+    with pytest.raises(llm.LLMError):
+        llm.GeminiBackend("gemini-3.8-flash", effort="max")
+
+
+def test_openai_compatible_sends_reasoning_effort():
+    captured: list[dict[str, Any]] = []
+
+    class FakeCompletions:
+        def create(self, **kwargs):
+            captured.append(kwargs)
+            msg = type("M", (), {"content": "{}"})()
+            choice = type("C", (), {"message": msg, "finish_reason": "stop"})()
+            usage = type("U", (), {"prompt_tokens": 10, "completion_tokens": 2})()
+            return type("R", (), {"choices": [choice], "usage": usage, "model": "m"})()
+
+    backend = llm.OpenAICompatibleBackend("m", base_url="http://localhost:9/v1", api_key="test-key-not-real", effort="low")
+    backend.client = type("Cl", (), {"chat": type("Ch", (), {"completions": FakeCompletions()})()})()
+    backend.complete("s", "u", {"title": "t"}, None)
+    assert captured[-1]["reasoning_effort"] == "low"
+    backend.effort = None
+    backend.complete("s", "u", {"title": "t"}, None)
+    assert "reasoning_effort" not in captured[-1]
+
+
+# ----------------------------------------------------------------------------- closed book
+
+
+def test_closed_book_prompt_has_only_bank_name_and_date(doc, sections):
+    text = build_closed_book_prompt(doc)
+    assert "Bank: SouthStar Bank, S.S.B." in text and "Evaluation date: 2022-09-12" in text
+    assert CLOSED_BOOK_PROMPT_VERSION in text and PROMPT_VERSION == "v2"
+    for leaked in (doc.doc_id, "FDIC", "Intermediate", "Regulator", "Certificate", "12299"):
+        assert leaked not in text and leaked not in CLOSED_BOOK_SYSTEM_PROMPT
+    for sec in sections.values():
+        lines = [ln.strip() for ln in sec.text.splitlines() if len(ln.strip()) >= 25]
+        assert lines and not any(ln in text for ln in lines)
+    schema = build_closed_book_schema()
+    assert schema["required"] == ["overall_rating", "finding_present"] and schema["additionalProperties"] is False
+    for prop in schema["properties"].values():
+        assert set(prop["properties"]) == {"value", "status"} and prop["properties"]["status"]["enum"] == ["value", "abstain"]
+    with pytest.raises(ValueError):
+        build_closed_book_prompt(doc.model_copy(update={"exam_date": None}))
+
+
+def test_extract_closed_book_maps_and_traces(doc, tmp_path):
+    backend = FakeBackend({
+        "overall_rating": {"value": "NI", "status": "value"},
+        "finding_present": {"value": None, "status": "absent"},
+    })
+    values, trace = llm.extract_closed_book(doc, backend, "test", trace_dir=tmp_path)
+    by = {v.field: v for v in values}
+    assert set(by) == {"overall_rating", "finding_present"}
+    assert by["overall_rating"].status == "value" and by["overall_rating"].value == "NI"
+    assert by["overall_rating"].quote is None and by["overall_rating"].system == "llm:fake:fake-1:closedbook"
+    assert by["finding_present"].status == "abstain" and by["finding_present"].notes.startswith("invalid_status")
+    call = backend.calls[0]
+    assert call["system"] == CLOSED_BOOK_SYSTEM_PROMPT and call["user"] == build_closed_book_prompt(doc)
+    assert trace.field_group == "closedbook" and trace.section_offsets == []
+    assert trace.prompt_hash == llm.prompt_hash(call["system"], call["user"], call["schema"], CLOSED_BOOK_PROMPT_VERSION)
+    assert trace.prompt_hash != llm.prompt_hash(call["system"], call["user"], call["schema"])
+    assert llm.read_traces(tmp_path / "test" / "fake.jsonl")[0].trace_id == trace.trace_id
+    # Replay serves the closed-book trace by its own hash.
+    replay = llm.ReplayBackend("fake", "test", "fake-1", trace_dir=tmp_path)
+    again, _ = llm.extract_closed_book(doc, replay, "test", trace_dir=tmp_path)
+    assert replay.hits == 1 and [v.value for v in again] == [v.value for v in values]
+    bad = llm.map_closed_book(doc.doc_id, {"overall_rating": {"value": "X", "status": "value"}}, "s")
+    assert bad[0].status == "abstain" and bad[0].notes.startswith("invalid_value")
+    assert bad[1].notes == "missing_from_response"
+
+
+def test_trace_values_rebuilds_rows(doc, sections, tmp_path):
+    response = {"overall_rating": entry("NI", quote=RATING_QUOTE, page=3)}
+    _, trace = llm.extract(doc, sections, "cover_and_rating", FakeBackend(response), "dev", trace_dir=tmp_path)
+    rows = {v.field: v for v in llm.trace_values(trace)}
+    assert rows["overall_rating"].value == "NI" and rows["overall_rating"].system == "llm:fake:fake-1"
+    assert rows["bank_name"].status == "abstain"
+    failed = trace.model_copy(update={"error": "max_tokens"})
+    assert all(v.status == "abstain" and v.notes == "max_tokens" for v in llm.trace_values(failed))
+    _, cb = llm.extract_closed_book(doc, FakeBackend({"overall_rating": {"value": "S", "status": "value"}}), "dev", trace_dir=tmp_path)
+    cb_rows = llm.trace_values(cb)
+    assert [v.field for v in cb_rows] == ["overall_rating", "finding_present"]
+    assert cb_rows[0].system == "llm:fake:fake-1:closedbook" and cb_rows[0].value == "S"

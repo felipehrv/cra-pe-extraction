@@ -18,7 +18,7 @@ import pytest
 from conftest import SAMPLE_META, SAMPLES
 
 from cra_extract import locate
-from cra_extract.config import load_headings
+from cra_extract.config import CORPUS_PATH, load_headings
 from cra_extract.models import Page, Section
 
 # Per sample: section -> (page_start, page_end, snippet inside the section text).
@@ -1066,3 +1066,240 @@ def test_review_section_ends_at_rated_area_titles(regulator, title, source):
 def test_fdic_title_boundaries_skip_table_cells_and_prose(line):
     patterns = [re.compile(p, re.IGNORECASE) for p in load_headings()["boundary_patterns"]["FDIC"]]
     assert not any(p.search(line) for p in patterns)
+
+
+# --------------------------------------------------------------------------- scope rules
+# scope_rules in config/headings.yaml (single-AA scope decision, docs/corpus_pass_2.md). The
+# excerpts are shortened from the cited corpus PEs.
+
+FRB_REVIEW = "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW"
+FRB_REVIEW_BODY = (
+    "No evidence of discriminatory or other illegal credit practices inconsistent with helping\n"
+    "to meet community credit needs was identified.\n"
+)
+FRB_LTD_PAGE = (  # FRB_3150205_20250407 p10 and p11 (Dallas)
+    "Net Loan-to-Deposit Ratio\n\n"
+    "Worthington's 27-quarter NLTD ratio is reasonable and within the range of the NLTD ratios\n"
+    "of similarly situated banks.\n\n"
+    "Assessment Area Concentration\n\n"
+    "Worthington originated a majority of loans both by number and dollar amount inside the AA.\n"
+)
+
+
+def _frb_doc(*area_pages: str) -> list[Page]:
+    """FRB PE: cover, rating and scope pages, the given area pages, LTD page, review page."""
+    return _doc(
+        "PUBLIC DISCLOSURE\n\nWorthington Bank\n",
+        "INSTITUTION'S CRA RATING\n\nThis institution is rated Satisfactory.\n",
+        *area_pages,
+        FRB_LTD_PAGE,
+        f"{FRB_REVIEW}\n\n{FRB_REVIEW_BODY}",
+    )
+
+
+def _lone_aa(pages: list[Page], regulator: str = "FRB") -> bool:
+    lines, _ = locate._analyze(pages, regulator)
+    return locate.lone_aa_unit(lines, locate._patterns(regulator).aa_unit_scopes)
+
+
+DALLAS_AA = (  # FRB_3150205_20250407 p5
+    "DESCRIPTION OF THE INSTITUTION'S OPERATIONS IN THE DFW METROPOLITAN\n\n"
+    "The DFW Metropolitan AA consists of Denton and Tarrant Counties.\n"
+)
+ATLANTA_AA = (  # FRB_648130_20250203 p7
+    "DESCRIPTION OF INSTITUTION'S OPERATIONS IN THE MIAMI, FLORIDA AA\n\n"
+    "The AA is located in the southeastern tip of Florida along the Atlantic Ocean.\n"
+)
+NEW_YORK_MSA = (  # FRB_722816_20230626 p7; the title repeats over the tables up to p13
+    "MSA 45060 (Syracuse, NY)\n\nSolvay has one assessment area, Onondaga County.\n"
+)
+NEW_YORK_TABLE = "MSA 45060 (Syracuse, NY)\n\nThe table shows the income of census tracts.\n"
+CHICAGO_AA_1 = (  # FRB_930442_20240715 p13 and p50, two of its four AAs
+    "DESCRIPTION OF INSTITUTION'S OPERATIONS IN ILLINOIS NON-MSA\n\n"
+    "The bank operates eight branches in the Illinois Non-MSA AA.\n"
+)
+CHICAGO_AA_2 = (
+    "DESCRIPTION OF INSTITUTION'S OPERATIONS IN PEORIA, IL MSA\n\n"
+    "The bank operates two branches in the Peoria MSA AA.\n"
+)
+
+
+def test_review_heading_resets_scope_to_institution_after_all_aa_sections():
+    """Chicago multi-AA layout: the review follows the last AA section (FRB_930442_20240715
+    p56 after the Peoria AA on p50). The section is institution scope at confidence 1.0, while
+    the page and line scopes stay those of the markers."""
+    pages = _frb_doc(CHICAGO_AA_1, CHICAGO_AA_2)
+    assert not _lone_aa(pages)
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, "FRB")
+    assert section is not None
+    assert (section.page_start, section.scope, section.confidence) == (6, "institution", 1.0)
+    assert section.text.startswith(FRB_REVIEW)
+    assert locate.tag_pages(pages, "FRB")[5].scope == "assessment_area"
+    spans = locate.scope_spans(pages, "FRB")
+    assert locate.scope_at(spans, section.char_start) == "assessment_area"
+
+
+@pytest.mark.parametrize(
+    ("regulator", "marker", "heading", "source"),
+    [
+        # a table cell read as a state marker, FDIC_10077_20250218 p6 (review p13)
+        (
+            "FDIC",
+            "State of Illinois",
+            "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW",
+            "FDIC_10077_20250218",
+        ),
+        # a prose line read as an appendix marker, FDIC_2787_20221205 p8 (review p13)
+        (
+            "FDIC",
+            "Appendix A for additional details regarding each test.",
+            "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW",
+            "FDIC_2787_20221205",
+        ),
+        # OCC state rating section before the review, OCC_6488_20230123 pp5-6 order reversed
+        (
+            "OCC",
+            "State of Minnesota",
+            "Discriminatory or Other Illegal Credit Practices Review",
+            "OCC_6488_20230123",
+        ),
+        ("FRB", "MSA 45060 (Syracuse, NY)", FRB_REVIEW, "FRB_722816_20230626"),
+    ],
+)
+def test_review_heading_resets_scope_whatever_scope_is_in_effect(
+    regulator, marker, heading, source
+):
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        f"{marker}\n\nThe area has two branches.\n",
+        f"{heading}\n\n{FRB_REVIEW_BODY}",
+    )
+    lines, _ = locate._analyze(pages, regulator)
+    assert any(ln.event and ln.event[0] == "marker" for ln in lines), source
+    assert locate.tag_pages(pages, regulator)[2].scope != "institution", source
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, regulator)
+    assert section is not None, source
+    assert (section.scope, section.confidence) == ("institution", 1.0), source
+
+
+@pytest.mark.parametrize(
+    ("area_pages", "source"),
+    [
+        ((DALLAS_AA,), "FRB_3150205_20250407"),
+        ((ATLANTA_AA,), "FRB_648130_20250203"),
+        ((NEW_YORK_MSA, NEW_YORK_TABLE, NEW_YORK_TABLE), "FRB_722816_20230626"),
+    ],
+)
+def test_lone_aa_ltd_and_concentration_are_institution_scope(area_pages, source):
+    pages = _frb_doc(*area_pages)
+    assert _lone_aa(pages), source
+    found, _ = locate.locate_all("d", pages, "FRB")
+    for name in ("ltd_ratio", "aa_concentration", "illegal_credit_practices_review"):
+        section = found[name]
+        assert (section.scope, section.confidence) == ("institution", 1.0), (source, name)
+    assert found["ltd_ratio"].page_start == len(pages) - 1
+    assert "27-quarter NLTD ratio" in found["ltd_ratio"].text
+    assert "Assessment Area Concentration" not in found["ltd_ratio"].text
+    # the line scope is that of the marker; only the Section record is overridden
+    marker_scope = "msa" if source == "FRB_722816_20230626" else "assessment_area"
+    assert locate.tag_pages(pages, "FRB")[len(pages) - 2].scope == marker_scope
+
+
+@pytest.mark.parametrize(
+    ("area_pages", "scope", "case"),
+    [
+        ((CHICAGO_AA_1, CHICAGO_AA_2), "assessment_area", "two AA operations headings"),
+        # two Dallas AAs that both print the bare operations heading under the area title
+        (
+            (
+                "DESCRIPTION OF THE INSTITUTION'S OPERATIONS\n\nDenton County.\n",
+                "DESCRIPTION OF THE INSTITUTION'S OPERATIONS\n\nWise County.\n",
+            ),
+            "assessment_area",
+            "two bare Dallas headings",
+        ),
+        (
+            ("MSA 45060 (Syracuse, NY)\n\nOne.\n", "MSA 10580 (Albany, NY)\n\nTwo.\n"),
+            "msa",
+            "two MSA codes",
+        ),
+        # a state marker before the one AA marker: a rated state, never a lone unit
+        (("STATE OF TEXAS\n\nThe state.\n", DALLAS_AA), "assessment_area", "state and AA"),
+    ],
+)
+def test_multi_aa_ltd_and_concentration_keep_the_scope_found(area_pages, scope, case):
+    pages = _frb_doc(*area_pages)
+    assert not _lone_aa(pages), case
+    found, _ = locate.locate_all("d", pages, "FRB")
+    for name in ("ltd_ratio", "aa_concentration"):
+        assert (found[name].scope, found[name].confidence) == (scope, 0.5), (case, name)
+    review = found["illegal_credit_practices_review"]
+    assert (review.scope, review.confidence) == ("institution", 1.0), case
+
+
+def test_lone_aa_rule_leaves_sections_without_markers_and_in_appendix_alone():
+    """No marker: the sections are institution scope as before. A lone AA unit does not lift
+    an LTD heading found in the sticky appendix scope."""
+    plain = _frb_doc()
+    assert not _lone_aa(plain)
+    found, _ = locate.locate_all("d", plain, "FRB")
+    assert all(s.scope == "institution" and s.confidence == 1.0 for s in found.values())
+
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        ATLANTA_AA,
+        "APPENDIX A - GLOSSARY\n\nTerms used in this evaluation.\n",
+        FRB_LTD_PAGE,
+    )
+    assert _lone_aa(pages)
+    section = locate.locate_section("ltd_ratio", "d", pages, "FRB")
+    assert section is not None
+    assert (section.scope, section.confidence) == ("appendix", 0.5)
+
+
+def test_scope_rules_do_not_move_a_section():
+    """The institution-level heading is still preferred: in a lone-AA document with an LTD
+    heading before and after the AA marker, the first one is located."""
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "Loan-to-Deposit Ratio\n\nThe bank's LTD ratio is reasonable.\n",
+        DALLAS_AA,
+        "Loan-to-Deposit Ratio\n\nThe AA has few lenders.\n",
+    )
+    section = locate.locate_section("ltd_ratio", "d", pages, "FRB")
+    assert section is not None
+    assert (section.page_start, section.scope, section.confidence) == (2, "institution", 1.0)
+
+
+def test_scope_rules_config_is_well_formed():
+    cfg = load_headings()
+    rules = cfg["scope_rules"]
+    sections = set(cfg["sections"])
+    markers = set(cfg["scope_markers"])
+    assert rules["reset_to_institution"]["sections"] == ["illegal_credit_practices_review"]
+    assert rules["lone_aa_institution"]["sections"] == ["ltd_ratio", "aa_concentration"]
+    assert set(rules["lone_aa_institution"]["unit_scopes"]) == {"assessment_area", "msa"}
+    assert set(rules["lone_aa_institution"]["unit_scopes"]) <= markers
+    for rule in rules.values():
+        assert set(rule["sections"]) <= sections
+        for name in rule["sections"]:
+            assert cfg["sections"][name]["scope"] == "institution"
+    pats = locate._patterns("FRB")
+    assert pats.reset_sections == {"illegal_credit_practices_review"}
+    assert pats.lone_aa_sections == {"ltd_ratio", "aa_concentration"}
+
+
+def test_scope_rule_evidence_is_a_tuning_document_outside_test_and_audit():
+    """Evidence cited by the scope rules is recorded as tuning documents, so its banks leave
+    the test and audit pools (plan, Leakage), and no evidence document sits in test or audit."""
+    from cra_extract import strata
+
+    manifest = pd.read_csv(CORPUS_PATH, usecols=["doc_id", "split"]).set_index("doc_id")
+    evidence = [
+        doc_id for rule in load_headings()["scope_rules"].values() for doc_id in rule["evidence"]
+    ]
+    assert {"FRB_3150205_20250407", "FRB_930442_20240715"} <= set(evidence)
+    tuning = strata.load_tuning_documents()
+    for doc_id in evidence:
+        assert manifest.loc[doc_id, "split"] not in ("test", "audit"), doc_id
+        assert doc_id in tuning, doc_id

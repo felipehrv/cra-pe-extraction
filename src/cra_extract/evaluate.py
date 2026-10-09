@@ -57,6 +57,9 @@ from cra_extract.stats import expected_calibration_error, wilson_ci
 
 CELLS = ("correct", "wrong", "fabrication", "fabricated_absence", "correct_null", "abstention")
 GROUNDING_FAILURES = ("quote_not_found", "quote_out_of_scope", "quote_does_not_support")
+# grounding_failure cell of a value that is not graded for groundedness (the S1-sourced values
+# of S5: the plan grades only S3, S4 and the S3-sourced values of S5); read as unknown (NaN).
+GROUNDING_NOT_GRADED = "na"
 RISK_GROUPS = ("B",)
 PLAN_TAG = "plan-v1.0"
 ENV_OVERRIDE = "CRA_ALLOW_TEST_EVAL"
@@ -236,7 +239,7 @@ def score_predictions(
     preds: list[FieldValue],
     systems: list[str] | None = None,
     doc_loader: Callable[[str], tuple[list[Page], dict[str, Section]] | None] | None = None,
-    grounding_column: Mapping[tuple[str, str, str], str | None] | None = None,
+    grounding_column: Mapping[tuple[str, str, str], str | float | None] | None = None,
 ) -> pd.DataFrame:
     """One scored row per (doc_id, field, system).
 
@@ -296,7 +299,7 @@ def _display(value: Any) -> str:
 
 def _grounding_for(
     pred: FieldValue,
-    column: Mapping[tuple[str, str, str], str | None] | None,
+    column: Mapping[tuple[str, str, str], str | float | None] | None,
     loader: Callable[[str], tuple[list[Page], dict[str, Section]] | None] | None,
     cache: dict[str, tuple[list[Page], dict[str, Section]] | None],
     spec: Mapping[str, Any],
@@ -679,10 +682,14 @@ def read_labels(path: Path) -> list[LabelRow]:
     return [LabelRow(**_clean(r)) for r in df.to_dict("records")]
 
 
-def read_predictions(path: Path) -> tuple[list[FieldValue], dict[tuple[str, str, str], str | None] | None]:
+def read_predictions(
+    path: Path,
+) -> tuple[list[FieldValue], dict[tuple[str, str, str], str | float | None] | None]:
     """Predictions as ``FieldValue`` rows plus the optional ``grounding_failure`` column
-    (empty cell = grounded) keyed by (doc_id, field, system). A non-empty value outside
-    ``GROUNDING_FAILURES`` raises ``ValueError`` rather than passing as grounded."""
+    (empty cell = grounded) keyed by (doc_id, field, system). ``GROUNDING_NOT_GRADED``
+    (``na``) marks a value whose grounding is not graded and is read as unknown (NaN). Any
+    other non-empty value outside ``GROUNDING_FAILURES`` raises ``ValueError`` rather than
+    passing as grounded."""
     df = pd.read_csv(path, dtype=str, keep_default_na=False)
     fv_fields = set(FieldValue.model_fields)
     preds, column = [], None
@@ -696,6 +703,9 @@ def read_predictions(path: Path) -> tuple[list[FieldValue], dict[tuple[str, str,
         preds.append(fv)
         if column is not None:
             g = r.get("grounding_failure")
+            if g == GROUNDING_NOT_GRADED:
+                column[(fv.doc_id, fv.field, fv.system)] = math.nan
+                continue
             if g is not None and g not in GROUNDING_FAILURES:
                 raise ValueError(
                     f"{path}: unknown grounding_failure {g!r} for {fv.doc_id}/{fv.field}/{fv.system}; "

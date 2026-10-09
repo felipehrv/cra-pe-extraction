@@ -363,7 +363,7 @@ def _extract_parts(parts: list[tuple[str | None, str]], regulator: str, doc_id: 
 def test_version_bumped_with_changelog():
     from cra_extract.rules import CHANGELOG
 
-    assert RULES_VERSION == "0.2.1"
+    assert RULES_VERSION == "0.2.2"
     assert CHANGELOG[-1][0] == RULES_VERSION
     versions = [v for v, _date, _text in CHANGELOG]
     assert versions == sorted(versions, key=lambda v: tuple(int(x) for x in v.split(".")))

@@ -23,10 +23,12 @@ STAGES: dict[str, tuple[str, str]] = {
     "index": ("cra_extract.index", "build the corpus manifest from the agency indexes"),
     "fetch": ("cra_extract.fetch", "download the PDFs listed in the manifest"),
     "parse": ("cra_extract.parse", "extract page text from the PDFs"),
+    "overrides": ("cra_extract.overrides", "apply the documented manifest overrides and exclusions"),
     "locate": ("cra_extract.locate", "locate sections and report locator coverage"),
     "templates": ("cra_extract.templates", "template-residual census of the review section"),
     "rules": ("cra_extract.rules", "rule-based extraction (system S1)"),
     "baseline": ("cra_extract.baseline", "keyword baseline for Group C (system S0)"),
+    "census": ("cra_extract.census", "Group C census: random draw, sheet, validation, scoring"),
     "group-a": ("cra_extract.group_a", "rules versus the agency index, corpus-wide (Group A)"),
     "strata": ("cra_extract.strata", "draw the dev, test and audit splits"),
     "label": ("cra_extract.label", "init, validate and hash gold label sheets"),
@@ -34,8 +36,13 @@ STAGES: dict[str, tuple[str, str]] = {
     "run": ("cra_extract.run", "run the extraction systems over a split"),
     "grounding": ("cra_extract.grounding", "check one quote against a text file"),
     "evaluate": ("cra_extract.evaluate", "score predictions against gold"),
+    "routing": ("cra_extract.routing", "S5 routing table from S1 index agreement, and the S5 rows"),
+    "corpus-scoring": ("cra_extract.corpus_scoring", "Group A at corpus scale and the corpus risk file"),
+    "audit": ("cra_extract.audit", "audit sheet, design-weighted Group B error, review curve"),
+    "reliability": ("cra_extract.reliability", "Group B reliability: second blind coding and agreement"),
     "freeze": ("cra_extract.freeze", "check the analysis plan and tag plan-v1.0"),
     "stats": ("cra_extract.stats", "binomial confidence intervals"),
+    "report": ("cra_extract.report", "assemble the report tables and figures from results/"),
 }
 
 

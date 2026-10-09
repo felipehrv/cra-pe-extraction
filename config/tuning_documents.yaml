@@ -1,0 +1,492 @@
+# Corpus documents read while tuning rules, locator scope rules, templates or thresholds
+# (plan, Leakage). Their banks leave the test and audit pools (strata.eligible_pool).
+# Entries with source config files are cited there as evidence and are added by
+# `python -m cra_extract.strata tuning-docs --write`; entries with a note were read
+# while tuning without being cited. Fix this list before draw-test; it is recorded
+# in the test and audit draws by count and hash.
+version: 1
+documents:
+- doc_id: FDIC_10011_20221219
+  source:
+  - headings.yaml
+- doc_id: FDIC_10015_20241104
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10077_20250218
+  source:
+  - review_templates.yaml
+  note: read 2026-10-08 for false FDIC state markers (p6 table cell)
+- doc_id: FDIC_10101_20230608
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10111_20250203
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10120_20240716
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10121_20250728
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10127_20241021
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10132_20230322
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10255_20230411
+  source:
+  - headings.yaml
+- doc_id: FDIC_10307_20240311
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10434_20230306
+  source:
+  - headings.yaml
+- doc_id: FDIC_10460_20250602
+  note: read 2026-10-08 for mixed-case FDIC state markers (pp10, 18)
+- doc_id: FDIC_10492_20240220
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10641_20231211
+  source:
+  - headings.yaml
+- doc_id: FDIC_10678_20221114
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_10685_20240826
+  source:
+  - headings.yaml
+- doc_id: FDIC_109_20250224
+  source:
+  - headings.yaml
+- doc_id: FDIC_1164_20240422
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_11891_20250310
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_12285_20250721
+  source:
+  - headings.yaml
+- doc_id: FDIC_12303_20220921
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_12706_20250324
+  note: read 2026-10-08 for false FDIC state markers (p7 table cell)
+- doc_id: FDIC_12717_20240924
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_12956_20240116
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_12969_20230221
+  source:
+  - headings.yaml
+- doc_id: FDIC_13622_20241202
+  source:
+  - headings.yaml
+- doc_id: FDIC_14333_20240520
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_14546_20230620
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_15415_20240924
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_15489_20230206
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_15629_20241216
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_16201_20250421
+  note: read 2026-10-08 while checking the lone-AA scope rule (two AAs, prose msa marker p3)
+- doc_id: FDIC_16221_20231016
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_16243_20230207
+  source:
+  - headings.yaml
+- doc_id: FDIC_16281_20221219
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_16595_20250303
+  note: read 2026-10-08 for mixed-case FDIC state markers (pp15, 25)
+- doc_id: FDIC_1678_20230814
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_16891_20230117
+  source:
+  - headings.yaml
+- doc_id: FDIC_1745_20230221
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_19163_20221128
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_19401_20241015
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_19680_20230417
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_20666_20230814
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_21606_20250505
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_2241_20230710
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_22621_20231120
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_22876_20240624
+  source:
+  - headings.yaml
+- doc_id: FDIC_22971_20240624
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_23376_20230213
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_24540_20221114
+  note: read 2026-10-08 for false msa markers (p5 prose line)
+- doc_id: FDIC_26530_20220920
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_26799_20220805
+  source:
+  - headings.yaml
+- doc_id: FDIC_2787_20221205
+  note: read 2026-10-08 while designing the review reset rule (false appendix marker p8)
+- doc_id: FDIC_28401_20230130
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_29332_20230531
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_32908_20240212
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_32968_20240730
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_35241_20241104
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_35261_20240422
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_35530_20240715
+  source:
+  - headings.yaml
+- doc_id: FDIC_5694_20241112
+  source:
+  - headings.yaml
+- doc_id: FDIC_57069_20220214
+  source:
+  - headings.yaml
+- doc_id: FDIC_57095_20230620
+  source:
+  - headings.yaml
+- doc_id: FDIC_57127_20220912
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_5768_20250414
+  source:
+  - headings.yaml
+- doc_id: FDIC_57897_20220920
+  source:
+  - headings.yaml
+- doc_id: FDIC_58103_20220919
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_58203_20240116
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_58424_20241021
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_5874_20221024
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_7614_20250303
+  source:
+  - headings.yaml
+- doc_id: FDIC_8681_20241203
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_903_20230717
+  source:
+  - review_templates.yaml
+- doc_id: FDIC_9737_20240306
+  source:
+  - headings.yaml
+- doc_id: FRB_1002953_20230508
+  source:
+  - headings.yaml
+- doc_id: FRB_1003558_20240226
+  source:
+  - review_templates.yaml
+- doc_id: FRB_1007051_20230515
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_1015252_20230306
+  source:
+  - headings.yaml
+- doc_id: FRB_1017425_20240729
+  source:
+  - review_templates.yaml
+- doc_id: FRB_114840_20241202
+  source:
+  - headings.yaml
+- doc_id: FRB_126049_20231016
+  source:
+  - review_templates.yaml
+- doc_id: FRB_126553_20230508
+  source:
+  - headings.yaml
+- doc_id: FRB_137447_20230724
+  source:
+  - headings.yaml
+- doc_id: FRB_143952_20240826
+  source:
+  - review_templates.yaml
+- doc_id: FRB_147857_20230403
+  source:
+  - review_templates.yaml
+- doc_id: FRB_150727_20250512
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_168571_20241015
+  source:
+  - review_templates.yaml
+- doc_id: FRB_175609_20241104
+  note: read 2026-10-08 while designing the lone-AA scope rule (New York, LTD heading p11)
+- doc_id: FRB_177135_20240819
+  source:
+  - headings.yaml
+- doc_id: FRB_180845_20241104
+  source:
+  - headings.yaml
+- doc_id: FRB_1864197_20230117
+  source:
+  - headings.yaml
+- doc_id: FRB_188720_20230508
+  source:
+  - review_templates.yaml
+- doc_id: FRB_194440_20250519
+  source:
+  - headings.yaml
+- doc_id: FRB_210256_20250224
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_21359_20240212
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_242949_20250324
+  source:
+  - headings.yaml
+- doc_id: FRB_2562164_20220307
+  source:
+  - headings.yaml
+- doc_id: FRB_2631172_20240311
+  source:
+  - review_templates.yaml
+- doc_id: FRB_2667957_20230501
+  source:
+  - headings.yaml
+- doc_id: FRB_268828_20230313
+  source:
+  - review_templates.yaml
+- doc_id: FRB_2736714_20250707
+  source:
+  - headings.yaml
+- doc_id: FRB_274829_20250303
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_2785477_20250602
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_2793593_20240610
+  source:
+  - review_templates.yaml
+- doc_id: FRB_3052813_20250224
+  source:
+  - review_templates.yaml
+- doc_id: FRB_3067929_20240325
+  source:
+  - review_templates.yaml
+- doc_id: FRB_3150205_20250407
+  source:
+  - headings.yaml
+- doc_id: FRB_331713_20230109
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_336361_20221128
+  source:
+  - headings.yaml
+  note: read 2026-10-08 for the AA-unit count (two bare Dallas markers)
+- doc_id: FRB_3370133_20230327
+  source:
+  - review_templates.yaml
+- doc_id: FRB_3487947_20230731
+  source:
+  - review_templates.yaml
+- doc_id: FRB_352651_20230417
+  source:
+  - headings.yaml
+- doc_id: FRB_353238_20230925
+  source:
+  - headings.yaml
+- doc_id: FRB_3603961_20230710
+  source:
+  - review_templates.yaml
+- doc_id: FRB_368054_20230612
+  source:
+  - headings.yaml
+- doc_id: FRB_371362_20231023
+  source:
+  - headings.yaml
+- doc_id: FRB_382050_20240129
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_447100_20240304
+  source:
+  - review_templates.yaml
+- doc_id: FRB_453446_20240903
+  source:
+  - headings.yaml
+- doc_id: FRB_49241_20230605
+  source:
+  - headings.yaml
+- doc_id: FRB_528102_20221128
+  source:
+  - headings.yaml
+- doc_id: FRB_533227_20240415
+  source:
+  - review_templates.yaml
+- doc_id: FRB_5543735_20241202
+  source:
+  - headings.yaml
+- doc_id: FRB_568939_20241021
+  source:
+  - headings.yaml
+  note: read 2026-10-08 while designing the lone-AA scope rule (counter-example, two AAs)
+- doc_id: FRB_580874_20230410
+  source:
+  - review_templates.yaml
+- doc_id: FRB_613156_20230911
+  source:
+  - review_templates.yaml
+- doc_id: FRB_618740_20250113
+  source:
+  - headings.yaml
+- doc_id: FRB_623454_20250310
+  source:
+  - headings.yaml
+- doc_id: FRB_629353_20241202
+  source:
+  - headings.yaml
+- doc_id: FRB_645465_20240401
+  source:
+  - headings.yaml
+- doc_id: FRB_648130_20250203
+  source:
+  - headings.yaml
+- doc_id: FRB_680130_20230724
+  source:
+  - headings.yaml
+- doc_id: FRB_680457_20220912
+  source:
+  - headings.yaml
+- doc_id: FRB_709143_20230130
+  note: read 2026-10-08 for the AA-unit count (three AAs, bare Dallas markers)
+- doc_id: FRB_722816_20230626
+  source:
+  - headings.yaml
+- doc_id: FRB_726953_20250218
+  source:
+  - headings.yaml
+- doc_id: FRB_749635_20250303
+  source:
+  - headings.yaml
+  - review_templates.yaml
+- doc_id: FRB_807348_20230710
+  source:
+  - headings.yaml
+- doc_id: FRB_823656_20230814
+  source:
+  - headings.yaml
+- doc_id: FRB_884358_20250303
+  source:
+  - headings.yaml
+- doc_id: FRB_886204_20231023
+  source:
+  - review_templates.yaml
+- doc_id: FRB_920975_20220926
+  note: read 2026-10-08 while checking the lone-AA scope rule (three AAs, one marker p6)
+- doc_id: FRB_925653_20240916
+  source:
+  - headings.yaml
+- doc_id: FRB_92902_20230403
+  source:
+  - headings.yaml
+- doc_id: FRB_930442_20240715
+  source:
+  - headings.yaml
+- doc_id: OCC_11001_20240722
+  source:
+  - review_templates.yaml
+- doc_id: OCC_11397_20241021
+  source:
+  - review_templates.yaml
+- doc_id: OCC_12152_20240531
+  source:
+  - review_templates.yaml
+- doc_id: OCC_13557_20230530
+  source:
+  - review_templates.yaml
+- doc_id: OCC_14821_20220822
+  source:
+  - review_templates.yaml
+- doc_id: OCC_15379_20250127
+  source:
+  - headings.yaml
+- doc_id: OCC_15748_20240724
+  source:
+  - review_templates.yaml
+- doc_id: OCC_16473_20230731
+  source:
+  - review_templates.yaml
+- doc_id: OCC_16553_20230724
+  source:
+  - review_templates.yaml
+- doc_id: OCC_24349_20220829
+  note: read 2026-10-08 for false msa markers (p4 prose line)
+- doc_id: OCC_6488_20230123
+  note: read 2026-10-08 while designing the review reset rule (false appendix marker p5)
+- doc_id: OCC_700133_20220801
+  source:
+  - review_templates.yaml
+- doc_id: OCC_702983_20231023
+  source:
+  - headings.yaml
+- doc_id: OCC_704307_20220922
+  source:
+  - review_templates.yaml
+- doc_id: OCC_713570_20250519
+  source:
+  - headings.yaml

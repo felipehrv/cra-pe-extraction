@@ -29,7 +29,7 @@ bank_id,OCC_13557_20230530,OCC,13557,rule_gap_fixed; unseen_phrasing: id label,v
 bank_id,FRB_3869123_20221114,FRB,3869123,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,3869123,True,3869123,2
 bank_id,OCC_18431_20240205,OCC,18431,rule_gap_fixed; unseen_phrasing: id label,value,18431,True,Charter #18431,1
 bank_id,OCC_14302_20221205,OCC,14302,rule_gap_fixed; cover_layout: bare id line under the name,value,14302,True,14302,1
-exam_date,FRB_785473_20220418,FRB,2022-04-18,locator_miss: cover not found,abstain,,False,,
+exam_date,FRB_785473_20220418,FRB,2022-04-18,rule_gap_fixed; unseen_phrasing: cover date format,value,2022-04-18,True,"April 18, 2022",1
 exam_date,FDIC_11674_20240205,FDIC,2024-02-05,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-02-05,True,"Feburary 5, 2024",1
 exam_date,FRB_302133_20230424,FRB,2023-04-24,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-04-24,True,"April 24, 2023",1
 exam_date,FRB_790543_20241028,FRB,2024-10-28,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-10-28,True,"October 28, 2024",1

@@ -161,3 +161,14 @@ class Trace(BaseModel):
     error: str | None = None
     stop_reason: str | None = None
     response_format: str | None = None
+    effort: str | None = Field(
+        default=None,
+        description="effort level sent with the call (Gemini thinking level, Anthropic effort, "
+        "OpenAI reasoning effort); None when no effort parameter was sent",
+    )
+    mode: str | None = Field(
+        default=None,
+        description="run mode of the call: located (the field group's located sections, or the "
+        "whole document on a locator miss), whole (the whole-document ablation) or closedbook "
+        "(the closed-book baseline); None on traces written before the field existed",
+    )

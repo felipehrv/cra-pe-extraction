@@ -56,6 +56,12 @@ CHANGELOG
   abstaining on every field to values, and sections that started on a table-of-contents page
   now start at the real heading. ``results/rules_0.2.0_head_locator.csv`` holds 0.2.0 on the
   previous locator for comparison.
+- 0.2.2 (2026-10-08): no pattern changed; S1 inputs changed. Locate scope rules
+  (``config/headings.yaml`` scope_rules): the fair lending or illegal credit practices review
+  section is institution scope wherever printed, and in a document with one assessment-area
+  unit the LTD ratio and AA concentration sections are institution scope, so ``FieldValue.scope``
+  changes for those sections. Manifest overrides (``config/manifest_overrides.yaml``):
+  FDIC_445_20280408 is FDIC_445_20240408, FRB_785473_20220418 is parsed from its embedded PE.
 """
 
 from __future__ import annotations
@@ -85,7 +91,7 @@ from cra_extract.locate import (
 )
 from cra_extract.models import RATING_WORDS, FieldValue, Page, Rating, Section
 
-RULES_VERSION = "0.2.1"
+RULES_VERSION = "0.2.2"
 SYSTEM = "rules"
 CHANGELOG: list[tuple[str, str, str]] = [
     ("0.1.0", "2026-10-07", "First version, patterns seeded on the eight sample PEs."),
@@ -105,6 +111,13 @@ CHANGELOG: list[tuple[str, str, str]] = [
         "tuning of the same day (no-break-space glyphs, leaderless ToC pages, wrapped headings, FRB heading "
         "variants, case-sensitive FRB state marker, running headers and table runs as section "
         "ends); 45 FRB Chicago PEs go from all-abstain to values.",
+    ),
+    (
+        "0.2.2",
+        "2026-10-08",
+        "No pattern change; S1 inputs changed: locate scope_rules (review section always institution "
+        "scope; LTD and AA concentration institution scope in one-unit documents) and the manifest "
+        "overrides (FDIC_445_20240408 renamed, FRB_785473_20220418 parsed from its embedded PE).",
     ),
 ]
 
