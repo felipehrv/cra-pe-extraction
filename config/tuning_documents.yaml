@@ -14,8 +14,10 @@ documents:
   - review_templates.yaml
 - doc_id: FDIC_10077_20250218
   source:
+  - headings.yaml
   - review_templates.yaml
-  note: read 2026-10-08 for false FDIC state markers (p6 table cell)
+  note: read 2026-10-08 for false FDIC state markers (p6 table cell); cited for the case-sensitive FDIC
+    state marker
 - doc_id: FDIC_10101_20230608
   source:
   - review_templates.yaml
@@ -60,15 +62,28 @@ documents:
 - doc_id: FDIC_109_20250224
   source:
   - headings.yaml
+- doc_id: FDIC_11448_20241118
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp9-11,
+    prose p33, rated-area titles pp13, 32'
 - doc_id: FDIC_1164_20240422
   source:
   - review_templates.yaml
+- doc_id: FDIC_11729_20250121
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_11891_20250310
   source:
   - review_templates.yaml
+- doc_id: FDIC_12163_20220920
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_12285_20250721
   source:
   - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: operations state heading p11,
+    mixed-case table rows pp9-12'
 - doc_id: FDIC_12303_20220921
   source:
   - review_templates.yaml
@@ -77,6 +92,9 @@ documents:
 - doc_id: FDIC_12717_20240924
   source:
   - review_templates.yaml
+- doc_id: FDIC_12814_20230717
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p15,
+    rated-area titles pp13, 23'
 - doc_id: FDIC_12956_20240116
   source:
   - review_templates.yaml
@@ -86,12 +104,23 @@ documents:
 - doc_id: FDIC_13622_20241202
   source:
   - headings.yaml
+- doc_id: FDIC_1373_20230501
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_14017_20230124
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp9-11,
+    rated-area title p12'
 - doc_id: FDIC_14333_20240520
   source:
   - review_templates.yaml
 - doc_id: FDIC_14546_20230620
   source:
   - review_templates.yaml
+- doc_id: FDIC_14922_20221128
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_15415_20240924
   source:
   - review_templates.yaml
@@ -101,6 +130,14 @@ documents:
 - doc_id: FDIC_15629_20241216
   source:
   - review_templates.yaml
+- doc_id: FDIC_15699_20240624
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p7,
+    rated-area titles pp13, 21'
+- doc_id: FDIC_16125_20250203
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_16201_20250421
   note: read 2026-10-08 while checking the lone-AA scope rule (two AAs, prose msa marker p3)
 - doc_id: FDIC_16221_20231016
@@ -112,6 +149,9 @@ documents:
 - doc_id: FDIC_16281_20221219
   source:
   - review_templates.yaml
+- doc_id: FDIC_16553_20230327
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp10-11,
+    rated-area title p12'
 - doc_id: FDIC_16595_20250303
   note: read 2026-10-08 for mixed-case FDIC state markers (pp15, 25)
 - doc_id: FDIC_1678_20230814
@@ -120,21 +160,53 @@ documents:
 - doc_id: FDIC_16891_20230117
   source:
   - headings.yaml
+- doc_id: FDIC_17077_20230919
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_17453_20240429
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_1745_20230221
   source:
   - review_templates.yaml
+- doc_id: FDIC_18100_20221003
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_18361_20250310
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp18-39,
+    rated-area titles pp14, 37'
+- doc_id: FDIC_18609_20241212
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_19163_20221128
   source:
   - review_templates.yaml
+- doc_id: FDIC_19288_20230501
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_19401_20241015
   source:
   - review_templates.yaml
 - doc_id: FDIC_19680_20230417
   source:
   - review_templates.yaml
+- doc_id: FDIC_20130_20230828
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_20156_20230327
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_20179_20230523
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: rated-area table p5, appendix
+    table p29, rated-area titles pp12, 22'
 - doc_id: FDIC_20666_20230814
   source:
   - review_templates.yaml
+- doc_id: FDIC_20845_20240903
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_21292_20230331
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p10'
 - doc_id: FDIC_21606_20250505
   source:
   - review_templates.yaml
@@ -154,13 +226,18 @@ documents:
   source:
   - review_templates.yaml
 - doc_id: FDIC_24540_20221114
-  note: read 2026-10-08 for false msa markers (p5 prose line)
+  source:
+  - headings.yaml
+  note: read 2026-10-08 for false msa markers (p5 prose line); cited for the case-sensitive FDIC msa marker
 - doc_id: FDIC_26530_20220920
   source:
   - review_templates.yaml
 - doc_id: FDIC_26799_20220805
   source:
   - headings.yaml
+- doc_id: FDIC_27074_20230320
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_2787_20221205
   note: read 2026-10-08 while designing the review reset rule (false appendix marker p8)
 - doc_id: FDIC_28401_20230130
@@ -169,12 +246,32 @@ documents:
 - doc_id: FDIC_29332_20230531
   source:
   - review_templates.yaml
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_29571_20221205
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_29922_20221107
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_32908_20240212
   source:
   - review_templates.yaml
 - doc_id: FDIC_32968_20240730
   source:
   - review_templates.yaml
+- doc_id: FDIC_33708_20221114
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_34363_20230515
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_34998_20230911
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa line p5, table rows
+    pp22, 28, rated-area titles pp14, 21, 27'
+- doc_id: FDIC_35109_20221129
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_35241_20241104
   source:
   - review_templates.yaml
@@ -184,9 +281,20 @@ documents:
 - doc_id: FDIC_35530_20240715
   source:
   - headings.yaml
+- doc_id: FDIC_4160_20241202
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_5072_20250630
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_5568_20240422
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_5694_20241112
   source:
   - headings.yaml
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
 - doc_id: FDIC_57069_20220214
   source:
   - headings.yaml
@@ -199,6 +307,9 @@ documents:
 - doc_id: FDIC_5768_20250414
   source:
   - headings.yaml
+- doc_id: FDIC_57841_20240603
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_57897_20220920
   source:
   - headings.yaml
@@ -208,24 +319,68 @@ documents:
 - doc_id: FDIC_58203_20240116
   source:
   - review_templates.yaml
+- doc_id: FDIC_58377_20240130
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_58424_20241021
   source:
   - review_templates.yaml
+- doc_id: FDIC_58428_20240304
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_5874_20221024
   source:
+  - headings.yaml
   - review_templates.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa line p7, table rows
+    pp9-11 and p14, MULTISTATE MSA headings p12'
+- doc_id: FDIC_58752_20250707
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa line p12, mixed-case
+    table rows pp13-29, rated-area titles pp12-28'
 - doc_id: FDIC_7614_20250303
   source:
   - headings.yaml
+- doc_id: FDIC_8141_20240304
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows pp11-19,
+    rated-area title p15'
+- doc_id: FDIC_8527_20250729
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_8681_20241203
   source:
   - review_templates.yaml
+- doc_id: FDIC_90141_20221024
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa lines pp6-20, MULTISTATE
+    MSA headings pp14, 17, table rows p16'
 - doc_id: FDIC_903_20230717
   source:
   - review_templates.yaml
+- doc_id: FDIC_9437_20230919
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
+- doc_id: FDIC_9463_20240701
+  source:
+  - headings.yaml
+  note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: multistate MSA headings pp12,
+    15, prose msa line p12, STATE OF OHIO p21, table rows p14'
+- doc_id: FDIC_9465_20230410
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
+    state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_9632_20240610
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
 - doc_id: FDIC_9737_20240306
   source:
   - headings.yaml
+- doc_id: FDIC_9963_20240122
+  note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
+    above each state rating line (pages not read)'
 - doc_id: FRB_1002953_20230508
   source:
   - headings.yaml

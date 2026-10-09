@@ -180,6 +180,9 @@ class _Patterns:
 
 
 def _compile(patterns: list[str]) -> list[re.Pattern[str]]:
+    """Compile without case; a pattern makes a part case-sensitive with the inline group
+    ``(?-i:...)``, as the FDIC and FRB "STATE OF" markers and the FDIC multistate MSA marker do
+    (mixed-case "State of Illinois" and "Multistate MSA" are table cells and prose there)."""
     return [re.compile(p, re.IGNORECASE) for p in patterns]
 
 
@@ -572,9 +575,11 @@ def aa_units(lines: list[_Line], unit_scopes: Iterable[str]) -> tuple[set[str], 
     One rule for the lone-AA scope rule (:func:`lone_aa_unit`) and the multi-AA strata count
     (``run.count_aa_sections``). A unit is a marker event that opened a scope in
     ``unit_scopes``; markers read while the sticky appendix scope is in effect open nothing and
-    are ignored (glossary prose such as "the multistate metropolitan area." on FDIC_58220_20250512
-    p23). Markers with the same :func:`aa_unit_name` are one unit; a marker with an empty name
-    counts once per occurrence, so three bare Dallas headings are three units.
+    are ignored (appendix tables and glossary prose repeat area names; the FDIC glossary line
+    "the multistate metropolitan area." on FDIC_58220_20250512 p23 was one until the FDIC msa
+    marker became case-sensitive on 2026-10-08). Markers with the same :func:`aa_unit_name`
+    are one unit; a marker with an empty name counts once per occurrence, so three bare Dallas
+    headings are three units.
     """
     scopes = frozenset(unit_scopes)
     units: set[str] = set()

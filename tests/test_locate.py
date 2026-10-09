@@ -799,6 +799,187 @@ def test_frb_state_marker_is_case_sensitive():
     assert locate.tag_pages(heading, "FRB")[1].scope == "state"
 
 
+# FDIC state and multistate MSA markers (2026-10-08): the state pattern and the name prefix of
+# the msa pattern are case-sensitive. The excerpts are shortened from the cited corpus PEs.
+FDIC_LTD_PAGE = (
+    "Loan-to-Deposit Ratio\n\n"
+    "The bank's net loan-to-deposit ratio is reasonable given its size and financial condition.\n\n"
+    "Assessment Area Concentration\n\n"
+    "The bank made a majority of its home mortgage and small business loans in its AAs.\n"
+)
+
+
+def _marker_events(pages: list[Page], regulator: str = "FDIC") -> list[tuple[str, str]]:
+    lines, _ = locate._analyze(pages, regulator)
+    return [(ln.event[1], ln.text) for ln in lines if ln.event and ln.event[0] == "marker"]
+
+
+@pytest.mark.parametrize(
+    ("excerpt", "source"),
+    [
+        (
+            "STATE OF OHIO\n\nCRA RATING FOR STATE OF OHIO:  SATISFACTORY\n\n"
+            "The Lending Test is rated:  Satisfactory\n"
+            "The Community Development Test is rated: Satisfactory\n",
+            "FDIC_9463_20240701 p21",
+        ),
+        (
+            "DESCRIPTION OF INSTITUTION’S OPERATIONS IN STATE OF\nOKLAHOMA\n\n"
+            "Cattlemens Bank designated one AA in the State of Oklahoma: the Oklahoma Non-MSA AA.\n",
+            "FDIC_12285_20250721 p11",
+        ),
+    ],
+)
+def test_fdic_state_heading_in_capitals_opens_state_scope(excerpt, source):
+    pages = _doc("PUBLIC DISCLOSURE\n", FDIC_LTD_PAGE, excerpt)
+    assert [kind for kind, _ in _marker_events(pages)] == ["state"], source
+    assert locate.tag_pages(pages, "FDIC")[2].scope == "state", source
+    lines, _ = locate._analyze(pages, "FDIC")
+    assert locate.aa_units(lines, ("assessment_area", "msa")) == (set(), True), source
+
+
+@pytest.mark.parametrize(
+    ("excerpt", "source"),
+    [
+        # unemployment table, the state row between county rates and the national average
+        (
+            "County or Area\nDec 2024\nLogan County\n4.7\nMason County\n4.9\nTazewell County\n"
+            "4.6\nState of Illinois\n4.3\nNational Average\n4.1\n"
+            "Source: Bureau of Labor Statistics\n",
+            "FDIC_10077_20250218 p6",
+        ),
+        # loans by rated area, a state row between counts and percentages
+        (
+            "$(000s)\n%\n#\n%\nState of Georgia\n280,770\n78.8\n386,410\n90.8\n8\n88.9\n"
+            "State of Florida\n75,716\n",
+            "FDIC_15699_20240624 p7",
+        ),
+        # community development table: the title, the state row, then the column headers
+        (
+            "Community Development Lending\nState of Louisiana\nAffordable\nHousing\nCommunity\n"
+            "Services\n",
+            "FDIC_8141_20240304 p17",
+        ),
+        # a prose line of the state's Lending Test conclusion
+        (
+            "Century Bank demonstrated a satisfactory Lending Test in the State of Mississippi.\n"
+            "State of Mississippi proves consistent with the Lending Test conclusions for both the"
+            " Mississippi\nNon-MSA AA and Gulfport-Biloxi-Pascagoula MSA AA.\n",
+            "FDIC_11448_20241118 p33",
+        ),
+    ],
+)
+def test_fdic_mixed_case_state_row_or_prose_is_not_a_marker(excerpt, source):
+    """Matched without case, these lines opened state scope before the institution-level LTD
+    and AA concentration sections (283 FDIC PEs of split corpus)."""
+    pages = _doc("PUBLIC DISCLOSURE\n", excerpt, FDIC_LTD_PAGE)
+    assert _marker_events(pages) == [], source
+    assert [p.scope for p in locate.tag_pages(pages, "FDIC")] == ["institution"] * 3, source
+    found, _ = locate.locate_all("d", pages, "FDIC")
+    for name in ("ltd_ratio", "aa_concentration"):
+        assert (found[name].scope, found[name].confidence) == ("institution", 1.0), source
+
+
+@pytest.mark.parametrize(
+    ("excerpt", "heading", "source"),
+    [
+        (
+            "SALISBURY, MD-DE MULTISTATE MSA – Full-Scope Review\n"
+            "CRA RATING FOR SALISBURY, MD-DE MULTISTATE MSA:  SATISFACTORY\n"
+            "The Lending Test is rated:  Satisfactory\n",
+            "SALISBURY, MD-DE MULTISTATE MSA – Full-Scope Review",
+            "FDIC_5874_20221024 p12",
+        ),
+        (
+            "WHEELING, WEST VIRGINIA-OHIO\nMULTISTATE METROPOLITAN STATISTICAL AREA\n"
+            "Full-Scope Review\n\nCRA RATING FOR WHEELING, WV-OH MULTISTATE MSA AA: SATISFACTORY\n",
+            "CRA RATING FOR WHEELING, WV-OH MULTISTATE MSA AA: SATISFACTORY",
+            "FDIC_9463_20240701 p12",
+        ),
+        (
+            "CONCLUSIONS ON PERFORMANCE CRITERIA IN MULTISTATE MSA\nLENDING TEST\n"
+            "BankProv demonstrated reasonable performance under the Lending Test.\n",
+            "CONCLUSIONS ON PERFORMANCE CRITERIA IN MULTISTATE MSA",
+            "FDIC_90141_20221024 p17",
+        ),
+    ],
+)
+def test_fdic_multistate_msa_heading_in_capitals_opens_msa_scope(excerpt, heading, source):
+    pages = _doc("PUBLIC DISCLOSURE\n", FDIC_LTD_PAGE, excerpt)
+    assert _marker_events(pages)[0] == ("msa", heading), source
+    # the line scope from the heading on (the page scope is that of most of its lines)
+    text = locate.doc_text(pages)
+    spans = locate.scope_spans(pages, "FDIC")
+    assert locate.scope_at(spans, text.index(heading)) == "msa", source
+    assert locate.scope_at(spans, len(text) - 2) == "msa", source
+    assert locate.scope_at(spans, text.index("Loan-to-Deposit Ratio")) == "institution", source
+
+
+@pytest.mark.parametrize(
+    ("excerpt", "source"),
+    [
+        (
+            "Metropolitan Division (MD) and the Cambridge-Newton-Framingham, MA MD, which are"
+            " both in\nthe Boston-Cambridge-Newton, MA-NH multistate MSA.\n"
+            "The State of NH AA consists of 71 census tracts located in the partial counties.\n",
+            "FDIC_24540_20221114 p5",
+        ),
+        (
+            "and Borrower Profile criteria supports this rating.  CBT's overall performance was"
+            " consistent across the\nMD-DE Multistate MSA and Virginia non-MSA assessment areas.\n\n"
+            "This section presents the institution's overall performance under the Lending Test.\n",
+            "FDIC_5874_20221024 p7",
+        ),
+        (
+            "of Oregon and consists of all 87 CTs in Clackamas, 197 CTs in Multnomah and all 134"
+            " CTs in\nHillsboro Multistate MSA. No changes were made to this AA since the previous"
+            " evaluation.\nEconomic and Demographic Data\n",
+            "FDIC_58752_20250707 p12",
+        ),
+        # a row of the loans-by-area table
+        ("#\n$(000s)\n#\n$(000s)\nMD-DE Multistate MSA\n2\n457\n0\n0\n", "FDIC_5874_20221024 p9"),
+    ],
+)
+def test_fdic_prose_or_table_multistate_msa_is_not_a_marker(excerpt, source):
+    """Matched without case, these lines opened msa scope before the LTD section
+    (FDIC_5874_20221024 p7 precedes "Loan-to-Deposit Ratio" on the same page) and each counted
+    as one more assessment-area unit."""
+    pages = _doc("PUBLIC DISCLOSURE\n", excerpt, FDIC_LTD_PAGE)
+    assert _marker_events(pages) == [], source
+    assert [p.scope for p in locate.tag_pages(pages, "FDIC")] == ["institution"] * 3, source
+    lines, _ = locate._analyze(pages, "FDIC")
+    assert locate.aa_units(lines, ("assessment_area", "msa")) == (set(), False), source
+    found, _ = locate.locate_all("d", pages, "FDIC")
+    for name in ("ltd_ratio", "aa_concentration"):
+        assert (found[name].scope, found[name].confidence) == ("institution", 1.0), source
+
+
+@pytest.mark.parametrize(
+    ("regulator", "kind", "pattern", "matches", "skips"),
+    [
+        ("FDIC", "state", "^(?-i:STATE OF [A-Z ]+)$", "STATE OF OHIO", "State of Ohio"),
+        ("FRB", "state", "^(?-i:STATE OF [A-Z ]+)$", "STATE OF IOWA", "State of Iowa"),
+        (
+            "FDIC",
+            "msa",
+            "^(?-i:[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN))",
+            "PORTLAND-VANCOUVER-HILLSBORO MULTISTATE MSA – Full-Scope",
+            "PVH Multistate MSA",
+        ),
+    ],
+)
+def test_case_sensitive_marker_patterns_are_configured(regulator, kind, pattern, matches, skips):
+    """The case-sensitive groups live in the configuration: the locator compiles every pattern
+    with re.IGNORECASE and the inline (?-i:...) group turns it off for its part only (the
+    "Full-Scope" tail of a multistate MSA title stays free)."""
+    assert pattern in load_headings()["scope_markers"][kind][regulator]
+    compiled = [p for scope, regs in locate._patterns(regulator).markers if scope == kind for p in regs]
+    assert pattern in [p.pattern for p in compiled]
+    one = next(p for p in compiled if p.pattern == pattern)
+    assert one.flags & re.IGNORECASE
+    assert one.search(matches) and not one.search(skips)
+
+
 @pytest.mark.parametrize(
     ("heading", "scope", "source"),
     [
@@ -1142,12 +1323,13 @@ def test_review_heading_resets_scope_to_institution_after_all_aa_sections():
 @pytest.mark.parametrize(
     ("regulator", "marker", "heading", "source"),
     [
-        # a table cell read as a state marker, FDIC_10077_20250218 p6 (review p13)
+        # an FDIC state heading before the review, FDIC_9463_20240701 p21 order reversed (the
+        # table cell "State of Illinois", FDIC_10077_20250218 p6, is no marker since 2026-10-08)
         (
             "FDIC",
-            "State of Illinois",
+            "STATE OF OHIO",
             "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW",
-            "FDIC_10077_20250218",
+            "FDIC_9463_20240701",
         ),
         # a prose line read as an appendix marker, FDIC_2787_20221205 p8 (review p13)
         (

@@ -1,11 +1,12 @@
 # Section heading patterns per regulator, used by the page-wise locator (src/cra_extract/locate.py).
-# Patterns are Python regular expressions matched against a stripped line, case-insensitive,
-# after curly quotes are replaced by straight ones (FRB prints "INSTITUTION’S" with a curly
-# apostrophe). A line is a heading candidate only when it is short (at most 100 characters),
-# has no currency or percent sign and no run of three or more inner spaces (pdftotext column
-# gaps in tables). Lines that look like table-of-contents entries (dot leaders, ellipsis,
-# trailing page numbers) are skipped before matching, and so is everything on a mostly-ToC
-# page up to its last ToC row (wrapped ToC entries carry no leader).
+# Patterns are Python regular expressions matched against a stripped line, case-insensitive
+# except inside an inline (?-i:...) group, after curly quotes are replaced by straight ones
+# (FRB prints "INSTITUTION’S" with a curly apostrophe). A line is a heading candidate only
+# when it is short (at most 100 characters), has no currency or percent sign and no run of
+# three or more inner spaces (pdftotext column gaps in tables). Lines that look like
+# table-of-contents entries (dot leaders, ellipsis, trailing page numbers) are skipped before
+# matching, and so is everything on a mostly-ToC page up to its last ToC row (wrapped ToC
+# entries carry no leader).
 # Seeded from the eight sample PEs on 2026-10-05; every pattern must be covered by a test
 # case in tests/test_locate.py.
 
@@ -217,14 +218,39 @@ scope_markers:
   msa:
     # '^Multi-state ... Rating$' with the hyphen: OCC_15379_20250127 p6 (2026-10-08).
     OCC: ['^Multistate Metropolitan', '^MMSA Rating', '^Multi-state Metropolitan Statistical Area Rating$']
-    FDIC: ['^[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN)']
+    # FDIC prints the multistate MSA headings with the area name and MULTISTATE in capitals
+    # ("SALISBURY, MD-DE MULTISTATE MSA – Full-Scope Review" and "CRA RATING FOR SALISBURY,
+    # MD-DE MULTISTATE MSA:" FDIC_5874_20221024 p12; "WV-OH MULTISTATE METROPOLITAN STATISTICAL
+    # AREA" FDIC_9463_20240701 p12; "CONCLUSIONS ON PERFORMANCE CRITERIA IN MULTISTATE MSA"
+    # FDIC_90141_20221024 p17), so the prefix is case-sensitive (2026-10-08). Matched without
+    # case, prose lines opened msa scope before the institution-level LTD section ("MD-DE
+    # Multistate MSA and Virginia non-MSA assessment areas.", FDIC_5874_20221024 p7; "the
+    # Boston-Cambridge-Newton, MA-NH multistate MSA.", FDIC_24540_20221114 p5; "Hillsboro
+    # Multistate MSA. No changes were made ...", FDIC_58752_20250707 p12), and so did table
+    # cells ("MD-DE Multistate MSA" between loan counts, FDIC_5874_20221024 p9); each prose
+    # line also counted as one more assessment-area unit (locate.aa_units).
+    FDIC: ['^(?-i:[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN))']
     # The third FRB pattern is the MSA title line that opens each FieldPoint MSA page two lines
     # before "FULL SCOPE REVIEW" (e.g. "MD 35614 (NEW YORK-JERSEY CITY-WHITE PLAINS, NY-NJ)");
     # the closing parenthesis at the end of the line keeps prose and table rows out.
     FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?(MSA|MD) \\d", '^(MSA|MD) \d{4,5} .*SCOPE REVIEW$', '^(MSA|MD) \d{4,5} \([^()]*\)$']
   state:
     OCC: ['^State Rating$', '^State of [A-Za-z ]+$', '^Scope of Evaluation in [A-Za-z ]+$']
-    FDIC: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
+    # FDIC state headings are printed in capitals ("STATE OF OHIO" over "CRA RATING FOR STATE
+    # OF OHIO: SATISFACTORY", FDIC_9463_20240701 p21; "DESCRIPTION OF INSTITUTION'S OPERATIONS
+    # IN STATE OF" / "OKLAHOMA", FDIC_12285_20250721 p11), so the first pattern is
+    # case-sensitive, as for FRB (2026-10-08). "State of Illinois" in mixed case is a row of the
+    # unemployment, loan and community development tables, between numbers or table headers
+    # (FDIC_10077_20250218 p6, FDIC_15699_20240624 p7, FDIC_11448_20241118 p9,
+    # FDIC_8141_20240304 p17), or a line of prose ("State of Mississippi proves consistent with
+    # the Lending Test conclusions", FDIC_11448_20241118 p33); matched without case it opened
+    # state scope before the institution-level LTD and AA concentration sections of 283 FDIC
+    # PEs of split corpus. No mixed-case "State of X" line of the FDIC corpus is a heading:
+    # the multistate PEs that print one title their rated areas "ALABAMA"
+    # (FDIC_11448_20241118 p13), "GEORGIA – Full-Scope Review" (FDIC_15699_20240624 p13) or
+    # "STATE OF MARYLAND – Full-Scope Review" (FDIC_14017_20230124 p12), all boundaries, not
+    # markers.
+    FDIC: ['^(?-i:STATE OF [A-Z ]+)$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
     # FRB state headings are printed in capitals; "State of Iowa" in mixed case is a row of the
     # population and income tables (Chicago, FRB_242949_20250324 p8, FRB_210256_20250224 p6) or
     # prose (FRB_2667957_20230501 p4), so the first pattern is case-sensitive. The operations
