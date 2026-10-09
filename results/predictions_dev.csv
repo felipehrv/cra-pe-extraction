@@ -1,0 +1,191 @@
+doc_id,field,system,status,value,quote,page,scope,char_start,char_end,confidence,notes,grounding_failure,locator_miss
+FDIC_12299_20220912,regulator,rules,value,FDIC,Federal Deposit Insurance Corporation,1,institution,239,276,,,,0
+FDIC_12299_20220912,bank_name,rules,value,"SouthStar Bank, S.S.B.","SouthStar Bank, S.S.B.",1,institution,130,152,,,,0
+FDIC_12299_20220912,bank_id,rules,value,12299,Certificate Number: 12299,1,institution,156,182,,,,0
+FDIC_12299_20220912,exam_date,rules,value,2022-09-12,"September 12, 2022",1,institution,38,56,,,,0
+FDIC_12299_20220912,exam_method,rules,value,isb,"Examiners used the Interagency Intermediate Small Institution Examination Procedures to evaluate SouthStar Bank, S.S.B.’s CRA performance.",6,institution,10860,10999,,,,0
+FDIC_12299_20220912,overall_rating,rules,value,NI,INSTITUTION’S CRA RATING: This institution is rated Needs to Improve.,3,institution,2691,2761,,,,0
+FDIC_12299_20220912,lending_test_rating,rules,value,S,The Lending Test is rated Satisfactory.,3,institution,3327,3366,,,,0
+FDIC_12299_20220912,cd_test_rating,rules,value,S,The Community Development Test is rated Satisfactory.,3,institution,4180,4233,,,,0
+FDIC_12299_20220912,prior_evaluation_date,rules,value,2019-07-15,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019, based on Interagency Intermediate Small Institution CRA Examination Procedures.",4,institution,5223,5457,,,,0
+FDIC_12299_20220912,prior_rating,rules,value,S,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019, based on Interagency Intermediate Small Institution CRA Examination Procedures.",4,institution,5223,5457,,,,0
+FDIC_12299_20220912,total_assets_usd,rules,value,1200000000,"As of June 30, 2022, assets totaled approximately $1.2 billion, consisting primarily of net loans and leases of $800.6 million, securities of 184.4 million, and cash of $114.2 million.",4,institution,6490,6675,,,,0
+FDIC_12299_20220912,total_assets_asof,rules,value,2022-06-30,"As of June 30, 2022, assets totaled approximately $1.2 billion, consisting primarily of net loans and leases of $800.6 million, securities of 184.4 million, and cash of $114.2 million.",4,institution,6490,6675,,,,0
+FDIC_12299_20220912,avg_ltd_ratio_pct,rules,value,100.7,"The LTD ratio, calculated from Report of Income and Condition data, averaged 100.7 percent over the past 12 calendar quarters from September 30, 2019, to June 30, 2022, representing a decrease from the 107.9 percent average, net LTD ratio recorded at the prior evaluation.",8,institution,17732,18006,,,,0
+FDIC_12299_20220912,inside_aa_share_number_pct,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_12299_20220912,inside_aa_share_product,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_12299_20220912,n_assessment_areas,rules,value,5,"SouthStar Bank, S.S.B. designated five assessment areas: 1) the Austin-Round Rock-Georgetown, TX Metropolitan Statistical Area (MSA) Assessment Area (Austin MSA AA), 2) the College Station-Bryan, TX MSA Assessment Area (College Station MSA AA), 3) the Houston-The Woodlands-Sugar Land, TX MSA Assessment Area (Houston MSA AA), 4) the Killeen-Temple, TX MSA Assessment Area (Killeen MSA AA), and 5) the Texas Non-MSA Assessment Area (Non-MSA AA).",5,institution,8615,9066,,,,0
+FDIC_12299_20220912,loan_products_evaluated,rules,value,home_mortgage|small_business,"For the Lending Test, examiners determined that the bank’s major product lines include home mortgage and small business lending.",7,institution,12668,12797,,home_mortgage: p7; small_business: p7,,0
+FDIC_12299_20220912,finding_present,baseline,value,true,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices present during the review period.,14,institution,30957,31101,,"hits=2 negated=0 triggers=lowered,violation_of",,0
+FDIC_12299_20220912,rating_lowered,baseline,value,true,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices present during the review period.,14,institution,30957,31101,,"hits=2 negated=0 triggers=lowered,violation_of",,0
+FDIC_16733_20240410,regulator,rules,value,FDIC,Federal Deposit Insurance Corporation,1,institution,226,263,,,,0
+FDIC_16733_20240410,bank_name,rules,value,North Star Bank,North Star Bank,1,institution,117,132,,,,0
+FDIC_16733_20240410,bank_id,rules,value,16733,Certificate Number: 16733,1,institution,134,160,,,,0
+FDIC_16733_20240410,exam_date,rules,value,2024-04-10,"April 10, 2024",1,institution,35,49,,,,0
+FDIC_16733_20240410,exam_method,rules,value,small,Examiners used Interagency Small Institution Examination Procedures to evaluate North Star Bank’s CRA performance.,7,institution,12506,12621,,,,0
+FDIC_16733_20240410,overall_rating,rules,value,S,INSTITUTION’S CRA RATING: This institution is rated Satisfactory.,3,institution,2118,2184,,,,0
+FDIC_16733_20240410,lending_test_rating,rules,absent,,,,,,,,applicability FDIC/small: absent_from_document,,0
+FDIC_16733_20240410,cd_test_rating,rules,absent,,,,,,,,applicability FDIC/small: absent_from_document,,0
+FDIC_16733_20240410,prior_evaluation_date,rules,value,2021-04-05,"The institution received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021, based on Interagency Small Institution Examination Procedures.",4,institution,3650,3826,,,,0
+FDIC_16733_20240410,prior_rating,rules,value,S,"The institution received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021, based on Interagency Small Institution Examination Procedures.",4,institution,3650,3826,,,,0
+FDIC_16733_20240410,total_assets_usd,rules,value,352077000,"As of December 31, 2023, assets totaled approximately $352,077,000, loans totaled $248,328,000, and deposits totaled $321,650,000.",4,institution,4643,4774,,,,0
+FDIC_16733_20240410,total_assets_asof,rules,value,2023-12-31,"As of December 31, 2023, assets totaled approximately $352,077,000, loans totaled $248,328,000, and deposits totaled $321,650,000.",4,institution,4643,4774,,,,0
+FDIC_16733_20240410,avg_ltd_ratio_pct,rules,value,71.5,"The bank’s net loan-to-deposit ratio, calculated from Reports of Condition data, averaged 71.5 percent over the past 11 calendar quarters from June 30, 2021, to December 31, 2023.",8,institution,15180,15361,,,,0
+FDIC_16733_20240410,inside_aa_share_number_pct,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_16733_20240410,inside_aa_share_product,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_16733_20240410,n_assessment_areas,rules,value,1,"North Star Bank designated a single contiguous assessment area in south central Minnesota that includes the following counties in their entirety: Anoka, Ramsey, and Washington.",5,institution,5864,6042,,,quote_does_not_support,0
+FDIC_16733_20240410,loan_products_evaluated,rules,value,small_business,Examiners determined that the bank’s major product line is commercial loans.,7,institution,12781,12857,,small_business: p7,,0
+FDIC_16733_20240410,finding_present,baseline,value,false,,11,institution,,,,hits=0 negated=0 triggers=,quote_not_found,0
+FDIC_16733_20240410,rating_lowered,baseline,value,false,,11,institution,,,,hits=0 negated=0 triggers=,quote_not_found,0
+FDIC_26816_20220809,regulator,rules,value,FDIC,Federal Deposit Insurance Corporation,1,institution,228,265,,,,0
+FDIC_26816_20220809,bank_name,rules,value,"Liberty Bank, Inc.","Liberty Bank, Inc.",1,institution,120,138,,,,0
+FDIC_26816_20220809,bank_id,rules,value,26816,Certificate Number: 26816,1,institution,142,168,,,,0
+FDIC_26816_20220809,exam_date,rules,value,2022-08-09,"August 9, 2022",1,institution,32,46,,,,0
+FDIC_26816_20220809,exam_method,rules,value,small,"Examiners used the Interagency Small Institution Examination Procedures to evaluate LBI’s CRA performance, which evaluates the bank’s performance under the Lending Test.",6,institution,10672,10843,,,,0
+FDIC_26816_20220809,overall_rating,rules,value,SN,INSTITUTION’S CRA RATING: This institution is rated Substantial Noncompliance.,3,institution,2155,2234,,,,0
+FDIC_26816_20220809,lending_test_rating,rules,absent,,,,,,,,applicability FDIC/small: absent_from_document,,0
+FDIC_26816_20220809,cd_test_rating,rules,absent,,,,,,,,applicability FDIC/small: absent_from_document,,0
+FDIC_26816_20220809,prior_evaluation_date,rules,value,2021-04-12,"The institution received a “Substantial Noncompliance” CRA Rating at its previous CRA Performance Evaluation dated April 12, 2021, based on the Interagency Small Institution Examination Procedures.",3,institution,3805,4004,,,,0
+FDIC_26816_20220809,prior_rating,rules,value,SN,"The institution received a “Substantial Noncompliance” CRA Rating at its previous CRA Performance Evaluation dated April 12, 2021, based on the Interagency Small Institution Examination Procedures.",3,institution,3805,4004,,,,0
+FDIC_26816_20220809,total_assets_usd,rules,value,12600000,"As of June 30, 2022, the Consolidated Reports of Conditions and Income (Call Report) reported assets totaling $12.6 million, loans totaling $7.7 million, deposits totaling $10.8 million and securities of $691,000.",4,institution,4611,4826,,,,0
+FDIC_26816_20220809,total_assets_asof,rules,value,2022-06-30,"As of June 30, 2022, the Consolidated Reports of Conditions and Income (Call Report) reported assets totaling $12.6 million, loans totaling $7.7 million, deposits totaling $10.8 million and securities of $691,000.",4,institution,4611,4826,,,,0
+FDIC_26816_20220809,avg_ltd_ratio_pct,rules,value,64.9,"The bank’s net LTD ratio, calculated from Call Report data, averaged 64.9 percent over the past five calendar quarters from June 30, 2021, to June 30, 2022.",7,institution,13260,13417,,,,0
+FDIC_26816_20220809,inside_aa_share_number_pct,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_26816_20220809,inside_aa_share_product,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_26816_20220809,n_assessment_areas,rules,value,1,"LBI has defined its AA as all of Salt Lake County, which is part of the Salt Lake City, Utah Metropolitan Statistical Area (MSA) #41620 and is located along the Wasatch Mountain front.",4,institution,5963,6149,,singular definite AA statement,quote_does_not_support,0
+FDIC_26816_20220809,loan_products_evaluated,rules,value,consumer|small_business,"According to bank management and a review of the composition of the bank’s loan portfolio, examiners determined that the institution’s primary product line to be consumer Tiny Home Loans.",6,institution,11097,11285,,consumer: p6; small_business: p7,quote_does_not_support,0
+FDIC_26816_20220809,finding_present,baseline,value,true,The FDIC identified illegal credit practices during the evaluation period.,9,institution,16041,16115,,"hits=2 negated=0 triggers=identified_practice,violation_of",,0
+FDIC_26816_20220809,rating_lowered,baseline,value,false,,9,institution,,,,"hits=2 negated=0 triggers=identified_practice,violation_of",quote_not_found,0
+FDIC_6078_20240805,regulator,rules,value,FDIC,Federal Deposit Insurance Corporation,1,institution,220,257,,,,0
+FDIC_6078_20240805,bank_name,rules,value,One American Bank,One American Bank,1,institution,109,126,,,,0
+FDIC_6078_20240805,bank_id,rules,value,6078,Certificate Number: 6078,1,institution,128,153,,,,0
+FDIC_6078_20240805,exam_date,rules,value,2024-08-05,"August 5, 2024",1,institution,29,43,,,,0
+FDIC_6078_20240805,exam_method,rules,value,isb,"One American Bank became subject to the Interagency Intermediate Small Institution Examination Procedures effective January 1, 2024.",7,institution,14345,14478,,,,0
+FDIC_6078_20240805,overall_rating,rules,value,NI,INSTITUTION’S CRA RATING: This institution is rated Needs to Improve.,3,institution,2101,2171,,,,0
+FDIC_6078_20240805,lending_test_rating,rules,value,NI,The Lending Test is rated Needs to Improve.,3,institution,2416,2459,,,,0
+FDIC_6078_20240805,cd_test_rating,rules,value,NI,The Community Development Test is rated Needs to Improve.,3,institution,3196,3253,,,,0
+FDIC_6078_20240805,prior_evaluation_date,rules,value,2018-12-03,"At the previous evaluation, dated December 3, 2018, the FDIC evaluated the institution under the Interagency Small Institution Examination Procedures, and the institution received a Satisfactory rating.",4,institution,3871,4075,,,,0
+FDIC_6078_20240805,prior_rating,rules,value,S,"At the previous evaluation, dated December 3, 2018, the FDIC evaluated the institution under the Interagency Small Institution Examination Procedures, and the institution received a Satisfactory rating.",4,institution,3871,4075,,,,0
+FDIC_6078_20240805,total_assets_usd,rules,value,463000000,"As of March 31, 2024, the institution reported total assets of $463 million, total loans of $327 million, and total deposits of $322 million.",4,institution,5101,5243,,,,0
+FDIC_6078_20240805,total_assets_asof,rules,value,2024-03-31,"As of March 31, 2024, the institution reported total assets of $463 million, total loans of $327 million, and total deposits of $322 million.",4,institution,5101,5243,,,,0
+FDIC_6078_20240805,avg_ltd_ratio_pct,rules,value,128.1,The bank’s average net loan-to-deposit ratio is 128.1 percent over the past 22 calendar quarters and ranged from a low of 82.1 percent to a high of 260.9 percent.,9,institution,19395,19559,,,,0
+FDIC_6078_20240805,inside_aa_share_number_pct,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_6078_20240805,inside_aa_share_product,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FDIC_6078_20240805,n_assessment_areas,rules,value,1,"One American Bank has designated a single assessment area, which consists of a portion of the Sioux Falls, South Dakota Metropolitan Statistical Area (MSA) (including all of Lincoln, McCook, Minnehaha, and Turner counties) and Clay County in the non- metropolitan portion of South Dakota.",5,institution,7055,7345,,,,0
+FDIC_6078_20240805,loan_products_evaluated,rules,value,consumer|home_mortgage|small_business|small_farm,"Given the shift in lending focus during the evaluation period, examiners reviewed consumer, small business, small farm, and home mortgage loans.",8,institution,16190,16336,,home_mortgage: p8; small_business: p8; small_farm: p8; consumer: p8,,0
+FDIC_6078_20240805,finding_present,baseline,value,false,,16,institution,,,,hits=0 negated=0 triggers=,quote_not_found,0
+FDIC_6078_20240805,rating_lowered,baseline,value,false,,16,institution,,,,hits=0 negated=0 triggers=,quote_not_found,0
+FRB_3664588_20240116,regulator,rules,value,FRB,Federal Reserve Bank of New York,1,institution,352,384,,,,0
+FRB_3664588_20240116,bank_name,rules,value,Fieldpoint Private Bank & Trust,Fieldpoint Private Bank & Trust,1,institution,242,273,,,,0
+FRB_3664588_20240116,bank_id,rules,value,3664588,RSSD No. 3664588,1,institution,277,293,,,,0
+FRB_3664588_20240116,exam_date,rules,value,2024-01-16,"January 16, 2024",1,institution,158,174,,,,0
+FRB_3664588_20240116,exam_method,rules,value,isb,Fieldpoint’s CRA performance was evaluated using the FFIEC Interagency Intermediate Small Institution Examination Procedures.,8,institution,14544,14670,,,,0
+FRB_3664588_20240116,overall_rating,rules,value,NI,INSTITUTION'S CRA RATING: This institution is rated Needs to Improve.,4,institution,7282,7351,,,,0
+FRB_3664588_20240116,lending_test_rating,rules,value,NI,The Lending Test is rated: Needs to Improve.,4,institution,7354,7398,,,,0
+FRB_3664588_20240116,cd_test_rating,rules,value,S,The Community Development Test is rated: Satisfactory.,4,institution,7401,7455,,,,0
+FRB_3664588_20240116,prior_evaluation_date,rules,value,2018-02-12,"The Federal Reserve Bank of New York (FRBNY) assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation dated February 12, 2018, using FFIEC Interagency Intermediate Small Institution Examination Procedures.",6,institution,11970,12196,,,,0
+FRB_3664588_20240116,prior_rating,rules,value,S,"The Federal Reserve Bank of New York (FRBNY) assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation dated February 12, 2018, using FFIEC Interagency Intermediate Small Institution Examination Procedures.",6,institution,11970,12196,,,,0
+FRB_3664588_20240116,total_assets_usd,rules,value,1700000000,"Based on the September 30, 2023, Federal Financial Institutions Examination Council (FFIEC) Consolidated Report of Condition and Income (Call Report), the bank had total assets of $1.7 billion, total loans of $1.0 billion, and total deposits of $1.9 billion.",5,institution,10025,10285,,,,0
+FRB_3664588_20240116,total_assets_asof,rules,value,2023-09-30,"Based on the September 30, 2023, Federal Financial Institutions Examination Council (FFIEC) Consolidated Report of Condition and Income (Call Report), the bank had total assets of $1.7 billion, total loans of $1.0 billion, and total deposits of $1.9 billion.",5,institution,10025,10285,,,,0
+FRB_3664588_20240116,avg_ltd_ratio_pct,rules,value,91.1,"Fieldpoint’s average LTD ratio for the 24-quarters from January 1, 2017, to December 31, 2022, was 91.1%, which was comparable to the previous evaluation’s 12-quarter average of 87.6% and indicated the bank’s consistent willingness to lend.",10,institution,23070,23312,,,,0
+FRB_3664588_20240116,inside_aa_share_number_pct,rules,value,40.8,"During the evaluation period, lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.",10,institution,23548,23661,,,,0
+FRB_3664588_20240116,inside_aa_share_product,rules,value,all_reviewed_combined,"During the evaluation period, lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.",10,institution,23548,23661,,,quote_does_not_support,0
+FRB_3664588_20240116,n_assessment_areas,rules,value,4,The CRA performance evaluation included the following four bank delineated assessment areas:,7,institution,13074,13166,,,,0
+FRB_3664588_20240116,loan_products_evaluated,rules,value,home_mortgage|small_business,"Examiners reviewed the bank’s home mortgage loans and small business loans from January 1, 2017, to December 31, 2022.",8,institution,15515,15634,,home_mortgage: p8; small_business: p8,,0
+FRB_3664588_20240116,finding_present,baseline,value,false,,14,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+FRB_3664588_20240116,rating_lowered,baseline,value,false,,14,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+FRB_663656_20241118,regulator,rules,value,FRB,Federal Reserve Bank of Kansas City,1,institution,197,232,,,,0
+FRB_663656_20241118,bank_name,rules,value,Small Business Bank,Small Business Bank,1,institution,112,131,,,,0
+FRB_663656_20241118,bank_id,rules,value,663656,RSSD# 663656,1,institution,133,145,,,,0
+FRB_663656_20241118,exam_date,rules,value,2024-11-18,"November 18, 2024",1,institution,33,50,,,,0
+FRB_663656_20241118,exam_method,rules,value,small,Examiners utilized the Federal Financial Institutions Examination Council’s (FFIEC’s) Interagency Examination Procedures for Small Institutions to evaluate the bank’s CRA performance.,3,institution,2910,3095,,,,0
+FRB_663656_20241118,overall_rating,rules,value,NI,Small Business Bank (the bank) is rated Needs to Improve.,3,institution,2181,2238,,,,0
+FRB_663656_20241118,lending_test_rating,rules,absent,,,,,,,,applicability FRB/small: absent_from_document,,0
+FRB_663656_20241118,cd_test_rating,rules,absent,,,,,,,,applicability FRB/small: absent_from_document,,0
+FRB_663656_20241118,prior_evaluation_date,rules,value,2020-03-23,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance evaluation.",4,institution,5386,5478,,,,0
+FRB_663656_20241118,prior_rating,rules,value,S,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance evaluation.",4,institution,5386,5478,,,,0
+FRB_663656_20241118,total_assets_usd,rules,value,94200000," The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4055,4120,,,,0
+FRB_663656_20241118,total_assets_asof,rules,value,2024-06-30," The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4055,4120,,,,0
+FRB_663656_20241118,avg_ltd_ratio_pct,rules,value,85.9,The bank’s 19-quarter average NLTD ratio of 85.9 percent was comparable to those of four similarly situated institutions with ratios ranging from 34.8 percent to 90.0 percent.,9,institution,16987,17164,,,,0
+FRB_663656_20241118,inside_aa_share_number_pct,rules,value,21.3,"As noted in Table 7, only 21.3 percent of the bank’s lending by number and 17.3 percent by dollar volume was originated inside the AA.",10,institution,18023,18159,,,,0
+FRB_663656_20241118,inside_aa_share_product,rules,value,all_reviewed_combined,"As noted in Table 7, only 21.3 percent of the bank’s lending by number and 17.3 percent by dollar volume was originated inside the AA.",10,institution,18023,18159,,,quote_does_not_support,0
+FRB_663656_20241118,n_assessment_areas,rules,value,1,"The bank’s delineated AA is comprised of the Kansas City, Missouri-Kansas Multistate Metropolitan Statistical Area (MSA) AA (KCMO-KS MSA AA).",4,institution,6034,6176,,singular definite AA statement,quote_does_not_support,0
+FRB_663656_20241118,loan_products_evaluated,rules,value,small_business," The bank’s 19-quarter average NLTD ratio, and  A statistical sample of 169 small business loans from a universe of 1,005 loans originated between March 24, 2020, and December 31, 2023.",3,institution,3605,3794,,small_business: p3,,0
+FRB_663656_20241118,finding_present,baseline,value,false,,12,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+FRB_663656_20241118,rating_lowered,baseline,value,false,,12,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+FRB_722432_20230911,regulator,rules,value,FRB,Federal Reserve Bank of Richmond,1,institution,133,165,,,,0
+FRB_722432_20230911,bank_name,rules,value,The Bank of Romney,The Bank of Romney,2,institution,1034,1052,,second cover page,,0
+FRB_722432_20230911,bank_id,rules,value,722432,722432,2,institution,1056,1062,,second cover page,,0
+FRB_722432_20230911,exam_date,rules,value,2023-09-11,"September 11, 2023",1,institution,19,37,,,,0
+FRB_722432_20230911,exam_method,rules,value,small,The Bank of Romney (BOR) was evaluated using the interagency examination procedures for small institutions developed by the Federal Financial Institutions Examination Council (FFIEC).,4,institution,4545,4729,,,,0
+FRB_722432_20230911,overall_rating,rules,value,O,INSTITUTION'S CRA RATING: This institution is rated Outstanding.,4,institution,3687,3752,,,,0
+FRB_722432_20230911,lending_test_rating,rules,absent,,,,,,,,applicability FRB/small: absent_from_document,,0
+FRB_722432_20230911,cd_test_rating,rules,absent,,,,,,,,applicability FRB/small: absent_from_document,,0
+FRB_722432_20230911,prior_evaluation_date,rules,value,2018-03-31,"No branches have been closed since the prior evaluation, however, one branch was opened on March 31, 2018 in Slanesville, WV which is located in the Winchester, WV assessment area.",5,institution,7866,8047,,,,0
+FRB_722432_20230911,prior_rating,rules,abstain,,,,,,,,prior evaluation sentence names no rating,,0
+FRB_722432_20230911,total_assets_usd,rules,value,354900000,"As of June 30, 2023, the bank’s assets totaled $354.9 million, of which 73.0% were net loans and 16.4% were securities.",4,institution,6199,6319,,,,0
+FRB_722432_20230911,total_assets_asof,rules,value,2023-06-30,"As of June 30, 2023, the bank’s assets totaled $354.9 million, of which 73.0% were net loans and 16.4% were securities.",4,institution,6199,6319,,,,0
+FRB_722432_20230911,avg_ltd_ratio_pct,rules,value,97.9,"The bank’s current loan-to-deposit ratio is 99.4% and averaged 97.9% for the preceding 24-quarter period ending June 30, 2023.",6,institution,11279,11406,,,,0
+FRB_722432_20230911,inside_aa_share_number_pct,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FRB_722432_20230911,inside_aa_share_product,rules,abstain,,,,,,,,no inside-AA sentence with a percent and no Total row,,0
+FRB_722432_20230911,n_assessment_areas,rules,value,2,"Based on branch locations and lending patterns, the bank delineated two assessment areas in West Virginia.",5,institution,7757,7864,,,,0
+FRB_722432_20230911,loan_products_evaluated,rules,value,consumer|home_mortgage,The evaluation was based on all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor vehicle loans originated during 2022.,4,institution,4912,5070,,home_mortgage: p4; consumer: p4,,0
+FRB_722432_20230911,finding_present,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+FRB_722432_20230911,rating_lowered,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=practice_identified!,quote_not_found,0
+OCC_11715_20240408,regulator,rules,value,OCC,Office of the Comptroller of the Currency,1,institution,204,245,,,,0
+OCC_11715_20240408,bank_name,rules,value,The Lemont National Bank,The Lemont National Bank,1,institution,85,109,,,,0
+OCC_11715_20240408,bank_id,rules,value,11715,Charter Number 11715,1,institution,112,132,,,,0
+OCC_11715_20240408,exam_date,rules,value,2024-04-08,"April 8, 2024",1,institution,18,31,,,,0
+OCC_11715_20240408,exam_method,rules,value,small,small bank CRA evaluation procedures.,4,institution,6460,6497,,,,0
+OCC_11715_20240408,overall_rating,rules,value,SN,Institution’s CRA Rating: This institution is rated Substantial Noncompliance.,3,institution,1595,1673,,,,0
+OCC_11715_20240408,lending_test_rating,rules,value,SN,The lending test is rated: Substantial Noncompliance.,3,institution,1675,1728,,,,0
+OCC_11715_20240408,cd_test_rating,rules,absent,,,,,,,,applicability OCC/small: absent_from_document,,0
+OCC_11715_20240408,prior_evaluation_date,rules,value,2021-06-19,"Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation, dated June 19, 2021.",4,institution,6085,6191,,,,0
+OCC_11715_20240408,prior_rating,rules,value,SN,"Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation, dated June 19, 2021.",4,institution,6085,6191,,,,0
+OCC_11715_20240408,total_assets_usd,rules,value,65400000,"As of December 31, 2023, Lemont reported total assets of $65.4 million, total deposits of $47.0 million, and tier 1 capital of $3.6 million.",4,institution,5109,5251,,,,0
+OCC_11715_20240408,total_assets_asof,rules,value,2023-12-31,"As of December 31, 2023, Lemont reported total assets of $65.4 million, total deposits of $47.0 million, and tier 1 capital of $3.6 million.",4,institution,5109,5251,,,,0
+OCC_11715_20240408,avg_ltd_ratio_pct,rules,value,10.6,The Lemont National Bank’s (“Lemont” or “bank”) average LTD for the 16-quarter period since the preceding CRA evaluation was 10.6 percent.,3,institution,2364,2503,,,,0
+OCC_11715_20240408,inside_aa_share_number_pct,rules,value,54.5,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,4,institution,3942,4059,,,,0
+OCC_11715_20240408,inside_aa_share_product,rules,value,all_reviewed_combined,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,4,institution,3942,4059,,,,0
+OCC_11715_20240408,n_assessment_areas,rules,abstain,,,,,,,,no counting sentence in institution scope,,0
+OCC_11715_20240408,loan_products_evaluated,rules,value,home_mortgage,"Based upon the examiner’s analysis of the bank’s lending activity, home mortgage loans represent the bank’s primary lending product.",4,institution,6499,6632,,home_mortgage: p4,,0
+OCC_11715_20240408,finding_present,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
+OCC_11715_20240408,rating_lowered,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
+OCC_13682_20240819,regulator,rules,value,OCC,Office of the Comptroller of the Currency,1,institution,228,269,,,,0
+OCC_13682_20240819,bank_name,rules,value,"First Neighbor Bank, National Association","First Neighbor Bank, National Association",1,institution,116,157,,,,0
+OCC_13682_20240819,bank_id,rules,value,13682,Charter Number 13682,1,institution,159,179,,,,0
+OCC_13682_20240819,exam_date,rules,value,2024-08-19,"August 19, 2024",1,institution,41,56,,,,0
+OCC_13682_20240819,exam_method,rules,value,isb,We evaluated First Neighbor’s CRA performance using intermediate small bank evaluation procedures which reviewed the bank’s record of meeting the credit needs of its AA through lending activities and CD activities.,5,institution,7421,7637,,,,0
+OCC_13682_20240819,overall_rating,rules,value,O,Institution’s CRA Rating: This institution is rated Outstanding.,3,institution,2811,2875,,,,0
+OCC_13682_20240819,lending_test_rating,rules,value,O,The lending test is rated: Outstanding.,3,institution,2883,2922,,,,0
+OCC_13682_20240819,cd_test_rating,rules,value,O,The community development test is rated: Outstanding.,3,institution,2925,2978,,,,0
+OCC_13682_20240819,prior_evaluation_date,rules,abstain,,,,,,,,no prior evaluation sentence with a date,,0
+OCC_13682_20240819,prior_rating,rules,abstain,,,,,,,,no prior evaluation sentence with a date,,0
+OCC_13682_20240819,total_assets_usd,rules,value,593700000,"First Neighbor Bank, N.A, (First Neighbor) is a $593.7 million (total assets) intrastate financial institution headquartered in Toledo, Illinois.",4,institution,5662,5808,,,,0
+OCC_13682_20240819,total_assets_asof,rules,abstain,,,,,,,,total assets sentence carries no date,,0
+OCC_13682_20240819,avg_ltd_ratio_pct,rules,value,85.5,"During the evaluation period, the bank’s quarterly LTD ratio averaged 85.5 percent and ranged from 76.4 percent to 95.1 percent.",3,institution,4096,4225,,,,0
+OCC_13682_20240819,inside_aa_share_number_pct,rules,value,87.5,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
+OCC_13682_20240819,inside_aa_share_product,rules,value,all_reviewed_combined,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
+OCC_13682_20240819,n_assessment_areas,rules,value,1,"Based on the branch locations, First Neighbor established one contiguous AA in Illinois that includes Clark, Coles, Cumberland, Douglas, Edgar, and Moultrie Counties.",4,institution,6398,6565,,,,0
+OCC_13682_20240819,loan_products_evaluated,rules,value,consumer|small_business,"Based on both the number and dollar volume of loan origination data supplied by the bank, First Neighbor’s primary lending products are consumer and business loans.",5,institution,8030,8195,,small_business: p5; consumer: p5,quote_does_not_support,0
+OCC_13682_20240819,finding_present,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
+OCC_13682_20240819,rating_lowered,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
+OCC_703395_20230327,regulator,rules,value,OCC,Office of the Comptroller of the Currency,1,institution,208,249,,,,0
+OCC_703395_20230327,bank_name,rules,value,GN Bank,GN Bank,1,institution,113,120,,,,0
+OCC_703395_20230327,bank_id,rules,value,703395,Charter Number: 703395,1,institution,131,153,,,,0
+OCC_703395_20230327,exam_date,rules,value,2023-03-27,"March 27, 2023",1,institution,39,53,,,,0
+OCC_703395_20230327,exam_method,rules,value,small,"Under interagency small bank CRA procedures, a small bank’s rating is determined through a blend of analyses.",5,institution,8943,9053,,,,0
+OCC_703395_20230327,overall_rating,rules,value,NI,Institution’s CRA Rating: This institution is rated Needs to Improve.,3,institution,1662,1731,,,,0
+OCC_703395_20230327,lending_test_rating,rules,value,NI,The lending test is rated: Needs to Improve.,3,institution,1740,1784,,,,0
+OCC_703395_20230327,cd_test_rating,rules,absent,,,,,,,,applicability OCC/small: absent_from_document,,0
+OCC_703395_20230327,prior_evaluation_date,rules,value,2018-10-01,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
+OCC_703395_20230327,prior_rating,rules,value,S,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
+OCC_703395_20230327,total_assets_usd,rules,value,84700000,"As of December 31, 2021, GN Bank reported total assets of $84.7 million, total deposits of $74.3 million, and net loans and leases of $67.3 million.",4,institution,5302,5452,,,,0
+OCC_703395_20230327,total_assets_asof,rules,value,2021-12-31,"As of December 31, 2021, GN Bank reported total assets of $84.7 million, total deposits of $74.3 million, and net loans and leases of $67.3 million.",4,institution,5302,5452,,,,0
+OCC_703395_20230327,avg_ltd_ratio_pct,rules,value,54.32,"The bank’s quarterly average LTD ratio since the end of the last performance evaluation period, June 30, 2018 to December 31, 2021, was 54.32 percent.",3,institution,2413,2564,,,,0
+OCC_703395_20230327,inside_aa_share_number_pct,rules,value,3.4,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,3,institution,3003,3120,,,,0
+OCC_703395_20230327,inside_aa_share_product,rules,value,all_reviewed_combined,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,3,institution,3003,3120,,,,0
+OCC_703395_20230327,n_assessment_areas,rules,value,1,"The bank delineated one AA consisting of 184 census tracts (CT) located in the southern portion of Cook County within the Chicago-Naperville-Evanston, IL Metropolitan Division (MD) of the Chicago- Naperville-Elgin, IL-IN-WI Metropolitan Statistical Area (MSA).",4,institution,4350,4611,,,,0
+OCC_703395_20230327,loan_products_evaluated,rules,value,consumer|small_business,"Based on the bank’s internal reports for lending activity and discussions with management, the OCC determined the primary loan products were consumer and small business loans.",5,institution,8013,8190,,small_business: p5; consumer: p5,,0
+OCC_703395_20230327,finding_present,baseline,value,false,,5,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
+OCC_703395_20230327,rating_lowered,baseline,value,false,,5,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0

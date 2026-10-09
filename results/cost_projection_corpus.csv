@@ -1,0 +1,2 @@
+system,mode,effort,n_docs,n_doc_errors,n_calls,n_calls_cached,n_calls_new,section_chars,prompt_chars,input_tokens_all,input_tokens_new,output_tokens_per_call,output_tokens_source,output_tokens_new,price_input_per_mtok,price_output_per_mtok,priced,cost_usd_new,requests_per_day,days_at_free_tier
+llm:gemini:gemini-3.8-flash,located,low,2751,0,11004,0,11004,45749614,120566785,30145935,30145935,0.0,none,0,,,False,0.0,,
