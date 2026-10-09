@@ -31,6 +31,14 @@ prompt and schema, calls the backend, validates the JSON, maps it to
 ``data/traces/{split}/{backend}.jsonl``. Grounding checks (fuzzy quote
 location, scope support) live in ``evaluate.py``; here the quote is only
 located by exact substring search to attach a page and scope.
+
+Field groups: ``extract`` takes one of the groups listed in ``fields.yaml`` or the
+combined group ``all`` (``prompts.ALL_GROUP``), which asks for every LLM field in one
+call. The trace records the group in ``Trace.field_group``, so an ``all`` trace and the
+four split traces of the same document are told apart; their prompt hashes differ, so
+replay never serves one mode's trace to the other. For ``all`` a field's quote is
+searched in its own group's sections first, then in the rest, so page, scope and offsets
+come from the same section as in the split call whenever the quote is there.
 """
 
 from __future__ import annotations
@@ -53,6 +61,7 @@ from typing import Any
 from cra_extract.config import CACHE_DIR, FIXTURES_DIR, TRACE_DIR, field_spec, load_prices
 from cra_extract.models import DocRecord, FieldValue, Section, Trace, make_doc_id
 from cra_extract.prompts import (
+    ALL_GROUP,
     CLOSED_BOOK_FIELDS,
     CLOSED_BOOK_GROUP,
     CLOSED_BOOK_PROMPT_VERSION,
@@ -65,6 +74,7 @@ from cra_extract.prompts import (
     build_closed_book_schema,
     build_prompt,
     build_schema,
+    field_home_sections,
     llm_field_group,
     portable_schema,
 )
@@ -892,6 +902,17 @@ def _page_of(sec: Section, offset: int) -> int:
     return min(page, sec.page_end)
 
 
+def _quote_search_order(
+    name: str, field_group: str, sections: dict[str, Section], home: dict[str, list[str]]
+) -> dict[str, Section]:
+    """Sections in the order a field's quote is searched: as given for a listed group; for
+    ``all``, the field's own group's sections first (as in its split call), then the rest."""
+    if field_group != ALL_GROUP:
+        return sections
+    first = {n: sections[n] for n in home.get(name, []) if n in sections}
+    return {**first, **{n: s for n, s in sections.items() if n not in first}}
+
+
 def map_response(
     doc: DocRecord | str,
     field_group: str,
@@ -905,11 +926,14 @@ def map_response(
     become abstentions with the reason in ``notes``. ``page`` and ``scope`` come
     from the section where the quote is found; when the quote is not found the
     model's page is kept and ``notes`` says ``quote_not_located``. ``doc`` may be
-    the record or its doc_id (only the id is used).
+    the record or its doc_id (only the id is used). For the combined group ``all``
+    every field of every listed group gets one row, and each quote is searched in
+    the field's own group's sections first (:func:`_quote_search_order`).
     """
     doc_id = doc if isinstance(doc, str) else doc.doc_id
     out: list[FieldValue] = []
     data = data or {}
+    home = field_home_sections() if field_group == ALL_GROUP else {}
     for name in llm_field_group(field_group)["fields"]:
         spec = field_spec(name)
         entry = data.get(name)
@@ -935,7 +959,7 @@ def map_response(
             out.append(FieldValue(**base, status="abstain", quote=quote, notes=f"invalid_value:{err}"))
             continue
         fv = FieldValue(**base, status="value", value=_normalize_value(spec, value), quote=quote)
-        hit = locate_quote(quote, sections) if quote else None
+        hit = locate_quote(quote, _quote_search_order(name, field_group, sections, home)) if quote else None
         if hit is None:
             fv.page = page
             fv.notes = "quote_missing" if not quote else "quote_not_located"
@@ -1065,7 +1089,9 @@ def extract(
     replay. A failed call (after retries) is recorded with ``error`` set and
     every field is returned as an abstention; the caller decides whether to
     stop. ``mode`` (``located`` or ``whole``) is recorded in ``Trace.mode`` so the
-    cost accounting can attribute the call to its run system.
+    cost accounting can attribute the call to its run system. ``field_group`` is a
+    listed group or ``all`` (every LLM field in one call), recorded in
+    ``Trace.field_group``.
     """
     system = system or system_name(backend)
     fields = llm_field_group(field_group)["fields"]
@@ -1235,7 +1261,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     ap.add_argument("--model", required=True)
     ap.add_argument("--sample", default="FDIC_12299_SouthStar_2022_ISB_NI_fairlending")
-    ap.add_argument("--field-group", default="cover_and_rating")
+    ap.add_argument(
+        "--field-group", default=ALL_GROUP,
+        help="a field group of fields.yaml, or all (every LLM field in one call; the run default)",
+    )
     ap.add_argument("--split", default="dev")
     ap.add_argument(
         "--effort", default=None,

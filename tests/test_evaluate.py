@@ -247,10 +247,29 @@ def test_error_table(synthetic):
     errs = evaluate.error_table(scored)
     assert set(errs["cell"]) <= {"wrong", "fabrication", "fabricated_absence", "abstention"}
     assert "correct" not in set(errs["cell"])
-    assert list(errs.columns) == ["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell", "grounding_failure", "cause"]
-    assert (errs["cause"] == "").all()
+    assert list(errs.columns) == ["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell", "grounding_failure", "cause", "stage"]
+    assert (errs["cause"] == "").all() and (errs["stage"] == "").all()
     wrong = errs[(errs["field"] == "overall_rating") & (errs["doc_id"] == "OCC_2_20240101") & (errs["system"] == "llm")]
     assert wrong.iloc[0]["gold_value"] == "S" and wrong.iloc[0]["pred_value"] == "NI"
+
+
+def test_carry_over_causes_keeps_hand_cells_of_unchanged_rows(synthetic):
+    labels, preds = synthetic
+    errs = evaluate.error_table(evaluate.score_predictions(labels, preds))
+    previous = errs.copy()
+    previous["cause"] = "reasoning"
+    previous["stage"] = "extract"
+    # One earlier row had another predicted value: its cell changed, so its causes do not carry.
+    previous.loc[0, "pred_value"] = "something else"
+    out = evaluate.carry_over_causes(errs, previous.astype(str))
+    assert list(out.columns) == list(errs.columns) and len(out) == len(errs)
+    assert out.loc[0, "cause"] == "" and out.loc[0, "stage"] == ""
+    assert (out.loc[1:, "cause"] == "reasoning").all() and (out.loc[1:, "stage"] == "extract").all()
+    # An errors file written before the stage column existed carries the cause only.
+    old = previous.drop(columns="stage").astype(str)
+    out = evaluate.carry_over_causes(errs, old)
+    assert (out.loc[1:, "cause"] == "reasoning").all() and (out["stage"] == "").all()
+    assert evaluate.carry_over_causes(errs, previous.iloc[0:0]).equals(errs)
 
 
 # -------------------------------------------------------------- risk flags
@@ -471,10 +490,17 @@ def test_cli_round_trip(tmp_path: Path, capsys):
     cd = risk[(risk["field"] == "cd_test_rating") & (risk["system"] == "llm")].iloc[0]
     assert cd["groundedness_fail"] and cd["n_flags"] == 1
 
-    # --systems restricts the output; deterministic regeneration.
+    # --systems restricts the output; deterministic regeneration, and a rerun keeps the
+    # hand-filled causes of the error file.
     before = (tmp_path / "results" / "table1_dev.csv").read_bytes()
+    errors["cause"] = "locator_miss;reasoning"
+    errors["stage"] = "locate;extract"
+    errors.to_csv(tmp_path / "results" / "errors_dev.csv", index=False)
     assert evaluate.main(["--split", "dev", "--root", str(tmp_path)]) == 0
     assert (tmp_path / "results" / "table1_dev.csv").read_bytes() == before
+    again = pd.read_csv(tmp_path / "results" / "errors_dev.csv", keep_default_na=False)
+    assert len(again) == len(errors) and (again["cause"] == "locator_miss;reasoning").all()
+    assert (again["stage"] == "locate;extract").all()
     assert evaluate.main(["--split", "dev", "--root", str(tmp_path), "--systems", "llm", "--out-dir", str(tmp_path / "only")]) == 0
     only = pd.read_csv(tmp_path / "only" / "table1_dev.csv")
     assert set(only["system"]) == {"llm"}

@@ -19,6 +19,7 @@ Makefile, as `python -m cra_extract.<stage>`, or through the `cra` console scrip
 | parse | `make parse` | `data/pdfs/` | `data/text/{doc_id}.pages.json`, `data/text/{doc_id}.txt`, pages, chars_per_page, text_extractable in the manifest |
 | overrides | `make overrides`, `make overrides-check` | `config/manifest_overrides.yaml`, `config/corpus.csv`, `data/pdfs/`, `data/text/` | `config/corpus.csv` (corrected cells, renamed doc_ids, split `excluded`, `exam_date_source`), renamed and replaced data files |
 | locate | `make locate` | `data/text/` | `results/locator_coverage.csv` |
+| locator-check | `make locator-check-draw LOCATOR_SEED=.. LOCATOR_DATE=..` (no plan seed yet; refuses to replace a recorded draw without `--force`), `make locator-check-sheet` (refuses a test or audit bank's document before reading text, and to overwrite reader entries), `make locator-check-score` | `config/corpus.csv`, `data/index/frb.csv` (state, district proxy), `config/tuning_documents.yaml` (left out of the pool), `config/locator_check_sample.yaml`, `data/text/` (sampled corpus documents only), `data/gold/locator_check_sheet.csv` (filled by hand from the PDFs) | `config/locator_check_sample.yaml`, `data/gold/locator_check_sheet.csv`, `results/locator_recall.csv`, `results/locator_recall_misses.csv` |
 | templates | `make templates` | `data/text/` | `results/census.csv` (Group C template-residual census) |
 | rules | `make rules` | `data/text/` | `results/rules.csv` (system S1) |
 | baseline | `make baseline` | `data/text/` | `results/baseline.csv` (system S0) |
@@ -27,14 +28,14 @@ Makefile, as `python -m cra_extract.<stage>`, or through the `cra` console scrip
 | strata | `make draw-dev`, `make draw-test DRAW_DATE=..` (seed 20261013), `make draw-audit DRAW_DATE=..` (seed 20261016), `make strata-show`, `make tuning-docs` | `config/corpus.csv`, `data/index/frb.csv` (dev), the aa-counts CSV (test), `results/risk_corpus.csv` (audit), `config/tuning_documents.yaml` (test, audit) | `split` column of `config/corpus.csv`, `config/strata.yaml` |
 | label | `make label-init SPLIT=dev`, `make label-validate SPLIT=dev`, `make label-hash SPLIT=test` | `config/corpus.csv`, `data/gold/labels_{split}.csv` | the label sheet, validation problems, `docs/hashes.md` |
 | llm | `make smoke-llm BACKEND=anthropic MODEL=claude-haiku-4-5` | one sample PE, API key from `.env` | `data/traces/smoke/{backend}.jsonl` |
-| run | `make pilot` (dev), `make scale` (corpus), `make project` (cost projection, no calls), `make dev-rerun` (second live dev run and agreement), `make ablation` and `make closed-book` (test), `RUN_FLAGS=--allow-api` for live calls | `config/corpus.csv`, `data/text/`, `data/traces/{split}/` | `results/predictions_{split}.csv`, `results/sections_{split}.csv`, `results/run_log_{split}.jsonl`, `results/cost_projection_{split}.csv`, `results/run_agreement_dev.csv`, new traces (with `Trace.mode` and `Trace.effort`) |
+| run | `make pilot` (dev), `make scale` (corpus), `make project` (cost projection, no calls), `make dev-rerun` (second live dev run and agreement), `make ablation` and `make closed-book` (test), `RUN_FLAGS=--allow-api` for live calls, `FIELD_GROUPS=split` for one call per field group (default `all`, one call per document) | `config/corpus.csv`, `data/text/`, `data/traces/{split}/` | `results/predictions_{split}.csv`, `results/sections_{split}.csv`, `results/run_log_{split}.jsonl`, `results/cost_projection_{split}.csv`, `results/run_agreement_dev.csv`, new traces (with `Trace.mode` and `Trace.effort`) |
 | routing | `make s5-routing` (after draw-test), `make s5-routing-provisional`, `make s5-apply` (corpus), `make s5-test` (test, before eval-test) | `results/rules.csv` or a predictions file, `config/corpus.csv`, `config/s5_routing.yaml` | `results/s5_routing.{csv,md}`, `config/s5_routing.yaml` (provisional tables under `results/provisional/`), `results/predictions_corpus_s5.csv`, S5 rows appended to `results/predictions_test.csv` |
 | corpus-scoring | `make group-a-corpus`, `make risk-corpus` | predictions files, `config/corpus.csv`, `results/group_a_triage.csv`, `results/sections_corpus.csv`, `config/s5_routing.yaml`, `data/gold/labels_{dev,test}.csv` (FDIC exam_date gate only) | `results/group_a_corpus.csv`, `results/fdic_exam_date_gate.csv`, `results/risk_corpus.csv`, `results/risk_values_corpus.csv`, `results/risk_validation_group_a.csv` |
-| evaluate | `make eval-dev`, `make eval-test`, `make eval-pair` (S1 and S3 pair for the calibration input) | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv`, `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv`; the pair run writes the same names under `results/pair/` |
+| evaluate | `make eval-dev`, `make eval-test`, `make eval-pair` (S1 and S3 pair for the calibration input) | `data/gold/labels_{split}.csv`, `results/predictions_{split}.csv`, `data/gold/text/` | `results/table1_{split}.csv`, `errors_{split}.csv` (empty `cause` and `stage` columns for hand classification; a rerun keeps the filled cells of unchanged rows), `risk_{split}.csv`, `calibration_{split}.csv`, `scored_{split}.csv`; the pair run writes the same names under `results/pair/` |
 | audit | `make audit-sheet`, `cra audit validate`, `make audit` (`AUDIT_SYSTEM=s5`) | `config/strata.yaml` (audit draw), `results/predictions_corpus.csv`, `results/predictions_corpus_s5.csv`, `data/gold/audit_sheet.csv`, `results/risk_values_corpus.csv`, `results/risk_corpus.csv` | `data/gold/audit_sheet.csv`, `results/audit_summary.csv`, `audit_by_field.csv`, `audit_by_tertile.csv`, `review_curve_group_b.csv` |
 | reliability | `make reliability-draw REL_BRANCH=outside REL_SEED=.. REL_DATE=..`, `make reliability-sheet`, `make reliability-compare` | `config/corpus.csv`, `data/gold/labels_{test,dev}.csv`, `data/gold/reliability_sheet.csv` | `config/reliability_sample.yaml`, `data/gold/reliability_sheet.csv`, `results/reliability.csv` |
 | freeze | `make freeze` (`cra freeze --check-only` to rehearse) | `docs/analysis_plan.md`, `docs/hashes.md`, `config/corpus.csv`, git tree | Freeze record in `docs/hashes.md` (RULES_VERSION, PROMPT_VERSION, CLOSED_BOOK_PROMPT_VERSION, effort per backend, config hashes), commit, annotated tag `plan-v1.0` |
-| report | `make report` (`REPORT_SPLIT=test`, `CORPUS_SYSTEM=..`), `make reproduce` | `results/*` (Table 1 inputs, `pair/calibration_{split}.csv`, review curves, `reliability.csv`, census and audit outputs), `config/corpus.csv`, `data/index/frb.csv`, `data/gold/labels_{dev,test}.csv`, `data/gold/audit_sheet.csv`, `data/traces/{split}/`, `config/prices.yaml` | `table1_{split}_report.csv`, `table1_{split}.md`, `table_probes_{split}.*`, `table1_{split}_appendix.csv`, `table_grounding_{split}.csv`, `table_ablation_{split}.*`, `table_closed_book_{split}.*`, `figure1.*`, `table2.*`, `table3_{split}*`, descriptive tables |
+| report | `make report` (`REPORT_SPLIT=test`, `CORPUS_SYSTEM=..`), `make reproduce` | `results/*` (Table 1 inputs, `scored_{split}.csv`, the hand-filled `errors_{split}.csv`, `pair/calibration_{split}.csv`, review curves, `reliability.csv`, census and audit outputs), `config/corpus.csv`, `data/index/frb.csv`, `data/gold/labels_{dev,test}.csv`, `data/gold/audit_sheet.csv`, `data/traces/{split}/`, `config/prices.yaml` | `table1_{split}_report.csv`, `table1_{split}.md`, `table_probes_{split}.*`, `table1_{split}_appendix.csv`, `table_grounding_{split}.csv`, `table_ablation_{split}.*`, `table_closed_book_{split}.*`, `table_group_b_by_regulator_{split}.*`, `table_error_causes_{split}.*` (skipped with a message when a cause or stage is outside the vocabulary), `figure1.*`, `table2.*`, `table3_{split}*`, descriptive tables |
 
 Order before the freeze: index, fetch, parse, overrides, locate, templates, rules, baseline,
 group-a, tuning-docs, scale (run on the corpus), draw-test, s5-routing, census-draw, then the
@@ -63,6 +64,54 @@ Notes on running:
   propagates out of `llm.extract` and halts the run (`summary.halted`); a truncated or
   refused response is recorded with `Trace.error` set to the stop reason and abstentions
   noted `truncated`.
+- `run --field-groups all|split` (Makefile `FIELD_GROUPS`, default `all` since 2026-10-08)
+  sets the LLM calls per document of the located and whole-document systems. `all`: one
+  structured-output call for the combined group `all`, derived in
+  `prompts.combined_field_group` from the four `llm_field_groups` entries of
+  `config/fields.yaml` (it is not listed there, so routing, corpus_scoring and report still
+  see each field once). The call sends every located section of the four groups once, in
+  document order, and asks for the 31 LLM fields in one JSON object; when any group has no
+  located section it sends the whole document instead, so no field loses its fallback.
+  `split`: the behaviour before 2026-10-08, one call per group (cover_and_rating,
+  institution, lending_tables, review), each with its own sections or the whole document.
+  Both modes write one `FieldValue` row per field with the same `locator_miss` (the field's
+  own group had no located section), the same grounding inputs and the same trace layout:
+  `Trace.field_group` is `all` or the group name, `Trace.mode` stays located or whole. The
+  split prompts are byte-identical to the earlier ones and an `all` prompt never hashes like
+  a split prompt, so neither mode replays the other's traces. The run log records
+  `field_groups` per (document, system); since the system name does not carry the mode, a
+  pair already written under the other mode is skipped with a warning and counted in the
+  summary line, and `--force` recomputes it. `--whole-document` sends the whole document
+  once per document under `all` (four times under `split`); `--closed-book` is one call per
+  document either way and ignores the option. `--project` counts calls under the chosen
+  mode and writes a `field_groups` column.
+- Combined schema: 31 fields, 155 properties (four slots per field), two object levels,
+  173 enum members, about 15,100 characters of JSON, the four split schemas together. Its
+  keywords (type, title, description, enum, items, anyOf, properties, additionalProperties,
+  required) are all in the subset google-genai 2.28.0 documents for `response_json_schema`;
+  the package states no limit on property count, enum size or schema length, so the first
+  live call is the check: `make smoke-llm BACKEND=gemini MODEL=gemini-3.8-flash` now sends
+  the `all` group (`llm --field-group` defaults to `all`). One response carries 31 values
+  with quotes, well inside the hosted `max_output_tokens` of 16,000; the Ollama budget of
+  4,096 output tokens is tighter (a cut-off response makes all 31 fields abstain
+  `truncated`), so watch `Trace.stop_reason` on the S4 pilot.
+- Free-tier arithmetic (Google AI Studio, Gemini Flash; the cap of about 1,500 requests per
+  day is still to be confirmed on the plan page and entered as
+  `gemini.free_tier.requests_per_day` in `config/prices.yaml`). Corpus pass, 2,751
+  documents (`run --project --split corpus`, 2026-10-08): `all` sends 2,751 calls, 2 quota
+  days at 1,500 a day (1,500 + 1,251), with 26.7 million input tokens (chars / 4, about
+  9,700 per call); `split` sends 11,004 calls, 8 quota days (7.3), with 30.1 million input
+  tokens (about 2,700 per call; the committed `results/cost_projection_corpus.csv` is this
+  split projection, reproduced exactly). `all` sends 11 percent fewer input tokens: the
+  system prompt, header and section notes go once per document instead of four times, and
+  the 36 documents with a group locator miss (29 lending_tables, 7 review) send the whole
+  document alone instead of the whole document plus the other groups' sections. Gold and
+  side runs under `all`: dev 10, dev rerun 10, test 30, ablation 20, closed book 30,
+  together 100 calls, inside one day's budget (under `split`: 40, 40, 120, 80 and 30, 310
+  calls). The limiter counts retries, so the days are lower bounds. Fewer, larger calls move the pressure from requests per day to requests and
+  tokens per minute: `requests_per_minute` is null in `config/prices.yaml` (at R per minute a
+  1,500-call day takes 1,500 / R minutes), and a tokens-per-minute cap, if the plan page
+  lists one, is not enforced by `llm.RateLimiter`.
 - `strata` draws the splits in order dev, test, audit (`draw-dev` needs `data/index/frb.csv`
   for the district rule, `draw-test` the aa-counts CSV from the run stage, `draw-audit` a
   risk file from evaluate). A split's pool excludes the splits drawn before it, so a redraw

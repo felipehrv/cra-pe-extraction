@@ -7,8 +7,18 @@ in ``evaluate.py`` consume the quote. The prompt lists the located sections
 with their scope labels and page numbers and states the applicability rules
 for the document's (regulator, exam method) cell.
 
+Field groups: ``fields.yaml`` lists four groups under ``llm_field_groups``
+(``cover_and_rating``, ``institution``, ``lending_tables``, ``review``), one call each in the
+``split`` mode. The combined group ``all`` (:data:`ALL_GROUP`) is derived here from those four
+rather than listed in the file (:func:`combined_field_group`): its sections are their union in
+``headings.yaml`` order and its fields their union in ``fields.yaml`` order, so one call per
+document asks for every LLM field (the ``all`` mode, the run stage's default). Modules that
+iterate ``llm_field_groups`` therefore still see every field exactly once.
+
 ``PROMPT_VERSION`` is bumped whenever the wording changes so that traces from
-different prompt versions never get mixed up.
+different prompt versions never get mixed up. The split-group prompts are unchanged by the
+combined group; an ``all`` prompt differs from every split prompt in its field block and its
+schema, so the two modes never share a prompt hash.
 
 The closed-book contamination baseline (analysis plan, "Leakage and contamination
 controls") has its own prompt, schema and ``CLOSED_BOOK_PROMPT_VERSION``: the model sees
@@ -20,7 +30,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from cra_extract.config import applicability, field_spec, load_fields
+from cra_extract.config import applicability, field_spec, load_fields, load_headings
 from cra_extract.models import DocRecord, Section
 
 # v2 (2026-10-07): header no longer carries the doc_id, bank name or evaluation date
@@ -29,6 +39,11 @@ from cra_extract.models import DocRecord, Section
 PROMPT_VERSION = "v2"
 
 STATUSES = ["value", "absent", "abstain"]
+
+# The combined field group (every LLM field in one call) and the two field-group modes of the
+# run stage: "all" sends one call per document, "split" one call per listed group.
+ALL_GROUP = "all"
+GROUP_MODES = ("all", "split")
 
 SYSTEM_PROMPT = """You extract structured fields from a Community Reinvestment Act (CRA) \
 Performance Evaluation published by a US bank regulator (OCC, FDIC or Federal Reserve).
@@ -60,12 +75,64 @@ _TYPE_NOTES: dict[str, str] = {
 }
 
 
+def split_group_names() -> list[str]:
+    """The field groups listed under ``llm_field_groups`` in ``fields.yaml``, in file order
+    (the calls of the ``split`` mode). ``all`` is never one of them: it is derived."""
+    return [g for g in load_fields()["llm_field_groups"] if g != ALL_GROUP]
+
+
 def llm_field_group(name: str) -> dict[str, Any]:
-    """Return the ``llm_field_groups`` entry for ``name`` from ``fields.yaml``."""
+    """Return the ``llm_field_groups`` entry for ``name`` from ``fields.yaml``, or the derived
+    combined group for ``all`` (:func:`combined_field_group`)."""
+    if name == ALL_GROUP:
+        return combined_field_group()
     groups = load_fields()["llm_field_groups"]
     if name not in groups:
-        raise KeyError(f"unknown llm field group {name!r}; known: {sorted(groups)}")
+        raise KeyError(f"unknown llm field group {name!r}; known: {sorted([*groups, ALL_GROUP])}")
     return groups[name]
+
+
+def combined_field_group() -> dict[str, Any]:
+    """The ``all`` group, derived from the listed groups.
+
+    ``sections``: the union of the groups' sections in ``headings.yaml`` order, which is the
+    order they appear in an FDIC or FRB PE (cover, rating, description_of_institution,
+    description_of_assessment_area, scope_of_evaluation, ltd_ratio, aa_concentration,
+    illegal_credit_practices_review; OCC prints the lending tables first, so the prompt
+    renders the located sections by their position in each document). ``fields``: the union
+    of the groups' fields in ``fields.yaml`` order. ``groups``: the listed groups it combines.
+    A section or field missing from those files keeps its group order after the rest.
+    """
+    groups = split_group_names()
+    specs = [llm_field_group(g) for g in groups]
+    wanted_sections = {s for spec in specs for s in spec["sections"]}
+    sections = [s for s in load_headings().get("sections", {}) if s in wanted_sections]
+    wanted_fields = {f for spec in specs for f in spec["fields"]}
+    fields = [f for f in load_fields()["fields"] if f in wanted_fields]
+    for spec in specs:
+        sections += [s for s in spec["sections"] if s not in sections]
+        fields += [f for f in spec["fields"] if f not in fields]
+    return {"sections": sections, "fields": fields, "groups": groups}
+
+
+def groups_for_mode(group_mode: str) -> list[str]:
+    """Field groups called per document: ``["all"]`` for ``all``, the listed groups for
+    ``split``."""
+    if group_mode == ALL_GROUP:
+        return [ALL_GROUP]
+    if group_mode == "split":
+        return split_group_names()
+    raise ValueError(f"unknown field-group mode {group_mode!r}; use one of {', '.join(GROUP_MODES)}")
+
+
+def field_home_sections() -> dict[str, list[str]]:
+    """Field name to the sections of the listed group that extracts it (first group wins)."""
+    out: dict[str, list[str]] = {}
+    for g in split_group_names():
+        spec = llm_field_group(g)
+        for name in spec["fields"]:
+            out.setdefault(name, list(spec["sections"]))
+    return out
 
 
 def _value_schema(spec: dict[str, Any]) -> dict[str, Any]:
@@ -96,7 +163,11 @@ def build_schema(field_group: str) -> dict[str, Any]:
     The top-level object has one required property per field in the group. Each
     property is an object ``{value, status, quote, page}`` with
     ``additionalProperties: false`` so that it is accepted by the strict modes of
-    the Anthropic, Gemini and OpenAI-compatible structured-output APIs.
+    the Anthropic, Gemini and OpenAI-compatible structured-output APIs. The combined
+    group ``all`` gets one property per field of every listed group: 31 fields, 155
+    properties counting the four slots of each, two levels of objects (plus the items of
+    the set fields), 173 enum members and about 15,100 characters of JSON, the size of the
+    four split schemas together.
     """
     group = llm_field_group(field_group)
     properties: dict[str, Any] = {}
@@ -160,22 +231,45 @@ def _field_lines(field_group: str, doc: DocRecord) -> list[str]:
     vocabulary) and from ``description`` otherwise, so the model never reads evaluation
     metadata.
     """
-    lines: list[str] = []
-    for name in llm_field_group(field_group)["fields"]:
-        spec = field_spec(name)
-        parts = [f"- {name} ({_TYPE_NOTES.get(spec['type'], spec['type'])}"]
-        if spec.get("allowed"):
-            parts.append(f"; allowed: {', '.join(spec['allowed'])}")
-        parts.append(f"): {spec.get('prompt_description', spec.get('description', '')).strip()}")
-        rule = applicability(name, doc.regulator, doc.method)
-        if rule == "absent_from_document":
-            parts.append(
-                f" For {doc.regulator} {_method_label(doc.method)} evaluations this field is"
-                " not printed; return status absent unless the text clearly states it."
-            )
-        elif rule == "not_applicable":
-            parts.append(" Not applicable to this document; return status absent.")
-        lines.append("".join(parts))
+    return [_field_line(name, doc) for name in llm_field_group(field_group)["fields"]]
+
+
+def _field_line(name: str, doc: DocRecord) -> str:
+    """The bullet of one field, with the applicability rule of the document's cell."""
+    spec = field_spec(name)
+    parts = [f"- {name} ({_TYPE_NOTES.get(spec['type'], spec['type'])}"]
+    if spec.get("allowed"):
+        parts.append(f"; allowed: {', '.join(spec['allowed'])}")
+    parts.append(f"): {spec.get('prompt_description', spec.get('description', '')).strip()}")
+    rule = applicability(name, doc.regulator, doc.method)
+    if rule == "absent_from_document":
+        parts.append(
+            f" For {doc.regulator} {_method_label(doc.method)} evaluations this field is"
+            " not printed; return status absent unless the text clearly states it."
+        )
+    elif rule == "not_applicable":
+        parts.append(" Not applicable to this document; return status absent.")
+    return "".join(parts)
+
+
+def _combined_field_block(doc: DocRecord) -> list[str]:
+    """Field block of the ``all`` prompt: every field once, under one line per listed group
+    naming the sections that usually state its fields."""
+    combined = combined_field_group()
+    lines = [
+        f"Fields to extract (group {ALL_GROUP!r}: all {len(combined['fields'])} fields in one "
+        "JSON object). Each list below names the sections that usually state its fields; use "
+        "any provided section that states a field."
+    ]
+    seen: set[str] = set()
+    for g in combined["groups"]:
+        spec = llm_field_group(g)
+        names = [n for n in spec["fields"] if n not in seen]
+        if not names:
+            continue
+        seen.update(names)
+        lines.append(f"Fields usually stated in the sections {', '.join(spec['sections'])}:")
+        lines += [_field_line(n, doc) for n in names]
     return lines
 
 
@@ -193,22 +287,40 @@ def build_prompt(doc: DocRecord, sections: dict[str, Section], field_group: str)
     only the regulator and exam method, which the applicability rules depend on;
     the bank name, bank id and evaluation date are scored Group A fields and are
     not shown (design 6.8), so the model must read them from the cover section.
+
+    For the combined group ``all`` the field block lists every field once, grouped by the
+    listed group that extracts it (:func:`_combined_field_block`), each field line carrying
+    the applicability rule of the (regulator, exam method) cell, and the sections (each name
+    once, as a dict) are rendered in document order, by start offset. The split-group
+    prompts are byte-identical to the ones before the combined group existed.
     """
     header = [
         "Document: a CRA Performance Evaluation",
         f"Regulator: {doc.regulator}",
         f"Exam method: {_method_label(doc.method)}",
     ]
+    if field_group == ALL_GROUP:
+        fields_block = _combined_field_block(doc)
+        sections_note = (
+            "Sections located in the document, each listed once in document order. Each section "
+            "is labeled with its scope (institution, state, msa, assessment_area, appendix) and "
+            "page range. Quotes must be copied verbatim from these sections."
+        )
+        sections = dict(sorted(sections.items(), key=lambda kv: (kv[1].char_start, kv[1].char_end)))
+    else:
+        fields_block = [f"Fields to extract (group {field_group!r}):", *_field_lines(field_group, doc)]
+        sections_note = (
+            "Sections located in the document. Each section is labeled with its scope "
+            "(institution, state, msa, assessment_area, appendix) and page range. "
+            "Quotes must be copied verbatim from these sections."
+        )
 
     body = [
         "\n".join(header),
         "",
-        f"Fields to extract (group {field_group!r}):",
-        *_field_lines(field_group, doc),
+        *fields_block,
         "",
-        "Sections located in the document. Each section is labeled with its scope "
-        "(institution, state, msa, assessment_area, appendix) and page range. "
-        "Quotes must be copied verbatim from these sections.",
+        sections_note,
     ]
     if not sections:
         body.append("\n(no sections were located; return status abstain for every field)")

@@ -25,6 +25,7 @@ STAGES: dict[str, tuple[str, str]] = {
     "parse": ("cra_extract.parse", "extract page text from the PDFs"),
     "overrides": ("cra_extract.overrides", "apply the documented manifest overrides and exclusions"),
     "locate": ("cra_extract.locate", "locate sections and report locator coverage"),
+    "locator-check": ("cra_extract.locator_check", "100-document locator hand check: draw, sheet, recall"),
     "templates": ("cra_extract.templates", "template-residual census of the review section"),
     "rules": ("cra_extract.rules", "rule-based extraction (system S1)"),
     "baseline": ("cra_extract.baseline", "keyword baseline for Group C (system S0)"),

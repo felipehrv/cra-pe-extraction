@@ -15,6 +15,10 @@ stripped, so the same inputs regenerate byte-identical files (``--check``). Piec
    grounding table. :func:`ablation` (located vs whole-document accuracy on the hash-sample
    documents, with discordant counts) and :func:`closed_book` (closed-book accuracy next to
    the test majority-class rate, plan Leakage) report the two variant systems.
+   :func:`heterogeneity_group_b` gives the Group B cut of the plan's "Heterogeneity" section
+   (per field and system, accuracy or precision and recall by regulator with Wilson
+   intervals, no between-regulator test) and :func:`error_causes` counts the hand-filled
+   causes of ``errors_{split}.csv`` per cause, stage and system (design 6.6).
 2. :func:`figure1`: the review curve (Group B from the audit, Group A from the corpus index
    comparison), the calibration inset (from the pair run of ``evaluate --systems`` written to
    ``ReportPaths.calibration_dir``, default ``results/pair``, plan Risk score flag 2) and the
@@ -37,8 +41,8 @@ Input contracts are documented on the reading functions: :func:`load_curve_frame
 
 CLI::
 
-    python -m cra_extract.report [all|table1|ablation|closed-book|figure1|table2|table3|descriptive]
-        [--split test] [--corpus-system SYSTEM] [--calibration-dir results/pair] [--no-figures]
+    python -m cra_extract.report [all|table1|ablation|closed-book|group-b-by-regulator|error-causes|
+        figure1|table2|table3|descriptive] [--split test] [--corpus-system SYSTEM] [--calibration-dir results/pair] [--no-figures]
     python -m cra_extract.report --check results/table1_test.csv [--no-figures]
 """
 
@@ -794,6 +798,291 @@ def closed_book(split: str = "test", paths: ReportPaths | None = None) -> dict[s
     return {
         "csv": write_csv(paths.out(f"table_closed_book_{split}.csv"), CLOSED_BOOK_COLUMNS, rows),
         "md": write_text(paths.out(f"table_closed_book_{split}.md"), md),
+    }
+
+
+# ----------------------------------------------------------------------------- Group B by regulator
+
+
+# Field groups of the confirmatory regulator cut (plan, Heterogeneity: "Group B: by regulator
+# on test; intervals reported, no between-regulator test").
+HETEROGENEITY_GROUPS = ("B",)
+GROUP_B_REGULATOR_COLUMNS = [
+    "field", "system", "regulator", "metric_type", "n_docs", "n_gold", "n_gold_value", "n_abstain",
+    "abstention_rate", "n", "n_correct", "accuracy", "accuracy_lo", "accuracy_hi",
+    "tp", "fp", "fn", "precision", "precision_lo", "precision_hi", "recall", "recall_lo", "recall_hi", "note",
+]
+
+
+def regulator_of(doc_id: Any) -> str:
+    """Regulator encoded as the first part of a doc_id (``{regulator}_{bank_id}_{YYYYMMDD}``)."""
+    return str(doc_id).split("_", 1)[0]
+
+
+def group_b_by_regulator_rows(
+    scored: pd.DataFrame, groups: Sequence[str] = HETEROGENEITY_GROUPS
+) -> list[dict[str, Any]]:
+    """Per (field, system, regulator) rows from the scored cells of ``groups`` (Group B).
+
+    Definitions as in ``evaluate.metrics_table``: accuracy over gold-value items with
+    abstentions excluded (metric types accuracy and set_pr); for binary_pr fields TP, FP and FN
+    (a fabricated absence is a false negative) with precision and recall conditional on
+    answering; for set_pr fields element-level TP, FP and FN summed over non-abstained items.
+    The whole-document and closed-book variants and ``counts`` fields are left out. The
+    regulator is read from the doc_id. Rows follow fields.yaml, then system, then OCC, FDIC
+    and FRB (a regulator without scored cells has no row).
+    """
+    if scored.empty:
+        return []
+    df = scored[scored["group"].astype(str).isin(groups) & ~scored["system"].astype(str).map(is_variant)]
+    df = df[df["metric_type"].astype(str) != "counts"].copy()
+    if df.empty:
+        return []
+    df["regulator"] = df["doc_id"].map(regulator_of)
+    order = _field_order()
+    reg_order = {r: i for i, r in enumerate(REGULATORS)}
+    keys = sorted(
+        {(str(f), str(s), str(r)) for f, s, r in zip(df["field"], df["system"], df["regulator"], strict=True)},
+        key=lambda k: (order.get(k[0], len(order)), k[0], k[1], reg_order.get(k[2], len(reg_order)), k[2]),
+    )
+    rows: list[dict[str, Any]] = []
+    for field, system, reg in keys:
+        g = df[(df["field"] == field) & (df["system"] == system) & (df["regulator"] == reg)]
+        mt = str(g["metric_type"].iloc[0])
+        cells = g["cell"].value_counts()
+        n_correct = int(cells.get("correct", 0))
+        n_eval = n_correct + int(cells.get("wrong", 0)) + int(cells.get("fabricated_absence", 0))
+        n_abstain = int(cells.get("abstention", 0))
+        row: dict[str, Any] = {
+            "field": field, "system": system, "regulator": reg, "metric_type": mt,
+            "n_docs": int(g["doc_id"].nunique()), "n_gold": len(g),
+            "n_gold_value": int((g["gold_status"] == "value").sum()), "n_abstain": n_abstain,
+            "abstention_rate": n_abstain / len(g),
+        }
+        if mt in ("accuracy", "set_pr"):
+            acc = _rate(n_correct, n_eval)
+            row.update(n=n_eval, n_correct=n_correct, accuracy=acc[0], accuracy_lo=acc[1], accuracy_hi=acc[2])
+        counts: tuple[int, int, int] | None = None
+        if mt == "binary_pr":
+            gp = g["gold_pos"].map(_truthy).astype(bool)
+            pp = g["pred_pos"].map(_truthy).astype(bool)
+            answered = g["pred_status"] == "value"
+            not_abstained = g["pred_status"] != "abstain"
+            counts = (int((gp & pp & answered).sum()), int((~gp & pp & answered).sum()),
+                      int((gp & ~pp & not_abstained).sum()))
+        elif mt == "set_pr":
+            counts = (int(_num(g, "tp").fillna(0).sum()), int(_num(g, "fp").fillna(0).sum()),
+                      int(_num(g, "fn").fillna(0).sum()))
+            row["note"] = "precision and recall element-level"
+        if counts is not None:
+            tp, fp, fn = counts
+            prec, rec = _rate(tp, tp + fp), _rate(tp, tp + fn)
+            row.update(tp=tp, fp=fp, fn=fn, precision=prec[0], precision_lo=prec[1], precision_hi=prec[2],
+                       recall=rec[0], recall_lo=rec[1], recall_hi=rec[2])
+        rows.append(row)
+    return rows
+
+
+def heterogeneity_group_b(split: str = "test", paths: ReportPaths | None = None) -> dict[str, Path]:
+    """Group B by regulator (plan, Heterogeneity): per field and system, accuracy (precision and
+    recall for binary and set fields) for each regulator with Wilson 95 percent intervals and
+    no between-regulator comparison. Reads ``scored_{split}.csv``; writes
+    ``table_group_b_by_regulator_{split}.csv`` and ``.md``."""
+    paths = paths or ReportPaths()
+    src = paths.inp(f"scored_{split}.csv")
+    if not src.exists():
+        raise FileNotFoundError(f"{src} not found; run evaluate --split {split} first")
+    rows = group_b_by_regulator_rows(_read_csv(src))
+    body = [
+        [r["field"], r["system"], r["regulator"], cell(r["n_docs"]), cell(r.get("n")),
+         pct_ci(r.get("accuracy"), r.get("accuracy_lo"), r.get("accuracy_hi")),
+         pct_ci(r.get("precision"), r.get("precision_lo"), r.get("precision_hi")),
+         pct_ci(r.get("recall"), r.get("recall_lo"), r.get("recall_hi")),
+         pct(r.get("abstention_rate"))]
+        for r in rows
+    ]
+    md = "\n".join([
+        f"# Group B by regulator ({split} split)",
+        "",
+        f"Heterogeneity cut of the analysis plan (Group B by regulator) on the {split} split, from "
+        f"scored_{split}.csv. Per field, system and regulator: accuracy over gold-value items with abstentions "
+        "excluded (n, as in Table 1), element-level precision and recall for the set field, precision and "
+        "recall for binary fields, Wilson 95 percent intervals in percent, and the abstention rate over all "
+        "gold items. Each regulator is reported on its own with its interval; no between-regulator test is "
+        "made. Whole-document and closed-book variants are left out; the regulator is the first part of the "
+        "doc_id.",
+        "",
+    ]) + "\n" + md_table(
+        ["Field", "System", "Regulator", "Documents", "n", "Accuracy [95% CI]", "Precision [95% CI]",
+         "Recall [95% CI]", "Abstention"], body)
+    return {
+        "csv": write_csv(paths.out(f"table_group_b_by_regulator_{split}.csv"), GROUP_B_REGULATOR_COLUMNS, rows),
+        "md": write_text(paths.out(f"table_group_b_by_regulator_{split}.md"), md),
+    }
+
+
+# ----------------------------------------------------------------------------- error causes
+
+
+# Vocabulary of the hand-filled cause column of errors_{split}.csv (design 6.6; plan, Metrics,
+# Error causes) and of the stage that produced each cause.
+ERROR_CAUSES = (
+    "parsing", "locator_miss", "wrong_scope", "wrong_period", "unit_or_format",
+    "boilerplate_confusion", "reasoning", "fabrication", "label",
+)
+ERROR_STAGES = ("parse", "locate", "extract", "label")
+# Causes whose stage is fixed: a locator miss is a locate-stage cause shared by S1 and S3, a
+# gold error found while classifying is a label-stage cause, a parsing error is the parser's.
+CAUSE_STAGE = {"parsing": "parse", "locator_miss": "locate", "label": "label"}
+UNCLASSIFIED = "unclassified"  # a non-correct cell whose cause column is blank
+UNASSIGNED = "unassigned"  # a cause with no stage given and no fixed stage
+ERROR_CAUSE_COLUMNS = [
+    "system", "level", "cause", "stage", "n_values", "share_of_values", "n_mentions", "share_of_mentions",
+]
+ERROR_CAUSE_PROBLEM_LIMIT = 20
+
+
+class ErrorCauseError(ValueError):
+    """The cause or stage column of ``errors_{split}.csv`` breaks the vocabulary."""
+
+
+def _semicolon_list(v: Any) -> list[str]:
+    return [p.strip().lower() for p in str(v if v is not None else "").split(";") if p.strip()]
+
+
+def error_cause_mentions(errors: pd.DataFrame) -> tuple[list[tuple[int, str, str, str]], list[str]]:
+    """(mentions, problems) of an errors file read as strings.
+
+    One mention ``(row position, system, cause, stage)`` per cause of a row; a row with a blank
+    cause gives one ``unclassified`` mention. Causes are separated by semicolons. The stage
+    cell holds one stage for every cause of the row, or one stage per cause in the same order;
+    a blank stage takes the fixed stage of the cause (:data:`CAUSE_STAGE`) or ``unassigned``.
+    Problems: a cause or stage outside the vocabulary, a cause repeated in a row, a stage list
+    whose length is neither 1 nor the number of causes, and a stage that contradicts a fixed
+    one. Line numbers count the header as line 1.
+    """
+    mentions: list[tuple[int, str, str, str]] = []
+    problems: list[str] = []
+    has_stage = "stage" in errors.columns
+    for pos, r in enumerate(errors.to_dict("records")):
+        where = f"line {pos + 2} ({r.get('doc_id', '')}, {r.get('field', '')}, {r.get('system', '')})"
+        system = str(r.get("system", ""))
+        causes = _semicolon_list(r.get("cause"))
+        stages = _semicolon_list(r.get("stage")) if has_stage else []
+        unknown = [c for c in causes if c not in ERROR_CAUSES]
+        if unknown:
+            problems.append(f"{where}: unknown cause {', '.join(unknown)} (vocabulary: {', '.join(ERROR_CAUSES)})")
+        if len(set(causes)) != len(causes):
+            problems.append(f"{where}: a cause is listed twice")
+        bad_stages = [s for s in stages if s not in ERROR_STAGES]
+        if bad_stages:
+            problems.append(f"{where}: unknown stage {', '.join(bad_stages)} (vocabulary: {', '.join(ERROR_STAGES)})")
+        if not causes:
+            if len(stages) > 1:
+                problems.append(f"{where}: a row without a cause takes at most one stage")
+            mentions.append((pos, system, UNCLASSIFIED, stages[0] if stages else UNASSIGNED))
+            continue
+        if len(stages) not in (0, 1, len(causes)):
+            problems.append(f"{where}: give one stage for every cause or one stage per cause ({len(causes)} causes, "
+                            f"{len(stages)} stages)")
+            continue
+        for j, cause in enumerate(causes):
+            fixed = CAUSE_STAGE.get(cause)
+            if not stages:
+                stage = fixed or UNASSIGNED
+            else:
+                stage = stages[j] if len(stages) == len(causes) else stages[0]
+                if fixed and stage != fixed:
+                    problems.append(f"{where}: {cause} is a {fixed}-stage cause, not {stage}")
+            mentions.append((pos, system, cause, stage))
+    return mentions, problems
+
+
+def _cause_row(system: str, level: str, cause: str, stage: str, sub: Sequence[tuple[int, str, str, str]],
+               n_values: int, n_mentions: int) -> dict[str, Any]:
+    k_values = len({m[0] for m in sub})
+    return {
+        "system": system, "level": level, "cause": cause, "stage": stage,
+        "n_values": k_values, "share_of_values": k_values / n_values if n_values else math.nan,
+        "n_mentions": len(sub), "share_of_mentions": len(sub) / n_mentions if n_mentions else math.nan,
+    }
+
+
+def error_cause_rows(errors: pd.DataFrame) -> tuple[list[dict[str, Any]], int]:
+    """(rows, variant cells left out) of the error-cause table; raises :class:`ErrorCauseError`
+    on a vocabulary problem.
+
+    Per system (sorted; the whole-document and closed-book variants are left out): a ``total``
+    row, one ``cause`` row per vocabulary cause plus ``unclassified`` (stage ``all``), one
+    ``stage`` row per stage plus ``unassigned`` (cause ``all``), then one ``cause_stage`` row per
+    (cause, stage) pair that occurs. ``n_values`` counts non-correct cells with at least one
+    matching mention, as a share of the system's non-correct cells (shares can sum past 1);
+    ``n_mentions`` counts (cell, cause) pairs, as a share of the system's mentions.
+    """
+    mentions, problems = error_cause_mentions(errors)
+    if problems:
+        shown = problems[:ERROR_CAUSE_PROBLEM_LIMIT]
+        rest = len(problems) - len(shown)
+        raise ErrorCauseError("cause or stage outside the vocabulary:\n" + "\n".join(shown)
+                              + (f"\n... and {rest} further problems" if rest else ""))
+    systems = errors["system"].astype(str).tolist() if len(errors) else []
+    keep = {pos for pos, s in enumerate(systems) if not is_variant(s)}
+    cause_rank = {c: i for i, c in enumerate((*ERROR_CAUSES, UNCLASSIFIED))}
+    stage_rank = {s: i for i, s in enumerate((*ERROR_STAGES, UNASSIGNED))}
+    rows: list[dict[str, Any]] = []
+    for system in sorted({systems[pos] for pos in keep}):
+        m = [x for x in mentions if x[0] in keep and x[1] == system]
+        n_values = sum(1 for pos in keep if systems[pos] == system)
+        n_mentions = len(m)
+        rows.append(_cause_row(system, "total", "all", "all", m, n_values, n_mentions))
+        for cause in cause_rank:
+            rows.append(_cause_row(system, "cause", cause, "all", [x for x in m if x[2] == cause], n_values, n_mentions))
+        for stage in stage_rank:
+            rows.append(_cause_row(system, "stage", "all", stage, [x for x in m if x[3] == stage], n_values, n_mentions))
+        for cause, stage in sorted({(x[2], x[3]) for x in m}, key=lambda p: (cause_rank[p[0]], stage_rank[p[1]])):
+            sub = [x for x in m if x[2] == cause and x[3] == stage]
+            rows.append(_cause_row(system, "cause_stage", cause, stage, sub, n_values, n_mentions))
+    return rows, len(systems) - len(keep)
+
+
+def error_causes(split: str = "test", paths: ReportPaths | None = None) -> dict[str, Path]:
+    """Error-cause table (design 6.6; plan, Metrics, Error causes) from the hand-filled
+    ``cause`` and ``stage`` columns of ``errors_{split}.csv``: counts per cause, stage and
+    system, per value and per cause mention. Writes ``table_error_causes_{split}.csv`` and
+    ``.md``; raises :class:`ErrorCauseError` on a vocabulary problem."""
+    paths = paths or ReportPaths()
+    src = paths.inp(f"errors_{split}.csv")
+    if not src.exists():
+        raise FileNotFoundError(f"{src} not found; run evaluate --split {split} first")
+    errors = _read_csv(src)
+    missing = [c for c in ("doc_id", "field", "system", "cause") if c not in errors.columns]
+    if missing:
+        raise ErrorCauseError(f"{src}: missing columns {missing}")
+    rows, n_variant = error_cause_rows(errors)
+    body = [[r["system"], r["level"], r["cause"], r["stage"], cell(r["n_values"]), pct(r["share_of_values"]),
+             cell(r["n_mentions"]), pct(r["share_of_mentions"])] for r in rows]
+    md = "\n".join([
+        f"# Error causes ({split} split)",
+        "",
+        f"Hand classification of the non-correct cells of errors_{split}.csv (design 6.6; analysis plan, "
+        "Metrics, Error causes). The cause column holds a cause, or several separated by semicolons, from: "
+        f"{', '.join(ERROR_CAUSES)}. The stage column holds one stage for every cause of the row, or one stage "
+        f"per cause in the same order, from: {', '.join(ERROR_STAGES)}; parsing, locator_miss and label carry "
+        "the parse, locate and label stages, and a blank stage takes that stage. A locator miss is a "
+        "locate-stage cause shared by S1 and S3, not an LLM reasoning error; a gold error found here is a "
+        "label-stage cause.",
+        "",
+        "Values: non-correct cells with at least one mention, in percent of the system's non-correct cells; a "
+        "cell with several causes counts once under each, so these shares can sum past 100 percent. Mentions: "
+        "each (cell, cause) pair once, in percent of the system's mentions. A cell with a blank cause counts "
+        "as unclassified; a cause with no stage given counts under stage unassigned. Whole-document and "
+        f"closed-book variant cells left out: {n_variant}.",
+        "",
+    ]) + "\n" + md_table(
+        ["System", "Level", "Cause", "Stage", "Values", "Share of values", "Mentions", "Share of mentions"], body)
+    return {
+        "csv": write_csv(paths.out(f"table_error_causes_{split}.csv"), ERROR_CAUSE_COLUMNS, rows),
+        "md": write_text(paths.out(f"table_error_causes_{split}.md"), md),
     }
 
 
@@ -1877,7 +2166,8 @@ def build_all(
     split: str = "test", paths: ReportPaths | None = None, corpus_system: str | None = None, figures: bool = True
 ) -> tuple[list[Path], list[str]]:
     """Run every piece; returns the written files (sorted) and the pieces skipped for a
-    missing required input."""
+    missing required input or, for the error-cause table, a cause or stage outside the
+    vocabulary."""
     paths = paths or ReportPaths()
     written: list[Path] = []
     skipped: list[str] = []
@@ -1892,6 +2182,12 @@ def build_all(
             written += ablation(split, paths).values()
         if any(str(x).endswith(CLOSED_BOOK_SUFFIX) for x in systems):
             written += closed_book(split, paths).values()
+        written += heterogeneity_group_b(split, paths).values()
+    if paths.inp(f"errors_{split}.csv").exists():
+        try:
+            written += error_causes(split, paths).values()
+        except ErrorCauseError as exc:
+            skipped.append(f"error-causes: {exc}")
     if figures:
         written += figure1(split, paths).values()
     try:
@@ -1939,8 +2235,8 @@ def main(argv: list[str] | None = None) -> int:
     """CLI. Exit 0 on success, 1 when ``--check`` finds a difference or a piece lacks its input."""
     parser = argparse.ArgumentParser(description="Assemble the report tables and figures from results/.")
     parser.add_argument("piece", nargs="?", default="all",
-                        choices=["all", "table1", "ablation", "closed-book", "figure1", "table2", "table3",
-                                 "descriptive"])
+                        choices=["all", "table1", "ablation", "closed-book", "group-b-by-regulator",
+                                 "error-causes", "figure1", "table2", "table3", "descriptive"])
     parser.add_argument("--split", default="test", help="split of Table 1, Figure 1 inset and Table 3 (default test)")
     parser.add_argument("--corpus-system", default=None, help="system whose corpus cost enters the review operating points")
     parser.add_argument("--results-dir", type=Path, default=RESULTS_DIR, help=f"inputs (default {RESULTS_DIR})")
@@ -1974,6 +2270,10 @@ def main(argv: list[str] | None = None) -> int:
             written = list(ablation(args.split, paths).values())
         elif args.piece == "closed-book":
             written = list(closed_book(args.split, paths).values())
+        elif args.piece == "group-b-by-regulator":
+            written = list(heterogeneity_group_b(args.split, paths).values())
+        elif args.piece == "error-causes":
+            written = list(error_causes(args.split, paths).values())
         elif args.piece == "figure1":
             written = list(figure1(args.split, paths).values())
         elif args.piece == "table2":
@@ -1982,7 +2282,7 @@ def main(argv: list[str] | None = None) -> int:
             written = list(table3(args.split, paths, args.corpus_system).values())
         else:
             written = list(descriptive(paths).values())
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ErrorCauseError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
     for p in written:

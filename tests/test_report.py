@@ -9,6 +9,7 @@ so the report is tested against the evaluator's real column contract.
 from __future__ import annotations
 
 import dataclasses
+import io
 import json
 import math
 import re
@@ -729,3 +730,198 @@ def test_cli_and_makefile_wiring() -> None:
     assert cli.STAGES["report"][0] == "cra_extract.report"
     text = MAKEFILE.read_text(encoding="utf-8")
     assert re.search(r"^report:\n\t\$\(PY\) -m cra_extract\.report --split \$\(REPORT_SPLIT\)", text, re.MULTILINE)
+
+
+# ----------------------------------------------------------------------------- Group B by regulator
+
+
+_COMPARATIVE = re.compile(r"\b(" + "|".join(report.COMPARATIVE_WORDS) + r")\b", re.IGNORECASE)
+
+
+def _generated_lines(path: Path) -> list[str]:
+    return [line for line in path.read_text(encoding="utf-8").splitlines() if not line.startswith("|")]
+
+
+def test_group_b_by_regulator_accuracy_and_set_counts(ws: report.ReportPaths) -> None:
+    out = report.heterogeneity_group_b("test", ws)
+    t = _csv(out["csv"])
+    assert list(t.columns) == report.GROUP_B_REGULATOR_COLUMNS
+    # Group B only (no Group A, component rating or Group C rows); test documents are OCC and FDIC.
+    assert set(t["field"]) == {"n_assessment_areas", "loan_products_evaluated"}
+    assert set(t["regulator"]) == {"OCC", "FDIC"}
+    # fields.yaml order, then system, then OCC before FDIC.
+    keys = list(zip(t["field"], t["system"], t["regulator"], strict=True))
+    assert keys[:4] == [("n_assessment_areas", GEMINI, "OCC"), ("n_assessment_areas", GEMINI, "FDIC"),
+                        ("n_assessment_areas", "rules", "OCC"), ("n_assessment_areas", "rules", "FDIC")]
+    aa = t[(t["field"] == "n_assessment_areas") & (t["system"] == "rules")].set_index("regulator")
+    # Two OCC documents, both correct: Wilson 2/2 = [0.3424, 1]; one FDIC document: 1/1 = [0.2065, 1].
+    assert (aa.loc["OCC", "n"], aa.loc["OCC", "n_correct"], aa.loc["OCC", "accuracy"]) == ("2", "2", "1.0000")
+    assert (aa.loc["OCC", "accuracy_lo"], aa.loc["OCC", "accuracy_hi"]) == ("0.3424", "1.0000")
+    assert (aa.loc["FDIC", "n"], aa.loc["FDIC", "accuracy_lo"]) == ("1", "0.2065")
+    assert aa.loc["OCC", "precision"] == "" and aa.loc["OCC", "tp"] == ""
+    lp = t[(t["field"] == "loan_products_evaluated") & (t["system"] == "rules")].set_index("regulator")
+    # Gold {home_mortgage, small_business}, predicted {home_mortgage}: set wrong, one element missed per document.
+    occ = lp.loc["OCC"]
+    assert (occ["accuracy"], occ["tp"], occ["fp"], occ["fn"]) == ("0.0000", "2", "0", "2")
+    assert (occ["precision"], occ["recall"], occ["n_docs"], occ["abstention_rate"]) == ("1.0000", "0.5000", "2", "0.0000")
+    assert "element-level" in occ["note"]
+    md = out["md"].read_text(encoding="utf-8")
+    assert "no between-regulator test" in md and "| Field | System | Regulator |" in md
+    for line in _generated_lines(out["md"]):
+        assert not _COMPARATIVE.search(line), line
+    assert "\u2014" not in md
+
+
+def test_group_b_by_regulator_binary_field_and_variants() -> None:
+    docs = {"OCC_1_20240101": (True, True), "OCC_2_20240201": (True, None), "FRB_5_20240501": (False, True),
+            "FRB_6_20240601": (True, True)}
+    labels = [LabelRow(doc_id=d, field="finding_present", value=str(g).lower(), minutes=1.0) for d, (g, _p) in docs.items()]
+    preds = [FieldValue(doc_id=d, field="finding_present", system="rules", value=str(p).lower()) if p is not None
+             else FieldValue(doc_id=d, field="finding_present", system="rules", status="absent")
+             for d, (_g, p) in docs.items()]
+    preds += [p.model_copy(update={"system": GEMINI + ":closedbook"}) for p in preds]
+    scored = evaluate.score_predictions(labels, preds)
+    scored = pd.read_csv(io.StringIO(scored.to_csv(index=False)), dtype=str, keep_default_na=False)
+    rows = report.group_b_by_regulator_rows(scored, groups=("C",))
+    assert [(r["system"], r["regulator"]) for r in rows] == [("rules", "OCC"), ("rules", "FRB")]
+    occ, frb = rows
+    # OCC: one true positive, one fabricated absence (a false negative); FRB: one TP, one FP.
+    assert (occ["tp"], occ["fp"], occ["fn"], occ["precision"], occ["recall"]) == (1, 0, 1, 1.0, 0.5)
+    assert (frb["tp"], frb["fp"], frb["fn"], frb["precision"], frb["recall"]) == (1, 1, 0, 0.5, 1.0)
+    assert "accuracy" not in occ and occ["metric_type"] == "binary_pr"
+    assert report.group_b_by_regulator_rows(scored) == []  # no Group B rows
+
+
+def test_group_b_by_regulator_is_deterministic_and_wired(ws: report.ReportPaths, tmp_path: Path) -> None:
+    a = report.heterogeneity_group_b("test", dataclasses.replace(ws, out_dir=tmp_path / "a"))
+    b = report.heterogeneity_group_b("test", dataclasses.replace(ws, out_dir=tmp_path / "b"))
+    for key in ("csv", "md"):
+        assert a[key].read_bytes() == b[key].read_bytes()
+    written, _ = report.build_all("test", ws, figures=False)
+    assert ws.out("table_group_b_by_regulator_test.csv") in written
+    assert ws.out("table_group_b_by_regulator_test.md") in written
+    with pytest.raises(FileNotFoundError):
+        report.heterogeneity_group_b("dev", ws)
+
+
+# ----------------------------------------------------------------------------- error causes
+
+
+ERROR_COLUMNS = ["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell",
+                 "grounding_failure", "cause", "stage"]
+
+
+def _errors(ws: report.ReportPaths, cells: list[tuple[str, str, str, str]]) -> Path:
+    """Write errors_test.csv with (doc_id, system, cause, stage) rows."""
+    rows = [{"doc_id": d, "field": f"f{i}", "system": s, "gold_status": "value", "gold_value": "1",
+             "pred_status": "value", "pred_value": "2", "cell": "wrong", "grounding_failure": "", "cause": c, "stage": st}
+            for i, (d, s, c, st) in enumerate(cells)]
+    path = ws.inp("errors_test.csv")
+    _write_csv(path, ERROR_COLUMNS, rows)
+    return path
+
+
+CAUSE_CELLS = [
+    ("OCC_1_20240101", "rules", "locator_miss", ""),  # fixed stage: locate
+    ("OCC_2_20240201", "rules", "locator_miss;reasoning", "locate;extract"),
+    ("FDIC_3_20240301", "rules", "", ""),  # unclassified, not a failure
+    ("OCC_1_20240101", GEMINI, "reasoning;wrong_scope", "extract"),  # one stage for both causes
+    ("OCC_2_20240201", GEMINI, "label", ""),
+    ("FDIC_3_20240301", GEMINI, " Fabrication ", "EXTRACT"),
+    ("FDIC_3_20240301", GEMINI + ":closedbook", "", ""),  # variant: left out
+]
+
+
+def test_error_causes_counts_per_value_and_per_mention(ws: report.ReportPaths) -> None:
+    _errors(ws, CAUSE_CELLS)
+    out = report.error_causes("test", ws)
+    t = _csv(out["csv"])
+    assert list(t.columns) == report.ERROR_CAUSE_COLUMNS
+    assert set(t["system"]) == {GEMINI, "rules"}
+
+    def row(system: str, level: str, cause: str, stage: str) -> pd.Series:
+        sel = t[(t["system"] == system) & (t["level"] == level) & (t["cause"] == cause) & (t["stage"] == stage)]
+        assert len(sel) == 1, (system, level, cause, stage)
+        return sel.iloc[0]
+
+    def counts(r: pd.Series) -> tuple[str, str, str, str]:
+        return (r["n_values"], r["share_of_values"], r["n_mentions"], r["share_of_mentions"])
+
+    # rules: 3 non-correct cells, 4 mentions (locator_miss, locator_miss, reasoning, unclassified).
+    assert counts(row("rules", "total", "all", "all")) == ("3", "1.0000", "4", "1.0000")
+    assert counts(row("rules", "cause", "locator_miss", "all")) == ("2", "0.6667", "2", "0.5000")
+    assert counts(row("rules", "cause", "reasoning", "all")) == ("1", "0.3333", "1", "0.2500")
+    assert counts(row("rules", "cause", "unclassified", "all")) == ("1", "0.3333", "1", "0.2500")
+    assert counts(row("rules", "cause", "fabrication", "all")) == ("0", "0.0000", "0", "0.0000")
+    assert counts(row("rules", "stage", "all", "locate")) == ("2", "0.6667", "2", "0.5000")
+    assert counts(row("rules", "stage", "all", "unassigned")) == ("1", "0.3333", "1", "0.2500")
+    assert counts(row("rules", "cause_stage", "locator_miss", "locate")) == ("2", "0.6667", "2", "0.5000")
+    # Gemini: the extract stage holds 2 cells but 3 mentions (two causes in one cell).
+    assert counts(row(GEMINI, "total", "all", "all")) == ("3", "1.0000", "4", "1.0000")
+    assert counts(row(GEMINI, "stage", "all", "extract")) == ("2", "0.6667", "3", "0.7500")
+    assert counts(row(GEMINI, "cause_stage", "label", "label")) == ("1", "0.3333", "1", "0.2500")
+    assert counts(row(GEMINI, "cause_stage", "fabrication", "extract")) == ("1", "0.3333", "1", "0.2500")
+    per_value = t[(t["system"] == GEMINI) & (t["level"] == "cause")]["n_values"].astype(int).sum()
+    assert per_value == 4  # per-value counts can sum past the 3 cells
+    # Cause rows list the whole vocabulary plus unclassified, in vocabulary order.
+    causes = t[(t["system"] == "rules") & (t["level"] == "cause")]["cause"].tolist()
+    assert causes == [*report.ERROR_CAUSES, "unclassified"]
+    md = out["md"].read_text(encoding="utf-8")
+    assert "variant cells left out: 1." in md
+    for line in _generated_lines(out["md"]):
+        assert not _COMPARATIVE.search(line), line
+    assert "\u2014" not in md
+
+
+def test_error_causes_unclassified_when_the_cause_column_is_empty(ws: report.ReportPaths) -> None:
+    errors = evaluate.error_table(_csv(ws.inp("scored_test.csv")))
+    errors.to_csv(ws.inp("errors_test.csv"), index=False)
+    t = _csv(report.error_causes("test", ws)["csv"])
+    total = t[t["level"] == "total"].set_index("system")
+    uncl = t[(t["level"] == "cause") & (t["cause"] == "unclassified")].set_index("system")
+    for system in total.index:
+        assert uncl.loc[system, "n_values"] == total.loc[system, "n_values"] != "0"
+        assert uncl.loc[system, "share_of_values"] == "1.0000"
+    # An errors file written before the stage column existed is read with blank stages.
+    errors.drop(columns="stage").to_csv(ws.inp("errors_test.csv"), index=False)
+    t2 = _csv(report.error_causes("test", ws)["csv"])
+    assert t2.equals(t)
+
+
+@pytest.mark.parametrize(("cause", "stage", "message"), [
+    ("hallucination", "", "unknown cause hallucination"),
+    ("reasoning", "lookup", "unknown stage lookup"),
+    ("reasoning;reasoning", "", "listed twice"),
+    ("reasoning;wrong_scope", "extract;extract;extract", "one stage per cause"),
+    ("locator_miss", "extract", "locator_miss is a locate-stage cause"),
+    ("label;reasoning", "extract", "label is a label-stage cause"),
+    ("", "parse;locate", "at most one stage"),
+])
+def test_error_causes_vocabulary_is_validated(ws: report.ReportPaths, cause: str, stage: str, message: str) -> None:
+    _errors(ws, [("OCC_1_20240101", "rules", "reasoning", "extract"), ("OCC_2_20240201", "rules", cause, stage)])
+    with pytest.raises(report.ErrorCauseError, match=message) as exc:
+        report.error_causes("test", ws)
+    assert "line 3 (OCC_2_20240201" in str(exc.value)
+    written, skipped = report.build_all("test", ws, figures=False)
+    assert any(s.startswith("error-causes:") for s in skipped)
+    assert ws.out("table_error_causes_test.csv") not in written
+
+
+def test_error_causes_deterministic_wired_and_cli(ws: report.ReportPaths, tmp_path: Path,
+                                                  monkeypatch: pytest.MonkeyPatch) -> None:
+    _errors(ws, CAUSE_CELLS)
+    a = report.error_causes("test", dataclasses.replace(ws, out_dir=tmp_path / "a"))
+    b = report.error_causes("test", dataclasses.replace(ws, out_dir=tmp_path / "b"))
+    for key in ("csv", "md"):
+        assert a[key].read_bytes() == b[key].read_bytes()
+    wa, skipped = report.build_all("test", dataclasses.replace(ws, out_dir=tmp_path / "c"), figures=False)
+    assert not skipped and tmp_path / "c" / "table_error_causes_test.csv" in wa
+    report.build_all("test", ws, figures=False)
+    assert report.check(ws.inp("table1_test.csv"), ws, figures=False) == []
+    monkeypatch.setattr(report, "ReportPaths", lambda: ws)
+    args = ["--results-dir", str(ws.results_dir), "--no-figures"]
+    assert report.main(["error-causes", "--split", "test", *args]) == 0
+    assert report.main(["group-b-by-regulator", "--split", "test", *args]) == 0
+    _errors(ws, [("OCC_1_20240101", "rules", "guess", "")])
+    assert report.main(["error-causes", "--split", "test", *args]) == 1
+    assert report.main(["error-causes", "--split", "dev", *args]) == 1

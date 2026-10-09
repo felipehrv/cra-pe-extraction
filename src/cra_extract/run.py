@@ -8,12 +8,28 @@ systems and appends their ``FieldValue`` rows to ``results/predictions_{split}.c
 - ``rules``: system S1, ``rules.extract`` over the located sections.
 - ``baseline``: system S0, ``baseline.detect`` over the review section.
 - ``llm:<backend>:<model>``: S3 (``gemini``, ``anthropic``, ``openai_compat``) or S4
-  (``ollama``), one ``llm.extract`` call per field group of ``fields.yaml`` with the group's
-  located sections as input and the whole document as fallback when none was located
-  (``locator_miss`` = 1). The model may contain colons (``llama3.1:8b-instruct-q4_K_M``).
+  (``ollama``) over the located sections (:func:`llm_inputs`). The model may contain colons
+  (``llama3.1:8b-instruct-q4_K_M``). ``--field-groups`` sets the calls per document:
+
+  - ``all`` (default): one ``llm.extract`` call for the combined group ``all``
+    (``prompts.combined_field_group``) with every located section of the four listed groups,
+    each once in document order, and every LLM field in one JSON object. When any listed
+    group has no located section the call sends the whole document instead, so every field
+    still sees its own group's sections or the whole document.
+  - ``split`` (the behaviour before 2026-10-08): one call per ``llm_field_groups`` entry of
+    ``fields.yaml`` with that group's located sections, or the whole document when none of
+    them was located.
+
+  In both modes a field's ``locator_miss`` is 1 when no section of its own listed group was
+  located (:func:`field_locator_misses`), and the rows, the trace layout, the replay rule and
+  the grounding inputs are the same; the trace's ``field_group`` (``all`` or a listed group)
+  records the mode, and the two modes never share a prompt hash, so neither replays the
+  other's traces. The run log records ``field_groups`` per (document, system); a pair already
+  written under the other mode is skipped with a warning (``--force`` recomputes it).
 - ``llm:<backend>:<model>:whole`` (or ``--whole-document``): the whole-document ablation
   (analysis plan, "Decisions" item 3): the whole document text, pages joined, for every
-  field group; ``locator_miss`` is ``na`` (not applicable).
+  call of the field-group mode (one call under ``all``, four under ``split``);
+  ``locator_miss`` is ``na`` (not applicable).
 - ``llm:<backend>:<model>:closedbook`` (or ``--closed-book``): the closed-book contamination
   baseline (analysis plan, "Leakage and contamination controls"): one ``llm.extract_closed_book``
   call per document with only the bank name and exam date, answering ``overall_rating`` and
@@ -50,15 +66,18 @@ Second live run (run-to-run agreement, dev only): ``--trace-dir data/traces/dev_
 replaying the first run; ``python -m cra_extract.run agreement A B`` then writes
 ``results/run_agreement_dev.csv`` (:func:`agreement`). ``--trace-dir`` is refused on test.
 
-Cost projection: ``--project`` builds every prompt the run would send, counts the calls,
-estimates input tokens as characters / 4, marks calls already in the traces and prices the
-rest with ``config/prices.yaml``, without building a backend or calling anything
-(:func:`project`); it writes ``results/cost_projection_{split}.csv``.
+Cost projection: ``--project`` builds every prompt the run would send under the chosen
+``--field-groups`` mode, counts the calls (one per document under ``all``, four under
+``split``), estimates input tokens as characters / 4, marks calls already in the traces and
+prices the rest with ``config/prices.yaml``, without building a backend or calling anything
+(:func:`project`); it writes ``results/cost_projection_{split}.csv`` with a ``field_groups``
+column.
 
 CLI::
 
     python -m cra_extract.run --split dev --systems rules,baseline,llm:gemini:gemini-3.8-flash
-        [--allow-api] [--effort LEVEL] [--whole-document | --closed-book] [--hash-sample N]
+        [--allow-api] [--effort LEVEL] [--field-groups all|split]
+        [--whole-document | --closed-book] [--hash-sample N]
         [--limit N] [--doc-id ID] [--force] [--parse-missing] [--root DIR]
         [--trace-dir DIR] [--results-dir DIR] [--project]
     python -m cra_extract.run agreement A B [--out results/run_agreement_dev.csv]
@@ -108,6 +127,13 @@ LLM_BACKENDS = ("gemini", "anthropic", "openai_compat", "ollama")
 LOCATED, WHOLE, CLOSED_BOOK = "located", "whole", prompts.CLOSED_BOOK_GROUP
 MODE_SUFFIXES = {WHOLE: ":whole", CLOSED_BOOK: f":{prompts.CLOSED_BOOK_GROUP}"}
 EFFORT_CHOICES = ("minimal", "low", "medium", "high", "max", "none")
+# Field-group modes of the located and whole-document LLM systems (prompts.GROUP_MODES): "all"
+# sends one call per document for the combined group, "split" one call per listed group.
+ALL_GROUPS, SPLIT_GROUPS = prompts.ALL_GROUP, "split"
+FIELD_GROUP_MODES = prompts.GROUP_MODES
+DEFAULT_FIELD_GROUPS = ALL_GROUPS
+# Run-log entries written before --field-groups existed came from the split mode.
+LEGACY_FIELD_GROUPS = SPLIT_GROUPS
 LOCATOR_MISS_NA = "na"
 # Free-tier day boundary (llm.RateLimiter): Google AI Studio resets daily quotas at
 # midnight Pacific time; prices.yaml gemini.free_tier.reset_timezone overrides it.
@@ -118,7 +144,7 @@ AGREEMENT_COLUMNS = [
     "n_status_mismatch", "n_value_mismatch", "n_only_a", "n_only_b",
 ]
 PROJECTION_COLUMNS = [
-    "system", "mode", "effort", "n_docs", "n_doc_errors", "n_calls", "n_calls_cached",
+    "system", "mode", "effort", "field_groups", "n_docs", "n_doc_errors", "n_calls", "n_calls_cached",
     "n_calls_new", "section_chars", "prompt_chars", "input_tokens_all", "input_tokens_new",
     "output_tokens_per_call", "output_tokens_source", "output_tokens_new",
     "price_input_per_mtok", "price_output_per_mtok", "priced", "cost_usd_new",
@@ -398,12 +424,21 @@ def section_rows(doc: DocRecord, located: Located) -> list[dict[str, Any]]:
 
 
 def field_sections() -> dict[str, list[str]]:
-    """Field name to the sections its LLM field group reads (``fields.yaml``)."""
-    out: dict[str, list[str]] = {}
-    for group in load_fields()["llm_field_groups"].values():
-        for name in group["fields"]:
-            out[name] = list(group["sections"])
-    return out
+    """Field name to the sections of the listed LLM field group that extracts it
+    (``fields.yaml``; the derived ``all`` group is not one of them)."""
+    return prompts.field_home_sections()
+
+
+def field_locator_misses(located: Located) -> dict[str, bool]:
+    """Field name to ``locator_miss``: no section of the field's own listed group was located.
+
+    The same flag in both field-group modes, and the one ``corpus_scoring.section_misses``
+    recomputes from ``sections_{split}.csv``.
+    """
+    return {
+        name: bool(wanted) and not any(n in located.sections for n in wanted)
+        for name, wanted in field_sections().items()
+    }
 
 
 def _display(value: Any) -> Any:
@@ -481,20 +516,33 @@ def run_baseline(doc: DocRecord, located: Located) -> SystemOutput:
     return SystemOutput(rows=_rows_for(values, located, doc.regulator))
 
 
-def llm_inputs(doc: DocRecord, located: Located, mode: str = LOCATED) -> list[tuple[str, dict[str, Section], bool | None]]:
-    """(field group, sections sent, locator_miss) for every field group of ``fields.yaml``.
+def llm_inputs(
+    doc: DocRecord, located: Located, mode: str = LOCATED, field_groups: str = DEFAULT_FIELD_GROUPS
+) -> list[tuple[str, dict[str, Section], bool | None]]:
+    """(field group, sections sent, whole-document fallback) for every call of one document.
 
-    ``located``: the group's located sections, or the whole document when none was located
-    (``locator_miss`` True). ``whole``: the whole document text (pages joined with form
-    feeds, ``llm.sections_from_text``) for every group, ``locator_miss`` ``None``.
+    ``field_groups`` ``split``: one call per group listed in ``fields.yaml``. ``located`` sends
+    the group's located sections, or the whole document when none was located (fallback
+    True). ``all``: one call for the combined group. ``located`` sends every located section
+    of the union once, in document order; when any listed group has no located section it
+    sends the whole document instead (fallback True), which holds every located section too,
+    so no field loses the fallback it has in the split mode. ``whole``: the whole document
+    text (pages joined with form feeds, ``llm.sections_from_text``) for every call, fallback
+    ``None``. The per-field ``locator_miss`` is :func:`field_locator_misses` in both modes.
     """
     text = doc_text(located.pages)
     out: list[tuple[str, dict[str, Section], bool | None]] = []
-    for group_name, group in load_fields()["llm_field_groups"].items():
+    for group_name in prompts.groups_for_mode(field_groups):
         if mode == WHOLE:
             out.append((group_name, llm.sections_from_text(doc.doc_id, text), None))
             continue
+        if group_name == prompts.ALL_GROUP and any(field_locator_misses(located).values()):
+            out.append((group_name, llm.sections_from_text(doc.doc_id, text), True))
+            continue
+        group = prompts.llm_field_group(group_name)
         secs = {n: located.sections[n] for n in group["sections"] if n in located.sections}
+        if group_name == prompts.ALL_GROUP:
+            secs = dict(sorted(secs.items(), key=lambda kv: (kv[1].char_start, kv[1].char_end)))
         if secs:
             out.append((group_name, secs, False))
         else:
@@ -510,23 +558,31 @@ def run_llm(
     trace_dir: Path,
     mode: str = LOCATED,
     system: str | None = None,
+    field_groups: str = DEFAULT_FIELD_GROUPS,
 ) -> SystemOutput:
-    """One ``llm.extract`` call per field group over the inputs of :func:`llm_inputs`.
+    """One ``llm.extract`` call per input of :func:`llm_inputs` (one call under ``all``, one
+    per listed group under ``split``).
 
-    ``system`` defaults to ``llm:{backend}:{model}`` with the mode suffix. A
+    ``system`` defaults to ``llm:{backend}:{model}`` with the mode suffix. Every row carries
+    its field's own ``locator_miss`` (:func:`field_locator_misses`; ``na`` in the whole mode)
+    and ``n_locator_fallbacks`` counts the calls that sent the whole document. A
     ``TraceMissError`` or any other exception propagates so that the (document, system)
     pair is written atomically or not at all.
     """
     if mode not in (LOCATED, WHOLE):
         raise ValueError(f"run_llm handles the located and whole modes, not {mode!r}")
     system = system or llm.system_name(backend, WHOLE if mode == WHOLE else None)
+    misses: dict[str, bool] = {} if mode == WHOLE else field_locator_misses(located)
     out = SystemOutput()
-    for group_name, secs, miss in llm_inputs(doc, located, mode):
-        if miss:
+    for group_name, secs, fallback in llm_inputs(doc, located, mode, field_groups):
+        if fallback:
             out.n_locator_fallbacks += 1
         values, trace = llm.extract(doc, secs, group_name, backend, split, trace_dir, system=system, mode=mode)
         out.traces.append(trace)
-        out.rows += [prediction_row(fv, located, doc.regulator, miss) for fv in values]
+        out.rows += [
+            prediction_row(fv, located, doc.regulator, None if mode == WHOLE else misses.get(fv.field, bool(fallback)))
+            for fv in values
+        ]
     return out
 
 
@@ -610,6 +666,23 @@ def read_run_log(path: Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in fh if line.strip()]
 
 
+def recorded_field_groups(path: Path) -> dict[tuple[str, str], str]:
+    """(doc_id, system) -> field-group mode of the last successful LLM entry of a run log.
+
+    Located and whole-document entries written before ``--field-groups`` existed carry no
+    ``field_groups`` key and count as ``split`` (:data:`LEGACY_FIELD_GROUPS`); closed-book,
+    rules and baseline entries are left out.
+    """
+    out: dict[tuple[str, str], str] = {}
+    for e in read_run_log(path):
+        if e.get("error") or not str(e.get("system", "")).startswith("llm:"):
+            continue
+        if e.get("mode") == CLOSED_BOOK:
+            continue
+        out[(str(e["doc_id"]), str(e["system"]))] = e.get("field_groups") or LEGACY_FIELD_GROUPS
+    return out
+
+
 # ----------------------------------------------------------------------------- driver
 
 
@@ -623,6 +696,7 @@ class RunSummary:
     n_pairs_written: int = 0
     n_errors: int = 0
     halted: bool = False
+    n_pairs_other_field_groups: int = 0
 
     @property
     def exit_code(self) -> int:
@@ -654,12 +728,18 @@ def select_documents(
     return hash_sample(docs, n_hash_sample) if n_hash_sample is not None else docs
 
 
+def uses_field_groups(spec: SystemSpec) -> bool:
+    """True for the LLM systems whose calls follow ``--field-groups`` (located and whole)."""
+    return spec.kind == "llm" and spec.mode != CLOSED_BOOK
+
+
 def _log_entry(
     doc_id: str,
     system: str | SystemSpec,
     seconds: float,
     out: SystemOutput | None,
     error: str | None,
+    field_groups: str | None = None,
 ) -> dict[str, Any]:
     spec = system if isinstance(system, SystemSpec) else None
     return {
@@ -667,6 +747,7 @@ def _log_entry(
         "system": spec.name if spec else system,
         "mode": spec.mode if spec and spec.kind == "llm" else None,
         "effort": spec.effort if spec else None,
+        "field_groups": field_groups if spec and uses_field_groups(spec) else None,
         "seconds": round(seconds, 3),
         "tokens": out.input_tokens + out.output_tokens if out else 0,
         "input_tokens": out.input_tokens if out else 0,
@@ -691,6 +772,7 @@ def run_split(
     parse_missing: bool = False,
     n_hash_sample: int | None = None,
     backend_factory: BackendFactory | None = None,
+    field_groups: str = DEFAULT_FIELD_GROUPS,
 ) -> RunSummary:
     """Run ``systems`` over the documents of ``split`` and write the three result files.
 
@@ -698,8 +780,13 @@ def run_split(
     as ``fetch --limit`` counts rows that needed network work. Backends are built once per
     run before any document is processed, so a missing API key fails fast. A document whose
     pending systems are all closed-book is not loaded or located (and gets no sections
-    rows). ``backend_factory`` defaults to :func:`build_llm_backend`.
+    rows). ``backend_factory`` defaults to :func:`build_llm_backend`. ``field_groups``
+    (``all`` or ``split``) sets the calls of the located and whole-document LLM systems; a
+    pair already written under the other mode (run log, :func:`recorded_field_groups`) is
+    skipped like any written pair, counted in ``n_pairs_other_field_groups`` and logged as a
+    warning, since the system name does not carry the mode.
     """
+    prompts.groups_for_mode(field_groups)
     paths = paths or Paths()
     backend_factory = backend_factory or build_llm_backend
     docs = select_documents(paths, split, doc_id, n_hash_sample)
@@ -723,6 +810,23 @@ def run_split(
         log.info("--force: dropped %d prediction rows for %d documents", n, len(targets))
     done = predictions.keys(("doc_id", "system"))
     sections_done = {k[0] for k in sections.keys(("doc_id",))}
+    recorded = recorded_field_groups(log_path)
+    selected = {d.doc_id for d in docs}
+    for s in systems:
+        if not uses_field_groups(s):
+            continue
+        other = sorted(
+            d for (d, name), g in recorded.items()
+            if name == s.name and d in selected and (d, name) in done and g != field_groups
+        )
+        if other:
+            summary.n_pairs_other_field_groups += len(other)
+            log.warning(
+                "%s: %d documents in %s were written with --field-groups %s; they are kept and "
+                "skipped under --field-groups %s (use --force to recompute them), e.g. %s",
+                s.name, len(other), paths.predictions(split).name, recorded[(other[0], s.name)],
+                field_groups, other[0],
+            )
 
     for doc in docs:
         pending = [s for s in systems if (doc.doc_id, s.name) not in done]
@@ -742,7 +846,9 @@ def run_split(
                 error = f"{type(exc).__name__}: {exc}"
                 log.error("%s: %s", doc.doc_id, error)
                 for s in pending:
-                    append_run_log(log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t0, None, error))
+                    append_run_log(
+                        log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t0, None, error, field_groups)
+                    )
                     summary.n_errors += 1
                 continue
             if doc.doc_id not in sections_done:
@@ -763,7 +869,8 @@ def run_split(
                 else:
                     assert located is not None
                     out = run_llm(
-                        doc, located, backends[s.name], split, paths.trace_dir, mode=s.mode, system=s.name
+                        doc, located, backends[s.name], split, paths.trace_dir, mode=s.mode, system=s.name,
+                        field_groups=field_groups,
                     )
             except llm.DailyLimitExceeded as exc:
                 error = f"{type(exc).__name__}: {exc}"
@@ -772,20 +879,24 @@ def run_split(
                     "to resume: written pairs are skipped and stored traces replayed)",
                     doc.doc_id, s.name, error,
                 )
-                append_run_log(log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t1, None, error))
+                append_run_log(
+                    log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t1, None, error, field_groups)
+                )
                 summary.n_errors += 1
                 summary.halted = True
                 return summary
             except Exception as exc:
                 error = f"{type(exc).__name__}: {exc}"
                 log.error("%s %s: %s", doc.doc_id, s.name, error)
-                append_run_log(log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t1, None, error))
+                append_run_log(
+                    log_path, _log_entry(doc.doc_id, s, time.perf_counter() - t1, None, error, field_groups)
+                )
                 summary.n_errors += 1
                 continue
             predictions.append(out.rows)
             done.add((doc.doc_id, s.name))
             summary.n_pairs_written += 1
-            entry = _log_entry(doc.doc_id, s, time.perf_counter() - t1, out, None)
+            entry = _log_entry(doc.doc_id, s, time.perf_counter() - t1, out, None, field_groups)
             append_run_log(log_path, entry)
             log.info(
                 "%s %s: %d values in %.2fs, %d tokens, $%.4f",
@@ -798,9 +909,10 @@ def run_split(
 
 
 def call_prompts(
-    doc: DocRecord, located: Located | None, mode: str
+    doc: DocRecord, located: Located | None, mode: str, field_groups: str = DEFAULT_FIELD_GROUPS
 ) -> list[tuple[str, str, str, dict[str, Any], str, int]]:
-    """Every call the run would send for one document and mode, without sending it.
+    """Every call the run would send for one document, mode and field-group mode, without
+    sending it (the closed-book call ignores ``field_groups``).
 
     Each item is (field group, system prompt, user prompt, JSON schema, prompt version,
     characters of the sections sent), built exactly as ``llm.extract`` and
@@ -819,17 +931,22 @@ def call_prompts(
             group, prompts.SYSTEM_PROMPT, prompts.build_prompt(doc, secs, group),
             prompts.build_schema(group), prompts.PROMPT_VERSION, sum(len(x.text) for x in secs.values()),
         )
-        for group, secs, _ in llm_inputs(doc, located, mode)
+        for group, secs, _ in llm_inputs(doc, located, mode, field_groups)
     ]
 
 
-def _output_tokens_per_call(replay: llm.ReplayBackend, spec: SystemSpec) -> tuple[float, str]:
-    """Mean output tokens of the stored traces of this model, effort and mode family."""
-    closed = spec.mode == CLOSED_BOOK
+def _output_tokens_per_call(
+    replay: llm.ReplayBackend, spec: SystemSpec, field_groups: str = DEFAULT_FIELD_GROUPS
+) -> tuple[float, str]:
+    """Mean output tokens of the stored traces of this model and effort whose field group
+    belongs to the call family: closed book, the combined group, or the listed groups."""
+    if spec.mode == CLOSED_BOOK:
+        groups = {prompts.CLOSED_BOOK_GROUP}
+    else:
+        groups = set(prompts.groups_for_mode(field_groups))
     tokens = [
         t.output_tokens for t in replay.stored()
-        if t.model == spec.model and t.output_tokens is not None
-        and (t.field_group == prompts.CLOSED_BOOK_GROUP) == closed
+        if t.model == spec.model and t.output_tokens is not None and t.field_group in groups
     ]
     if not tokens:
         return 0.0, "none"
@@ -847,22 +964,26 @@ def project(
     n_hash_sample: int | None = None,
     output_tokens_per_call: float | None = None,
     write: bool = True,
+    field_groups: str = DEFAULT_FIELD_GROUPS,
 ) -> pd.DataFrame:
     """Dry-run cost projection for the LLM systems over a split (analysis plan, "Decisions"
     item 3 and "Cost accounting"); no backend is built and nothing is called.
 
     For every selected document (``limit`` takes the first N) the prompts the run would send
-    are built (:func:`call_prompts`); input tokens are characters / 4 of the system prompt,
+    under ``field_groups`` are built (:func:`call_prompts`: one call per document under
+    ``all``, one per listed group under ``split``, one closed-book call either way; the
+    ``field_groups`` column is empty for closed book); input tokens are characters / 4 of the system prompt,
     the user prompt (which holds the located sections, or the whole document) and the JSON
     schema, rounded up per call. A call whose (model, effort, prompt hash) is already in
     ``{trace_dir}/{split}/{backend}.jsonl`` is counted as cached: replay serves it at no
     cost. Output tokens per call come from ``output_tokens_per_call``, else from the mean of
-    the stored traces of that model, else 0 (``output_tokens_source`` says which). Cost uses
+    the stored traces of that model and call family, else 0 (``output_tokens_source`` says which). Cost uses
     ``config/prices.yaml`` (null prices count as 0 and set ``priced`` False, as in the
     traces). For gemini, ``days_at_free_tier`` is new calls / ``requests_per_day``, a lower
     bound because the limiter also counts retries. Writes
     ``results/cost_projection_{split}.csv`` when ``write``.
     """
+    prompts.groups_for_mode(field_groups)
     paths = paths or Paths()
     llm_systems = [s for s in systems if s.kind == "llm" and s.backend and s.model]
     if not llm_systems:
@@ -895,7 +1016,7 @@ def project(
                 c["n_doc_errors"] += 1
                 continue
             try:
-                calls = call_prompts(doc, located, s.mode)
+                calls = call_prompts(doc, located, s.mode, field_groups)
             except ValueError as exc:
                 log.warning("%s %s: %s", doc.doc_id, s.name, exc)
                 c["n_doc_errors"] += 1
@@ -919,14 +1040,15 @@ def project(
         if output_tokens_per_call is not None:
             out_per_call, source = float(output_tokens_per_call), "argument"
         else:
-            out_per_call, source = _output_tokens_per_call(replays[s.name], s)
+            out_per_call, source = _output_tokens_per_call(replays[s.name], s, field_groups)
         price = llm.model_price(s.model) or {}
         p_in, p_out = price.get("input"), price.get("output")
         output_new = round(out_per_call * n_new)
         cost = (c["input_tokens_new"] * (p_in or 0.0) + output_new * (p_out or 0.0)) / 1e6
         per_day = gemini_free_tier().get("requests_per_day") if s.backend == "gemini" else None
         rows.append({
-            "system": s.name, "mode": s.mode, "effort": s.effort or "", **c,
+            "system": s.name, "mode": s.mode, "effort": s.effort or "",
+            "field_groups": field_groups if uses_field_groups(s) else "", **c,
             "n_calls_new": n_new,
             "output_tokens_per_call": round(out_per_call, 1), "output_tokens_source": source,
             "output_tokens_new": output_new,
@@ -959,7 +1081,7 @@ def _load_items(path: Path) -> tuple[dict[tuple[Any, ...], FieldValue], str]:
     path = Path(path)
     if path.is_dir() or path.suffix == ".jsonl":
         files = sorted(path.rglob("*.jsonl")) if path.is_dir() else [path]
-        groups = set(load_fields()["llm_field_groups"]) | {prompts.CLOSED_BOOK_GROUP}
+        groups = set(prompts.split_group_names()) | {prompts.ALL_GROUP, prompts.CLOSED_BOOK_GROUP}
         items: dict[tuple[Any, ...], FieldValue] = {}
         for f in files:
             for tr in llm.read_traces(f):
@@ -1075,6 +1197,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="effort sent with every LLM call and recorded per trace (default: low for hosted "
         "backends, none for ollama; 'none' sends no effort parameter)",
     )
+    ap.add_argument(
+        "--field-groups", choices=FIELD_GROUP_MODES, default=DEFAULT_FIELD_GROUPS,
+        help="calls per document of the located and whole-document LLM systems: all (default, one "
+        "call for every field) or split (one call per llm_field_groups entry of fields.yaml)",
+    )
     mode = ap.add_mutually_exclusive_group()
     mode.add_argument(
         "--whole-document", action="store_true",
@@ -1116,14 +1243,15 @@ def main(argv: Sequence[str] | None = None) -> int:
             df = project(
                 args.split, systems, paths=paths, limit=args.limit, doc_id=args.doc_id,
                 parse_missing=args.parse_missing, n_hash_sample=args.hash_sample,
-                output_tokens_per_call=args.output_tokens_per_call,
+                output_tokens_per_call=args.output_tokens_per_call, field_groups=args.field_groups,
             )
         except (ValueError, RuntimeError) as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         for r in df.itertuples():
             print(
-                f"{r.system}: {r.n_docs} documents ({r.n_doc_errors} not loadable), {r.n_calls} calls "
+                f"{r.system}{f' (field groups {r.field_groups})' if r.field_groups else ''}: "
+                f"{r.n_docs} documents ({r.n_doc_errors} not loadable), {r.n_calls} calls "
                 f"({r.n_calls_cached} in traces), {r.input_tokens_new} new input tokens, "
                 f"{r.output_tokens_new} new output tokens ({r.output_tokens_source}), "
                 f"projected ${r.cost_usd_new:.4f}{'' if r.priced else ' (unpriced in prices.yaml)'}"
@@ -1135,7 +1263,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         summary = run_split(
             args.split, systems, paths=paths, allow_api=args.allow_api, limit=args.limit,
             doc_id=args.doc_id, force=args.force, parse_missing=args.parse_missing,
-            n_hash_sample=args.hash_sample,
+            n_hash_sample=args.hash_sample, field_groups=args.field_groups,
         )
     except (llm.LLMError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -1145,6 +1273,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         f"{summary.n_skipped} already done, {summary.n_pairs_written} (doc, system) pairs written, "
         f"{summary.n_errors} errors{' (halted)' if summary.halted else ''}; "
         f"predictions in {paths.predictions(args.split)}"
+        + (
+            f"; {summary.n_pairs_other_field_groups} pairs kept from the other --field-groups mode"
+            if summary.n_pairs_other_field_groups else ""
+        )
     )
     return summary.exit_code
 

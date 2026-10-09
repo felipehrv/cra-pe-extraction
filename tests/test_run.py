@@ -9,6 +9,10 @@ the PDFs are parsed once per session with pymupdf and copied per test. The LLM p
 Assessment-area counts: SouthStar designates five assessment areas (line 165) and prints one
 "X AA - Full/Limited-Scope Review" block each (lines 606, 935, 1246, 1403, 1561); FieldPoint
 has four (line 221), one MSA or MD block each (lines 647, 1219, 1741, 2210).
+
+Field-group modes: ``all`` (the default) sends one LLM call per document, ``split`` one per
+``llm_field_groups`` entry of fields.yaml (``N_GROUPS``); ``CALLS`` maps each mode to its
+calls per document.
 """
 
 from __future__ import annotations
@@ -159,6 +163,8 @@ FAKE = run.llm_spec("fake", "fake-1")
 FAKE_WHOLE = run.llm_spec("fake", "fake-1", run.WHOLE)
 FAKE_CLOSED = run.llm_spec("fake", "fake-1", run.CLOSED_BOOK)
 N_GROUPS = len(load_fields()["llm_field_groups"])
+CALLS = {"all": 1, "split": N_GROUPS}
+MODES = pytest.mark.parametrize("field_groups", ["all", "split"])
 
 
 def read_predictions(root: Path, split: str = "dev") -> pd.DataFrame:
@@ -370,23 +376,28 @@ def test_resumable_limit_and_force(root: Path):
     assert run.main([*args, "--doc-id", "FDIC_0_20200101"]) == 1
 
 
-def test_llm_fake_backend_writes_traces_and_predictions(root: Path):
+@MODES
+def test_llm_fake_backend_writes_traces_and_predictions(root: Path, field_groups: str):
     paths = run.Paths.under(root)
     # parse_systems rejects unknown backend names, so the fake spec is built directly.
     systems = [run.SystemSpec("llm:fake:fake-1", "llm", "fake", "fake-1")]
+    kw = {"field_groups": field_groups}
 
     # Replay without traces: every pair fails with a TraceMissError and nothing is written.
-    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory,limit=2)
+    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory, limit=2, **kw)
     assert summary.n_errors == 2 and summary.n_pairs_written == 0 and summary.exit_code == 1
     assert not paths.predictions("dev").exists()
     entries = run.read_run_log(paths.run_log("dev"))
     assert all(e["error"].startswith("TraceMissError") for e in entries)
 
-    # Live (fake) calls record one trace per field group and one row per field.
-    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory,allow_api=True)
+    # Live (fake) calls record one trace per call (one per document under all, one per field
+    # group under split) and one row per field either way.
+    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory, allow_api=True, **kw)
     assert summary.n_errors == 0 and summary.n_pairs_written == 8
     traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
-    assert len(traces) == 8 * len(load_fields()["llm_field_groups"])
+    assert len(traces) == 8 * CALLS[field_groups]
+    expected_groups = {"all"} if field_groups == "all" else set(load_fields()["llm_field_groups"])
+    assert {t.field_group for t in traces} == expected_groups and {t.mode for t in traces} == {"located"}
     assert {t.doc_id for t in traces} == {r["doc_id"] for r in sample_rows()}
     assert all(t.backend == "fake" and t.model == "fake-1" and t.error is None for t in traces)
     preds = read_predictions(root)
@@ -401,10 +412,11 @@ def test_llm_fake_backend_writes_traces_and_predictions(root: Path):
     # OCC samples lack description_of_assessment_area but the group still has located sections.
     assert set(preds["locator_miss"]) == {"0"}
     log_ok = [e for e in run.read_run_log(paths.run_log("dev")) if e["error"] is None]
-    assert len(log_ok) == 8 and all(e["tokens"] == 4 * 120 and e["cost_usd"] == 0 for e in log_ok)
+    assert len(log_ok) == 8 and all(e["tokens"] == CALLS[field_groups] * 120 and e["cost_usd"] == 0 for e in log_ok)
+    assert {e["field_groups"] for e in log_ok} == {field_groups}
 
     # A forced rerun without --allow-api replays every call from the stored traces.
-    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory,force=True)
+    summary = run.run_split("dev", systems, paths=paths, backend_factory=fake_factory, force=True, **kw)
     assert summary.n_errors == 0 and summary.n_pairs_written == 8
     assert len(llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")) == len(traces)
     assert len(read_predictions(root)) == len(preds)
@@ -460,6 +472,10 @@ def test_makefile_targets_use_real_flags():
     assert "cra_extract.run --split corpus --systems $(SYSTEMS)" in scale
     assert "SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash" in text
     assert "--systems rules,llm" not in text
+    # Every run target with located or whole-document LLM calls passes the field-group mode.
+    assert f"FIELD_GROUPS ?= {run.DEFAULT_FIELD_GROUPS}" in text
+    for target in ("pilot:", "scale:", "project:", "dev-rerun:", "ablation:"):
+        assert "--field-groups $(FIELD_GROUPS)" in text[text.index(target) :].split("\n")[1], target
 
 
 # ----------------------------------------------------------------------------- LLM modes
@@ -470,11 +486,14 @@ def sample_text(doc_id: str) -> str:
     return (SAMPLES / f"{stem}.txt").read_text(encoding="utf-8")
 
 
-def test_whole_document_mode_sends_whole_text_and_marks_locator_na(root: Path):
+@MODES
+def test_whole_document_mode_sends_whole_text_and_marks_locator_na(root: Path, field_groups: str):
     paths = run.Paths.under(root)
     sent: list[dict[str, Any]] = []
+    calls = CALLS[field_groups]
     summary = run.run_split(
-        "dev", [FAKE, FAKE_WHOLE], paths=paths, allow_api=True, backend_factory=recording_factory(sent)
+        "dev", [FAKE, FAKE_WHOLE], paths=paths, allow_api=True, backend_factory=recording_factory(sent),
+        field_groups=field_groups,
     )
     assert summary.n_errors == 0 and summary.n_pairs_written == 16
     preds = read_predictions(root)
@@ -482,26 +501,27 @@ def test_whole_document_mode_sends_whole_text_and_marks_locator_na(root: Path):
     located = preds[preds["system"] == "llm:fake:fake-1"]
     assert len(whole) == len(located) == 8 * N_LLM_FIELDS
     assert set(whole["locator_miss"]) == {run.LOCATOR_MISS_NA} and set(located["locator_miss"]) == {"0"}
-    # The whole document goes to every field group: one "document" section of all pages.
+    # The whole document goes to every call: one "document" section of all pages.
     whole_prompts = [p["user"] for p in sent if "=== section: document | scope: institution" in p["user"]]
-    assert len(whole_prompts) == 8 * N_GROUPS
+    assert len(whole_prompts) == 8 * calls
     pages = parse.load_pages(SOUTHSTAR, root / "data" / "text")
     text = parse.doc_text(pages)
     traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
     ss_whole = [t for t in traces if t.doc_id == SOUTHSTAR and t.section_offsets == [(0, len(text))]]
-    assert len(ss_whole) == N_GROUPS
+    assert len(ss_whole) == calls
     # Trace.mode attributes each call to its run system (cost accounting).
     assert {t.mode for t in ss_whole} == {"whole"}
     assert {t.mode for t in traces} == {"whole", "located"}
     # Every SouthStar whole-document prompt holds the full text, every page joined.
     ss_prompts = [p for p in whole_prompts if pages[0].text.strip()[:80] in p]
-    assert len(ss_prompts) == N_GROUPS and all(text.strip() in p for p in ss_prompts)
+    assert len(ss_prompts) == calls and all(text.strip() in p for p in ss_prompts)
     ss = whole[whole["doc_id"] == SOUTHSTAR].set_index("field")
     assert ss.loc["overall_rating", "value"] == "NI" and ss.loc["overall_rating", "page"] == "3"
     assert ss.loc["overall_rating", "grounding_failure"] == ""
     # Tokens are recorded per (document, system) in the run log.
     entries = [e for e in run.read_run_log(paths.run_log("dev")) if e["system"] == "llm:fake:fake-1:whole"]
-    assert len(entries) == 8 and all(e["input_tokens"] == N_GROUPS * 100 and e["mode"] == "whole" for e in entries)
+    assert len(entries) == 8 and all(e["input_tokens"] == calls * 100 and e["mode"] == "whole" for e in entries)
+    assert {e["field_groups"] for e in entries} == {field_groups}
     assert all(e["n_locator_fallbacks"] == 0 for e in entries)
     # evaluate reads "na" as no locator flag.
     from cra_extract.evaluate import read_predictions as eval_read
@@ -510,13 +530,18 @@ def test_whole_document_mode_sends_whole_text_and_marks_locator_na(root: Path):
     assert not any("locator_miss" in (f.notes or "") for f in fvs if f.system.endswith(":whole"))
 
 
-def test_closed_book_prompts_contain_no_pe_text(root: Path):
+@MODES
+def test_closed_book_prompts_contain_no_pe_text(root: Path, field_groups: str):
     paths = run.Paths.under(root)
-    # No text and no PDFs: the closed-book path never loads the document.
+    # No text and no PDFs: the closed-book path never loads the document. It is one call per
+    # document under either field-group mode.
     shutil.rmtree(root / "data" / "text")
     shutil.rmtree(root / "data" / "pdfs")
     sent: list[dict[str, Any]] = []
-    summary = run.run_split("dev", [FAKE_CLOSED], paths=paths, allow_api=True, backend_factory=recording_factory(sent))
+    summary = run.run_split(
+        "dev", [FAKE_CLOSED], paths=paths, allow_api=True, backend_factory=recording_factory(sent),
+        field_groups=field_groups,
+    )
     assert summary.n_errors == 0 and summary.n_pairs_written == 8 and len(sent) == 8
     rows = {r["doc_id"]: r for r in sample_rows()}
     for p in sent:
@@ -540,11 +565,15 @@ def test_closed_book_prompts_contain_no_pe_text(root: Path):
     traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
     assert {t.field_group for t in traces} == {"closedbook"} and all(t.section_offsets == [] for t in traces)
     assert {t.mode for t in traces} == {"closedbook"}
+    assert {e["field_groups"] for e in run.read_run_log(paths.run_log("dev"))} == {None}
     assert traces[0].prompt_hash == llm.prompt_hash(
         sent[0]["system"], sent[0]["user"], sent[0]["schema"], prompts.CLOSED_BOOK_PROMPT_VERSION
     )
     # A forced rerun replays every closed-book call.
-    summary = run.run_split("dev", [FAKE_CLOSED], paths=paths, force=True, backend_factory=recording_factory(sent))
+    other = "split" if field_groups == "all" else "all"
+    summary = run.run_split(
+        "dev", [FAKE_CLOSED], paths=paths, force=True, backend_factory=recording_factory(sent), field_groups=other
+    )
     assert summary.n_pairs_written == 8 and len(sent) == 8
 
 
@@ -552,7 +581,7 @@ def test_trace_dir_isolates_a_second_live_run_and_agreement(root: Path):
     first = run.Paths.under(root)
     sent: list[dict[str, Any]] = []
     run.run_split("dev", [FAKE], paths=first, allow_api=True, backend_factory=recording_factory(sent))
-    assert len(sent) == 8 * N_GROUPS
+    assert len(sent) == 8 * CALLS[run.DEFAULT_FIELD_GROUPS]
     first_traces = (first.trace_dir / "dev" / "fake.jsonl").read_text(encoding="utf-8")
 
     second = dataclasses.replace(
@@ -562,9 +591,9 @@ def test_trace_dir_isolates_a_second_live_run_and_agreement(root: Path):
     summary = run.run_split("dev", [FAKE], paths=second, backend_factory=recording_factory(sent))
     assert summary.n_errors == 8 and summary.n_pairs_written == 0
     summary = run.run_split("dev", [FAKE], paths=second, allow_api=True, backend_factory=recording_factory(sent))
-    assert summary.n_pairs_written == 8 and len(sent) == 2 * 8 * N_GROUPS
+    assert summary.n_pairs_written == 8 and len(sent) == 2 * 8 * CALLS[run.DEFAULT_FIELD_GROUPS]
     assert (first.trace_dir / "dev" / "fake.jsonl").read_text(encoding="utf-8") == first_traces
-    assert len(llm.read_traces(second.trace_dir / "dev" / "fake.jsonl")) == 8 * N_GROUPS
+    assert len(llm.read_traces(second.trace_dir / "dev" / "fake.jsonl")) == 8 * CALLS[run.DEFAULT_FIELD_GROUPS]
     assert second.predictions("dev").exists() and len(read_predictions(root)) == 8 * N_LLM_FIELDS
 
     out = root / "results" / "run_agreement_dev.csv"
@@ -625,11 +654,12 @@ def test_main_passes_effort_trace_dir_and_results_dir(root: Path, monkeypatch, c
     assert run.main(args) == 0
     assert made[0]["effort"] == "low" and made[0]["limiter"].reset_tz == ZoneInfo("America/Los_Angeles")
     written = llm.read_traces(traces / "dev" / "gemini.jsonl")
-    assert len(written) == N_GROUPS and {t.effort for t in written} == {"low"}
+    # The default field-group mode is all: one call for the document.
+    assert len(written) == 1 and {t.effort for t in written} == {"low"} and written[0].field_group == "all"
     assert not (root / "data" / "traces" / "dev").exists() and not (root / "results" / "predictions_dev.csv").exists()
     assert (results / "predictions_dev.csv").exists() and (results / "run_log_dev.jsonl").exists()
     # The daily count is persisted under the root's cache directory.
-    assert json.loads((root / "data" / "cache" / "ratelimit_gemini.json").read_text())["count"] == N_GROUPS
+    assert json.loads((root / "data" / "cache" / "ratelimit_gemini.json").read_text())["count"] == 1
     # Another effort is another replay key: a replay-only run at effort high misses.
     assert run.main([*args[:4], "--doc-id", SOUTHSTAR, "--root", str(root), "--trace-dir", str(traces),
                      "--results-dir", str(root / "results" / "high"), "--effort", "high"]) == 1
@@ -641,6 +671,15 @@ def test_main_passes_effort_trace_dir_and_results_dir(root: Path, monkeypatch, c
                      "--results-dir", str(root / "results" / "w")]) == 1
     entry = run.read_run_log(root / "results" / "w" / "run_log_dev.jsonl")[0]
     assert entry["system"] == "llm:gemini:gemini-3.8-flash:whole" and entry["mode"] == "whole"
+    # --field-groups split sends the four group calls; the all trace is not replayed for them.
+    assert run.main([*args, "--field-groups", "split", "--results-dir", str(root / "results" / "s")]) == 0
+    written = llm.read_traces(traces / "dev" / "gemini.jsonl")
+    assert len(written) == 1 + N_GROUPS and {t.field_group for t in written[1:]} == set(load_fields()["llm_field_groups"])
+    assert run.read_run_log(root / "results" / "s" / "run_log_dev.jsonl")[0]["field_groups"] == "split"
+    capsys.readouterr()
+    with pytest.raises(SystemExit) as exc:
+        run.main([*args, "--field-groups", "groups"])
+    assert exc.value.code == 2
 
 
 def test_daily_limit_halt_resumes_without_repeating_calls(root: Path, tmp_path: Path):
@@ -652,26 +691,164 @@ def test_daily_limit_halt_resumes_without_repeating_calls(root: Path, tmp_path: 
     sent: list[dict[str, Any]] = []
     factory = recording_factory(sent, limiter)
 
+    # Split mode (four calls per document), so a halt can fall inside a document.
+    def run_split(**kw: Any) -> run.RunSummary:
+        return run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory, field_groups="split", **kw)
+
     # Day 1: 14 calls = 3 documents (12 calls) and half of the fourth, then the halt.
-    s1 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    s1 = run_split()
     assert s1.halted and s1.n_pairs_written == 3 and s1.exit_code == 1 and len(sent) == 14
     assert read_predictions(root)["doc_id"].nunique() == 3
     assert run.read_run_log(paths.run_log("dev"))[-1]["error"].startswith("DailyLimitExceeded")
     # Same day: nothing new can be sent; the stored traces of the half document replay.
-    s2 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    s2 = run_split()
     assert s2.halted and s2.n_pairs_written == 0 and len(sent) == 14
     # Next quota day: the fourth document finishes from 2 stored + 2 new calls.
     clock["t"] += 86_400
-    s3 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    s3 = run_split()
     assert s3.halted and s3.n_pairs_written == 4 and s3.n_skipped == 3 and len(sent) == 28
     clock["t"] += 86_400
-    s4 = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+    s4 = run_split()
     assert not s4.halted and s4.n_pairs_written == 1 and s4.exit_code == 0
     # Every prompt was sent exactly once and every trace written once.
     assert len(sent) == 8 * N_GROUPS
     traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
     assert len(traces) == 8 * N_GROUPS == len({t.prompt_hash for t in traces})
     assert len(read_predictions(root)) == 8 * N_LLM_FIELDS
+
+
+def test_daily_limit_in_all_mode_counts_one_request_per_document(root: Path, tmp_path: Path):
+    paths = run.Paths.under(root)
+    clock = {"t": 1_700_000_000.0}
+    limiter = llm.RateLimiter(
+        "fake", per_day=3, cache_dir=tmp_path, clock=lambda: clock["t"], reset_tz=ZoneInfo("America/Los_Angeles")
+    )
+    sent: list[dict[str, Any]] = []
+    factory = recording_factory(sent, limiter)
+    days = []
+    while True:
+        s = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory)
+        days.append(s.n_pairs_written)
+        if not s.halted:
+            break
+        clock["t"] += 86_400
+    # 3 requests a day give 3 documents a day: 8 documents in 3 quota days, each sent once.
+    assert days == [3, 3, 2] and len(sent) == 8
+    assert len(read_predictions(root)) == 8 * N_LLM_FIELDS
+
+
+# ----------------------------------------------------------------------------- field-group modes
+
+
+def _located(paths: run.Paths, doc_id: str) -> tuple[Any, run.Located]:
+    doc = run.select_documents(paths, "dev", doc_id)[0]
+    return doc, run.locate_document(doc_id, parse.load_pages(doc_id, paths.text_dir), doc.regulator)
+
+
+def test_all_mode_prompt_lists_every_section_and_field_once(root: Path):
+    paths = run.Paths.under(root)
+    combined = prompts.llm_field_group("all")
+    for r in sample_rows():
+        doc, located = _located(paths, r["doc_id"])
+        calls = run.llm_inputs(doc, located, field_groups="all")
+        assert len(calls) == 1
+        group, secs, fallback = calls[0]
+        assert group == "all" and fallback is False
+        # Every located section of the union is sent, once, in document order.
+        assert set(secs) == {n for n in combined["sections"] if n in located.sections}
+        starts = [sec.char_start for sec in secs.values()]
+        assert starts == sorted(starts)
+        user = prompts.build_prompt(doc, secs, group)
+        for name, sec in secs.items():
+            assert user.count(f"=== section: {name} | scope: {sec.scope} |") == 1, (r["doc_id"], name)
+        labels = [user.index(f"=== section: {name} |") for name in secs]
+        assert labels == sorted(labels)
+        # Every LLM field once, the same set and order as the schema.
+        for name in combined["fields"]:
+            assert user.count(f"\n- {name} (") == 1, (r["doc_id"], name)
+        schema = prompts.build_schema(group)
+        assert list(schema["properties"]) == combined["fields"] == schema["required"]
+        # The four split calls send the same sections between them, each in one call.
+        split = run.llm_inputs(doc, located, field_groups="split")
+        assert [g for g, _, _ in split] == prompts.split_group_names()
+        assert sorted(n for _, ss, _ in split for n in ss) == sorted(secs)
+
+
+def test_field_group_modes_never_replay_each_other_and_resume_warns(root: Path, caplog):
+    paths = run.Paths.under(root)
+    sent: list[dict[str, Any]] = []
+    factory = recording_factory(sent)
+    assert run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory, field_groups="split").n_pairs_written == 8
+    split_traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
+    assert len(split_traces) == 8 * N_GROUPS
+
+    # Same documents, same sections: the all prompts hash differently from every split prompt.
+    doc, located = _located(paths, SOUTHSTAR)
+    hashes = {
+        mode: {llm.prompt_hash(sp, up, schema, version) for _, sp, up, schema, version, _ in run.call_prompts(doc, located, run.LOCATED, mode)}
+        for mode in ("all", "split")
+    }
+    assert len(hashes["all"]) == 1 and len(hashes["split"]) == N_GROUPS and not hashes["all"] & hashes["split"]
+    assert hashes["split"] == {t.prompt_hash for t in split_traces if t.doc_id == SOUTHSTAR}
+
+    # The split pairs are in the predictions file: an all run keeps and skips them, with a warning.
+    with caplog.at_level("WARNING"):
+        summary = run.run_split("dev", [FAKE], paths=paths, backend_factory=factory)
+    assert summary.n_skipped == 8 and summary.n_pairs_written == 0 and summary.n_pairs_other_field_groups == 8
+    assert "written with --field-groups split" in caplog.text
+    # Recomputed in the all mode without --allow-api: no split trace is served for an all call.
+    summary = run.run_split("dev", [FAKE], paths=paths, backend_factory=factory, force=True)
+    assert summary.n_errors == 8 and summary.n_pairs_written == 0
+    assert all(e["error"].startswith("TraceMissError") for e in run.read_run_log(paths.run_log("dev"))[-8:])
+    summary = run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=factory, force=True)
+    assert summary.n_pairs_written == 8 and len(sent) == 8 * N_GROUPS + 8
+    traces = llm.read_traces(paths.trace_dir / "dev" / "fake.jsonl")
+    all_traces = [t for t in traces if t.field_group == "all"]
+    assert len(all_traces) == 8 and {t.mode for t in all_traces} == {"located"}
+    assert not {t.prompt_hash for t in all_traces} & {t.prompt_hash for t in split_traces}
+    assert run.recorded_field_groups(paths.run_log("dev")) == {(d, FAKE.name): "all" for d in {t.doc_id for t in all_traces}}
+    # The per-field rows have the same shape as in the split mode.
+    preds = read_predictions(root)
+    assert preds.groupby("doc_id").size().to_dict() == {t.doc_id: N_LLM_FIELDS for t in all_traces}
+    # Both modes replay their own traces: a forced split rerun sends nothing.
+    assert run.run_split("dev", [FAKE], paths=paths, backend_factory=factory, force=True, field_groups="split").n_pairs_written == 8
+    assert len(sent) == 8 * N_GROUPS + 8
+    # Run-log entries without the key (before --field-groups) count as split.
+    legacy = paths.results_dir / "legacy.jsonl"
+    run.append_run_log(legacy, {"doc_id": SOUTHSTAR, "system": FAKE.name, "mode": "located", "error": None})
+    run.append_run_log(legacy, {"doc_id": SOUTHSTAR, "system": FAKE_CLOSED.name, "mode": "closedbook", "error": None})
+    run.append_run_log(legacy, {"doc_id": SOUTHSTAR, "system": "rules", "mode": None, "error": None})
+    assert run.recorded_field_groups(legacy) == {(SOUTHSTAR, FAKE.name): "split"}
+
+
+def test_all_mode_locator_fallback_keeps_per_field_flags(root: Path):
+    paths = run.Paths.under(root)
+    doc, located = _located(paths, SOUTHSTAR)
+    review_fields = set(prompts.llm_field_group("review")["fields"])
+    missing = run.Located(
+        located.pages,
+        {n: sec for n, sec in located.sections.items() if n != "illegal_credit_practices_review"},
+        [*located.missing, "illegal_credit_practices_review"],
+        located.n_aa_sections,
+    )
+    # all: one call, and the whole document replaces the located sections because one group
+    # (review) has none; split: only the review call falls back.
+    (group, secs, fallback), = run.llm_inputs(doc, missing, field_groups="all")
+    assert (group, list(secs), fallback) == ("all", ["document"], True)
+    split = {g: (list(ss), fb) for g, ss, fb in run.llm_inputs(doc, missing, field_groups="split")}
+    assert split["review"] == (["document"], True) and not any(fb for g, (_, fb) in split.items() if g != "review")
+    rows = {}
+    for mode in ("all", "split"):
+        out = run.run_llm(doc, missing, FakeBackend(), "dev", paths.trace_dir, field_groups=mode)
+        assert out.n_locator_fallbacks == 1
+        rows[mode] = {r["field"]: r["locator_miss"] for r in out.rows}
+    # locator_miss is the field's own group miss in both modes.
+    assert rows["all"] == rows["split"] == {f: int(f in review_fields) for f in rows["split"]}
+    assert run.field_locator_misses(missing) == {f: f in review_fields for f in rows["all"]}
+    # The whole-document mode sends the whole document once under all and marks na.
+    whole = run.run_llm(doc, missing, FakeBackend(), "dev", paths.trace_dir, mode=run.WHOLE, field_groups="all")
+    assert len(whole.traces) == 1 and {r["locator_miss"] for r in whole.rows} == {run.LOCATOR_MISS_NA}
+    assert whole.n_locator_fallbacks == 0 and whole.traces[0].mode == "whole"
 
 
 # ----------------------------------------------------------------------------- projection
@@ -685,42 +862,66 @@ def test_projection_needs_no_network_and_counts_calls(root: Path, monkeypatch, c
     monkeypatch.setattr(llm, "make_backend", no_network)
     monkeypatch.setattr(llm.GeminiBackend, "__init__", no_network)
     monkeypatch.setattr(run, "load_prices", lambda: {"gemini": {"free_tier": {"requests_per_day": 10}}})
-    rc = run.main(["--split", "dev", "--systems", "rules,llm:gemini:gemini-3.8-flash", "--project", "--root", str(root)])
-    assert rc == 0
-    assert "32 calls (0 in traces)" in capsys.readouterr().out
+    args = ["--split", "dev", "--systems", "rules,llm:gemini:gemini-3.8-flash", "--project", "--root", str(root)]
+    # Default field-group mode all: one call per document, 8 calls, 1 day at 10 requests a day.
+    assert run.main(args) == 0
+    out = capsys.readouterr().out
+    assert "(field groups all): 8 documents" in out and "8 calls (0 in traces)" in out
     table = pd.read_csv(root / "results" / "cost_projection_dev.csv")
     assert list(table.columns) == run.PROJECTION_COLUMNS and len(table) == 1
     row = table.iloc[0]
-    assert (row["n_docs"], row["n_calls"], row["n_calls_cached"], row["n_calls_new"]) == (8, 32, 0, 32)
-    assert row["effort"] == "low" and row["days_at_free_tier"] == 4 and not row["priced"]
+    assert (row["n_docs"], row["n_calls"], row["n_calls_cached"], row["n_calls_new"]) == (8, 8, 0, 8)
+    assert row["field_groups"] == "all" and row["days_at_free_tier"] == 1
+    assert row["effort"] == "low" and not row["priced"]
     # chars / 4 of the prompts, which hold the located sections.
     assert row["input_tokens_all"] == row["input_tokens_new"] >= row["prompt_chars"] / 4 > row["section_chars"] / 4
+    all_row = row
+    # Split mode: four calls per document, 32 calls, 4 days.
+    assert run.main([*args, "--field-groups", "split"]) == 0
+    assert "(field groups split): 8 documents" in capsys.readouterr().out
+    row = pd.read_csv(root / "results" / "cost_projection_dev.csv").iloc[0]
+    assert (row["n_docs"], row["n_calls"], row["n_calls_new"]) == (8, 32, 32)
+    assert row["field_groups"] == "split" and row["days_at_free_tier"] == 4
+    # The same sections are sent once per document either way; split repeats the system
+    # prompt, header and section notes per group.
+    assert row["section_chars"] == all_row["section_chars"] and row["prompt_chars"] > all_row["prompt_chars"]
     assert not (root / "results" / "predictions_dev.csv").exists() and not (root / "data" / "traces" / "dev").exists()
 
 
-def test_projection_independent_count_cache_prices_and_modes(root: Path, monkeypatch):
+@MODES
+def test_projection_independent_count_cache_prices_and_modes(root: Path, monkeypatch, field_groups: str):
     paths = run.Paths.under(root)
+    kw = {"field_groups": field_groups}
+    n = 8 * CALLS[field_groups]
     doc = run.select_documents(paths, "dev", SOUTHSTAR)[0]
     located = run.locate_document(SOUTHSTAR, parse.load_pages(SOUTHSTAR, paths.text_dir), "FDIC")
     expected = 0
-    for group, secs, _ in run.llm_inputs(doc, located):
+    for group, secs, _ in run.llm_inputs(doc, located, **kw):
         chars = len(prompts.SYSTEM_PROMPT) + len(prompts.build_prompt(doc, secs, group)) + len(json.dumps(prompts.build_schema(group)))
         expected += -(-chars // 4)
-    one = run.project("dev", [FAKE], paths=paths, doc_id=SOUTHSTAR, write=False).iloc[0]
-    assert one["input_tokens_all"] == expected and one["n_calls"] == N_GROUPS
+    one = run.project("dev", [FAKE], paths=paths, doc_id=SOUTHSTAR, write=False, **kw).iloc[0]
+    assert one["input_tokens_all"] == expected and one["n_calls"] == CALLS[field_groups]
     assert one["output_tokens_source"] == "none" and one["cost_usd_new"] == 0
 
     # After a live run every call is cached and output tokens come from the traces.
-    run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=fake_factory)
+    run.run_split("dev", [FAKE], paths=paths, allow_api=True, backend_factory=fake_factory, **kw)
     monkeypatch.setattr(llm, "load_prices", lambda: {"x": {"models": {"fake-1": {"input": 1.0, "output": 2.0}}}})
-    after = run.project("dev", [FAKE, FAKE_WHOLE, FAKE_CLOSED], paths=paths).set_index("system")
+    after = run.project("dev", [FAKE, FAKE_WHOLE, FAKE_CLOSED], paths=paths, **kw).set_index("system")
     loc, whole, closed = after.loc[FAKE.name], after.loc[FAKE_WHOLE.name], after.loc[FAKE_CLOSED.name]
-    assert (loc["n_calls_cached"], loc["n_calls_new"], loc["input_tokens_new"], loc["cost_usd_new"]) == (32, 0, 0, 0)
+    assert (loc["n_calls_cached"], loc["n_calls_new"], loc["input_tokens_new"], loc["cost_usd_new"]) == (n, 0, 0, 0)
     assert loc["output_tokens_per_call"] == 20 and loc["output_tokens_source"] == "traces" and loc["priced"]
-    assert whole["n_calls_new"] == 32 and whole["input_tokens_all"] > loc["input_tokens_all"]
-    assert whole["cost_usd_new"] == pytest.approx(round((whole["input_tokens_new"] + 2 * 20 * 32) / 1e6, 4))
+    assert whole["n_calls_new"] == n and whole["input_tokens_all"] > loc["input_tokens_all"]
+    assert whole["cost_usd_new"] == pytest.approx(round((whole["input_tokens_new"] + 2 * 20 * n) / 1e6, 4))
     assert closed["n_calls"] == 8 and closed["output_tokens_source"] == "none"
     assert closed["input_tokens_all"] < loc["input_tokens_all"] / 10
+    assert (loc["field_groups"], whole["field_groups"], closed["field_groups"]) == (field_groups, field_groups, "")
     assert paths.cost_projection("dev").exists()
+    # The other mode's prompts are not in the traces, and its output tokens are not borrowed.
+    other = "split" if field_groups == "all" else "all"
+    swapped = run.project("dev", [FAKE], paths=paths, write=False, field_groups=other).iloc[0]
+    assert swapped["n_calls_cached"] == 0 and swapped["n_calls"] == 8 * CALLS[other]
+    assert swapped["output_tokens_source"] == "none"
     with pytest.raises(ValueError):
         run.project("dev", run.parse_systems("rules"), paths=paths)
+    with pytest.raises(ValueError):
+        run.project("dev", [FAKE], paths=paths, field_groups="groups")

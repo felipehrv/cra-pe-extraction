@@ -13,8 +13,9 @@ Implements design section 6 (6.1, 6.2, 6.4, 6.5, 6.6). The flow is:
    recall with Wilson CIs, abstention and fabrication rates with denominators,
    the three groundedness failure rates, the 2x2 correctness x groundedness
    cells and the derived hallucination rate.
-5. ``error_table`` lists every non-correct cell with an empty ``cause`` column
-   for hand classification (section 6.6).
+5. ``error_table`` lists every non-correct cell with empty ``cause`` and ``stage``
+   columns for hand classification (section 6.6; ``report.error_causes`` counts
+   them). A rerun keeps the hand-filled cells of unchanged rows (``carry_over_causes``).
 6. ``risk_table`` computes the four flags per value (section 6.5) and the
    document risk as the sum over Group B values.
 7. ``check_test_guard`` enforces the work rule of section 6.1 for ``--split test``.
@@ -459,16 +460,37 @@ def metrics_table(scored: pd.DataFrame) -> pd.DataFrame:
 # ------------------------------------------------------------- error table
 
 
+HAND_COLUMNS = ("cause", "stage")
+_CARRY_KEY = ["doc_id", "field", "system", "cell", "pred_value"]
+
+
 def error_table(scored: pd.DataFrame) -> pd.DataFrame:
-    """One row per non-correct cell, with an empty ``cause`` column (design 6.6)."""
-    cols = ["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell", "grounding_failure", "cause"]
+    """One row per non-correct cell, with empty ``cause`` and ``stage`` columns for hand
+    classification (design 6.6; read by ``report.error_causes``)."""
+    cols = ["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell", "grounding_failure", *HAND_COLUMNS]
     if scored.empty:
         return pd.DataFrame(columns=cols)
     bad = scored[~scored["cell"].isin(["correct", "correct_null"])].copy()
     bad = bad[["doc_id", "field", "system", "gold_status", "gold_value", "pred_status", "pred_value", "cell", "grounding_failure"]]
     bad["grounding_failure"] = bad["grounding_failure"].fillna("")
-    bad["cause"] = ""
+    for col in HAND_COLUMNS:
+        bad[col] = ""
     return bad.sort_values(["doc_id", "field", "system"]).reset_index(drop=True)
+
+
+def carry_over_causes(errors: pd.DataFrame, previous: pd.DataFrame) -> pd.DataFrame:
+    """``errors`` with the hand-filled ``cause`` and ``stage`` of an earlier errors file copied
+    onto the cells that did not change (same doc_id, field, system, cell and pred_value), so a
+    regeneration (``--replay-only``) keeps the classification; a changed cell starts blank."""
+    if errors.empty or previous.empty or any(c not in previous.columns for c in _CARRY_KEY):
+        return errors
+    prev = previous.astype(str).drop_duplicates(_CARRY_KEY).set_index(_CARRY_KEY)
+    out = errors.copy()
+    idx = pd.MultiIndex.from_frame(out[_CARRY_KEY].astype(str))
+    for col in HAND_COLUMNS:
+        if col in prev.columns:
+            out[col] = prev[col].reindex(idx).fillna("").to_numpy()
+    return out
 
 
 # -------------------------------------------------------------- risk flags
@@ -754,6 +776,8 @@ def run(
         "scored": out_dir / f"scored_{split}.csv",
     }
     table1.to_csv(paths["table1"], index=False, float_format="%.5f")
+    if paths["errors"].exists():  # keep the hand-filled causes of unchanged cells
+        errors = carry_over_causes(errors, pd.read_csv(paths["errors"], dtype=str, keep_default_na=False))
     errors.to_csv(paths["errors"], index=False)
     risk.to_csv(paths["risk"], index=False)
     calib.to_csv(paths["calibration"], index=False, float_format="%.5f")

@@ -1,7 +1,7 @@
 PY ?= .venv/bin/python
 PIP ?= .venv/bin/pip
 
-.PHONY: env index index-replay fetch parse overrides overrides-check locate templates rules baseline tuning-docs census-draw census-sheet census-validate census-score census-double census-compare group-a smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot project dev-rerun eval-dev freeze eval-test eval-pair ablation closed-book scale s5-routing s5-routing-provisional s5-apply s5-test group-a-corpus risk-corpus audit-sheet audit reliability-draw reliability-sheet reliability-compare report reproduce test lint
+.PHONY: env index index-replay fetch parse overrides overrides-check locate locator-check-draw locator-check-sheet locator-check-score templates rules baseline tuning-docs census-draw census-sheet census-validate census-score census-double census-compare group-a smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot project dev-rerun eval-dev freeze eval-test eval-pair ablation closed-book scale s5-routing s5-routing-provisional s5-apply s5-test group-a-corpus risk-corpus audit-sheet audit reliability-draw reliability-sheet reliability-compare report reproduce test lint
 
 # Needs a native (arm64 on Apple silicon) Python 3.11+. With an x86_64 Anaconda install,
 # use: CONDA_SUBDIR=osx-arm64 conda create -p ./.venv python=3.12 pip && make env PYTHON=.venv/bin/python
@@ -36,6 +36,23 @@ overrides-check:
 
 locate:
 	$(PY) -m cra_extract.locate --manifest config/corpus.csv --report results/locator_coverage.csv
+
+# Locator hand check (design 6.10, plan "Locator recall"): 100 corpus documents, one FRB PE per
+# Reserve Bank district (district approximated by the bank's state), no document of a test or
+# audit bank and no tuning document, drawn once into config/locator_check_sample.yaml (the draw
+# refuses to replace a record without --force). The plan names no seed: LOCATOR_SEED and
+# LOCATOR_DATE are required. locator-check-sheet writes data/gold/locator_check_sheet.csv (refuses
+# to overwrite reader entries); the reader fills it from the PDFs; locator-check-score writes
+# results/locator_recall.csv and results/locator_recall_misses.csv.
+locator-check-draw:
+	@test -n "$(LOCATOR_SEED)" -a -n "$(LOCATOR_DATE)" || (echo "set LOCATOR_SEED=<seed> LOCATOR_DATE=YYYY-MM-DD" && exit 2)
+	$(PY) -m cra_extract.locator_check draw --seed $(LOCATOR_SEED) --date $(LOCATOR_DATE)
+
+locator-check-sheet:
+	$(PY) -m cra_extract.locator_check sheet
+
+locator-check-score:
+	$(PY) -m cra_extract.locator_check score
 
 templates:
 	$(PY) -m cra_extract.templates --manifest config/corpus.csv --out results/census.csv
@@ -138,21 +155,25 @@ SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash
 # S3 corpus tier (analysis plan, Decisions item 2), used by the ablation, the closed-book
 # baseline, S5 routing, the pair run and the corpus scoring targets.
 S3_CORPUS ?= llm:gemini:gemini-3.8-flash
+# LLM calls per document (run --field-groups): all = one call for every field (default, sized
+# for the free-tier daily request cap), split = one call per llm_field_groups entry of
+# config/fields.yaml (four). Closed book is one call either way and takes no flag.
+FIELD_GROUPS ?= all
 RUN_FLAGS ?=
 pilot:
-	$(PY) -m cra_extract.run --split dev --systems $(SYSTEMS) $(RUN_FLAGS)
+	$(PY) -m cra_extract.run --split dev --systems $(SYSTEMS) --field-groups $(FIELD_GROUPS) $(RUN_FLAGS)
 
 # Cost projection without calls (chars / 4 of every prompt): PROJECT_FLAGS=--whole-document for
 # the ablation estimate, --closed-book for the closed-book baseline.
 PROJECT_FLAGS ?=
 project:
-	$(PY) -m cra_extract.run --split $(SPLIT) --systems $(SYSTEMS) --project $(PROJECT_FLAGS)
+	$(PY) -m cra_extract.run --split $(SPLIT) --systems $(SYSTEMS) --field-groups $(FIELD_GROUPS) --project $(PROJECT_FLAGS)
 
 # Second live dev run for run-to-run agreement (plan, Leakage): its own trace and results
 # directories, so replay never serves the first run's traces; then agreement per field and tier.
 DEV_RERUN_SYSTEMS ?= $(S3_CORPUS)
 dev-rerun:
-	$(PY) -m cra_extract.run --split dev --systems $(DEV_RERUN_SYSTEMS) --trace-dir data/traces/dev_rerun --results-dir results/dev_rerun --allow-api
+	$(PY) -m cra_extract.run --split dev --systems $(DEV_RERUN_SYSTEMS) --field-groups $(FIELD_GROUPS) --trace-dir data/traces/dev_rerun --results-dir results/dev_rerun --allow-api
 	$(PY) -m cra_extract.run agreement results/predictions_dev.csv results/dev_rerun/predictions_dev.csv --out results/run_agreement_dev.csv
 
 eval-dev:
@@ -176,13 +197,13 @@ eval-pair:
 # Whole-document ablation on the first 20 test doc_ids by sha256 (plan, Decisions item 3) and the
 # closed-book contamination baseline (plan, Leakage); both use the S3 corpus tier.
 ablation:
-	$(PY) -m cra_extract.run --split test --systems $(S3_CORPUS) --whole-document --hash-sample 20 $(RUN_FLAGS)
+	$(PY) -m cra_extract.run --split test --systems $(S3_CORPUS) --field-groups $(FIELD_GROUPS) --whole-document --hash-sample 20 $(RUN_FLAGS)
 
 closed-book:
 	$(PY) -m cra_extract.run --split test --systems $(S3_CORPUS) --closed-book $(RUN_FLAGS)
 
 scale:
-	$(PY) -m cra_extract.run --split corpus --systems $(SYSTEMS) --parse-missing $(RUN_FLAGS)
+	$(PY) -m cra_extract.run --split corpus --systems $(SYSTEMS) --field-groups $(FIELD_GROUPS) --parse-missing $(RUN_FLAGS)
 
 # S5 routing (analysis plan, Decisions item 1): after the test draw and before the freeze, with
 # S1 at the frozen RULES_VERSION (make rules). Writes results/s5_routing.{csv,md} and

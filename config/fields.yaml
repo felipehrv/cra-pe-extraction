@@ -362,7 +362,12 @@ applicability:
     FRB/small: absent_from_document
     FRB/isb: value
 
-# Fields the LLM extracts per request, grouped so that one call covers one located section set.
+# Fields the LLM extracts per request, grouped so that one call covers one located section set
+# (run --field-groups split: one call per group). The combined group "all" (run --field-groups
+# all, the default: one call per document) is derived in code, prompts.combined_field_group:
+# the union of these groups' sections in headings.yaml order and of their fields in the order
+# of the fields block above. Do not list it here: modules that iterate this block (routing,
+# corpus_scoring, report) would then see every field twice.
 llm_field_groups:
   cover_and_rating:
     sections: [cover, rating]

@@ -16,10 +16,11 @@ from typing import Any
 
 import pytest
 
-from cra_extract import llm
-from cra_extract.config import load_fields
+from cra_extract import llm, prompts
+from cra_extract.config import load_fields, load_headings
 from cra_extract.models import DocRecord, Section, Trace
 from cra_extract.prompts import (
+    ALL_GROUP,
     CLOSED_BOOK_PROMPT_VERSION,
     CLOSED_BOOK_SYSTEM_PROMPT,
     PROMPT_VERSION,
@@ -172,6 +173,76 @@ def test_build_schema_unknown_group():
         build_schema("nope")
 
 
+def test_combined_group_is_derived_union_of_listed_groups():
+    listed = load_fields()["llm_field_groups"]
+    # Derived in code, never listed: modules iterating the block see each field once.
+    assert ALL_GROUP not in listed and prompts.split_group_names() == list(listed)
+    combined = prompts.llm_field_group(ALL_GROUP)
+    union_sections = {s for g in listed.values() for s in g["sections"]}
+    union_fields = {f for g in listed.values() for f in g["fields"]}
+    # Sections: the union in headings.yaml (document) order; fields: the union in fields.yaml order.
+    assert combined["sections"] == [s for s in load_headings()["sections"] if s in union_sections]
+    assert set(combined["sections"]) == union_sections and len(combined["sections"]) == len(union_sections)
+    assert combined["fields"] == [f for f in load_fields()["fields"] if f in union_fields]
+    assert len(combined["fields"]) == len(union_fields) == sum(len(g["fields"]) for g in listed.values())
+    assert combined["groups"] == list(listed)
+    assert prompts.groups_for_mode("all") == [ALL_GROUP] and prompts.groups_for_mode("split") == list(listed)
+    with pytest.raises(ValueError):
+        prompts.groups_for_mode("both")
+    home = prompts.field_home_sections()
+    assert set(home) == union_fields and home["finding_present"] == ["illegal_credit_practices_review"]
+    # A fresh copy each time: callers cannot change the derived group.
+    combined["fields"].append("x")
+    assert "x" not in prompts.llm_field_group(ALL_GROUP)["fields"]
+
+
+def _schema_stats(node: Any, depth: int = 0, stats: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Properties, object nesting depth, enum members and keywords of a JSON schema."""
+    stats = stats if stats is not None else {"properties": 0, "depth": 0, "enum": 0, "keywords": set()}
+    if isinstance(node, list):
+        for item in node:
+            _schema_stats(item, depth, stats)
+    elif isinstance(node, dict):
+        stats["keywords"] |= set(node)
+        for key, value in node.items():
+            if key == "properties":
+                stats["properties"] += len(value)
+                stats["depth"] = max(stats["depth"], depth + 1)
+                for prop in value.values():
+                    _schema_stats(prop, depth + 1, stats)
+            elif key == "enum":
+                stats["enum"] += len(value)
+            else:
+                _schema_stats(value, depth, stats)
+    return stats
+
+
+# Keywords google-genai 2.28.0 documents as supported for response_json_schema
+# (types.GenerateContentConfig.response_json_schema); it states no size or count limit.
+GEMINI_JSON_SCHEMA_KEYWORDS = {
+    "$id", "$defs", "$ref", "$anchor", "type", "format", "title", "description", "enum", "items",
+    "prefixItems", "minItems", "maxItems", "minimum", "maximum", "anyOf", "oneOf", "properties",
+    "additionalProperties", "required", "propertyOrdering",
+}
+
+
+def test_combined_schema_size_and_gemini_keywords():
+    combined = prompts.llm_field_group(ALL_GROUP)
+    schema = build_schema(ALL_GROUP)
+    _check_schema(schema, combined["fields"])
+    assert list(schema["properties"]) == combined["fields"] and schema["title"] == "cra_pe_all"
+    port = prompts.portable_schema(schema)
+    stats = _schema_stats(port)
+    n = len(combined["fields"])
+    # One object per field with its four slots, two object levels, as in every split schema.
+    assert n == 31 and stats["properties"] == 5 * n and stats["depth"] == 2
+    split = [_schema_stats(prompts.portable_schema(build_schema(g))) for g in prompts.split_group_names()]
+    assert stats["properties"] == sum(x["properties"] for x in split)
+    assert stats["enum"] == sum(x["enum"] for x in split)
+    assert len(json.dumps(schema)) < 1.05 * sum(len(json.dumps(build_schema(g))) for g in prompts.split_group_names())
+    assert stats["keywords"] <= GEMINI_JSON_SCHEMA_KEYWORDS, stats["keywords"] - GEMINI_JSON_SCHEMA_KEYWORDS
+
+
 def test_schema_is_json_serializable():
     json.dumps(build_schema("review"))
 
@@ -236,7 +307,7 @@ def test_build_prompt_applicability_for_small_bank(doc, sections):
 def test_prompts_never_leak_evaluation_metadata(doc, sections, regulator, method):
     """The field lines use the system vocabulary and never name a probe or the gold nulls."""
     d = doc.model_copy(update={"regulator": regulator, "method": method})
-    for group in ("cover_and_rating", "institution", "lending_tables", "review"):
+    for group in ("cover_and_rating", "institution", "lending_tables", "review", ALL_GROUP):
         text = build_prompt(d, sections, group).lower()
         for word in ("probe", "absent_from_document", "not_applicable", "applicability block", "fabrication", "gold"):
             assert word not in text, (group, regulator, method, word)
@@ -245,6 +316,36 @@ def test_prompts_never_leak_evaluation_metadata(doc, sections, regulator, method
 def test_build_prompt_no_sections(doc):
     text = build_prompt(doc, {}, "review")
     assert "no sections were located" in text
+    assert "no sections were located" in build_prompt(doc, {}, ALL_GROUP)
+
+
+def test_combined_prompt_lists_every_field_and_section_once(doc, sections):
+    # Sections given out of document order are rendered in document order.
+    reversed_secs = dict(reversed(list(sections.items())))
+    text = build_prompt(doc, reversed_secs, ALL_GROUP)
+    fields = prompts.llm_field_group(ALL_GROUP)["fields"]
+    for name in fields:
+        assert text.count(f"\n- {name} (") == 1, name
+    lines = [ln for ln in text.splitlines() if ln.startswith("- ")]
+    assert [ln[2:].split(" (")[0] for ln in lines] == fields
+    for name, sec in sections.items():
+        assert text.count(f"=== section: {name} | scope: {sec.scope} |") == 1
+    assert text.index("=== section: rating |") < text.index("=== section: illegal_credit_practices_review |")
+    assert text.count(RATING_QUOTE) == 1 and text.count(REVIEW_QUOTE) == 1
+    assert "group 'all'" in text and f"all {len(fields)} fields" in text and PROMPT_VERSION in text
+    for g in prompts.split_group_names():
+        secs = ", ".join(prompts.llm_field_group(g)["sections"])
+        assert text.count(f"Fields usually stated in the sections {secs}:") == 1
+    # Applicability of the cell: FDIC Small Bank prints neither component rating.
+    small = build_prompt(doc.model_copy(update={"method": "small"}), sections, ALL_GROUP)
+    for name in ("lending_test_rating", "cd_test_rating"):
+        line = small.split(f"\n- {name} (")[1].split("\n")[0]
+        assert "FDIC Small Bank" in line and "not printed" in line
+    isb_line = text.split("\n- cd_test_rating (")[1].split("\n")[0]
+    assert "not printed" not in isb_line
+    # The split prompts are unchanged: the split field block is a sub-block of the combined one.
+    split = build_prompt(doc, sections, "review")
+    assert "Fields usually stated" not in split and "Fields to extract (group 'review'):" in split
 
 
 def test_system_prompt_mentions_statuses():
@@ -301,6 +402,76 @@ def test_extract_maps_values_absent_and_missing(doc, sections, tmp_path):
     assert trace.trace_id == llm.make_trace_id(doc.doc_id, "cover_and_rating", "fake-1", trace.prompt_hash)
     written = llm.read_traces(tmp_path / "dev" / "fake.jsonl")
     assert len(written) == 1 and written[0].trace_id == trace.trace_id
+
+
+def test_extract_maps_combined_response_to_every_field(doc, sections, tmp_path):
+    response = {
+        "overall_rating": entry("NI", quote=RATING_QUOTE, page=99),
+        "lending_test_rating": entry("S", quote=LENDING_QUOTE, page=3),
+        "total_assets_usd": entry(status="abstain"),
+        "avg_ltd_ratio_pct": entry(status="absent"),
+        "finding_present": entry(True, quote=REVIEW_QUOTE, page=14),
+        "laws_cited": entry(["FHA", "ECOA_RegB", "FHA"], quote=REVIEW_QUOTE, page=14),
+        # A quote also printed in an earlier section: located in the field's own section.
+        "rating_after": entry("NI", quote="Needs to Improve", page=14),
+        "rating_before": entry("X", quote=REVIEW_QUOTE, page=14),
+    }
+    backend = FakeBackend(response)
+    values, trace = llm.extract(doc, sections, ALL_GROUP, backend, "dev", trace_dir=tmp_path)
+    fields = prompts.llm_field_group(ALL_GROUP)["fields"]
+    by = {v.field: v for v in values}
+    assert [v.field for v in values] == fields and len(values) == 31
+    assert all(v.system == "llm:fake:fake-1" and v.doc_id == doc.doc_id for v in values)
+    assert by["overall_rating"].value == "NI" and by["overall_rating"].page == 3
+    assert by["overall_rating"].scope == "institution" and by["overall_rating"].notes is None
+    assert by["lending_test_rating"].value == "S"
+    assert by["total_assets_usd"].status == "abstain" and by["avg_ltd_ratio_pct"].status == "absent"
+    assert by["finding_present"].value is True and by["finding_present"].page == 14
+    assert by["laws_cited"].value == ["ECOA_RegB", "FHA"]
+    assert "Needs to Improve" in sections["rating"].text
+    assert by["rating_after"].page == 14 and by["rating_after"].char_start >= sections["illegal_credit_practices_review"].char_start
+    assert by["rating_before"].status == "abstain" and by["rating_before"].notes.startswith("invalid_value")
+    # Every field the response left out abstains.
+    missing = [f for f in fields if f not in response]
+    assert missing and all(by[f].status == "abstain" and by[f].notes == "missing_from_response" for f in missing)
+    # One call, one trace in the usual layout, recorded under the combined group.
+    call = backend.calls[0]
+    assert len(backend.calls) == 1 and call["schema"] == build_schema(ALL_GROUP)
+    assert call["user"] == build_prompt(doc, sections, ALL_GROUP) and call["system"] == SYSTEM_PROMPT
+    assert trace.field_group == ALL_GROUP and trace.mode == "located"
+    assert trace.section_offsets == [(s.char_start, s.char_end) for s in sections.values()]
+    assert trace.prompt_hash == llm.prompt_hash(call["system"], call["user"], call["schema"])
+    assert trace.trace_id == llm.make_trace_id(doc.doc_id, ALL_GROUP, "fake-1", trace.prompt_hash)
+    assert llm.read_traces(tmp_path / "dev" / "fake.jsonl")[0] == trace
+    # trace_values rebuilds the 31 rows of a stored combined trace.
+    rebuilt = llm.trace_values(trace)
+    assert [v.field for v in rebuilt] == fields and {v.field: v.value for v in rebuilt}["laws_cited"] == ["ECOA_RegB", "FHA"]
+    # A truncated combined call abstains on every field.
+    class Truncating(FakeBackend):
+        def _call(self, *args):
+            return llm.BackendResult(text="{", parsed_json=None, stop_reason="MAX_TOKENS")
+
+    cut, cut_trace = llm.extract(doc, sections, ALL_GROUP, Truncating({}), "dev", trace_dir=tmp_path)
+    assert len(cut) == 31 and all(v.notes == "truncated" for v in cut) and cut_trace.error == "max_tokens"
+
+
+def test_combined_and_split_prompts_never_share_a_hash_or_a_trace(doc, sections, tmp_path):
+    def key(group: str) -> str:
+        return llm.prompt_hash(SYSTEM_PROMPT, build_prompt(doc, sections, group), build_schema(group))
+
+    split_keys = {key(g) for g in prompts.split_group_names()}
+    assert len(split_keys) == 4 and key(ALL_GROUP) not in split_keys
+    # The same response under the split groups is stored; replaying the combined call misses.
+    for g in prompts.split_group_names():
+        llm.extract(doc, sections, g, FakeBackend({}), "dev", trace_dir=tmp_path)
+    replay = llm.ReplayBackend("fake", "dev", "fake-1", trace_dir=tmp_path)
+    assert {t.prompt_hash for t in replay.stored()} == split_keys
+    with pytest.raises(llm.TraceMissError):
+        llm.extract(doc, sections, ALL_GROUP, replay, "dev", trace_dir=tmp_path)
+    llm.extract(doc, sections, ALL_GROUP, FakeBackend({}), "dev", trace_dir=tmp_path)
+    replay = llm.ReplayBackend("fake", "dev", "fake-1", trace_dir=tmp_path)
+    values, served = llm.extract(doc, sections, ALL_GROUP, replay, "dev", trace_dir=tmp_path)
+    assert replay.hits == 1 and served.prompt_hash == key(ALL_GROUP) and len(values) == 31
 
 
 def test_extract_propagates_daily_limit(doc, sections, tmp_path):
