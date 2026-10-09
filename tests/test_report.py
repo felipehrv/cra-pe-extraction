@@ -285,14 +285,20 @@ def test_load_curve_frame_schemas() -> None:
 # ----------------------------------------------------------------------------- matrix floor
 
 
-def test_isb_floor_matrix_is_lower_of_the_two_tests() -> None:
+def test_isb_floor_follows_appendix_a_paragraph_d3() -> None:
+    # Appendix A to 12 CFR part 345, (d)(3): both tests at least satisfactory -> an overall
+    # NI or SN is not explained by the tests (floor S; outstanding is optional); any test
+    # below satisfactory -> NI or SN both compatible (floor SN).
     assert len(report.ISB_OVERALL_FLOOR) == 16
     for (lt, cd), floor in report.ISB_OVERALL_FLOOR.items():
-        assert floor == min(lt, cd, key=report.RATING_RANK.get)
+        both_ok = report.RATING_RANK[lt] >= report.RATING_RANK["S"] and report.RATING_RANK[cd] >= report.RATING_RANK["S"]
+        assert floor == ("S" if both_ok else "SN")
     assert report.isb_overall_floor("S", "O") == "S"
+    assert report.isb_overall_floor("O", "O") == "S"
+    assert report.isb_overall_floor("S", "NI") == "SN"
     assert report.isb_overall_floor("", "O") is None
     assert "12 CFR 345.28" in report.isb_overall_floor.__doc__
-    assert "MUST VERIFY" in report.isb_overall_floor.__doc__
+    assert "verified" in report.isb_overall_floor.__doc__
 
 
 # ----------------------------------------------------------------------------- Table 1

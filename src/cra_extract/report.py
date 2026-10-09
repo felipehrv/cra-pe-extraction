@@ -129,41 +129,41 @@ COMPARATIVE_WORDS = (
 
 # FRB ISB overall-rating floor implied by the Lending Test and Community Development Test
 # ratings, keyed by (lending, cd). See the docstring of ``isb_overall_floor``.
+# Lowest overall rating that the two intermediate small bank test ratings alone explain.
+# Verified 2026-10-08 against Appendix A to 12 CFR part 345, paragraph (d)(3), 2023 annual
+# edition of the CFR (govinfo, CFR-2023-title12-vol5; amendments through 75 FR 61045, the
+# framework in force for the 2022 to 2025 exams; the OCC 12 CFR 25 and FRB 12 CFR 228
+# appendices carry the same text): (i) no ISB may receive an overall "satisfactory" unless it
+# receives at least "satisfactory" on both the lending test and the community development
+# test; (ii)(A) an ISB with "outstanding" on one test and at least "satisfactory" on the other
+# MAY receive "outstanding" (so "satisfactory" stays allowed); (iii) an ISB that fails the
+# "satisfactory" standards receives "needs to improve" or "substantial noncompliance"
+# "depending on the degree" of the failure (so both are compatible and no floor between them
+# follows from the tests). Paragraph (a)(1) adds "adjustments on the basis of evidence of
+# discriminatory or other illegal credit practices" (12 CFR 345.28(c)). Hence: both tests at
+# least "satisfactory" -> floor "S" (an overall NI or SN is not explained by the tests and is
+# a candidate downgrade); any test below "satisfactory" -> floor "SN" (nothing to flag).
 ISB_OVERALL_FLOOR: dict[tuple[str, str], str] = {
-    ("O", "O"): "O",
-    ("O", "S"): "S",
-    ("O", "NI"): "NI",
-    ("O", "SN"): "SN",
-    ("S", "O"): "S",
-    ("S", "S"): "S",
-    ("S", "NI"): "NI",
-    ("S", "SN"): "SN",
-    ("NI", "O"): "NI",
-    ("NI", "S"): "NI",
-    ("NI", "NI"): "NI",
-    ("NI", "SN"): "SN",
-    ("SN", "O"): "SN",
-    ("SN", "S"): "SN",
-    ("SN", "NI"): "SN",
-    ("SN", "SN"): "SN",
+    (lt, cd): ("S" if RATING_RANK[lt] >= RATING_RANK["S"] and RATING_RANK[cd] >= RATING_RANK["S"] else "SN")
+    for lt in ("O", "S", "NI", "SN")
+    for cd in ("O", "S", "NI", "SN")
 }
 
 
 def isb_overall_floor(lending: str, cd: str) -> str | None:
-    """Lowest overall rating an intermediate small bank can receive from its two test
-    ratings alone (``ISB_OVERALL_FLOOR``); ``None`` when either rating is not a code.
+    """Lowest overall rating that an intermediate small bank's two test ratings alone explain
+    (``ISB_OVERALL_FLOOR``); ``None`` when either rating is not a code.
 
-    Source: the intermediate small bank rules of Appendix A to 12 CFR part 228
-    (Regulation BB, Federal Reserve; the FDIC equivalent is Appendix A to 12 CFR part 345)
-    and 12 CFR 228.28 (FDIC 12 CFR 345.28, "Assigned ratings"), whose paragraph (c) lets
-    evidence of discriminatory or other illegal credit practices lower a rating. As recalled
-    here, the appendix says that an ISB with Outstanding on one test and at least Satisfactory
-    on the other may receive Outstanding overall, and that it may not receive Satisfactory
-    overall unless both tests are at least Satisfactory. The matrix encodes the floor as the
-    lower of the two test ratings: an overall rating below both test ratings is not explained
-    by the two tests, so the design (section 7) reads it as a candidate downgrade under
-    paragraph (c). THE AUTHOR MUST VERIFY this matrix against the eCFR text in force on each
-    exam date before any result of the check is reported.
+    Source: Appendix A to 12 CFR part 345, paragraph (d)(3) (FDIC; the same text is Appendix A
+    to 12 CFR part 25 for the OCC and to 12 CFR part 228 for the Federal Reserve), 2023 annual
+    edition, read on govinfo on 2026-10-08, and 12 CFR 345.28(c) on adjustments for evidence of
+    discriminatory or other illegal credit practices. With both tests at least "satisfactory"
+    the floor is "S": the appendix forbids an overall "satisfactory" otherwise and makes
+    "outstanding" optional, so an overall NI or SN is not explained by the two tests and the
+    design (section 7) reads it as a candidate downgrade under paragraph (c). With any test
+    below "satisfactory" the appendix allows NI or SN "depending on the degree" of the
+    failure, so the floor is "SN" and nothing is flagged. The matrix was verified against the
+    regulation text on 2026-10-08; re-verify if an exam date falls under a later framework.
     """
     return ISB_OVERALL_FLOOR.get((str(lending).strip(), str(cd).strip()))
 
@@ -1823,7 +1823,7 @@ def _descriptive_md(
         "## FRB ISB matrix-floor check",
         "",
         "Floor = the lowest overall rating the Lending and Community Development Test ratings of the FRB CSV "
-        "main row allow (report.ISB_OVERALL_FLOOR; to be verified against the regulation text). An overall "
+        "main row allow (report.ISB_OVERALL_FLOOR, verified against Appendix A to 12 CFR part 345 (d)(3), 2023 CFR edition). An overall "
         "rating below the floor is read as a candidate downgrade and set against the census.",
         "",
         md_table(["Status", "Documents"], [[k, str(counts[k])] for k in sorted(counts)]),

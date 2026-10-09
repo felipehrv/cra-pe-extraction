@@ -25,7 +25,7 @@ decisions still open (five marker lines; the FDIC state-marker item needs none, 
 - [ ] **Whole-document ablation** (plan "Decisions", item 3, marker line). Record yes or no,
   with the projected spend (projection rule now in plan "Cost accounting") and the dev token
   figures used.
-- [ ] **ISB_OVERALL_FLOOR** (was section 10; plan "Descriptive analyses (exploratory)", marker
+- [x] **ISB_OVERALL_FLOOR** (verified 2026-10-08 against Appendix A to 12 CFR 345 (d)(3), 2023 CFR edition; matrix corrected: floor S when both tests are at least S, else SN) (was section 10; plan "Descriptive analyses (exploratory)", marker
   line). It rests on recollection of Appendix A to 12 CFR 228 and 345 and 228.28(c) /
   345.28(c). Someone must verify it against the regulation text in force on each exam date
   before any matrix-floor result is quoted.
