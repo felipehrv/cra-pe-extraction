@@ -20,3 +20,5 @@ data/cache/
 # summary tables under results/ are committed.
 results/*.log
 results/rules*.csv
+results/predictions_corpus*.csv
+results/run_log_*.jsonl

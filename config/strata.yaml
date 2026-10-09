@@ -134,3 +134,338 @@ splits:
     notes:
     - dev is a development set, not an inference sample; probabilities are recorded for completeness
     - 'documents removed from the pool by bank exclusivity during the draw: 11'
+  test:
+    split: test
+    seed: 20261013
+    drawn_at: '2026-10-08'
+    n: 30
+    rules:
+      n_test: 30
+      per_cell: 3
+      min_cell: 50
+      n_rating: 5
+      n_multi_aa: 4
+      multi_aa_rule: aa_counts
+      cell_allocation:
+        FDIC/isb: 4
+        FDIC/small: 4
+        FRB/isb: 3
+        FRB/small: 3
+        OCC/isb: 3
+        OCC/small: 4
+      order:
+      - cell
+      - low_rating
+      - multi_aa
+      tuning_documents: 234
+      tuning_documents_hash: 8dcc39433f12caa088c03ea9a06baa7ad77f03c950a298c4f231cb364522a525
+      tuning_documents_removed_from_pool: 235
+    strata:
+    - name: cell:FDIC/isb
+      population: 789
+      pool: 700
+      drawn: 4
+      selection_probability: 0.005714
+      weight: null
+      detail: {}
+    - name: cell:FDIC/small
+      population: 981
+      pool: 937
+      drawn: 4
+      selection_probability: 0.004269
+      weight: null
+      detail: {}
+    - name: cell:FRB/isb
+      population: 202
+      pool: 158
+      drawn: 3
+      selection_probability: 0.018987
+      weight: null
+      detail: {}
+    - name: cell:FRB/small
+      population: 216
+      pool: 182
+      drawn: 3
+      selection_probability: 0.016484
+      weight: null
+      detail: {}
+    - name: cell:OCC/isb
+      population: 233
+      pool: 216
+      drawn: 3
+      selection_probability: 0.013889
+      weight: null
+      detail: {}
+    - name: cell:OCC/small
+      population: 372
+      pool: 352
+      drawn: 4
+      selection_probability: 0.011364
+      weight: null
+      detail: {}
+    - name: low_rating
+      population: 70
+      pool: 57
+      drawn: 5
+      selection_probability: 0.087719
+      weight: null
+      detail: {}
+    - name: multi_aa
+      population: 140
+      pool: 116
+      drawn: 4
+      selection_probability: 0.034483
+      weight: null
+      detail:
+        rule: aa_counts
+        aa_min: 3
+        documents_with_counts: 2781
+    docs:
+    - doc_id: FDIC_11902_20240815
+      bank_id: '11902'
+      cell: FDIC/small
+      stratum: cell:FDIC/small
+      reason: regulator_x_method
+      pool_size: 937
+      selection_probability: 0.004269
+    - doc_id: FDIC_12305_20250224
+      bank_id: '12305'
+      cell: FDIC/small
+      stratum: low_rating
+      reason: overall_rating_NI_or_SN
+      pool_size: 57
+      selection_probability: 0.087719
+    - doc_id: FDIC_12501_20230417
+      bank_id: '12501'
+      cell: FDIC/isb
+      stratum: cell:FDIC/isb
+      reason: regulator_x_method
+      pool_size: 700
+      selection_probability: 0.005714
+    - doc_id: FDIC_14851_20250804
+      bank_id: '14851'
+      cell: FDIC/isb
+      stratum: multi_aa
+      reason: aa_counts
+      pool_size: 116
+      selection_probability: 0.034483
+    - doc_id: FDIC_15799_20231204
+      bank_id: '15799'
+      cell: FDIC/isb
+      stratum: cell:FDIC/isb
+      reason: regulator_x_method
+      pool_size: 700
+      selection_probability: 0.005714
+    - doc_id: FDIC_16600_20230227
+      bank_id: '16600'
+      cell: FDIC/small
+      stratum: low_rating
+      reason: overall_rating_NI_or_SN
+      pool_size: 57
+      selection_probability: 0.087719
+    - doc_id: FDIC_16970_20230406
+      bank_id: '16970'
+      cell: FDIC/isb
+      stratum: low_rating
+      reason: overall_rating_NI_or_SN
+      pool_size: 57
+      selection_probability: 0.087719
+    - doc_id: FDIC_18229_20231010
+      bank_id: '18229'
+      cell: FDIC/isb
+      stratum: cell:FDIC/isb
+      reason: regulator_x_method
+      pool_size: 700
+      selection_probability: 0.005714
+    - doc_id: FDIC_2036_20230404
+      bank_id: '2036'
+      cell: FDIC/isb
+      stratum: cell:FDIC/isb
+      reason: regulator_x_method
+      pool_size: 700
+      selection_probability: 0.005714
+    - doc_id: FDIC_25260_20230522
+      bank_id: '25260'
+      cell: FDIC/small
+      stratum: cell:FDIC/small
+      reason: regulator_x_method
+      pool_size: 937
+      selection_probability: 0.004269
+    - doc_id: FDIC_28316_20250122
+      bank_id: '28316'
+      cell: FDIC/isb
+      stratum: multi_aa
+      reason: aa_counts
+      pool_size: 116
+      selection_probability: 0.034483
+    - doc_id: FDIC_35439_20231212
+      bank_id: '35439'
+      cell: FDIC/small
+      stratum: cell:FDIC/small
+      reason: regulator_x_method
+      pool_size: 937
+      selection_probability: 0.004269
+    - doc_id: FDIC_8207_20240916
+      bank_id: '8207'
+      cell: FDIC/small
+      stratum: cell:FDIC/small
+      reason: regulator_x_method
+      pool_size: 937
+      selection_probability: 0.004269
+    - doc_id: FRB_164975_20250818
+      bank_id: '164975'
+      cell: FRB/small
+      stratum: cell:FRB/small
+      reason: regulator_x_method
+      pool_size: 182
+      selection_probability: 0.016484
+    - doc_id: FRB_312244_20250303
+      bank_id: '312244'
+      cell: FRB/isb
+      stratum: multi_aa
+      reason: aa_counts
+      pool_size: 116
+      selection_probability: 0.034483
+    - doc_id: FRB_3322468_20240819
+      bank_id: '3322468'
+      cell: FRB/small
+      stratum: cell:FRB/small
+      reason: regulator_x_method
+      pool_size: 182
+      selection_probability: 0.016484
+    - doc_id: FRB_41553_20240226
+      bank_id: '41553'
+      cell: FRB/small
+      stratum: cell:FRB/small
+      reason: regulator_x_method
+      pool_size: 182
+      selection_probability: 0.016484
+    - doc_id: FRB_669555_20231127
+      bank_id: '669555'
+      cell: FRB/isb
+      stratum: multi_aa
+      reason: aa_counts
+      pool_size: 116
+      selection_probability: 0.034483
+    - doc_id: FRB_699105_20241104
+      bank_id: '699105'
+      cell: FRB/isb
+      stratum: cell:FRB/isb
+      reason: regulator_x_method
+      pool_size: 158
+      selection_probability: 0.018987
+    - doc_id: FRB_711548_20240226
+      bank_id: '711548'
+      cell: FRB/isb
+      stratum: cell:FRB/isb
+      reason: regulator_x_method
+      pool_size: 158
+      selection_probability: 0.018987
+    - doc_id: FRB_753324_20240916
+      bank_id: '753324'
+      cell: FRB/isb
+      stratum: cell:FRB/isb
+      reason: regulator_x_method
+      pool_size: 158
+      selection_probability: 0.018987
+    - doc_id: FRB_813572_20250414
+      bank_id: '813572'
+      cell: FRB/small
+      stratum: low_rating
+      reason: overall_rating_NI_or_SN
+      pool_size: 57
+      selection_probability: 0.087719
+    - doc_id: OCC_11642_20240812
+      bank_id: '11642'
+      cell: OCC/small
+      stratum: cell:OCC/small
+      reason: regulator_x_method
+      pool_size: 352
+      selection_probability: 0.011364
+    - doc_id: OCC_12141_20230601
+      bank_id: '12141'
+      cell: OCC/small
+      stratum: cell:OCC/small
+      reason: regulator_x_method
+      pool_size: 352
+      selection_probability: 0.011364
+    - doc_id: OCC_1253_20230320
+      bank_id: '1253'
+      cell: OCC/isb
+      stratum: cell:OCC/isb
+      reason: regulator_x_method
+      pool_size: 216
+      selection_probability: 0.013889
+    - doc_id: OCC_3147_20230703
+      bank_id: '3147'
+      cell: OCC/small
+      stratum: cell:OCC/small
+      reason: regulator_x_method
+      pool_size: 352
+      selection_probability: 0.011364
+    - doc_id: OCC_704171_20240528
+      bank_id: '704171'
+      cell: OCC/isb
+      stratum: low_rating
+      reason: overall_rating_NI_or_SN
+      pool_size: 57
+      selection_probability: 0.087719
+    - doc_id: OCC_708039_20200504
+      bank_id: '708039'
+      cell: OCC/isb
+      stratum: cell:OCC/isb
+      reason: regulator_x_method
+      pool_size: 216
+      selection_probability: 0.013889
+    - doc_id: OCC_708286_20250512
+      bank_id: '708286'
+      cell: OCC/small
+      stratum: cell:OCC/small
+      reason: regulator_x_method
+      pool_size: 352
+      selection_probability: 0.011364
+    - doc_id: OCC_9734_20250623
+      bank_id: '9734'
+      cell: OCC/isb
+      stratum: cell:OCC/isb
+      reason: regulator_x_method
+      pool_size: 216
+      selection_probability: 0.013889
+    doc_ids:
+    - FDIC_11902_20240815
+    - FDIC_12305_20250224
+    - FDIC_12501_20230417
+    - FDIC_14851_20250804
+    - FDIC_15799_20231204
+    - FDIC_16600_20230227
+    - FDIC_16970_20230406
+    - FDIC_18229_20231010
+    - FDIC_2036_20230404
+    - FDIC_25260_20230522
+    - FDIC_28316_20250122
+    - FDIC_35439_20231212
+    - FDIC_8207_20240916
+    - FRB_164975_20250818
+    - FRB_312244_20250303
+    - FRB_3322468_20240819
+    - FRB_41553_20240226
+    - FRB_669555_20231127
+    - FRB_699105_20241104
+    - FRB_711548_20240226
+    - FRB_753324_20240916
+    - FRB_813572_20250414
+    - OCC_11642_20240812
+    - OCC_12141_20230601
+    - OCC_1253_20230320
+    - OCC_3147_20230703
+    - OCC_704171_20240528
+    - OCC_708039_20200504
+    - OCC_708286_20250512
+    - OCC_9734_20250623
+    doc_id_hash: 641232fa5594981252b28029f1611d1581ea783267079e7a72aefb3dda3c7459
+    notes:
+    - multi-AA stratum from parsed section counts (n_aa_sections >= 3)
+    - strata are drawn in sequence; a document eligible for a later stratum that was not drawn earlier
+      keeps that later chance, so its inclusion probability exceeds the recorded stage probability; gold
+      metrics are reported unweighted, corpus estimates come from the audit (design 5.1)
+    - 'documents removed from the pool by bank exclusivity during the draw: 34'

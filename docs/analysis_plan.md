@@ -301,20 +301,21 @@ Design section 7, produced by `report.descriptive`; exploratory and non-causal.
 ## Decisions that depend on dev results
 
 1. S5 routing table. Rule: per field, S1 coverage and agreement against the raw index over the evaluable documents of split `corpus` after the test draw (dev, test, audit and excluded rows left out), S1 at the frozen RULES_VERSION; route to S1 when coverage is at least 95 percent and agreement at least 98 percent (inclusive), else to the S3 corpus tier ("Systems and versions"). `make s5-routing` writes the table below as `results/s5_routing.md` (values to one decimal, with the n of each) and the record `config/s5_routing.yaml` (date, RULES_VERSION, systems, thresholds, population counts); the table is pasted here before the freeze.
-   TODO: paste the computed routing table below (from `results/s5_routing.md`) and delete this line; the freeze refuses while it stands.
 
 | field | n with index value | S1 coverage | S1 agreement | route |
 |---|---|---|---|---|
-| regulator | | | | |
-| bank_name | | | | |
-| bank_id | | | | |
-| exam_date | | | | |
-| exam_method | | | | |
-| overall_rating | | | | |
-| prior_evaluation_date | | | | |
-| prior_rating | | | | |
-| lending_test_rating (FRB/isb) | | | | |
-| cd_test_rating (FRB/isb) | | | | |
+| regulator | 2,751 | 100.0 (2,750 of 2,751) | 100.0 (2,750 of 2,750) | S1 |
+| bank_name | 2,751 | 99.9 (2,748 of 2,751) | 97.6 (2,681 of 2,748) | S3 |
+| bank_id | 2,751 | 99.9 (2,748 of 2,751) | 99.9 (2,745 of 2,748) | S1 |
+| exam_date | 998 | 100.0 (998 of 998) | 98.6 (984 of 998) | S1 |
+| exam_method | 2,751 | 99.9 (2,747 of 2,751) | 99.8 (2,742 of 2,747) | S1 |
+| overall_rating | 2,751 | 99.9 (2,747 of 2,751) | 100.0 (2,746 of 2,747) | S1 |
+| prior_evaluation_date | 2,477 | 91.6 (2,269 of 2,477) | 94.8 (2,150 of 2,269) | S3 |
+| prior_rating | 2,477 | 81.7 (2,023 of 2,477) | 99.8 (2,019 of 2,023) | S3 |
+| lending_test_rating (FRB/isb) | 196 | 75.0 (147 of 196) | 100.0 (147 of 147) | S3 |
+| cd_test_rating (FRB/isb) | 196 | 76.0 (149 of 196) | 100.0 (149 of 149) | S3 |
+
+Computed 2026-10-08 after the test draw (seed 20261013) on 2,751 evaluable documents of split corpus with dev, test, audit, tuning-document banks and excluded rows left out; RULES_VERSION 0.2.2; record in `config/s5_routing.yaml`. exam_date is decided on the 998 OCC and FRB documents (FDIC exam_date has no index truth) and applies to FDIC documents.
 
 2. Corpus tier. Rule: on dev, pooled Group B accuracy per tier = sum of n_correct / sum of (n_correct + n_wrong + n_fabricated_absence) over the 11 Group B rows of `table1_dev.csv`; the eligible tiers are those within the margin of the best tier; the corpus pass uses the eligible tier with the lowest mean `cost_usd` per dev document. Proposed margin: 3 percentage points. Dev holds about 110 Group B items per tier, so the margin is a cost rule, not a significance test.
    TODO: confirm the 3 percentage-point margin and record the chosen tier with its dev accuracy and cost per document.

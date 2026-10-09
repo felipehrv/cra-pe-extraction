@@ -1,0 +1,137 @@
+# S5 routing (docs/analysis_plan.md, Decisions that depend on dev results, item 1).
+# Written by python -m cra_extract.routing compute; do not edit by hand.
+computed_on: '2026-10-08'
+rules_version: 0.2.2
+rules_version_source: predictions
+s1_system: rules
+s3_system: llm:gemini:gemini-3.8-flash
+s5_system: s5
+rule: route S1 when S1 coverage >= 0.95 and S1 agreement >= 0.98 over evaluable documents
+  of split corpus with an index value; S3 corpus tier otherwise
+thresholds:
+  coverage: 0.95
+  agreement: 0.98
+population:
+  split: corpus
+  n_documents: 2751
+  n_manifest: 2793
+  n_by_split:
+    corpus: 2751
+    dev: 10
+    excluded: 2
+    test: 30
+  n_not_evaluable: 2
+  test_drawn: true
+exam_date_index_by_regulator:
+  OCC: 593
+  FDIC: 0
+  FRB: 405
+notes:
+- FDIC exam_date has no index truth at routing time (the file-id gate of the plan,
+  Group A bullet 3, needs the test gold), the hand override included, so the exam_date
+  route rests on OCC (593) and FRB (405) documents and applies to FDIC documents too.
+- Component ratings are routed only in FRB/isb; in every other cell S5 takes S3.
+- Agreement uses evaluate.values_match with the field's tolerance against the raw
+  index.
+fields:
+  regulator:
+    cell: all
+    route: s1
+    n_population: 2751
+    n_index: 2751
+    n_no_truth: 0
+    n_s1_value: 2750
+    n_agree: 2750
+    coverage: 0.9996
+    agreement: 1.0
+  bank_name:
+    cell: all
+    route: s3
+    n_population: 2751
+    n_index: 2751
+    n_no_truth: 0
+    n_s1_value: 2748
+    n_agree: 2681
+    coverage: 0.9989
+    agreement: 0.9756
+  bank_id:
+    cell: all
+    route: s1
+    n_population: 2751
+    n_index: 2751
+    n_no_truth: 0
+    n_s1_value: 2748
+    n_agree: 2745
+    coverage: 0.9989
+    agreement: 0.9989
+  exam_date:
+    cell: all
+    route: s1
+    n_population: 2751
+    n_index: 998
+    n_no_truth: 1753
+    n_s1_value: 998
+    n_agree: 984
+    coverage: 1.0
+    agreement: 0.986
+  exam_method:
+    cell: all
+    route: s1
+    n_population: 2751
+    n_index: 2751
+    n_no_truth: 0
+    n_s1_value: 2747
+    n_agree: 2742
+    coverage: 0.9985
+    agreement: 0.9982
+  overall_rating:
+    cell: all
+    route: s1
+    n_population: 2751
+    n_index: 2751
+    n_no_truth: 0
+    n_s1_value: 2747
+    n_agree: 2746
+    coverage: 0.9985
+    agreement: 0.9996
+  prior_evaluation_date:
+    cell: all
+    route: s3
+    n_population: 2751
+    n_index: 2477
+    n_no_truth: 274
+    n_s1_value: 2269
+    n_agree: 2150
+    coverage: 0.916
+    agreement: 0.9476
+  prior_rating:
+    cell: all
+    route: s3
+    n_population: 2751
+    n_index: 2477
+    n_no_truth: 274
+    n_s1_value: 2023
+    n_agree: 2019
+    coverage: 0.8167
+    agreement: 0.998
+  lending_test_rating:
+    cell: FRB/isb
+    route: s3
+    n_population: 196
+    n_index: 196
+    n_no_truth: 0
+    n_s1_value: 147
+    n_agree: 147
+    coverage: 0.75
+    agreement: 1.0
+  cd_test_rating:
+    cell: FRB/isb
+    route: s3
+    n_population: 196
+    n_index: 196
+    n_no_truth: 0
+    n_s1_value: 149
+    n_agree: 149
+    coverage: 0.7602
+    agreement: 1.0
+provisional: false
