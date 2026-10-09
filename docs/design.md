@@ -121,6 +121,8 @@ Prices from the API reference cached 2026-09-25, stored in `config/prices.yaml` 
 - Dev and test synchronous runs with reruns: under $20.
 - Proposed cap: $150.
 
+Decision of 2026-10-06, after this section was written: the primary hosted model is the Google AI Studio free tier (Gemini Flash, model id recorded per trace) on dev, test and the corpus, at zero API cost; a local open-weight model through Ollama is the second system; the three Claude tiers run on gold only if the Anthropic console credit (about $5) is claimed in time. The free tier's terms allow Google to retain and reuse submitted text, which is acceptable only because PEs are public records; the README states this and the local model remains the option for non-public records. `docs/analysis_plan.md` carries the pre-registered version of this plan.
+
 ## 5. Gold set, census and audit
 
 ### 5.1 Gold set (Groups A and B)
