@@ -33,7 +33,7 @@ Hard constraints: no data or code from the author's current employer projects; e
   - FFIEC's combined ratings file is not used (CAPTCHA on download, stale as of mid-2024, FDIC dates are release months). It is cited in the data-quality table.
 - Manifest `config/corpus.csv`: doc_id, regulator, bank_id, bank_name, exam_date, release_date, method, overall_rating, url, sha256, pages, chars_per_page, text_extractable, split.
 - Fetching: `make fetch` with rate limiting, a User-Agent, retries and resume; sha256 verified. The gold-set PDFs (about 40 files) and their text are committed to the repo so evaluation runs offline; the rest are fetched on demand. PEs are US government works.
-- Parsing: pymupdf (or pdfplumber if tables need it), page-wise text split on form feed. `text_extractable` is false when characters per page fall below a threshold; counts by regulator are reported. OCR (tesseract) is implemented only if more than 2 percent of the corpus is scanned; all 8 sample PDFs were born-digital.
+- Parsing: pymupdf (or pdfplumber if tables need it), page-wise text split on form feed. `text_extractable` is false when characters per page fall below a threshold; counts by regulator are reported. OCR (tesseract) is implemented only if more than 2 percent of the corpus is scanned; all 8 sample PDFs were born-digital, and no scanned document exists in the corpus (2026-10-08: the one candidate, FRB_785473_20220418, was a PDF portfolio whose embedded PE was extracted), so no OCR is done. Exclusions (no fetched PDF, `text_extractable` false, or an index PDF link that points to another evaluation) are listed with reason, evidence and date in `config/manifest_overrides.yaml` and set to split `excluded`; `docs/analysis_plan.md` ("Exclusions") lists them.
 
 ## 3. Field groups and data dictionary
 
@@ -106,7 +106,7 @@ Removed from v0 and why: the bank-level home-mortgage LMI share is a computed qu
 
 ### 4.1 Grounding (two-stage, rule-based, no LLM judge)
 
-Every S3 and S4 value must come with a verbatim quote. Stage 1: OCR-tolerant fuzzy locate (rapidfuzz partial ratio >= 90 against page text), recording page and character offsets. Stage 2, support: (a) scope: an institution-level field is supported only by a quote in institution scope (a state-level CD rating must not support the institution's CD rating); (b) value presence: the normalized value appears in the quote; (c) Group C enums: the quote contains a finding predicate ("identified", "lowered", "violation", "substantive") and is not within edit distance k of a stored template; (d) dates and numbers within tolerance. All fields are enums, dates, numbers, sets or index-verified strings, so no entailment judge is needed; this is stated in the README. Groundedness failures are reported in three categories: quote_not_found, quote_out_of_scope, quote_does_not_support.
+Every S3 and S4 value must come with a verbatim quote. Stage 1: OCR-tolerant fuzzy locate (rapidfuzz partial ratio >= 90 against page text), recording page and character offsets. Stage 2, support: (a) scope: an institution-level field is supported only by a quote in institution scope (a state-level CD rating must not support the institution's CD rating). The fair lending or other illegal credit practices review is institution-wide in all three formats and is institution scope wherever the PE prints it (FRB_930442_20240715 p56), and in a PE with a single assessment area the LTD ratio and AA concentration sections printed after the assessment-area heading are institution scope. (b) value presence: the normalized value appears in the quote; (c) Group C enums: the quote contains a finding predicate ("identified", "lowered", "violation", "substantive") and is not within edit distance k of a stored template; (d) dates and numbers within tolerance. All fields are enums, dates, numbers, sets or index-verified strings, so no entailment judge is needed; this is stated in the README. Groundedness failures are reported in three categories: quote_not_found, quote_out_of_scope, quote_does_not_support.
 
 ### 4.2 Traces
 
@@ -198,7 +198,7 @@ Multiple causes allowed, attributed to the stage that produced them: parsing, lo
 
 ### 6.7 Heterogeneity
 
-Group A: regulator x method x year on the corpus. Group B: by regulator on test. The scanned vs born-digital cut is dropped unless at least 20 scanned documents exist, and the README says so.
+Group A: regulator x method x year on the corpus. Group B: by regulator on test. The scanned vs born-digital cut is dropped: no scanned document exists in the corpus (the one candidate, FRB_785473_20220418, was a PDF portfolio), and the README says so.
 
 ### 6.8 Leakage and contamination
 
