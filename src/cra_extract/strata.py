@@ -31,8 +31,8 @@ Draws
   pool with ties broken at random, so the three strata are equal in size.
 
 Tuning documents (``config/tuning_documents.yaml``): every corpus document cited as evidence
-in a tuning configuration (``config/headings.yaml``, ``config/review_templates.yaml``) or
-recorded there as read while tuning. The plan (Leakage) allows tuning only on dev, the
+in a tuning configuration (``config/headings.yaml``, ``config/review_templates.yaml``,
+``config/group_a_triage.yaml``) or recorded there as read while tuning. The plan (Leakage) allows tuning only on dev, the
 locator check and corpus-wide index agreement, never on test or audit documents, so the test
 and audit pools drop the banks of these documents; the draw records their count and hash.
 ``tuning-docs`` lists the cited documents that the file does not hold yet and ``--write``
@@ -125,7 +125,10 @@ DEFAULTS = {
 # Splits whose pool drops the banks of tuning documents (plan, Leakage).
 TUNING_FREE_SPLITS = ("test", "audit")
 # Configuration files whose cited doc_ids are tuning documents.
-TUNING_SOURCES: tuple[Path, ...] = (HEADINGS_PATH, TEMPLATES_PATH)
+# Configuration files whose cited documents count as tuning documents: the locator headings,
+# the review-template library and the hand triage of Group A disagreements (plan, Leakage:
+# the 31 triage entries were read against the PE text, so their banks leave the pools too).
+TUNING_SOURCES: tuple[Path, ...] = (HEADINGS_PATH, TEMPLATES_PATH, HEADINGS_PATH.parent / "group_a_triage.yaml")
 DOC_ID_PATTERN = re.compile(r"\b(?:OCC|FDIC|FRB)_[0-9A-Za-z]+_\d{8}\b")
 
 

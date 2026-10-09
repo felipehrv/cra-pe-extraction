@@ -135,6 +135,9 @@ documents:
   - headings.yaml
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: mixed-case table rows p7,
     rated-area titles pp13, 21'
+- doc_id: FDIC_15701_20241118
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_16125_20250203
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -160,6 +163,9 @@ documents:
 - doc_id: FDIC_16891_20230117
   source:
   - headings.yaml
+- doc_id: FDIC_17011_20230307
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_17077_20230919
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
@@ -240,6 +246,9 @@ documents:
     state or MSA heading line and the line after it (pages not read)'
 - doc_id: FDIC_2787_20221205
   note: read 2026-10-08 while designing the review reset rule (false appendix marker p8)
+- doc_id: FDIC_28348_20240813
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_28401_20230130
   source:
   - review_templates.yaml
@@ -260,6 +269,9 @@ documents:
 - doc_id: FDIC_32968_20240730
   source:
   - review_templates.yaml
+- doc_id: FDIC_33450_20250602
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_33708_20221114
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
@@ -284,6 +296,12 @@ documents:
 - doc_id: FDIC_4160_20241202
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_445_20240408
+  source:
+  - group_a_triage.yaml
+- doc_id: FDIC_445_20280408
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_5072_20250630
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
@@ -328,6 +346,9 @@ documents:
 - doc_id: FDIC_58428_20240304
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state and msa markers: one capitals
     state or MSA heading line and the line after it (pages not read)'
+- doc_id: FDIC_58691_20250407
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_5874_20221024
   source:
   - headings.yaml
@@ -339,6 +360,9 @@ documents:
   - headings.yaml
   note: 'read 2026-10-08 for the case-sensitive FDIC state and msa markers: prose msa line p12, mixed-case
     table rows pp13-29, rated-area titles pp12-28'
+- doc_id: FDIC_5981_20240304
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_7614_20250303
   source:
   - headings.yaml
@@ -364,6 +388,9 @@ documents:
 - doc_id: FDIC_9437_20230919
   note: 'seen 2026-10-08 in a listing for the case-sensitive FDIC state marker: the rated-area title line
     above each state rating line (pages not read)'
+- doc_id: FDIC_9438_20240709
+  source:
+  - group_a_triage.yaml
 - doc_id: FDIC_9463_20240701
   source:
   - headings.yaml
@@ -419,6 +446,9 @@ documents:
   source:
   - headings.yaml
   - review_templates.yaml
+- doc_id: FRB_152057_20240401
+  source:
+  - group_a_triage.yaml
 - doc_id: FRB_168571_20241015
   source:
   - review_templates.yaml
@@ -536,6 +566,9 @@ documents:
 - doc_id: FRB_5543735_20241202
   source:
   - headings.yaml
+- doc_id: FRB_560214_20241113
+  source:
+  - group_a_triage.yaml
 - doc_id: FRB_568939_20241021
   source:
   - headings.yaml
@@ -585,6 +618,9 @@ documents:
 - doc_id: FRB_823656_20230814
   source:
   - headings.yaml
+- doc_id: FRB_853112_20220411
+  source:
+  - group_a_triage.yaml
 - doc_id: FRB_884358_20250303
   source:
   - headings.yaml
@@ -602,6 +638,12 @@ documents:
 - doc_id: FRB_930442_20240715
   source:
   - headings.yaml
+- doc_id: OCC_10180_20231031
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_10637_20250707
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_11001_20240722
   source:
   - review_templates.yaml
@@ -611,15 +653,24 @@ documents:
 - doc_id: OCC_12152_20240531
   source:
   - review_templates.yaml
+- doc_id: OCC_12190_20220922
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_13557_20230530
   source:
   - review_templates.yaml
+- doc_id: OCC_14294_20240708
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_14821_20220822
   source:
   - review_templates.yaml
 - doc_id: OCC_15379_20250127
   source:
   - headings.yaml
+- doc_id: OCC_15698_20240603
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_15748_20240724
   source:
   - review_templates.yaml
@@ -629,8 +680,35 @@ documents:
 - doc_id: OCC_16553_20230724
   source:
   - review_templates.yaml
+- doc_id: OCC_16625_20231127
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_16626_20230818
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_18558_20240102
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_23834_20221031
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_23925_20240724
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_24219_20250218
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_24349_20220829
   note: read 2026-10-08 for false msa markers (p4 prose line)
+- doc_id: OCC_24685_20221028
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_24798_20240226
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_4934_20221215
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_6488_20230123
   note: read 2026-10-08 while designing the review reset rule (false appendix marker p5)
 - doc_id: OCC_700133_20220801
@@ -639,9 +717,21 @@ documents:
 - doc_id: OCC_702983_20231023
   source:
   - headings.yaml
+- doc_id: OCC_703997_20240506
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_704307_20220922
   source:
   - review_templates.yaml
+- doc_id: OCC_708183_20240304
+  source:
+  - group_a_triage.yaml
 - doc_id: OCC_713570_20250519
   source:
   - headings.yaml
+- doc_id: OCC_8694_20231023
+  source:
+  - group_a_triage.yaml
+- doc_id: OCC_9183_20230213
+  source:
+  - group_a_triage.yaml
