@@ -1,0 +1,13 @@
+field,regulator,our_error,source_error,definitional,untriaged,total
+bank_id,OCC,0,0,0,0,0
+bank_id,FDIC,0,2,0,0,2
+bank_id,FRB,0,1,0,0,1
+exam_date,OCC,0,13,0,0,13
+exam_date,FDIC,0,2,127,0,129
+exam_date,FRB,0,2,0,0,2
+exam_method,OCC,10,4,2,0,16
+exam_method,FDIC,20,1,0,0,21
+exam_method,FRB,10,0,0,0,10
+overall_rating,OCC,0,0,0,0,0
+overall_rating,FDIC,0,1,0,0,1
+overall_rating,FRB,0,0,0,0,0

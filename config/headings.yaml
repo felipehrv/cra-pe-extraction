@@ -28,59 +28,180 @@ sections:
     scope: institution
     OCC: ["^Overall CRA Rating$", "^INSTITUTION'?S CRA RATING", "^This institution is rated"]
     FDIC: ["^INSTITUTION RATING$", "^INSTITUTION'?S CRA RATING"]
-    FRB: ["^INSTITUTION'?S CRA RATING", "^INSTITUTION RATING$", "^INSTITUTION'?S COMMUNITY REINVESTMENT ACT RATING$"]
+    # FRB variants (2026-10-08 corpus tuning): "BANK'S CRA RATING" and "<BANK NAME>'S CRA RATING"
+    # (Chicago, FRB_180845_20241104 p3, FRB_194440_20250519 p3), "BANK CRA RATING"
+    # (FRB_807348_20230710 p3); "INSTITUTION'S COMMUNITY REINVESTMENT ACT (CRA) RATING"
+    # (Cleveland, FRB_150727_20250512 p3), "INSTITUTION COMMUNITY REINVESTMENT ACT RATING"
+    # (FRB_645465_20240401 p3) and the misprint "INTUITION'S ..." (FRB_884358_20250303 p3).
+    FRB:
+      - "^INSTITUTION'?S CRA RATING"
+      - "^INSTITUTION RATING$"
+      - "^(INSTITUTION|INTUITION)('?S)? COMMUNITY REINVESTMENT ACT (\\(CRA\\) )?RATING$"
+      - "^([A-Z0-9&.,' -]+ )?BANK('?S)? CRA RATING$"
     max_pages: 2
 
   description_of_institution:
     scope: institution
     OCC: ['^Description of Institution$']
     FDIC: ['^DESCRIPTION OF INSTITUTION$']
-    FRB: ['^DESCRIPTION OF INSTITUTION$']
+    # FRB_1015252_20230306 p4 (Dallas): "DESCRIPTION OF THE INSTITUTION".
+    FRB: ['^DESCRIPTION OF (THE )?INSTITUTION$']
     max_pages: 4
 
   description_of_assessment_area:
     scope: institution
     OCC: ['^Description of Assessment Areas?$']
     FDIC: ['^DESCRIPTION OF ASSESSMENT AREAS?$']
-    FRB: ['^DESCRIPTION OF ASSESSMENT AREAS?$']
+    # FRB_180845_20241104 p5 (Chicago): footnote mark glued to the heading, "DESCRIPTION OF
+    # ASSESSMENT AREA1"; FRB_368054_20230612 p4: "DESCRIPTION OF THE ASSESSMENT AREA".
+    FRB: ['^DESCRIPTION OF (THE )?ASSESSMENT AREAS?\d?$']
     max_pages: 4
 
   scope_of_evaluation:
     scope: institution
     OCC: ['^Scope of (the )?Evaluation$']
     FDIC: ['^SCOPE OF EVALUATION$']
-    FRB: ['^SCOPE OF EVALUATION$', '^SCOPE OF EXAMINATION$']
+    # FRB_1015252_20230306 p3 (Dallas): "SCOPE OF THE EVALUATION".
+    FRB: ['^SCOPE OF EVALUATION$', '^SCOPE OF EXAMINATION$', '^SCOPE OF THE (EVALUATION|EXAMINATION)$']
     max_pages: 4
 
   ltd_ratio:
     scope: institution
     OCC: ['^Loan-to-Deposit Ratio$']
     FDIC: ['^Loan-to-Deposit Ratio$']
-    FRB: ['^(Net )?Loan-to-Deposit Ratio$']
+    # FRB variants: "Loan-to-Deposit (LTD) Ratio" (St. Louis, FRB_1007051_20230515 p8),
+    # "Loan–to-Deposit (LTD) Ratio" (FRB_49241_20230605 p7), "Net Loan-to-Deposit Ratio (NLTD)"
+    # (Cleveland, FRB_150727_20250512 p8), "LOAN TO DEPOSIT RATIO" (FRB_92902_20230403 p10),
+    # "Net Loan-to-Deposit Ratio2" with a footnote mark (FRB_352651_20230417 p4) and
+    # "LOAN-TO-DEPOSIT RATIO ANALYSIS" (Minneapolis, FRB_126553_20230508 p10).
+    FRB:
+      - '^(Net )?Loan[-– ]to[- ]Deposit (\((N?LTD)\) )?Ratio( \(N?LTD\))?\d?$'
+      - '^LOAN-TO-DEPOSIT RATIO ANALYSIS$'
+      # Atlanta prints "LTD Ratio" (FRB_353238_20230925 p13, FRB_680130_20230724 p8) and "Net LTD
+      # Ratio"; the same words are a row of the criterion table in the scope section (followed by
+      # the review period) or a scope-list item (after a lone bullet), which locate.py skips.
+      - '^(Net )?LTD Ratio$'
+      # one-off hyphenation, FRB_371362_20231023 p5
+      - '^Net-Loan-to Deposit-Ratio$'
     max_pages: 2
 
   aa_concentration:
     scope: institution
     OCC: ['^Lending in (the )?Assessment Areas?$']
     FDIC: ['^Assessment Area Concentration$']
-    FRB: ['^Assessment Area Concentration$', '^Lending in (the )?Assessment Areas?$']
+    # FRB variants: "AA Concentration" (Atlanta, FRB_177135_20240819 p12, FRB_749635_20250303 p7)
+    # and "COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE THE ASSESSMENT AREA(S)" or "... THE AA"
+    # (Minneapolis, FRB_126553_20230508 p10, FRB_382050_20240129 p10).
+    FRB:
+      - '^Assessment Area Concentration$'
+      - '^Lending in (the )?Assessment Areas?$'
+      - '^AA Concentration$'
+      - '^COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE (OF )?THE (ASSESSMENT AREAS?|AAS?)$'
     max_pages: 2
 
   illegal_credit_practices_review:
     description: The fair lending / illegal credit practices review; one paragraph of 2 to 5 lines (FDIC, FRB) or three boilerplate paragraphs of about 14 lines (OCC, the second paragraph carrying any finding) in the eight samples.
     scope: institution
     OCC: ['^Discriminatory or Other Illegal Credit Practices Review$']
-    FDIC: ['^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$']
-    FRB: ['^FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$']
+    # FDIC variants (2026-10-08 census tuning): "... CREDIT PRACTICE REVIEW" (FDIC_22876_20240624
+    # p12) and the misprint "... PRACTICES EVIEW" (FDIC_57069_20220214 p11). A heading wrapped
+    # with "REVIEW" on the next line (FDIC_10434_20230306 p6) is joined by the locator. "Review"
+    # stays required: SouthStar prints the sub-heading "Discriminatory or Other Illegal Credit
+    # Practices" inside its rating section (sample L93, page 3), so FDIC_12969_20230221, whose
+    # review heading also lacks "Review", stays a locator miss.
+    FDIC: ['^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES? R?EVIEW$']
+    # FRB_1864197_20230117 p9: "Fair Lending or Other Illegal Practices Review" (no "Credit");
+    # Philadelphia drops "REVIEW": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES"
+    # (FRB_2785477_20250602 p36, FRB_331713_20230109 p32).
+    FRB: ['^FAIR LENDING OR OTHER ILLEGAL (CREDIT )?PRACTICES( REVIEW)?$']
     max_pages: 2
+    # The review section ends where a one-cell-per-line table begins (locate.table_run_start):
+    # pymupdf prints tables placed on the same page after the paragraph, e.g. "Lending Inside
+    # and Outside of the Assessment Area" (FDIC_109_20250224 p8), "Community Development
+    # Services by Year" (FDIC_26799_20220805 p11), small-farm tables (FRB_1002953_20230508 p11).
+    end_at_table_run: true
 
 # Headings that end a section but are never located themselves (sub-test headings, appendix
 # front matter). A located section runs to the next section heading, scope marker or
 # boundary heading, whichever comes first, capped by max_pages.
 boundary_patterns:
-  OCC: ['^Lending Test$', '^Community Development Test$', '^Conclusions with Respect to Performance']
-  FDIC: ['^CONCLUSIONS ON PERFORMANCE CRITERIA', '^LENDING TEST$', '^COMMUNITY DEVELOPMENT TEST$', '^APPENDICES$', '^(SMALL|INTERMEDIATE SMALL) BANK PERFORMANCE CRITERIA$']
-  FRB: ['^SUMMARY OF MAJOR FACTORS SUPPORTING RATINGS?$', '^CONCLUSIONS WITH RESPECT TO PERFORMANCE', '^LENDING TEST$', '^COMMUNITY DEVELOPMENT TEST$', '^PERFORMANCE CONTEXT$']
+  # OCC additions (2026-10-08 census tuning): the rating line that opens a state, MMSA, CSA or
+  # nationwide rating area ("CRA rating for the United States1: Satisfactory" under "United
+  # States", OCC_713570_20250519 p7; "CRA rating for the Fargo-Wahpeton ND-MN CSA1:
+  # Satisfactory", OCC_702983_20231023 p7) and the CSA rating heading of OCC_702983_20231023.
+  OCC:
+    - '^Lending Test$'
+    - '^Community Development Test$'
+    - '^Conclusions with Respect to Performance'
+    - '^CRA rating for (the )?[^:]+: ?(Outstanding|Satisfactory|Needs to Improve|Substantial Noncompliance)\.?$'
+    - '^.+ Combined Statistical Area Rating$'
+  # FDIC additions (2026-10-08 census tuning): the rated-area title "X - Full-Scope Review"
+  # without " AA " (the assessment_area marker needs it), e.g. "NON-MSA ASSESSMENT AREA -
+  # Full-Scope Review" (FDIC_10685_20240826), "STATE OF OKLAHOMA - Full-Scope Review"
+  # (FDIC_12285_20250721), "NONMETROPOLITAN NEBRASKA ASSESSMENT AREA - Full-Scope" wrapped
+  # (FDIC_13622_20241202), with no space at the dash in "OHIO NON-MSA- Full-Scope Review"
+  # (FDIC_10255_20230411) and "STATE OF OREGON-Full-Scope Review" (FDIC_16243_20230207); and
+  # the state rating line "CRA RATING FOR NEBRASKA: SATISFACTORY" under a bare state name
+  # (FDIC_10641_20231211 p13, FDIC_5694_20241112 p14). Boundaries, not scope markers, so the
+  # assessment-area count of run.count_aa_sections is unchanged. The dash title also takes the
+  # wrap "... AREAS - Full-" / "Scope Review" joined by the locator (FDIC_7614_20250303 p12);
+  # "Scope" is case-sensitive and a semicolon is excluded, which keeps out the scope-table
+  # legends "FS - Full-Scope; LS - Limited-Scope" (FDIC_35530_20240715 p8) and "FS -
+  # Full-scope" (FDIC_57095_20230620). The lookahead on both title patterns keeps out prose
+  # ending in a title ("A description of each assessment area is presented in the NMSA
+  # Assessment Area-Full-Scope", FDIC_26799_20220805 p6) and a paragraph glued to the next
+  # title ("... practices.INDIANA NON-MSA - Full-Scope", FDIC_5768_20250414 p13). The second
+  # title pattern is "Full-Scope Review" with "Review", case-sensitive, on its own line
+  # under the area name ("NONMETROPOLITAN MINNESOTA ASSESSMENT AREA" then "Full-Scope
+  # Review", FDIC_9737_20240306 p12) or after it with no
+  # dash ("SEBRING-AVON PARK MSA ASSESSMENT AREA Full-Scope Review"); bare "Full Scope" and
+  # "Full-Scope" are scope-table cells (FDIC_10011_20221219 p5) and stay out. The last
+  # pattern is the operations heading of a rated area that does not end in "AA" and so is no
+  # assessment_area marker ("DESCRIPTION OF INSTITUTION'S OPERATIONS" / "IN THE
+  # CARBONDALE-MARION, IL MSA ASSESSMENT AREA", FDIC_57897_20220920 p8), in capitals only:
+  # prose cites "the Description of Institution's Operations sections" (FDIC_16891_20230117).
+  FDIC:
+    - '^CONCLUSIONS ON PERFORMANCE CRITERIA'
+    - '^LENDING TEST$'
+    - '^COMMUNITY DEVELOPMENT TEST$'
+    - '^APPENDICES$'
+    - '^(SMALL|INTERMEDIATE SMALL) BANK PERFORMANCE CRITERIA$'
+    - '^(?!.*(?-i: (the|is|are|any|each|was|were|in) ))[^;]+ ?[–-] ?(?-i:(Full|Limited)(- ?| )Scope)( Review)?$'
+    - '^(?!.*(?-i: (the|is|are|any|each|was|were|in) ))(.+ )?(?-i:(Full|Limited)-Scope Review)$'
+    - '^CRA RATING FOR [^:]+:'
+    - "^(?-i:DESCRIPTION OF INSTITUTION'?S OPERATIONS)( |$)"
+  # The last FRB pattern is the Dallas assessment-area title line printed one line above
+  # "DESCRIPTION OF THE INSTITUTION'S OPERATIONS" ("DENTON AND WISE COUNTIES METROPOLITAN
+  # ASSESSMENT AREA", FRB_336361_20221128 p7): without it the institution-level review section
+  # ends with that title. Case-sensitive so that prose and table captions stay out.
+  FRB:
+    - '^SUMMARY OF MAJOR FACTORS SUPPORTING RATINGS?$'
+    - '^CONCLUSIONS WITH RESPECT TO PERFORMANCE'
+    - '^LENDING TEST$'
+    - '^COMMUNITY DEVELOPMENT TEST$'
+    - '^PERFORMANCE CONTEXT$'
+    - "^(?-i:[A-Z][A-Z0-9 ,.&'/-]* (METROPOLITAN|NONMETROPOLITAN) ASSESSMENT AREA)$"
+    # San Francisco title above the per-AA sections, FRB_1864197_20230117 p10
+    - '^(FULL|LIMITED)-SCOPE ASSESSMENT AREA CONCLUSIONS$'
+    # Rated-area title line "(Full-Scope Review)" under the area name (FRB_137447_20230724 p10,
+    # FRB_114840_20241202 p10), or on one line with it ("HOUSTON METROPOLITAN ASSESSMENT AREA
+    # (Full-Scope Review)", FRB_629353_20241202 p8); added 2026-10-08 for the review census.
+    - '^(.+ )?\((Full|Limited)([- ]Scope)? Review\)$'
+    # More rated-area titles (2026-10-08): "(Full Review)" (Minneapolis, FRB_21359_20240212 p6),
+    # "METROPOLITAN AREA - FULL REVIEW" (FRB_680457_20220912 p10), "FULL-SCOPE ASSESSMENT AREA
+    # CONCLUSIONS" (San Francisco, FRB_2736714_20250707 p10), "EVANSVILLE, INDIANA-KENTUCKY" /
+    # "METROPOLITAN STATISTICAL AREA2" wrapped (FRB_618740_20250113 p10) and "MULTISTATE
+    # METROPOLITAN AREA" (FRB_274829_20250303 p9); the last two are case-sensitive.
+    - '^.+ [–-] (FULL|LIMITED)([- ]SCOPE)? REVIEW$'
+    - '^(FULL|LIMITED)-SCOPE ASSESSMENT AREA CONCLUSIONS'
+    - "^(?-i:[A-Z][A-Z0-9 ,.&/-]* METROPOLITAN STATISTICAL AREA)\\d?$"
+    - '^(?-i:MULTISTATE METROPOLITAN (STATISTICAL )?AREA)$'
+    # Appendix front matter without a dash after the letter, which the FRB appendix marker
+    # needs: "Appendix A" then "Glossary of Common CRA Terms" (FRB_823656_20230814 p20),
+    # "GLOSSARY" (FRB_5543735_20241202 p14), "APPENDIX" over "GLOSSARY" (FRB_528102_20221128
+    # p16). None of the three occurs before the review heading in any FRB PE of the corpus.
+    - '^APPENDIX( [A-E])?$'
+    - '^GLOSSARY( OF .*)?$'
 
 # Headings that start a non-institution scope. Every line after one of these inherits the
 # scope. Scope never returns to institution: in all three formats the institution-level
@@ -94,7 +215,8 @@ scope_markers:
     FDIC: ['^GLOSSARY$', '^APPENDIX [A-Z]\b', '^APPENDICES$']
     FRB: ['^APPENDIX [A-D]\s*[-–:]', '^Appendix [A-D]\s*[-–:]']
   msa:
-    OCC: ['^Multistate Metropolitan', '^MMSA Rating']
+    # '^Multi-state ... Rating$' with the hyphen: OCC_15379_20250127 p6 (2026-10-08).
+    OCC: ['^Multistate Metropolitan', '^MMSA Rating', '^Multi-state Metropolitan Statistical Area Rating$']
     FDIC: ['^[A-Z ,-]+ MULTISTATE (MSA|METROPOLITAN)']
     # The third FRB pattern is the MSA title line that opens each FieldPoint MSA page two lines
     # before "FULL SCOPE REVIEW" (e.g. "MD 35614 (NEW YORK-JERSEY CITY-WHITE PLAINS, NY-NJ)");
@@ -103,8 +225,26 @@ scope_markers:
   state:
     OCC: ['^State Rating$', '^State of [A-Za-z ]+$', '^Scope of Evaluation in [A-Za-z ]+$']
     FDIC: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE )?STATE OF"]
-    FRB: ['^STATE OF [A-Z ]+$', "^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN (THE STATE OF )?[A-Z ]+$", '^CRA RATING FOR [A-Z ]+:']
+    # FRB state headings are printed in capitals; "State of Iowa" in mixed case is a row of the
+    # population and income tables (Chicago, FRB_242949_20250324 p8, FRB_210256_20250224 p6) or
+    # prose (FRB_2667957_20230501 p4), so the first pattern is case-sensitive. The operations
+    # heading is a state heading only when it names a state ("... IN NEW YORK", "... IN THE STATE
+    # OF CONNECTICUT", FieldPoint sample L48 and L57); "... IN THE LITTLE ROCK ..."
+    # (FRB_453446_20240903 p10) opens an assessment area and falls through to that marker.
+    FRB:
+      - '^(?-i:STATE OF [A-Z ]+)$'
+      - "^DESCRIPTION OF (THE )?INSTITUTION'?S'? OPERATIONS IN (THE )?(STATE|COMMONWEALTH) OF [A-Z ]+$"
+      - "^DESCRIPTION OF (THE )?INSTITUTION'?S'? OPERATIONS IN (ALABAMA|ALASKA|ARIZONA|ARKANSAS|CALIFORNIA|COLORADO|CONNECTICUT|DELAWARE|FLORIDA|GEORGIA|HAWAII|IDAHO|ILLINOIS|INDIANA|IOWA|KANSAS|KENTUCKY|LOUISIANA|MAINE|MARYLAND|MASSACHUSETTS|MICHIGAN|MINNESOTA|MISSISSIPPI|MISSOURI|MONTANA|NEBRASKA|NEVADA|NEW HAMPSHIRE|NEW JERSEY|NEW MEXICO|NEW YORK|NORTH CAROLINA|NORTH DAKOTA|OHIO|OKLAHOMA|OREGON|PENNSYLVANIA|RHODE ISLAND|SOUTH CAROLINA|SOUTH DAKOTA|TENNESSEE|TEXAS|UTAH|VERMONT|VIRGINIA|WASHINGTON|WEST VIRGINIA|WISCONSIN|WYOMING)$"
+      - '^CRA RATING FOR [A-Z ]+:'
   assessment_area:
     OCC: ['^Description of Assessment Area', '^Conclusions .* Assessment Area']
     FDIC: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN .* AA$", '^.+ AA [–-] (Full|Limited)-Scope Review$']
-    FRB: ["^DESCRIPTION OF INSTITUTION'?S OPERATIONS IN "]
+    # Dallas prints "DESCRIPTION OF THE INSTITUTION'S OPERATIONS IN THE ... ASSESSMENT AREA", or
+    # the bare "DESCRIPTION OF THE INSTITUTION'S OPERATIONS" under an assessment-area title line
+    # (FRB_336361_20221128 p7, FRB_925653_20240916 p8); "INSTITUTIONS" without the apostrophe in
+    # FRB_623454_20250310 p8.
+    # San Francisco prints "DESCRIPTION OF OPERATIONS IN STANISLAUS" under "FULL-SCOPE ASSESSMENT
+    # AREA CONCLUSIONS" (FRB_1864197_20230117 p10, FRB_2562164_20220307 p12).
+    FRB:
+      - "^DESCRIPTION OF (THE )?INSTITUTION'?S'? OPERATIONS( IN |$)"
+      - '^(?-i:DESCRIPTION OF OPERATIONS IN )'

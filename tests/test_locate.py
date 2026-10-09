@@ -448,27 +448,44 @@ HEADING_EXAMPLES: dict[str, str] = {
     "^INSTITUTION'?S CRA RATING": "INSTITUTION'S CRA RATING: This institution is rated Satisfactory.",
     "^This institution is rated": "This institution is rated Satisfactory.",
     "^INSTITUTION RATING$": "INSTITUTION RATING",
-    "^INSTITUTION'?S COMMUNITY REINVESTMENT ACT RATING$": (
-        "INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING"
+    "^(INSTITUTION|INTUITION)('?S)? COMMUNITY REINVESTMENT ACT (\\(CRA\\) )?RATING$": (
+        "INSTITUTION'S COMMUNITY REINVESTMENT ACT (CRA) RATING"
     ),
+    "^([A-Z0-9&.,' -]+ )?BANK('?S)? CRA RATING$": "COMMERCIAL SAVINGS BANK'S CRA RATING",
     "^Description of Institution$": "Description of Institution",
     "^DESCRIPTION OF INSTITUTION$": "DESCRIPTION OF INSTITUTION",
+    "^DESCRIPTION OF (THE )?INSTITUTION$": "DESCRIPTION OF THE INSTITUTION",
     "^Description of Assessment Areas?$": "Description of Assessment Areas",
     "^DESCRIPTION OF ASSESSMENT AREAS?$": "DESCRIPTION OF ASSESSMENT AREA",
+    "^DESCRIPTION OF (THE )?ASSESSMENT AREAS?\\d?$": "DESCRIPTION OF ASSESSMENT AREA1",
     "^Scope of (the )?Evaluation$": "Scope of the Evaluation",
     "^SCOPE OF EVALUATION$": "SCOPE OF EVALUATION",
     "^SCOPE OF EXAMINATION$": "SCOPE OF EXAMINATION",
+    "^SCOPE OF THE (EVALUATION|EXAMINATION)$": "SCOPE OF THE EVALUATION",
     "^Loan-to-Deposit Ratio$": "Loan-to-Deposit Ratio",
-    "^(Net )?Loan-to-Deposit Ratio$": "Net Loan-to-Deposit Ratio",
+    "^(Net )?Loan[-\u2013 ]to[- ]Deposit (\\((N?LTD)\\) )?Ratio( \\(N?LTD\\))?\\d?$": (
+        "Loan-to-Deposit (LTD) Ratio"
+    ),
+    "^LOAN-TO-DEPOSIT RATIO ANALYSIS$": "LOAN-TO-DEPOSIT RATIO ANALYSIS",
+    "^(Net )?LTD Ratio$": "LTD Ratio",
+    "^Net-Loan-to Deposit-Ratio$": "Net-Loan-to Deposit-Ratio",
     "^Lending in (the )?Assessment Areas?$": "Lending in the Assessment Area",
     "^Assessment Area Concentration$": "Assessment Area Concentration",
+    "^AA Concentration$": "AA Concentration",
+    "^COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE (OF )?THE (ASSESSMENT AREAS?|AAS?)$": (
+        "COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE THE ASSESSMENT AREAS"
+    ),
     "^Discriminatory or Other Illegal Credit Practices Review$": (
         "Discriminatory or Other Illegal Credit Practices Review"
     ),
     "^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$": (
         "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW"
     ),
-    "^FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW$": (
+    # FDIC_22876_20240624 p12 prints the singular "PRACTICE"; FDIC_57069_20220214 p11 "EVIEW"
+    "^DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES? R?EVIEW$": (
+        "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICE REVIEW"
+    ),
+    "^FAIR LENDING OR OTHER ILLEGAL (CREDIT )?PRACTICES( REVIEW)?$": (
         "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW"
     ),
 }
@@ -570,3 +587,482 @@ def test_cli_manifest_reads_pages_json_and_skips_unparsed_docs(tmp_path):
 
 def test_cli_missing_manifest_fails(tmp_path):
     assert locate.main(["--manifest", str(tmp_path / "none.csv")]) == 1
+
+
+# --------------------------------------------------------------------------- FRB district layouts
+# Corpus tuning of 2026-10-08 (design 6.1): the FRB headings outside the New York and Kansas City
+# seeds. Each case is a short excerpt of a corpus PE (doc_id and page cited), not a fixture file.
+
+NBSP = " "
+
+
+@pytest.mark.parametrize(
+    ("name", "heading", "source"),
+    [
+        ("rating", "BANK'S CRA RATING", "FRB_180845_20241104 p3"),
+        ("rating", "BANK CRA RATING", "FRB_807348_20230710 p3"),
+        ("rating", "BLISSFIELD STATE BANK'S CRA RATING", "FRB_937843_20231016 p3"),
+        (
+            "rating",
+            "INSTITUTION'S COMMUNITY REINVESTMENT ACT (CRA) RATING",
+            "FRB_150727_20250512 p3",
+        ),
+        ("rating", "INSTITUTION COMMUNITY REINVESTMENT ACT RATING", "FRB_645465_20240401 p3"),
+        ("rating", "INTUITION'S COMMUNITY REINVESTMENT ACT RATING", "FRB_884358_20250303 p3"),
+        ("description_of_institution", "DESCRIPTION OF THE INSTITUTION", "FRB_1015252_20230306 p4"),
+        (
+            "description_of_assessment_area",
+            "DESCRIPTION OF ASSESSMENT AREA1",
+            "FRB_180845_20241104 p5",
+        ),
+        (
+            "description_of_assessment_area",
+            "DESCRIPTION OF THE ASSESSMENT AREA",
+            "FRB_368054_20230612 p4",
+        ),
+        ("scope_of_evaluation", "SCOPE OF THE EVALUATION", "FRB_1015252_20230306 p3"),
+        ("ltd_ratio", "Loan-to-Deposit (LTD) Ratio", "FRB_1007051_20230515 p8"),
+        ("ltd_ratio", "Loan–to-Deposit (LTD) Ratio", "FRB_49241_20230605 p7"),
+        ("ltd_ratio", "Net Loan-to-Deposit Ratio (NLTD)", "FRB_150727_20250512 p8"),
+        ("ltd_ratio", "LOAN TO DEPOSIT RATIO", "FRB_92902_20230403 p10"),
+        ("ltd_ratio", "Net Loan-to-Deposit Ratio2", "FRB_352651_20230417 p4"),
+        ("ltd_ratio", "LOAN-TO-DEPOSIT RATIO ANALYSIS", "FRB_126553_20230508 p10"),
+        ("ltd_ratio", "LTD Ratio", "FRB_353238_20230925 p13"),
+        ("ltd_ratio", "Net-Loan-to Deposit-Ratio", "FRB_371362_20231023 p5"),
+        ("aa_concentration", "AA Concentration", "FRB_177135_20240819 p12"),
+        (
+            "aa_concentration",
+            "COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE THE ASSESSMENT AREAS",
+            "FRB_153054_20240212 p7",
+        ),
+        (
+            "aa_concentration",
+            "COMPARISON OF CREDIT EXTENDED INSIDE AND OUTSIDE THE AA",
+            "FRB_382050_20240129 p10",
+        ),
+        (
+            "illegal_credit_practices_review",
+            "Fair Lending or Other Illegal Practices Review",
+            "FRB_1864197_20230117 p9",
+        ),
+        (
+            "illegal_credit_practices_review",
+            "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES",
+            "FRB_2785477_20250602 p36",
+        ),
+    ],
+)
+def test_frb_district_heading_variants(name, heading, source):
+    pages = _doc("PUBLIC DISCLOSURE\n", f"{heading}\nBody line one.\n\nLENDING TEST\nx\n")
+    section = locate.locate_section(name, "d", pages, "FRB")
+    assert section is not None, source
+    assert section.heading_matched == heading
+    assert section.text == f"{heading}\nBody line one.\n"
+
+
+def test_normalize_line_maps_frb_chicago_glyphs():
+    """FRB_180845_20241104 p3: no-break spaces between words, the modifier letter prime as
+    apostrophe and the Unicode hyphen; each glyph maps to one character."""
+    raw = "BANKʹS CRA RATING "
+    assert locate.normalize_line(raw) == "BANK'S CRA RATING"
+    assert locate.normalize_line("Loan‐to‑Deposit Ratio") == "Loan-to-Deposit Ratio"
+    assert len("a b".translate(locate._QUOTES)) == 3
+
+
+def test_frb_chicago_no_break_space_layout_is_located():
+    """FRB_180845_20241104 pages 1 to 5 (Chicago), every space printed as U+00A0."""
+
+    def nb(text: str) -> str:
+        return text.replace(" ", NBSP)
+
+    pages = _doc(
+        nb("PUBLIC DISCLOSURE \n\nIllini State Bank \nRSSD# 180845 \n"),
+        nb(
+            "TABLE OF CONTENTS \n"
+            "SCOPE OF EXAMINATION ........................................ 2 \n"
+            "DESCRIPTION OF INSTITUTION .................................. 3 \n"
+            "LENDING TEST ................................................ 10 \n"
+        ),
+        nb(
+            "2 \nBANKʹS CRA RATING \n\nIllini State Bank is rated Satisfactory. \n\n"
+            "SCOPE OF EXAMINATION \n\nIllini State Bankʹs performance was evaluated. \n"
+        ),
+        nb(
+            "3 \nDESCRIPTION OF INSTITUTION \n\nIllini State Bank is a wholly owned subsidiary. \n\n"
+            "DESCRIPTION OF ASSESSMENT AREA1 \n\nThe assessment area is comprised of 13 tracts. \n"
+        ),
+    )
+    found, missing = locate.locate_all("d", pages, "FRB")
+    assert missing == ["ltd_ratio", "aa_concentration", "illegal_credit_practices_review"]
+    assert found["rating"].heading_matched == "BANK'S CRA RATING"  # the page number is not joined
+    assert f"rated{NBSP}Satisfactory" in found["rating"].text  # section text stays verbatim
+    assert (
+        found["scope_of_evaluation"].page_start,
+        found["description_of_institution"].page_start,
+    ) == (3, 4)
+    assert (
+        found["description_of_assessment_area"].heading_matched == "DESCRIPTION OF ASSESSMENT AREA1"
+    )
+    assert all(s.scope == "institution" for s in found.values())
+
+
+def test_frb_criterion_table_rows_are_not_headings():
+    """FRB_1007051_20230515 (St. Louis): the scope section lists each criterion with its review
+    period (p3); the sections themselves start on p8. FRB_3350658_20230612 p3 prints the
+    products instead of the period, under a "Time Period" column header."""
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "SCOPE OF EXAMINATION\nThe following table includes the time period for each category.\n"
+        "Performance Criterion\nTime Period\nLTD Ratio\nMarch 31, 2018 – March 31, 2023\n"
+        "Assessment Area Concentration\nMarch 19, 2018 – December 31, 2021\n",
+        "Lending Test Performance\nCriterion\nProducts Selected for Review\nTime Period\n"
+        "Net LTD Ratio\n•\nLoans reported under the Home\n",
+        "CONCLUSIONS WITH RESPECT TO PERFORMANCE CRITERIA\n"
+        "Loan-to-Deposit (LTD) Ratio\nThis performance criterion evaluates the average LTD ratio.\n"
+        "Assessment Area Concentration\nThe bank originated a majority of its loans inside the AA.\n",
+    )
+    found, _ = locate.locate_all("d", pages, "FRB")
+    assert found["ltd_ratio"].page_start == 4
+    assert found["ltd_ratio"].heading_matched == "Loan-to-Deposit (LTD) Ratio"
+    assert found["aa_concentration"].page_start == 4
+    assert "majority of its loans inside" in found["aa_concentration"].text
+
+
+def test_frb_list_item_after_lone_bullet_is_not_a_heading():
+    """FRB_2736714_20250707 p5: the scope list prints each criterion after a Wingdings bullet on
+    its own line; the LTD section heading follows on a later page."""
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "LENDING TEST\nThe lending portion of the evaluation was based on:\n"
+        "\nLTD Ratio\n\nLending inside versus outside the assessment area\n",
+        "LTD Ratio\nThe bank's average LTD ratio is reasonable.\n",
+    )
+    section = locate.locate_section("ltd_ratio", "d", pages, "FRB")
+    assert section is not None and section.page_start == 3
+
+
+def test_toc_page_without_leaders_is_skipped():
+    """FRB_925653_20240916 p2 (Dallas): the ToC page numbers sit on their own lines, so no row
+    carries a dot leader; the whole page is ToC and the appendix rows set no scope."""
+    toc = (
+        "Bank of Texas\nMidland, Texas\nTABLE OF CONTENTS\n"
+        "INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING\n1\nSCOPE OF THE EVALUATION\n1\n"
+        "DESCRIPTION OF THE INSTITUTION\n2\nEL PASO METROPOLITAN ASSESSMENT AREA\n6\n"
+        "DESCRIPTION OF THE INSTITUTION'S OPERATIONS\n6\n"
+        "APPENDIX D - LIMITED-SCOPE REVIEW ASSESSMENT AREA LENDING TABLES\n23\n"
+        "APPENDIX E - GLOSSARY\n26\n"
+    )
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        toc,
+        "INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING\nThis institution is rated Satisfactory.\n"
+        "SCOPE OF THE EVALUATION\nExaminers utilized the Interagency procedures.\n",
+    )
+    tagged = locate.tag_pages(pages, "FRB")
+    assert tagged[1].is_toc and tagged[1].scope == "toc"
+    assert tagged[2].scope == "institution"
+    found, _ = locate.locate_all("d", pages, "FRB")
+    assert found["rating"].page_start == 3 and found["rating"].scope == "institution"
+    assert found["scope_of_evaluation"].page_start == 3
+    # a cover page with a stray "Table of Contents" line and prose stays a body page
+    # (FRB_560214_20241113 p1)
+    cover = _doc(
+        "Table of Contents\nPUBLIC DISCLOSURE\nNOTE:\n"
+        "This document is an evaluation of this bank's record of meeting the credit needs of its\n"
+    )
+    assert not locate.tag_pages(cover, "FRB")[0].is_toc
+
+
+def test_toc_rows_after_the_last_leader_row_are_skipped():
+    """FRB_623454_20250310 p2: the last ToC row "APPENDIX D - GLOSSARY" has no leader; it must
+    not open the appendix scope before the body starts."""
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "TABLE OF CONTENTS\n"
+        "SCOPE OF THE EVALUATION ............................................... 1\n"
+        "DESCRIPTION OF THE INSTITUTION ........................................ 2\n"
+        "CONCLUSIONS WITH RESPECT TO PERFORMANCE TESTS .......................... 2\n"
+        "APPENDIX D – GLOSSARY\n",
+        "SCOPE OF THE EVALUATION\nExaminers utilized the Interagency procedures.\n",
+    )
+    assert locate.tag_pages(pages, "FRB")[2].scope == "institution"
+    section = locate.locate_section("scope_of_evaluation", "d", pages, "FRB")
+    assert section is not None and section.scope == "institution" and section.confidence == 1.0
+
+
+def test_frb_state_marker_is_case_sensitive():
+    """FRB_242949_20250324 p8: "State of Iowa" is a row of the population table; the state
+    heading is printed in capitals (FRB_825847_20240923 p10)."""
+    row = _doc("PUBLIC DISCLOSURE\n", "Population Change\nArea\nAssessment Area\nState of Iowa\n")
+    assert [p.scope for p in locate.tag_pages(row, "FRB")] == ["institution", "institution"]
+    heading = _doc("PUBLIC DISCLOSURE\n", "STATE OF IOWA\nCRA RATING FOR IOWA: Satisfactory\n")
+    assert locate.tag_pages(heading, "FRB")[1].scope == "state"
+
+
+@pytest.mark.parametrize(
+    ("heading", "scope", "source"),
+    [
+        ("DESCRIPTION OF INSTITUTION'S OPERATIONS IN NEW YORK", "state", "FieldPoint sample L48"),
+        (
+            "DESCRIPTION OF INSTITUTION'S OPERATIONS IN THE STATE OF CONNECTICUT",
+            "state",
+            "FieldPoint sample L57",
+        ),
+        (
+            "DESCRIPTION OF INSTITUTION'S OPERATIONS IN THE LITTLE ROCK",
+            "assessment_area",
+            "FRB_453446_20240903 p10",
+        ),
+        (
+            "DESCRIPTION OF THE INSTITUTION'S OPERATIONS IN THE DALLAS METROPOLITAN ASSESSMENT",
+            "assessment_area",
+            "FRB_726953_20250218 p5",
+        ),
+        (
+            "DESCRIPTION OF THE INSTITUTION'S OPERATIONS",
+            "assessment_area",
+            "FRB_336361_20221128 p7",
+        ),
+        (
+            "DESCRIPTION OF THE INSTITUTIONS OPERATIONS IN THE DEL RIO NONMETROPOLITAN",
+            "assessment_area",
+            "FRB_623454_20250310 p8",
+        ),
+        ("DESCRIPTION OF OPERATIONS IN STANISLAUS", "assessment_area", "FRB_1864197_20230117 p10"),
+    ],
+)
+def test_frb_operations_headings_open_state_or_assessment_area_scope(heading, scope, source):
+    pages = _doc("PUBLIC DISCLOSURE\n", f"{heading}\nThe bank operates two branches.\n")
+    assert locate.tag_pages(pages, "FRB")[1].scope == scope, source
+
+
+def test_frb_review_section_ends_before_the_next_area_title():
+    """The institution review is followed by the first area's title line: Dallas
+    (FRB_336361_20221128 p6-7) and San Francisco (FRB_1864197_20230117 p9-10)."""
+    review = (
+        "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW\n\n"
+        "No evidence of discriminatory or other illegal credit practices was identified.\n\n"
+    )
+    for title, operations in [
+        (
+            "DENTON AND WISE COUNTIES METROPOLITAN ASSESSMENT AREA",
+            "DESCRIPTION OF THE INSTITUTION'S OPERATIONS",
+        ),
+        ("FULL-SCOPE ASSESSMENT AREA CONCLUSIONS", "DESCRIPTION OF OPERATIONS IN STANISLAUS"),
+    ]:
+        pages = _doc(
+            "PUBLIC DISCLOSURE\n",
+            review + f"{title}\n{operations}\nThe AA consists of two counties.\n",
+        )
+        section = locate.locate_section("illegal_credit_practices_review", "d", pages, "FRB")
+        assert section is not None
+        assert title not in section.text
+        assert section.text.rstrip().endswith("was identified.")
+
+
+def test_wrapped_headings_are_joined():
+    """A wrapped section heading is matched on the joined text; page numbers, one-word lines,
+    two-word section starts and scope markers are not joined ("2" above "BANK'S CRA RATING",
+    FRB_2044820_20231127 p3; "LENDING" over "TEST", FRB_1864197_20230117 p3; "Assessment Area"
+    over "Concentration", FDIC_10635_20240122 p7; the lending-table cell "MSA 36740 (Orlando-"
+    over "Kissimmee-Sanford, FL)", FRB_3664588_20240116 p12)."""
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "FAIR LENDING OR OTHER ILLEGAL CREDIT\nPRACTICES REVIEW\nNo evidence was identified.\n",
+        "LENDING TEST\nAssessment Area\nMSA 36740 (Orlando-\nKissimmee-Sanford, FL)\n"
+        "Assessment Area\n0\n",
+    )
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, "FRB")
+    assert section is not None
+    assert section.heading_matched == "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW"
+    assert section.text.endswith("No evidence was identified.\n")
+    assert locate.tag_pages(pages, "FRB")[2].scope == "institution"
+
+    rating_table = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "INSTITUTION RATING\nThis institution is rated Satisfactory.\n"
+        "PERFORMANCE\nLEVELS\nLENDING\nTEST\nOUTSTANDING\n",
+    )
+    rating = locate.locate_section("rating", "d", rating_table, "FRB")
+    assert rating is not None and rating.text.rstrip().endswith("OUTSTANDING")
+
+    sample_table = _doc(
+        "PUBLIC DISCLOSURE\n",
+        "Loan Products Reviewed\nAssessment Area\nConcentration\nUniverse Inside\n",
+        "Assessment Area Concentration\nThe bank originated a majority of loans inside.\n",
+    )
+    concentration = locate.locate_section("aa_concentration", "d", sample_table, "FDIC")
+    assert concentration is not None and concentration.page_start == 3
+
+
+# --------------------------------------------------------------------------- review census
+# Additions of 2026-10-08 for the review-section census: security markings and "x of y" page
+# footers as furniture, running headers per document, and the end of the review section at a
+# one-cell-per-line table (end_at_table_run in config/headings.yaml).
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "CONTROLLED//FDIC INTERNAL ONLY",  # FDIC_11777_20240924 p14
+        "NONCONFIDENTIAL // EXTERNAL",  # FRB_426141_20221212 p13
+        "PUBLIC/OFFICIAL RELEASE // EXTERNAL",  # FRB_680130_20230724 p10
+        "8 of 29",  # FRB_114840_20241202 p10
+    ],
+)
+def test_security_markings_and_bare_page_of_footer_are_furniture(line):
+    assert locate.is_furniture_line(locate.normalize_line(line))
+
+
+def test_running_lines_finds_repeated_page_headers():
+    header = "Some Bank\nCRA Performance Evaluation\nTown, Kansas\nMay 8, 2023\n"
+    pages = _doc(
+        *(f"{header}Body text of page {i} that is long enough to be prose.\n" for i in range(5))
+    )
+    running = locate.running_lines(pages)
+    assert {"Some Bank", "CRA Performance Evaluation", "Town, Kansas", "May 8, 2023"} <= running
+    assert not any(line.startswith("Body text") for line in running)
+    assert locate.running_lines(pages[:2]) == frozenset()  # fewer than RUNNING_MIN_PAGES pages
+
+
+def test_review_section_ends_before_running_header_and_table():
+    """A table printed one cell per line after the review paragraph is not part of the section
+    (FDIC_109_20250224 p8), and the next page's running header is trimmed (FRB_137447_20230724)."""
+    header = "Some Bank\nCRA Performance Evaluation\nTown, Kansas\n"
+    body = "Prose line long enough to read as running text in a performance evaluation.\n"
+    pages = _doc(
+        f"{header}PUBLIC DISCLOSURE\n{body}",
+        f"{header}{body}",
+        f"{header}DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW\n\n"
+        "Examiners did not identify any discriminatory or other illegal credit practices.\n\n"
+        "Lending Inside and Outside of the Assessment Area\n"
+        "Inside\nOutside\nInside\nOutside\n#\n%\n174\n67.7\n",
+        f"{header}{body}",
+    )
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, "FDIC")
+    assert section is not None
+    assert section.text.rstrip().endswith("illegal credit practices.")
+    assert "Lending Inside" not in section.text
+    lines = locate._split_lines(pages)
+    start = next(i for i, ln in enumerate(lines) if ln.text.startswith("DISCRIMINATORY"))
+    cut = locate.table_run_start(lines, start, len(lines))
+    assert lines[cut].text == "Lending Inside and Outside of the Assessment Area"
+
+
+def test_table_run_needs_six_short_lines():
+    pages = _doc("HEADING\nshort\nlines\nonly\nfive\nhere\n")
+    lines = locate._split_lines(pages)
+    assert locate.table_run_start(lines, 0, len(lines)) == len(lines)
+
+
+_FDIC_REVIEW = (
+    "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW\n\n"
+    "The bank's compliance with the laws relating to discrimination and other illegal credit\n"
+    "practices was reviewed, including the Fair Housing Act and the Equal Credit Opportunity\n"
+    "Act.  Examiners did not\n"
+    "identify any discriminatory or other illegal credit practices\n"
+)
+
+
+@pytest.mark.parametrize(
+    ("after", "source"),
+    [
+        (
+            "\n\nKANSAS – Full-Scope Review\n\nCRA RATING FOR KANSAS:  SATISFACTORY\n",
+            "FDIC_17636_20241028 p11",
+        ),
+        (
+            "\nTEXAS NON-MSA AA – Full-Scope Review\n\nDESCRIPTION OF INSTITUTION'S OPERATIONS IN\n",
+            "FDIC_1720_20221003 p14",
+        ),
+    ],
+)
+def test_last_paragraph_line_is_not_joined_with_the_next_title(after, source):
+    """The last line of the review paragraph, which ends without a period, must not be read
+    as the first half of a wrapped heading with the rated-area title after it."""
+    pages = _doc("PUBLIC DISCLOSURE\n", _FDIC_REVIEW + after + "The AA has two branches.\n")
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, "FDIC")
+    assert section is not None, source
+    assert section.text.rstrip().endswith("illegal credit practices"), source
+    assert "Full-Scope" not in section.text
+
+
+@pytest.mark.parametrize(
+    ("regulator", "title", "source"),
+    [
+        ("FDIC", "NON-MSA ASSESSMENT AREA – Full-Scope Review", "FDIC_10685_20240826"),
+        ("FDIC", "ILLINOIS NON-MSA ASSESSMENT AREA– Full-Scope Review", "FDIC_17320_20220811 p13"),
+        ("FDIC", "STATE OF OREGON-Full-Scope Review", "FDIC_16243_20230207"),
+        (
+            "FDIC",
+            "NONMETROPOLITAN MINNESOTA ASSESSMENT AREA\nFull-Scope Review",
+            "FDIC_9737_20240306 p12",
+        ),
+        (
+            "FDIC",
+            "PENNSYLVANIA NON-METROPOLITAN STATISTICAL AREAS – Full-\nScope Review",
+            "FDIC_7614_20250303 p12",
+        ),
+        ("FDIC", "NEBRASKA\n\nCRA RATING FOR NEBRASKA: SATISFACTORY", "FDIC_10641_20231211 p13"),
+        (
+            "FDIC",
+            "DESCRIPTION OF INSTITUTION'S OPERATIONS\nIN THE CARBONDALE-MARION, IL MSA",
+            "FDIC_57897_20220920 p8",
+        ),
+        (
+            "FRB",
+            "NONMETROPOLITAN ILLINOIS STATEWIDE AREA\n(Full-Scope Review)",
+            "FRB_137447_20230724 p10",
+        ),
+        ("FRB", "NONMETROPOLITAN AREA\n(Full Review)", "FRB_21359_20240212 p6"),
+        ("FRB", "METROPOLITAN AREA – FULL REVIEW", "FRB_680457_20220912 p10"),
+        (
+            "FRB",
+            "EVANSVILLE, INDIANA-KENTUCKY\nMETROPOLITAN STATISTICAL AREA2",
+            "FRB_618740_20250113 p10",
+        ),
+        ("FRB", "MULTISTATE METROPOLITAN AREA", "FRB_274829_20250303 p9"),
+        ("FRB", "Appendix A\nGlossary of Common CRA Terms", "FRB_823656_20230814 p20"),
+        ("FRB", "APPENDIX\n\nGLOSSARY", "FRB_528102_20221128 p16"),
+        (
+            "OCC",
+            "United States\n\nCRA rating for the United States1: Satisfactory",
+            "OCC_713570_20250519 p7",
+        ),
+        ("OCC", "Fargo Combined Statistical Area Rating", "OCC_702983_20231023 p7"),
+        ("OCC", "Multi-state Metropolitan Statistical Area Rating", "OCC_15379_20250127 p6"),
+    ],
+)
+def test_review_section_ends_at_rated_area_titles(regulator, title, source):
+    heading = {
+        "OCC": "Discriminatory or Other Illegal Credit Practices Review",
+        "FDIC": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW",
+        "FRB": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW",
+    }[regulator]
+    paragraph = "No evidence of discriminatory or other illegal credit practices was identified."
+    pages = _doc(
+        "PUBLIC DISCLOSURE\n",
+        f"{heading}\n\n{paragraph}\n\n{title}\n\nThe area has two branches and one ATM.\n",
+    )
+    section = locate.locate_section("illegal_credit_practices_review", "d", pages, regulator)
+    assert section is not None, source
+    assert "two branches" not in section.text, source
+    # a bare area name above a "CRA rating for ..." boundary ("NEBRASKA", "United States")
+    # stays in the section; it is one short line of residual
+    kept = section.text.split(paragraph, 1)[1].split()
+    assert kept in ([], title.split("\n", 1)[0].split()), source
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        "Full Scope",  # scope-table cell, FDIC_10011_20221219 p5
+        "FS – Full-Scope; LS – Limited-Scope",  # table legend, FDIC_35530_20240715 p8
+        "FS – Full-scope",  # table legend, FDIC_57095_20230620
+        "A description of each assessment area is presented in the NMSA Assessment Area-Full-Scope",
+        "Description of Institution's Operations sections.",  # prose, FDIC_15809_20221116
+    ],
+)
+def test_fdic_title_boundaries_skip_table_cells_and_prose(line):
+    patterns = [re.compile(p, re.IGNORECASE) for p in load_headings()["boundary_patterns"]["FDIC"]]
+    assert not any(p.search(line) for p in patterns)

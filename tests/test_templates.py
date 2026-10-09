@@ -16,6 +16,7 @@ from conftest import SAMPLE_META, SAMPLES
 from rapidfuzz import fuzz
 
 from cra_extract import templates
+from cra_extract.config import CORPUS_PATH
 from cra_extract.locate import locate_section, pages_from_text
 
 POSITIVES = {
@@ -52,11 +53,35 @@ def test_template_library_is_well_formed():
         if t.regulator == "FRB":
             assert t.district
     assert {t.regulator for t in lib} == {"OCC", "FDIC", "FRB"}
-    assert [t.id for t in templates.templates_for("FDIC")] == ["fdic_no_evidence"]
+    # the sample-seeded FDIC paragraph comes first; the 2026-10-08 corpus variants follow it
+    fdic = [t.id for t in templates.templates_for("FDIC")]
+    assert fdic[0] == "fdic_no_evidence"
+    assert len(fdic) == 17
+    corpus_variants = [t for t in lib if t.source.startswith("data/text/")]
+    assert len(corpus_variants) == 30
+    for t in corpus_variants:
+        # source names the first evidence document; evidence lists every document read
+        assert t.evidence and t.note, t.id
+        assert t.source.startswith(f"data/text/{t.evidence[0]}.txt p"), t.id
+    for t in lib:
+        if not t.source.startswith("data/text/"):
+            assert not t.evidence, t.id
+
+
+def test_no_template_evidence_comes_from_a_held_out_split():
+    """Templates are tuned on the corpus split only (design 6.1, 6.8): no dev evidence."""
+    manifest = pd.read_csv(CORPUS_PATH, usecols=["doc_id", "split"])
+    split = dict(zip(manifest["doc_id"], manifest["split"], strict=True))
+    for t in templates.load_templates():
+        for doc_id in t.evidence:
+            assert split.get(doc_id) == "corpus", (t.id, doc_id)
 
 
 def test_each_template_matches_the_section_it_was_seeded_from(review_sections):
+    """Sample-seeded templates only; corpus variants are checked in test_template_evidence.py."""
     for t in templates.load_templates():
+        if t.source.startswith("data/text/"):
+            continue
         stem = re.match(r"(\S+)\.txt", t.source).group(1)
         normalized = templates.normalize(review_sections[stem], t.regulator)
         assert fuzz.partial_ratio(t.normalized, normalized) >= templates.MATCH_THRESHOLD, t.id
@@ -81,6 +106,24 @@ def test_normalize_drops_furniture_and_heading_and_straightens_quotes():
     )
     # without a regulator the heading is kept
     assert templates.normalize(raw).startswith("discriminatory or other illegal")
+
+
+@pytest.mark.parametrize(
+    ("heading", "source"),
+    [
+        ("FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW", "FRB_180845_20241104 p17"),
+        ("FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES", "FRB_2785477_20250602 p36"),
+        ("Fair Lending or Other Illegal Practices Review", "FRB_1864197_20230117 p9"),
+    ],
+)
+def test_normalize_frb_review_glyphs_and_heading_variants(heading, source):
+    """Chicago PEs print U+00A0 for every space and U+2010 for hyphens (FRB_180845_20241104);
+    the FRB heading variants of the 2026-10-08 locator tuning are dropped like the seeded one."""
+    body = "No evidence of discriminatory or other illegal credit practices was identified."
+    plain = templates.normalize(f"{heading}\n{body}\n", "FRB")
+    chicago = f"{heading}\n{body}\n".replace(" ", " ").replace("-", "‐")
+    assert plain == body.lower(), source
+    assert templates.normalize(chicago, "FRB") == plain, source
 
 
 # --------------------------------------------------------------------------- residual

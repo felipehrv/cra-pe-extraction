@@ -65,7 +65,7 @@ Command: `python -m cra_extract.strata draw-audit --risk results/risk_corpus.csv
 | system | definition | pinned at the freeze |
 |---|---|---|
 | S0 | `baseline.detect`: sentence-level triggers ("lowered", "violation(s) of", "identified ... illegal credit practice", "substantive violation") with sentence-wide negation over the located review section; outputs finding_present and rating_lowered | code at the tag |
-| S1 | `rules.extract` over located sections: scope-aware locator, regular expressions, table parser | `RULES_VERSION` 0.1.0 (rules.py:65), bumped with a CHANGELOG entry on every change |
+| S1 | `rules.extract` over located sections: scope-aware locator, regular expressions, table parser | `RULES_VERSION` 0.2.1 at the time of writing (rules.py CHANGELOG; 0.1.0 was the first corpus pass, 0.2.x the corpus and dev tuning of 2026-10-08), bumped with a CHANGELOG entry on every change; the value at the tag is the pinned one |
 | S3 | hosted LLM, one structured-output call per `llm_field_groups` entry of fields.yaml over that group's located sections; whole document when none was located (`locator_miss` = 1) | `PROMPT_VERSION` v2 (prompts.py:24) |
 | S4 | local open-weight model through Ollama; same prompts, schema and grounding as S3 | `PROMPT_VERSION` v2 |
 | S5 | composite of S1 and the S3 corpus tier, routing below | routing table in "Decisions that depend on dev results" |
@@ -167,7 +167,7 @@ Table 1 (test): rows field x system for Group A (labeled smoke test), the compon
 Protocol (design 5.2; `cra_extract.templates`):
 
 1. The locator extracts the review section of every evaluable document.
-2. `templates.residual` removes every template of `config/review_templates.yaml` that matches at partial ratio 90 or more (FRB templates per Reserve Bank district). A section is flagged when the residual exceeds 120 characters or no template reaches 85 (templates.py:40-42, 126); a section the locator did not find is flagged as a locator miss.
+2. `templates.residual` removes every template of `config/review_templates.yaml` that matches at partial ratio 90 or more (FRB templates per Reserve Bank district). A section is flagged when the residual exceeds 120 characters, or no template reaches 85, or the residual contains a sentence that asserts a finding (a finding predicate without negation; third criterion added 2026-10-08 with template library version 2, 39 templates, `templates.py`); a section the locator did not find is flagged as a locator miss. The second corpus pass (`docs/corpus_pass_2.md`) flagged 62 sections, so the hand-reading queue is 62 plus the random 100.
 3. Hand reading starts only when at most 300 sections are flagged (200 under the checkpoint fallback); above the cap, template variants are added and the census rerun. The first run (2026-10-07, `results/census.csv`) flagged 1,972 of 2,792 sections and missed 92 review sections, so the cap rule applies.
 4. A simple random sample of 100 unflagged sections, drawn without replacement with the seed and doc_ids recorded before reading, is hand-read.
 5. Locator misses are listed and hand-located when fewer than 100 (92 at the first run); otherwise a random 50 are hand-located and the miss rate is reported.

@@ -1,0 +1,677 @@
+{
+ "description": "Located illegal-credit-practices review sections (locate.locate_section on data/text/{doc_id}.pages.json) of the evidence documents of config/review_templates.yaml and of the two positive samples, with the running headers and footers of each document that occur inside the section. Built 2026-10-08; tests/test_templates.py checks it against data/text when that folder is present.",
+ "sections": {
+  "OCC_11397_20241021": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s \n(collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal credit \npractices in any geography by the bank, or in any AA by an affiliate whose loans have been considered as \npart of the bank’s lending performance. As part of this evaluation process, the OCC consults with other \nfederal agencies with responsibility for compliance with the relevant laws and regulations, including the \nU.S. Department of Justice, the U.S. Department of Housing and Urban Development, and the Consumer \nFinancial Protection Bureau, as applicable. \n \nThe OCC has not identified that this institution has engaged in discriminatory or other illegal credit \npractices that require consideration in this evaluation. \n \nThe OCC does not have public information regarding non-compliance with statutes and regulations \nprohibiting discriminatory or other illegal credit practices with respect to this institution. In determining \nthis institution’s overall CRA rating, the OCC has considered information that was made available to the \nOCC on a confidential basis during its consultations. \n \nThe OCC will consider any information that this institution engaged in discriminatory or other illegal \ncredit practices, identified by or provided to the OCC before the end of the institution’s next performance \nevaluation in that subsequent evaluation, even if the information concerns activities that occurred during \nthe evaluation period addressed in this performance evaluation.  \n"
+  },
+  "OCC_14821_20220822": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal \nsavings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or \nother illegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans \nhave been considered as part of the bank’s lending performance. As part of this evaluation process, the \nOCC consults with other federal agencies with responsibility for compliance with the relevant laws and \nregulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban \nDevelopment, and the Bureau of Consumer Financial Protection, as applicable. \nThe OCC has not identified that this institution (or any affiliate whose loans have been considered as \npart of the institution’s lending performance) has engaged in discriminatory or other illegal credit \npractices that require consideration in this evaluation. \nThe OCC does not have public information regarding non-compliance with statutes and regulations \nprohibiting discriminatory or other illegal credit practices with respect to this institution. In determining \nthis institution’s overall CRA rating, the OCC has considered information that was made available to the \nOCC on a confidential basis during its consultations. \nThe OCC will consider any information that this institution engaged in discriminatory or other illegal \ncredit practices, identified by or provided to the OCC before the end of the institution’s next \nperformance evaluation in that subsequent evaluation, even if the information concerns activities that \noccurred during the evaluation period addressed in this performance evaluation.  \n"
+  },
+  "OCC_13557_20230530": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or \nfederal savings association’s (collectively, bank) CRA rating, the OCC considers evidence of \ndiscriminatory or other illegal credit practices in any geography by the bank, or in any AA by an \naffiliate whose loans have been considered as part of the bank’s lending performance. As part of \nthis evaluation process, the OCC consults with other federal agencies with responsibility for \ncompliance with the relevant laws and regulations, including the U.S. Department of Justice, the \nU.S. Department of Housing and Urban Development, and the Bureau of Consumer Financial \nProtection, as applicable. \n \nThe OCC has not identified that this institution (or any affiliate whose loans have been \nconsidered as part of the institution’s lending performance) has engaged in discriminatory or \nother illegal credit practices that require consideration in this evaluation. \n \nThe OCC does not have additional public information regarding non-compliance with statutes \nand regulations prohibiting discriminatory or other illegal credit practices with respect to this \ninstitution. In determining this institution’s overall CRA rating, the OCC has considered \ninformation that was made available to the OCC on a confidential basis during its consultations. \n \nThe OCC will consider any information that this institution engaged in discriminatory or other \nillegal credit practices, identified by or provided to the OCC before the end of the institution’s \nnext performance evaluation in that subsequent evaluation, even if the information concerns \nactivities that occurred during the evaluation period addressed in this performance evaluation. \n"
+  },
+  "OCC_12152_20240531": {
+   "regulator": "OCC",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal savings \nassociation’s (collectively banks) CRA rating, the OCC considers evidence of discriminatory or other \nillegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans have been \nconsidered as part of the bank’s lending performance. As part of this evaluation process, the OCC consults \nwith other federal agencies with responsibility for compliance with the relevant laws and regulations, \nincluding the U.S. Department of Justice, the U.S. Department of Housing and Urban Development, and \nthe Bureau of Consumer Financial Protection, as applicable. \n \nThe OCC has not identified that the Bank engaged in discriminatory or other illegal credit practices that \nrequire consideration in this evaluation. \n \nThe OCC will consider any information that this institution engaged in discriminatory or other illegal \ncredit practices, identified by or provided to the OCC before the end of the institution’s next performance \nevaluation in that subsequent evaluation, even if the information concerns activities that occurred during \nthe evaluation period addressed in this performance evaluation.  \n"
+  },
+  "OCC_15748_20240724": {
+   "regulator": "OCC",
+   "page_start": 5,
+   "page_end": 6,
+   "running_lines": [
+    "Charter Number: 15748"
+   ],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c), respectively, in determining a national bank’s or federal savings \nassociation’s (collectively, banks) CRA rating, the OCC considers evidence of discriminatory or other \nillegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans have been \nconsidered as part of the bank’s lending performance. As part of this evaluation process, the OCC \nconsults with other federal agencies with responsibility for compliance with the relevant laws and \nregulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban \nDevelopment, and the of Consumer Financial Protection Bureau, as applicable. \n \nThe OCC has not identified that ENB engaged in discriminatory or other illegal credit practices that \nrequire consideration in this evaluation. \n\fCharter Number: 15748 \n \n  \n4 \n \n \nThe OCC will consider any information that ENB engaged in discriminatory or other illegal credit \npractices, identified by or provided to the OCC before the end of ENB’s next performance evaluation in \nthat subsequent evaluation, even if the information concerns activities that occurred during the \nevaluation period addressed in this performance evaluation.  \n"
+  },
+  "OCC_16553_20230724": {
+   "regulator": "OCC",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal \nsavings association’s CRA rating, the OCC considers evidence of discriminatory or other illegal credit \npractices in any geography by a bank, or in any AA by an affiliate whose loans have been considered as \npart of a bank’s lending performance. As part of this evaluation process, the OCC consults with other \nfederal agencies with responsibility for compliance with the relevant laws and regulations, including the \nU.S. Department of Justice, the U.S. Department of Housing and Urban Development, and the Bureau of \nConsumer Financial Protection, as applicable. \nThe OCC has not identified that CNB has engaged in discriminatory or other illegal credit practices that \nrequire consideration in this evaluation. \nThe OCC will consider any information that CNB engaged in discriminatory or other illegal credit \npractices, identified by or provided to the OCC before the end of the bank’s next performance evaluation \nin that subsequent evaluation, even if the information concerns activities that occurred during the \nevaluation period addressed in this performance evaluation. \n"
+  },
+  "OCC_700133_20220801": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal \nsavings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or \nother illegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans \nhave been considered as part of the bank’s lending performance. As part of this evaluation process, the \nOCC consults with other federal agencies with responsibility for compliance with the relevant laws and \nregulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban \nDevelopment, and the Bureau of Consumer Financial Protection, as applicable. \n \nThe OCC has not identified that FDSB (or any affiliate whose loans have been considered as part of the \ninstitution’s lending performance) has engaged in discriminatory or other illegal credit practices that \nrequire consideration in this evaluation. \n \nThe OCC will consider any information that this institution engaged in discriminatory or other illegal \ncredit practices, identified by or provided to the OCC before the end of FDSB’s next PE in that \nsubsequent evaluation, even if the information concerns activities that occurred during the evaluation \nperiod addressed in this PE.  \n"
+  },
+  "OCC_16473_20230731": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s CRA rating, \nthe OCC considers evidence of discriminatory or other illegal credit practices in any geography by FNB \nUSA, or in any AA by an affiliate whose loans have been considered as part of the lending performance. \nAs part of this evaluation process, the OCC consults with other federal agencies with responsibility for \ncompliance with the relevant laws and regulations, including the U.S. Department of Justice, the U.S. \nDepartment of Housing and Urban Development, and the Bureau of Consumer Financial Protection, as \napplicable. \n \nThe OCC has not identified that FNB USA (or any affiliate whose loans have been considered as part of \nthe institution’s lending performance) has engaged in discriminatory or other illegal credit practices that \nrequire consideration in this PE. \n \nThe OCC will consider any information that FNB USA engaged in discriminatory or other illegal credit \npractices, identified by or provided to the OCC before the end of FNB USA’s next PE in that subsequent \nevaluation, even if the information concerns activities that occurred during the evaluation period \naddressed in this PE.  \n"
+  },
+  "OCC_11001_20240722": {
+   "regulator": "OCC",
+   "page_start": 6,
+   "page_end": 7,
+   "running_lines": [
+    "Charter Number: 11001"
+   ],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \n \nPursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s \n(collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal \ncredit practices in any geography by the bank, or in any AA by an affiliate whose loans have been \nconsidered as part of the bank’s lending performance. As part of this evaluation process, the OCC \nconsults with other federal agencies with responsibility for compliance with the relevant laws and \nregulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban \nDevelopment, and the Consumer Financial Protection Bureau, as applicable. \n \nThe OCC has not identified that this institution (or any affiliate whose loans have been considered \nas part of the institution’s lending performance) has engaged in discriminatory or other illegal \ncredit practices that require consideration in this evaluation. \n \n\fCharter Number: 11001 \n \n5 \n \nThe OCC will consider any information that this institution engaged in discriminatory or other \nillegal credit practices, identified by, or provided to the OCC before the end of the institution’s \nnext PE in that subsequent evaluation, even if the information concerns activities that occurred \nduring the evaluation period addressed in this PE.  \n"
+  },
+  "OCC_704307_20220922": {
+   "regulator": "OCC",
+   "page_start": 5,
+   "page_end": 6,
+   "running_lines": [
+    "Charter Number: 704307"
+   ],
+   "text": "Discriminatory or Other Illegal Credit Practices Review \nPursuant to 12 CFR 25.28(c) or 195.28(c), “Community Reinvestment Act and Interstate Deposit \nProduction Regulations” or “Community Reinvestment Act,” respectively, in determining a national \nbank’s or federal savings association’s (collectively, bank) CRA rating, the OCC considers evidence of \ndiscriminatory or other illegal credit practices in any geography by the bank, or in any AA by an affiliate \nwhose loans have been considered as part of the bank’s lending performance. As part of this evaluation \nprocess, the OCC consults with other federal agencies with responsibility for compliance with the \nrelevant laws and regulations, including the U.S. Department of Justice, the U.S. Department of Housing \nand Urban Development, and the Bureau of Consumer Financial Protection, as applicable. \n3 \n\f \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nCharter Number: 704307 \nThe OCC has not identified that this institution (or any affiliate whose loans have been considered as \npart of the institution’s lending performance) has engaged in discriminatory or other illegal credit \npractices that require consideration in this evaluation. \nThe OCC will consider any information that this institution engaged in discriminatory or other illegal \ncredit practices, identified by, or provided to the OCC before the end of the institution’s next \nperformance evaluation in that subsequent evaluation, even if the information concerns activities that \noccurred during the evaluation period addressed in this performance evaluation.  \n"
+  },
+  "FDIC_10015_20241104": {
+   "regulator": "FDIC",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nSecurity Bank’s compliance with the laws relating to discrimination and other illegal credit \npractices was reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  \nExaminers did not identify any discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_10101_20230608": {
+   "regulator": "FDIC",
+   "page_start": 15,
+   "page_end": 15,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_10120_20240716": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_14546_20230620": {
+   "regulator": "FDIC",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other \nillegal credit practices, including the Fair Housing Act and the Equal Credit Opportunity Act. \nExaminers did not identify any evidence of discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_15415_20240924": {
+   "regulator": "FDIC",
+   "page_start": 10,
+   "page_end": 10,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other \nillegal credit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  \nExaminers did not identify any evidence of discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_15489_20230206": {
+   "regulator": "FDIC",
+   "page_start": 15,
+   "page_end": 15,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any evidence of discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_10678_20221114": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any discriminatory or other illegal credit practices; therefore, this consideration did \nnot affect the institution’s overall CRA rating.   \n"
+  },
+  "FDIC_12956_20240116": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any discriminatory or other illegal credit practices; therefore, this consideration did \nnot affect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_14333_20240520": {
+   "regulator": "FDIC",
+   "page_start": 19,
+   "page_end": 19,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any discriminatory or other illegal credit practices; therefore, this consideration did \nnot affect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_10111_20250203": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices inconsistent with helping meet \ncommunity credit needs. \n"
+  },
+  "FDIC_10121_20250728": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices inconsistent with helping \nmeet community credit needs. \n"
+  },
+  "FDIC_12717_20240924": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices inconsistent with helping \nmeet community credit needs. \n"
+  },
+  "FDIC_1164_20240422": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe institution’s compliance with the laws relating to discrimination and other illegal credit practices \nwas reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did \nnot identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to \nmeet community credit needs.  Therefore, this consideration did not affect the institution’s overall \nCRA rating. \n"
+  },
+  "FDIC_19401_20241015": {
+   "regulator": "FDIC",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe institution’s compliance with the laws relating to discrimination and other illegal credit \npractices was reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping to meet community credit needs.  Therefore, this consideration did not \naffect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_2241_20230710": {
+   "regulator": "FDIC",
+   "page_start": 16,
+   "page_end": 16,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe institution’s compliance with the laws relating to discrimination and other illegal credit practices \nwas reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did \nnot identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to \nmeet community credit needs.  Therefore, this consideration did not affect the institution’s overall \nCRA rating. \n"
+  },
+  "FDIC_16281_20221219": {
+   "regulator": "FDIC",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  There was no \nevidence of discrimination or other illegal credit practices.  Therefore, this consideration did not \naffect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_19680_20230417": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  There was no \nevidence of discrimination or other illegal credit practices.  Therefore, this consideration did not \naffect the institution’s overall CRA rating.  \n"
+  },
+  "FDIC_35241_20241104": {
+   "regulator": "FDIC",
+   "page_start": 17,
+   "page_end": 17,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices.  Therefore, this \nconsideration did not affect the bank’s overall CRA rating. \n"
+  },
+  "FDIC_35261_20240422": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Equal Credit Opportunity Act and the Fair Housing Act. Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_8681_20241203": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Equal Credit Opportunity Act and the Fair Housing Act. Examiners did not \nidentify any evidence of discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_26530_20220920": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe institution’s compliance with the laws relating to discrimination and other illegal credit \npractices was reviewed, including the Equal Credit Opportunity Act and the Fair Housing Act. \nExaminers did not identify any discriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_1745_20230221": {
+   "regulator": "FDIC",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any evidence of discriminatory or other illegal credit practices inconsistent with \nhelping to meet the credit needs of the community. \n"
+  },
+  "FDIC_22621_20231120": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did \nnot identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to \nmeet the credit needs of the community. \n"
+  },
+  "FDIC_32968_20240730": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \ndid not identify any evidence of discriminatory or other illegal credit practices inconsistent with \nhelping to meet the credit needs of the community. \n"
+  },
+  "FDIC_58203_20240116": {
+   "regulator": "FDIC",
+   "page_start": 16,
+   "page_end": 16,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \nidentified no evidence of discriminatory or other illegal credit practices inconsistent with helping meet \ncommunity credit needs; therefore, this consideration did not affect the institution’s overall CRA \nrating. \n"
+  },
+  "FDIC_58424_20241021": {
+   "regulator": "FDIC",
+   "page_start": 18,
+   "page_end": 18,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \nidentified no evidence of discriminatory or other illegal credit practices inconsistent with helping \nmeet community credit needs; therefore, this consideration did not affect the institution’s overall \nCRA rating. \n"
+  },
+  "FDIC_5874_20221024": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers reviewed the bank’s compliance with the laws relating to discrimination and other illegal \ncredit practices, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners \nidentified no evidence of discriminatory or other illegal credit practices inconsistent with helping \nmeet community credit needs; therefore, this consideration did not affect the institution’s overall \nCRA rating. \n"
+  },
+  "FDIC_19163_20221128": {
+   "regulator": "FDIC",
+   "page_start": 8,
+   "page_end": 8,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers evaluated the bank’s compliance with anti-discrimination laws, including the Fair \nHousing Act and the Equal Credit Opportunity Act.  No evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FDIC_57127_20220912": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers evaluated the bank’s compliance with anti-discrimination laws, including the Fair Housing \nAct and the Equal Credit Opportunity Act.  No evidence of discriminatory or other illegal credit \npractices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FDIC_58103_20220919": {
+   "regulator": "FDIC",
+   "page_start": 10,
+   "page_end": 10,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers evaluated the bank’s compliance with anti-discrimination laws, including the Fair \nHousing Act and the Equal Credit Opportunity Act.  No evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FDIC_10127_20241021": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping meet community credit needs. \n"
+  },
+  "FDIC_10132_20230322": {
+   "regulator": "FDIC",
+   "page_start": 8,
+   "page_end": 8,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping meet community credit needs. \n"
+  },
+  "FDIC_10492_20240220": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping meet community credit needs. \n"
+  },
+  "FDIC_10307_20240311": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping to meet community credit needs. Therefore, this consideration did not \naffect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_11891_20250310": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping to meet community credit needs.  Therefore, this consideration did not \naffect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_12303_20220921": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of discriminatory or other illegal credit practices \ninconsistent with helping to meet community credit needs.  Therefore, this consideration did not \naffect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_20666_20230814": {
+   "regulator": "FDIC",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of illegal or discriminatory credit practices; therefore, this \nconsideration did not affect the institution's overall CRA rating. \n"
+  },
+  "FDIC_22971_20240624": {
+   "regulator": "FDIC",
+   "page_start": 15,
+   "page_end": 15,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of illegal or discriminatory credit practices; therefore, this \nconsideration did not affect the institution's overall CRA rating. \n"
+  },
+  "FDIC_903_20230717": {
+   "regulator": "FDIC",
+   "page_start": 15,
+   "page_end": 15,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nExaminers did not identify any evidence of illegal or discriminatory credit practices; therefore, this \nconsideration did not affect the institution's overall CRA rating. \n"
+  },
+  "FDIC_23376_20230213": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo substantive violations of the provisions of the anti-discrimination laws and regulations or other \nillegal credit practices were identified during this CRA evaluation.  Therefore, this consideration did \nnot affect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_29332_20230531": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo substantive violations of the provisions of the anti-discrimination laws and regulations or other \nillegal credit practices were identified during this CRA evaluation.  Therefore, this consideration did \nnot affect the institution’s overall CRA rating. \n"
+  },
+  "FDIC_28401_20230130": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo violations of the substantive provisions of the anti-discriminatory laws and regulations or other \nillegal credit practices were identified during the evaluation.  Therefore, this consideration did not \naffect the institution's overall CRA rating. \n"
+  },
+  "FDIC_15629_20241216": {
+   "regulator": "FDIC",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping meet \ncommunity credit needs was identified. \n"
+  },
+  "FDIC_16221_20231016": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping meet \ncommunity credit needs was identified.  \n"
+  },
+  "FDIC_1678_20230814": {
+   "regulator": "FDIC",
+   "page_start": 12,
+   "page_end": 12,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping meet \ncommunity credit needs was identified.  \n"
+  },
+  "FDIC_10077_20250218": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Equal Credit Opportunity Act.  Examiners did not identify any \ndiscriminatory or other illegal credit practices. \n"
+  },
+  "FDIC_21606_20250505": {
+   "regulator": "FDIC",
+   "page_start": 16,
+   "page_end": 16,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory \nor other illegal credit practices.   \n"
+  },
+  "FDIC_32908_20240212": {
+   "regulator": "FDIC",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe bank’s compliance with the laws relating to discrimination and other illegal credit practices was \nreviewed, including the Equal Credit Opportunity Act.  Examiners did not identify any \ndiscriminatory or other illegal credit practices. \n"
+  },
+  "FRB_1007051_20230515": {
+   "regulator": "FRB",
+   "page_start": 11,
+   "page_end": 11,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \nBased on findings from the Consumer Affairs examination, including a fair lending analysis \nperformed under Regulation B – Equal Credit Opportunity and the Fair Housing Act requirements, \nconducted concurrently with this CRA evaluation, no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FRB_126049_20231016": {
+   "regulator": "FRB",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nBased on findings from the Consumer Affairs examination, including a fair lending analysis \nperformed under Regulation B – Equal Credit Opportunity and the Fair Housing Act requirements, \nconducted concurrently with this CRA evaluation, no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FRB_168571_20241015": {
+   "regulator": "FRB",
+   "page_start": 10,
+   "page_end": 10,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nBased on findings from the Consumer Affairs examination, including a fair lending analysis \nperformed under Regulation B – Equal Credit Opportunity and the Fair Housing Act requirements, \nconducted concurrently with this CRA evaluation, no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs was identified. \n"
+  },
+  "FRB_188720_20230508": {
+   "regulator": "FRB",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet \ncommunity credit needs was identified.  Adequate policies, procedures, and training programs have been \ndeveloped to support nondiscrimination in lending activities. \n"
+  },
+  "FRB_268828_20230313": {
+   "regulator": "FRB",
+   "page_start": 7,
+   "page_end": 7,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet \ncommunity credit needs was identified. Adequate policies, procedures, and training programs have been \ndeveloped to support nondiscrimination in lending activities. \n"
+  },
+  "FRB_274829_20250303": {
+   "regulator": "FRB",
+   "page_start": 8,
+   "page_end": 8,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet \ncommunity credit needs was identified.  Adequate policies, procedures, and training programs have been \ndeveloped to support nondiscrimination in lending activities. \n"
+  },
+  "FRB_1003558_20240226": {
+   "regulator": "FRB",
+   "page_start": 13,
+   "page_end": 13,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or \nregulations (including Regulation B – Equal Credit Opportunity Act and the Fair Housing Act) \nor other illegal credit practices inconsistent with the bank helping to meet community credit \nneeds. \n"
+  },
+  "FRB_147857_20230403": {
+   "regulator": "FRB",
+   "page_start": 10,
+   "page_end": 10,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or \nregulations (including Regulation B – Equal Credit Opportunity Act and the Fair Housing Act) \nor other illegal credit practices inconsistent with the bank helping to meet community credit \nneeds. \n"
+  },
+  "FRB_210256_20250224": {
+   "regulator": "FRB",
+   "page_start": 20,
+   "page_end": 20,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or \nregulations (including Regulation B – Equal Credit Opportunity Act and the Fair Housing Act) \nor other illegal credit practices inconsistent with the bank helping to meet community credit \nneeds. \n"
+  },
+  "FRB_2631172_20240311": {
+   "regulator": "FRB",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or regulations \n(including Regulation B--Equal Credit Opportunity Act, Regulation C--Home Mortgage Disclosure Act, \nand the Fair Housing Act) or other illegal credit practices inconsistent with the bank helping to meet \ncommunity credit needs. \n"
+  },
+  "FRB_382050_20240129": {
+   "regulator": "FRB",
+   "page_start": 16,
+   "page_end": 17,
+   "running_lines": [
+    "Central Savings Bank",
+    "Intermediate Small Bank Performance Evaluation",
+    "January 29, 2024",
+    "Sault Sainte Marie, Michigan"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or regulations \n(including Regulation B--Equal Credit Opportunity Act, Regulation C--Home Mortgage Disclosure Act, \nand the Fair Housing Act) or other illegal credit practices inconsistent with the bank helping to meet \ncommunity credit needs.  \n \n\f \nCentral Savings Bank \n \n \n \n \n                 Intermediate Small Bank Performance Evaluation \nSault Sainte Marie, Michigan  \n \n \n \n \n \n \n \n January 29, 2024 \n \n \nPage 15 \n"
+  },
+  "FRB_613156_20230911": {
+   "regulator": "FRB",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe examination did not reveal any evidence of violations of antidiscrimination laws or regulations \n(including Regulation B--Equal Credit Opportunity Act, Regulation C--Home Mortgage Disclosure Act, \nand the Fair Housing Act) or other illegal credit practices inconsistent with the bank helping to meet \ncommunity credit needs. \n"
+  },
+  "FRB_1017425_20240729": {
+   "regulator": "FRB",
+   "page_start": 28,
+   "page_end": 28,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nAn evaluation of the bank’s fair lending activities was conducted during the examination to \ndetermine compliance with the substantive provisions of antidiscrimination laws and \nregulations, including the equal Credit Opportunity Act and the Fair Housing Act.  No evidence \nof discriminatory or other illegal credit practices inconsistent with helping to meet community \ncredit needs was identified. \n"
+  },
+  "FRB_143952_20240826": {
+   "regulator": "FRB",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nAn evaluation of the bank’s fair lending activities was conducted during the examination to \ndetermine compliance with the substantive provisions of antidiscrimination laws and \nregulations, including the Equal Credit Opportunity Act and the Fair Housing Act. No evidence \nof discriminatory or other illegal credit practices inconsistent with helping to meet community \ncredit needs was identified.  \n"
+  },
+  "FRB_21359_20240212": {
+   "regulator": "FRB",
+   "page_start": 6,
+   "page_end": 6,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nAn evaluation of the bank’s fair lending activities was conducted during the examination to \ndetermine compliance with the substantive provisions of antidiscrimination laws and \nregulations, including the Equal Credit Opportunity Act and the Fair Housing Act.  No evidence \nof discriminatory or other illegal credit practices inconsistent with helping to meet community \ncredit needs was identified.   \n"
+  },
+  "FRB_3067929_20240325": {
+   "regulator": "FRB",
+   "page_start": 17,
+   "page_end": 17,
+   "running_lines": [],
+   "text": "Fair Lending or Other Illegal Practices Review \n \nConcurrent with this CRA evaluation, the Federal Reserve conducted a review of the Bank's \ncompliance with consumer protection laws and regulations and found no violations of the \nsubstantive provisions of anti-discrimination, fair lending, or other illegal credit practice rules, \nlaws or regulations that were inconsistent with helping to meet community credit needs.    \n"
+  },
+  "FRB_3487947_20230731": {
+   "regulator": "FRB",
+   "page_start": 23,
+   "page_end": 23,
+   "running_lines": [],
+   "text": "Fair Lending or Other Illegal Practices Review \n \nConcurrent with this CRA evaluation, the Federal Reserve conducted a review of the bank's \ncompliance with consumer protection laws and regulations and found no violations of the \nsubstantive provisions of anti-discrimination, fair lending, or other illegal credit practice rules, \nlaws or regulations that were inconsistent with helping to meet community credit needs. \n"
+  },
+  "FRB_3052813_20250224": {
+   "regulator": "FRB",
+   "page_start": 19,
+   "page_end": 19,
+   "running_lines": [],
+   "text": "Fair Lending or Other Illegal Practices Review \n \nConcurrent with this CRA evaluation, the Reserve Bank conducted a review of the bank's compliance \nwith consumer protection laws and regulations and found no violations of the substantive provisions of \nanti-discrimination, fair lending, or other illegal credit practice rules, laws, or regulations that were \ninconsistent with helping to meet community credit needs. \n"
+  },
+  "FRB_447100_20240304": {
+   "regulator": "FRB",
+   "page_start": 22,
+   "page_end": 23,
+   "running_lines": [
+    "Cornerstone Bank",
+    "Intermediate Small Institution Performance Evaluation",
+    "March 4, 2024",
+    "Spencer, Massachusetts"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW  \n \nConcurrent with this CRA evaluation, a review of the bank’s compliance with consumer \nprotection laws and regulations was conducted, and no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs were identified. \n \n\f \nIntermediate Small Institution Performance Evaluation  \n \nCornerstone Bank \nMarch 4, 2024 \n \nSpencer, Massachusetts \n \n \nA \n"
+  },
+  "FRB_580874_20230410": {
+   "regulator": "FRB",
+   "page_start": 18,
+   "page_end": 19,
+   "running_lines": [
+    "April 10, 2023",
+    "Brattleboro, VT",
+    "Small Institution Performance Evaluation                                                                 Brattleboro Savings & Loan Association"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW  \n \nConcurrent with this CRA evaluation, a review of the bank’s compliance with consumer \nprotection laws and regulations was conducted, and no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs were identified. \n \n \n \n\fSmall Institution Performance Evaluation                                                                 Brattleboro Savings & Loan Association \nApril 10, 2023 \n \nBrattleboro, VT \n \nA \n"
+  },
+  "FRB_886204_20231023": {
+   "regulator": "FRB",
+   "page_start": 19,
+   "page_end": 20,
+   "running_lines": [
+    "Intermediate Small Institution Performance Evaluation",
+    "October 23, 2023",
+    "Watertown Savings Bank",
+    "Watertown, MA"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW  \n \nConcurrent with this CRA evaluation, a review of the bank’s compliance with consumer \nprotection laws and regulations was conducted, and no evidence of discriminatory or other illegal \ncredit practices inconsistent with helping to meet community credit needs were identified. \n \n\f \nIntermediate Small Institution Performance Evaluation  \n \nWatertown Savings Bank \nOctober 23, 2023 \n \nWatertown, MA \n \nA \n"
+  },
+  "FRB_150727_20250512": {
+   "regulator": "FRB",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe Federal Reserve Bank of Cleveland conducted a fair lending analysis performed under \nRegulation B – Equal Credit Opportunity Act and Fair Housing Act requirements and was \nconducted concurrently with this CRA evaluation.  No evidence of a pattern or practice of \ndiscrimination on a prohibited basis or of other illegal credit practices inconsistent with helping \nto meeting community credit needs was identified.   \n"
+  },
+  "FRB_533227_20240415": {
+   "regulator": "FRB",
+   "page_start": 16,
+   "page_end": 16,
+   "running_lines": [],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe Federal Reserve Bank of Cleveland conducted a fair lending analysis performed under \nRegulation B – Equal Credit Opportunity Act and Fair Housing Act requirements and was \nconducted concurrently with this CRA evaluation.  No evidence of a pattern or practice of \ndiscrimination on a prohibited basis or of other illegal credit practices inconsistent with helping \nto meet community credit needs was identified.   \n"
+  },
+  "FRB_2793593_20240610": {
+   "regulator": "FRB",
+   "page_start": 7,
+   "page_end": 8,
+   "running_lines": [
+    "CRA Public Evaluation",
+    "June 10, 2024",
+    "Mount Juliet, Tennessee",
+    "Southern Bank of Tennessee"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community \ncredit needs was identified. \n \n \n\fSouthern Bank of Tennessee \nCRA Public Evaluation \nMount Juliet, Tennessee \nJune 10, 2024 \n6 \n \nMETROPOLITAN AREA \nFULL-SCOPE REVIEW \n"
+  },
+  "FRB_3370133_20230327": {
+   "regulator": "FRB",
+   "page_start": 8,
+   "page_end": 9,
+   "running_lines": [
+    "CRA Public Evaluation",
+    "March 27, 2023",
+    "Orlando, Florida",
+    "Sunrise Bank"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit \nneeds was identified. \n\fSunrise Bank \nCRA Public Evaluation \nOrlando, Florida \nMarch 27, 2023 \n \n7 \nMETROPOLITAN AREA  \nFULL-SCOPE REVIEW \n"
+  },
+  "FRB_749635_20250303": {
+   "regulator": "FRB",
+   "page_start": 9,
+   "page_end": 10,
+   "running_lines": [
+    "Auburn, Alabama",
+    "AuburnBank",
+    "CRA Public Evaluation",
+    "March 3, 2025"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nNo evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit \nneeds was identified. \n \n \n \n\fAuburnBank \nCRA Public Evaluation \nAuburn, Alabama \nMarch 3, 2025 \n \n8 \nMETROPOLITAN AREA \nFULL-SCOPE REVIEW \n"
+  },
+  "FRB_2785477_20250602": {
+   "regulator": "FRB",
+   "page_start": 36,
+   "page_end": 37,
+   "running_lines": [
+    "INTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION",
+    "JUNE 2025"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES \n \nAsian Bank is in compliance with the substantive provisions of the anti-discrimination laws and \nregulations. No evidence of discriminatory or other illegal credit practices, inconsistent with helping \nto meet community credit needs, was identified. \n \n\fINTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION \nJUNE 2025 \n \n \n35 \nCRA APPENDICES \n"
+  },
+  "FRB_331713_20230109": {
+   "regulator": "FRB",
+   "page_start": 32,
+   "page_end": 33,
+   "running_lines": [
+    "INTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION",
+    "JANUARY 2023"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES \n \nNew Tripoli is in compliance with the substantive provisions of the anti-discrimination laws and \nregulations. No evidence of discriminatory or other illegal credit practices, inconsistent with \nhelping to meet community credit needs, was identified. \n \n\fINTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION \nJANUARY 2023 \n \n \n \n31 \n \n \nCRA APPENDICES \n"
+  },
+  "FRB_3603961_20230710": {
+   "regulator": "FRB",
+   "page_start": 40,
+   "page_end": 41,
+   "running_lines": [
+    "INTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION",
+    "JULY 2023"
+   ],
+   "text": "FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES \n \nVictory is in compliance with the substantive provisions of the anti-discrimination laws and \nregulations. No evidence of discriminatory or other illegal credit practices, inconsistent with \nhelping to meet community credit needs, was identified. \n \n \n\fINTERMEDIATE SMALL INSTITUTION PERFORMANCE EVALUATION \nJULY 2023 \n \n \n \n39 \n \n \nCRA APPENDICES \n"
+  },
+  "FDIC_12299_20220912": {
+   "regulator": "FDIC",
+   "page_start": 14,
+   "page_end": 14,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nConsistent with the CRA, regulators must consider discriminatory and other illegal credit practices \nwhen arriving at the bank’s CRA rating.  Examiners considered the nature and extent of the violations, \npolicies and procedures in place to prevent the practice, corrective action by the bank taken or \ncommitted to take, and other relevant information to determine the impact on the rating.   \n \nThe FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory \nlending practices present during the review period.  Examiners identified violations of the Equal Credit \nOpportunity Act and Fair Housing Act, pertaining to the bank’s lending practices on the basis of \nredlining.  Sufficient oversight, appropriate policies and procedures, and other compliance \nmanagement system controls were not in place to prevent these violations.  Bank management \ncommitted to take action to improve the compliance management system to mitigate fair lending risks. \n"
+  },
+  "FDIC_26816_20220809": {
+   "regulator": "FDIC",
+   "page_start": 9,
+   "page_end": 9,
+   "running_lines": [],
+   "text": "DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW \n \nThe FDIC identified illegal credit practices during the evaluation period.  Examiners cited a \nviolation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices \n(UDAP).  The UDAP violation caused substantial harm to a majority of the bank’s mortgage loan \nborrowers.  Management has not completed corrective action to address the violation, and \nmanagement has not committed to implementing corrective action.  Further, the bank does not have \nsufficient policies, procedures, training programs, internal assessment efforts, or other practices in \nplace to prevent illegal credit practices.  Although the bank’s practices harmed consumers, \nconsidering the bank’s already substantially deficient performance, this illegal credit practice did \nnot affect the CRA rating. \n"
+  }
+ }
+}

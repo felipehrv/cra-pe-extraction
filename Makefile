@@ -1,7 +1,7 @@
 PY ?= .venv/bin/python
 PIP ?= .venv/bin/pip
 
-.PHONY: env index index-replay fetch parse locate templates rules baseline smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot eval-dev freeze eval-test scale audit report reproduce test lint
+.PHONY: env index index-replay fetch parse locate templates rules baseline group-a smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot eval-dev freeze eval-test scale audit report reproduce test lint
 
 # Needs a native (arm64 on Apple silicon) Python 3.11+. With an x86_64 Anaconda install,
 # use: CONDA_SUBDIR=osx-arm64 conda create -p ./.venv python=3.12 pip && make env PYTHON=.venv/bin/python
@@ -35,6 +35,12 @@ rules:
 
 baseline:
 	$(PY) -m cra_extract.baseline --manifest config/corpus.csv --out results/baseline.csv
+
+# Group A agreement of the rules with the agency index and the triage of every disagreement
+# (design 6.3). RULES_BEFORE is an earlier rules output kept for the before/after table.
+RULES_BEFORE ?= results/rules_0.1.0.csv
+group-a:
+	$(PY) -m cra_extract.group_a --rules results/rules.csv --before $(RULES_BEFORE)
 
 # One live structured-output call against a sample PE (needs the backend's API key in .env).
 BACKEND ?= anthropic

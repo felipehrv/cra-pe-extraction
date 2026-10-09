@@ -27,6 +27,7 @@ STAGES: dict[str, tuple[str, str]] = {
     "templates": ("cra_extract.templates", "template-residual census of the review section"),
     "rules": ("cra_extract.rules", "rule-based extraction (system S1)"),
     "baseline": ("cra_extract.baseline", "keyword baseline for Group C (system S0)"),
+    "group-a": ("cra_extract.group_a", "rules versus the agency index, corpus-wide (Group A)"),
     "strata": ("cra_extract.strata", "draw the dev, test and audit splits"),
     "label": ("cra_extract.label", "init, validate and hash gold label sheets"),
     "llm": ("cra_extract.llm", "LLM extraction smoke test"),

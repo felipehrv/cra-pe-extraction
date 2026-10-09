@@ -33,6 +33,29 @@ Known abstentions on the samples, documented in ``tests/test_rules.py``:
 CHANGELOG
 ---------
 - 0.1.0 (2026-10-07): first version, patterns seeded on the eight sample PEs.
+- 0.2.0 (2026-10-08): Group A fixes from the corpus-wide comparison with the agency index
+  (design 6.3; triage in ``results/group_a_triage.csv``, hand entries in
+  ``config/group_a_triage.yaml``). exam_method: ISB abbreviations and hyphenation, Small Bank
+  "performance standards/criteria" wordings, negated ISB, mid-period transitions abstain, the
+  FDIC/FRB CD Test rating overrides a Small Bank scope sentence, optional OCC CD Test means
+  Small Bank, FDIC appendix heading and OCC Lending-Test-only rating page as fallbacks.
+  bank_id and bank_name: more id labels, bare id lines, the FRB Richmond second cover, address
+  lines and the "Name of Depository Institution:" label kept out of the name. exam_date:
+  misspelled months, ordinal days and two-digit years on the cover, the Scope "current
+  evaluation dated" sentence as fallback and as a consistency note. overall_rating:
+  "Institution's CRA rating: X", "This institution is X", "CRA rating for <bank> is X", a
+  lowered rating and a named subject "<bank> is rated X". Lending and CD Test ratings also
+  read "test rating: X" and "CD Test is rated X".
+- 0.2.1 (2026-10-08): the regulator rule matches the cover line after ``normalize_line``, so
+  the 46 FRB Chicago covers printed with U+00A0 spaces name their agency. No other pattern
+  changed; the version also records that the S1 inputs changed with
+  the locator and ``config/headings.yaml`` tuning of the same day (no-break-space and hyphen
+  glyphs in ``locate.normalize_line``, leaderless table-of-contents pages, wrapped headings,
+  FRB heading variants by district, case-sensitive FRB state marker, running headers and
+  table runs as section ends). The 45 FRB Chicago PEs printed with U+00A0 spaces go from
+  abstaining on every field to values, and sections that started on a table-of-contents page
+  now start at the real heading. ``results/rules_0.2.0_head_locator.csv`` holds 0.2.0 on the
+  previous locator for comparison.
 """
 
 from __future__ import annotations
@@ -62,10 +85,27 @@ from cra_extract.locate import (
 )
 from cra_extract.models import RATING_WORDS, FieldValue, Page, Rating, Section
 
-RULES_VERSION = "0.1.0"
+RULES_VERSION = "0.2.1"
 SYSTEM = "rules"
 CHANGELOG: list[tuple[str, str, str]] = [
     ("0.1.0", "2026-10-07", "First version, patterns seeded on the eight sample PEs."),
+    (
+        "0.2.0",
+        "2026-10-08",
+        "Group A fixes from the corpus-wide index comparison: exam_method wordings, negation, "
+        "transitions and fallbacks; more cover id labels, bare id lines and the FRB Richmond "
+        "second cover; tolerant cover dates and the Scope date fallback; more overall rating "
+        "wordings; 'test rating: X' and 'CD Test is rated X'.",
+    ),
+    (
+        "0.2.1",
+        "2026-10-08",
+        "Regulator rule reads the cover line after normalize_line (FRB Chicago U+00A0 "
+        "spaces). No other pattern change; S1 inputs changed with the locator and headings "
+        "tuning of the same day (no-break-space glyphs, leaderless ToC pages, wrapped headings, FRB heading "
+        "variants, case-sensitive FRB state marker, running headers and table runs as section "
+        "ends); 45 FRB Chicago PEs go from all-abstain to values.",
+    ),
 ]
 
 RULE_FIELDS = [
@@ -154,6 +194,53 @@ def find_dates(text: str) -> list[tuple[int, date]]:
             continue
         out.append((m.start(), d))
     return out
+
+
+# Cover-page dates as some PEs print them: a misspelled month ("Feburary 5, 2024",
+# FDIC_11674_20240205 p1; "Aprill 22, 2024", FDIC_13951_20240422 p1; "Decmeber 2, 2024",
+# FDIC_16344_20241202 p1; "Janurary 21, 2025", FDIC_23373_20250121 p1), no space between
+# month and day ("August4,2025", FRB_980960_20250804 p1), an ordinal day ("August 28th, 2023",
+# OCC_11916_20230828 p1) and a two-digit year ("6/26/23", OCC_18609_20230626 p1). Used only by
+# the cover rule, never by the prose rules, so a stray token cannot become a prior date.
+_LOOSE_DATE_RE = re.compile(r"\b([A-Za-z]{3,10})\.?\s*(\d{1,2})(?:st|nd|rd|th)?\s*,?\s*(\d{4})\b")
+_SHORT_NUM_DATE_RE = re.compile(r"\b(\d{1,2})/(\d{1,2})/(\d{2})\b(?!/)")
+
+
+def fuzzy_month(token: str) -> int | None:
+    """Month number for a month name, its three-letter abbreviation or a near miss.
+
+    A near miss shares the first three letters and has a rapidfuzz ratio of at least 85 with
+    the month name ("decmeber" 87.5, "janurary" 93.3), which keeps "market" and "mayor" out.
+    """
+    t = token.lower().rstrip(".")
+    for i, month in enumerate(_MONTHS):
+        if t in (month, month[:3]) or (i == 8 and t == "sept"):
+            return i + 1
+        if len(t) > 3 and t[:3] == month[:3] and fuzz.ratio(t, month) >= 85:
+            return i + 1
+    return None
+
+
+def parse_cover_date(text: str) -> date | None:
+    """First date on a cover-page line: :func:`parse_date`, then the tolerant cover forms."""
+    strict = parse_date(text)
+    if strict:
+        return strict
+    for m in _LOOSE_DATE_RE.finditer(text):
+        month = fuzzy_month(m.group(1))
+        if month is None:
+            continue
+        try:
+            return date(int(m.group(3)), month, int(m.group(2)))
+        except ValueError:
+            continue
+    m = _SHORT_NUM_DATE_RE.search(text)
+    if m:
+        try:
+            return date(2000 + int(m.group(3)), int(m.group(1)), int(m.group(2)))
+        except ValueError:
+            return None
+    return None
 
 
 # --------------------------------------------------------------------------- sentences
@@ -345,9 +432,18 @@ class Doc:
         sec = self.sections.get(name)
         if sec is None:
             return []
+        return self._span_lines(sec.text, sec.char_start)
+
+    def page_lines(self, number: int) -> list[Sentence]:
+        """Non-blank lines of one page (1-based) as spans; empty when the page does not exist."""
+        if not 1 <= number <= len(self.pages):
+            return []
+        return self._span_lines(self.pages[number - 1].text, self._starts[number - 1])
+
+    def _span_lines(self, text: str, base: int) -> list[Sentence]:
         out = []
-        offset = sec.char_start
-        for raw in sec.text.split("\n"):
+        offset = base
+        for raw in text.split("\n"):
             clean = raw.replace("\f", "")
             if clean.strip():
                 lead = len(clean) - len(clean.lstrip())
@@ -412,94 +508,350 @@ REGULATOR_PATTERNS = [
     ("FDIC", re.compile(r"federal deposit insurance corporation", re.IGNORECASE)),
     ("FRB", re.compile(r"federal reserve bank", re.IGNORECASE)),
 ]
+# Id line labels seen on covers: "Charter Number 10180", "Charter Number: 18558", "Charter
+# 13478" (OCC_13478_20240415 p1), "Charter #10161" (OCC_10161_20221219 p1), "Charter # 13557"
+# (OCC_13557_20230530 p1), "Charter: 23393" (OCC_23393_20241113 p1), "Charter No. 23458"
+# (OCC_23458_20240722 p1), "Certificate Number: 5891", "RSSD #853113", "RSSD# 465243",
+# "RSSD ID NUMBER: 353238" (FRB Atlanta, FRB_353238_20230925 p1) and "Institution's
+# Identification Number: 920210" (FRB Philadelphia, FRB_920210_20240716 p1, curly apostrophe).
 ID_RE = re.compile(
-    r"(?:charter\s+number|certificate\s+number|rssd(?:\s*(?:no\.?|#|id))?)\s*:?\s*#?\s*(\d{1,10})\b",
+    r"(?:\bcharter(?:\s+(?:number|no\.?))?|certificate\s+number|\brssd(?:\s*id)?(?:\s*(?:number|no\.?))?|"
+    r"institution\W?s\s+identification\s+number)\s*:?\s*#?\s*(\d{1,10})\b",
     re.IGNORECASE,
 )
-TITLE_RE = re.compile(r"^performance\s+evaluation$", re.IGNORECASE)
+# A bare number on its own line right under the institution name: OCC covers print "9773"
+# (OCC_9773_20230109 p1) or "#22327" (OCC_22327_20221003 p1), FRB Richmond second covers print
+# "711520" (FRB_711520_20230925 p2).
+BARE_ID_RE = re.compile(r"^#?\s*(\d{1,10})$")
+# "PERFORMANCE EVALUATION" on its own line, or the one-line FRB Richmond title "COMMUNITY
+# REINVESTMENT ACT PERFORMANCE EVALUATION" (FRB_711520_20230925 p1 and p2).
+TITLE_RE = re.compile(
+    r"^(?:community\s+reinvestment\s+act\s+(?:\(cra\)\s+)?)?performance\s+evaluation$", re.IGNORECASE
+)
+COVER_HEADING_RE = re.compile(r"^public\s+disclosure$", re.IGNORECASE)
+ADDRESS_LINE_RE = re.compile(r"^\d|^p\.?\s*o\.?\s+box\b|\b\d{5}(?:-\d{4})?$", re.IGNORECASE)
+NAME_LABEL_RE = re.compile(r"^name\s+of\s+(?:depository\s+)?institution\s*:\s*", re.IGNORECASE)
 
 
 def rule_regulator(doc: Doc) -> FieldValue:
-    """Agency named on the cover page."""
+    """Agency named on the cover page.
+
+    The line is matched after ``normalize_line``: FRB Chicago covers print U+00A0 for every
+    space ("Federal\xa0Reserve\xa0Bank\xa0of\xa0Chicago", FRB_180845_20241104 p1).
+    """
     for line in doc.lines("cover"):
         for code, pat in REGULATOR_PATTERNS:
-            if pat.search(line.text):
+            if pat.search(normalize_line(line.text)):
                 return _value(doc, "regulator", code, line, "cover")
     return _abstain(doc, "regulator", "no agency name on the cover")
 
 
-def _id_line_index(lines: list[Sentence]) -> int | None:
-    return next((i for i, ln in enumerate(lines) if ID_RE.search(ln.text)), None)
+def _id_line(lines: list[Sentence]) -> tuple[int, str] | None:
+    """Index and digits of the id line: a labelled id anywhere on the cover, else a bare
+    number within the three lines after the title (the name takes at least one line)."""
+    for i, ln in enumerate(lines):
+        m = ID_RE.search(ln.text)
+        if m:
+            return i, m.group(1)
+    title = next((i for i, ln in enumerate(lines) if TITLE_RE.match(normalize_line(ln.text))), None)
+    if title is None:
+        return None
+    for i in range(title + 2, min(title + 5, len(lines))):
+        m = BARE_ID_RE.match(lines[i].text.strip())
+        if m:
+            return i, m.group(1)
+    return None
+
+
+def _second_cover(doc: Doc) -> list[Sentence]:
+    """Lines of a second cover on the page after the located one, when that page opens with
+    "PUBLIC DISCLOSURE". FRB Richmond prints a decorative cover with no id on page 1 and the
+    full cover, id included, on page 2 (FRB_711520_20230925, FRB_8631_20240129)."""
+    sec = doc.sections.get("cover")
+    if sec is None:
+        return []
+    lines = doc.page_lines(sec.page_end + 1)
+    if any(COVER_HEADING_RE.match(normalize_line(ln.text)) for ln in lines[:3]):
+        return lines
+    return []
+
+
+def _cover_with_id(doc: Doc) -> tuple[list[Sentence], int, str, str | None] | None:
+    """(cover lines, id line index, digits, note) from the located cover or a second cover."""
+    for lines, note in ((doc.lines("cover"), None), (_second_cover(doc), "second cover page")):
+        hit = _id_line(lines)
+        if hit:
+            return lines, hit[0], hit[1], note
+    return None
 
 
 def rule_bank_id(doc: Doc) -> FieldValue:
     """Charter, certificate or RSSD number on the cover page, leading zeros stripped."""
-    lines = doc.lines("cover")
-    i = _id_line_index(lines)
-    if i is None:
+    found = _cover_with_id(doc)
+    if found is None:
         return _abstain(doc, "bank_id", "no charter, certificate or RSSD line on the cover")
-    m = ID_RE.search(lines[i].text)
-    assert m is not None
-    return _value(doc, "bank_id", m.group(1).lstrip("0") or "0", lines[i], "cover")
+    lines, i, digits, note = found
+    return _value(doc, "bank_id", digits.lstrip("0") or "0", lines[i], "cover", note)
 
 
 def rule_bank_name(doc: Doc) -> FieldValue:
     """Institution name: the line(s) between "PERFORMANCE EVALUATION" and the id line."""
-    lines = doc.lines("cover")
-    i = _id_line_index(lines)
-    if i is None or i == 0:
+    found = _cover_with_id(doc)
+    if found is None or found[1] == 0:
         return _abstain(doc, "bank_name", "no id line on the cover to anchor the name")
-    title = next((j for j in range(i - 1, -1, -1) if TITLE_RE.match(lines[j].text)), None)
+    lines, i, _, note = found
+    title = next((j for j in range(i - 1, -1, -1) if TITLE_RE.match(normalize_line(lines[j].text))), None)
     name_lines = lines[title + 1 : i] if title is not None and title + 1 < i else lines[i - 1 : i]
+    # FRB Atlanta prints the address between the name and the id line ("Central State Bank /
+    # 11025 Highway 25 / Calera, Alabama 35040 / RSSD ID NUMBER: 353238", FRB_353238_20230925
+    # p1): the name ends before the first street, post-office-box or ZIP line.
+    for k, ln in enumerate(name_lines):
+        if k and ADDRESS_LINE_RE.search(ln.text):
+            name_lines = name_lines[:k]
+            break
     span = Sentence(
         doc.text[name_lines[0].start : name_lines[-1].end],
         name_lines[0].start,
         name_lines[-1].end,
         name_lines[0].page,
     )
-    return _value(doc, "bank_name", span.quote, span, "cover")
+    # FRB Philadelphia labels the line: "Name of Depository Institution: JIM THORPE NEIGHBORHOOD
+    # BANK" (FRB_920210_20240716 p1); the value drops the label, the quote keeps the line.
+    value = NAME_LABEL_RE.sub("", span.quote).strip()
+    return _value(doc, "bank_name", value or span.quote, span, "cover", note)
+
+
+# The Scope section's statement of the current evaluation date (FDIC: "to the current
+# evaluation dated July 9, 2024", FDIC_9438_20240709 p7). Used as a fallback when the cover
+# prints no date (FDIC_9366_20230821 p1) and as a consistency note when the two differ.
+CURRENT_EVAL_RE = re.compile(
+    r"\b(?:current|this)\s+(?:cra\s+)?(?:performance\s+)?evaluation,?\s+(?:dated|date\s+of|as\s+of)\s+"
+    r"(" + LONG_DATE_RE + "|" + NUM_DATE_RE + ")",
+    re.IGNORECASE,
+)
+
+
+def _scope_eval_date(doc: Doc) -> tuple[Sentence, date] | None:
+    for s in doc.sentences("scope_of_evaluation"):
+        m = CURRENT_EVAL_RE.search(s.norm)
+        if m:
+            d = parse_date(m.group(1))
+            if d:
+                return s, d
+    return None
 
 
 def rule_exam_date(doc: Doc) -> FieldValue:
-    """Evaluation date printed on the cover page (the first date there)."""
+    """Evaluation date printed on the cover page (the first date there).
+
+    When the cover prints no date, the Scope section's "current evaluation dated" sentence is
+    read instead (noted); when both exist and differ, the cover wins and the note records the
+    Scope date for the consistency check.
+    """
+    scope = _scope_eval_date(doc)
     for line in doc.lines("cover"):
-        d = parse_date(line.text)
+        d = parse_cover_date(line.text)
         if d:
-            return _value(doc, "exam_date", d, line, "cover")
+            note = None
+            if scope and scope[1] != d:
+                note = f"scope section dates the current evaluation {scope[1].isoformat()} (p{scope[0].page})"
+            return _value(doc, "exam_date", d, line, "cover", note)
+    if scope:
+        return _value(doc, "exam_date", scope[1], scope[0], "scope_of_evaluation",
+                      "no date on the cover; current evaluation date from the scope section")
     return _abstain(doc, "exam_date", "no date on the cover")
 
 
 # --------------------------------------------------------------------------- rating rules
 
-OVERALL_RE = re.compile(r"(?:institution|bank\)?)\s+is\s+rated:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE)
-LENDING_RE = re.compile(r"lending\s+test\s+is\s+rated:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE)
-CD_RE = re.compile(
-    r"community\s+development\s+(?:\(cd\)\s+)?test\s+is\s+rated:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE
+# "is rate" is a typo printed by OCC_5288_20231030 p3 ("This institution is rate Satisfactory.").
+OVERALL_RE = re.compile(r"(?:institution|bank\)?)\s+is\s+rated?:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE)
+# Other wordings of the institution rating on the rating page: "Institution's CRA rating:
+# Satisfactory" (OCC_706517_20230828 p3), "This institution is Satisfactory." (FDIC_4235_20250310
+# p3), "The Community Reinvestment Act (CRA) rating for Western Bank (the bank) is Satisfactory."
+# (FRB_723653_20230109 p3), a lowered rating "initial satisfactory Community Reinvestment Act (CRA)
+# rating has been lowered to Needs to Improve" (FRB_392152_20210222 p3), and a named subject:
+# "Bank of 1889 is rated Satisfactory." (FRB_864846_20230821 p3), "The Hamler State Bank
+# (Hamler) is rated "Satisfactory."" (FRB_887827_20230515 p3), "Wadena State Bank (the bank),
+# Wadena, Minnesota, is rated Outstanding." (FRB_210256_20250224 p3).
+OVERALL_LABEL_RE = re.compile(r"institution\W?s\s+cra\s+rating\s*(?:is)?\s*:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE)
+OVERALL_BARE_RE = re.compile(r"\bthis\s+institution\s+is\s+[\"“]?\s*" + RATING_RE, re.IGNORECASE)
+OVERALL_FOR_RE = re.compile(
+    r"\b(?:cra|community\s+reinvestment\s+act(?:\s+\(cra\))?)\s+rating\s+for\s+[^:;]{1,120}?\s+is:?\s*[\"“]?\s*"
+    + RATING_RE,
+    re.IGNORECASE,
 )
-ISB_RE = re.compile(r"intermediate\s+small\s+(?:bank|institution)", re.IGNORECASE)
-SMALL_RE = re.compile(r"\bsmall\s+(?:bank|institution)s?\b", re.IGNORECASE)
+OVERALL_LOWERED_RE = re.compile(
+    r"\brating\s+(?:has\s+been|was|is)\s+(?:lowered|downgraded)\s+to\s+(?:a\s+|an\s+)?[\"“]?\s*" + RATING_RE,
+    re.IGNORECASE,
+)
+# The optional label prefix is lazy so that "Clear Lake Bank and Trust Company is rated:
+# Satisfactory The Lending Test is rated: ..." (FRB_865544_20221107 p3, one sentence) takes the
+# bank as the subject, not the text after the first colon.
+OVERALL_NAMED_RE = re.compile(
+    r"^(?:[^:]{0,60}:\s*)??(?P<subject>[^:;]{2,120}?)\s+is\s+rated:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE
+)
+# A named subject that is not the institution: a component test, a state, MSA or area,
+# performance in a rated area, or the prior evaluation. "State Bank" in a name is allowed.
+NOT_INSTITUTION_RE = re.compile(
+    r"\btest\b|\bstate\s+of\b|\bmsa\b|\bmultistate\b|\bassessment\s+areas?\b|\baa\b|\bprior\b|\bprevious\b|"
+    r"\bcomponent\b|\bperformance\s+in\b",
+    re.IGNORECASE,
+)
+OVERALL_RES = (OVERALL_RE, OVERALL_LABEL_RE, OVERALL_BARE_RE, OVERALL_FOR_RE, OVERALL_LOWERED_RE)
+# Component test ratings, "is rated: X" or "rating: X" ("The lending test rating: Satisfactory",
+# OCC_706517_20230828 p3; "The community development test rating: Satisfactory",
+# OCC_11544_20230531 p3; "The CD Test is rated: Outstanding.", OCC_23771_20220801 p3). "The
+# Lending Test rating is based on ..." does not match.
+LENDING_RE = re.compile(r"lending\s+test\s+(?:is\s+rated|rating)\s*:?\s*[\"“]?\s*" + RATING_RE, re.IGNORECASE)
+CD_RE = re.compile(
+    r"(?:community\s+development\s+(?:\(cd\)\s+)?|\bcd\s+)test\s+(?:is\s+rated|rating)\s*:?\s*[\"“]?\s*" + RATING_RE,
+    re.IGNORECASE,
+)
 
 
 def rule_overall_rating(doc: Doc) -> FieldValue:
-    """"This institution is rated X." (or "(the bank) is rated X.") on the rating page."""
-    hit = _first(doc, "rating", OVERALL_RE)
-    if not hit:
-        return _abstain(doc, "overall_rating", "no 'institution is rated' sentence in the rating section")
-    s, m = hit
-    return _value(doc, "overall_rating", normalize_rating(m.group(1)), s, "rating")
+    """"This institution is rated X." and its variants, from the first rating-page sentence
+    that states the institution's rating."""
+    for s in doc.sentences("rating"):
+        n = s.norm
+        m = next((m for m in (p.search(n) for p in OVERALL_RES) if m), None)
+        if m is None:
+            named = OVERALL_NAMED_RE.search(n)
+            if named and not NOT_INSTITUTION_RE.search(named.group("subject")):
+                m = named
+        if m:
+            return _value(doc, "overall_rating", normalize_rating(m.group(m.lastindex or 1)), s, "rating")
+    return _abstain(doc, "overall_rating", "no 'institution is rated' sentence in the rating section")
+
+
+# --------------------------------------------------------------------------- exam method
+#
+# The Scope section names the examination procedures in one sentence. Wordings that 0.1.0
+# missed or misread, with the corpus document that established each:
+# - ISB abbreviations and hyphenation: "ISI Examination Procedures" (FDIC_14134_20240205 p6),
+#   "ISB Examination Procedures" (FDIC_33708_20221114 p5), "Intermediate Small (ISB)
+#   Institution" (FDIC_10474_20250428 p8), "intermediate- small institutions"
+#   (FRB_214722_20241118 p4), "Intermediate-Small Bank" (OCC_12523_20221031 p5),
+#   "Intermediate/Small Bank" (OCC_3180_20221219 p5).
+# - Small Bank wordings without "procedures": "small bank performance standards"
+#   (OCC_13692_20230117 p5), "small bank performance criteria" (OCC_17106_20250616 p4), "the
+#   Small Bank criterion" (OCC_9183_20230213), "SB procedures" (OCC_13835_20230724), "Procedures
+#   for Small Institutions1" with a footnote digit (FRB_164975_20250818 p4), "Interagency Small
+#   Business Examination Procedures" (sic, FDIC_12402_20241021).
+# - ISB sentences that name the Small Bank Lending Test ("These procedures include two tests:
+#   the CRA Small Bank Lending Test and the Community Development Test", FDIC_14134_20240205 p6)
+#   or the small bank asset threshold (FDIC_10474_20250428 p9) are not Small Bank evidence.
+# - Negated ISB: "the bank fell below the asset threshold for Intermediate Small Institution
+#   Examination Procedures" (FDIC_17280_20221018 p6) is skipped; "the bank was not considered an
+#   intermediate small institution" (FRB_528102_20221128 p4) is Small Bank evidence.
+# - Both procedures in one sentence, a transition during the evaluation period: "Small Bank CRA
+#   examination procedures ... and Intermediate Small Bank CRA examination procedures for the
+#   portion of the evaluation period" (OCC_10637_20250707 p5, OCC_24798_20240226 p5,
+#   OCC_24219_20250218). The OCC index labels these small twice and isb once, so the rule
+#   abstains (definitional, see results/group_a_triage.csv).
+# - Sentences about the prior evaluation are skipped.
+ISB_TERM_RE = re.compile(
+    r"intermediate[\s\-/]*small|\bIS[BI]\b(?=\s+(?:CRA\s+)?(?:examination\s+|evaluation\s+)?"
+    r"(?:procedures|performance|examination|evaluation|standards|criteria))",
+    re.IGNORECASE,
+)
+SMALL_TERM_RE = re.compile(
+    r"\bsmall\s+(?:bank|institution)s?\d*\b(?!\s+lending\s+test)(?!\s+(?:asset|size)\b)(?!\s+thresholds?\b)"
+    r"|\bsmall\s+business\s+(?:cra\s+)?examination\s+procedures|\bSB\s+(?:cra\s+)?(?:procedures|performance)",
+    re.IGNORECASE,
+)
+PROCEDURES_RE = re.compile(r"procedures|standards|criteri(?:a|on)", re.IGNORECASE)
+PRIOR_EVAL_RE = re.compile(
+    r"\b(?:prior|previous|preceding|last)\b[^.]{0,60}?\b(?:evaluation|examination|PE)\b", re.IGNORECASE
+)
+NEGATION_RE = re.compile(r"\bnot\b|\bbelow\b|\bno\s+longer\b|\bfell\b|\bdropped\b", re.IGNORECASE)
+NOT_ISB_RE = re.compile(
+    r"\bnot\s+(?:considered|designated|classified|deemed)?\s*(?:as\s+)?an?\s+intermediate[\s\-]*small", re.IGNORECASE
+)
+OPTIONAL_RE = re.compile(r"\boptional\b", re.IGNORECASE)
+# FDIC appendix headings, one per method (FDIC_17280_20221018: "SMALL BANK PERFORMANCE
+# CRITERIA"; FDIC_17011_20230307: "INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA").
+APPENDIX_METHOD_RE = re.compile(
+    r"^[ \t]*(?P<isb>INTERMEDIATE[ \t]+)?SMALL[ \t]+BANK[ \t]+PERFORMANCE[ \t]+CRITERIA[ \t]*$", re.MULTILINE
+)
+
+
+def _negated(text: str, start: int) -> bool:
+    """A negation word in the 60 characters before ``start``."""
+    return bool(NEGATION_RE.search(text[max(0, start - 60) : start]))
+
+
+def method_from_sentence(norm: str) -> str | None:
+    """``isb``, ``small``, ``mixed`` or None for one Scope sentence (see the notes above)."""
+    if PRIOR_EVAL_RE.search(norm):
+        return None
+    if NOT_ISB_RE.search(norm):
+        return "small"
+    if not PROCEDURES_RE.search(norm):
+        return None
+    isb = [m for m in ISB_TERM_RE.finditer(norm) if not _negated(norm, m.start())]
+    if any(ISB_TERM_RE.finditer(norm)) and not isb:
+        return None
+    rest = ISB_TERM_RE.sub(" ", norm)
+    small = [m for m in SMALL_TERM_RE.finditer(rest) if not _negated(rest, m.start())]
+    if isb and small:
+        return "mixed"
+    if isb:
+        return "isb"
+    if small:
+        return "small"
+    return None
+
+
+def _appendix_method(doc: Doc) -> tuple[str, Sentence] | None:
+    m = APPENDIX_METHOD_RE.search(doc.text)
+    if not m:
+        return None
+    start = m.start() + len(m.group(0)) - len(m.group(0).lstrip())
+    end = m.start() + len(m.group(0).rstrip())
+    return ("isb" if m.group("isb") else "small"), Sentence(doc.text[start:end], start, end, doc.page_of(start))
 
 
 def rule_exam_method(doc: Doc) -> FieldValue:
-    """Small or ISB procedures, from the Scope section; falls back to the CD test sentence."""
-    hit = _first(doc, "scope_of_evaluation", ISB_RE)
-    if hit:
-        return _value(doc, "exam_method", "isb", hit[0], "scope_of_evaluation")
+    """Small or ISB procedures. Evidence in order:
+
+    1. the first Scope sentence naming the procedures (:func:`method_from_sentence`); a sentence
+       naming both is a mid-period transition and the rule abstains;
+    2. for FDIC and FRB, a Community Development Test rating on the rating page overrides a
+       Small Bank Scope sentence: neither agency rates a CD Test on a Small Bank PE (the Scope
+       sentence of FDIC_1678_20230814 p5, FDIC_28348_20240813 p8 and FDIC_58691_20250407 p9 says
+       "Small Institution" while the rating page, the appendix and the index say ISB);
+    3. without a Scope sentence: the CD Test rating sentence (isb, or small when the OCC calls
+       it the "Optional" CD Test, OCC_13692_20230117 p3), then the FDIC appendix heading, then,
+       for the OCC, a rating page that rates the Lending Test and no CD Test (small).
+    """
+    scope_hit = None
     for s in doc.sentences("scope_of_evaluation"):
-        if SMALL_RE.search(s.norm) and "procedures" in s.norm.lower():
-            return _value(doc, "exam_method", "small", s, "scope_of_evaluation")
-    hit = _first(doc, "rating", CD_RE)
-    if hit:
-        return _value(doc, "exam_method", "isb", hit[0], "rating", "inferred from the CD test rating sentence")
+        method = method_from_sentence(s.norm)
+        if method:
+            scope_hit = (method, s)
+            break
+    cd = _first(doc, "rating", CD_RE)
+    if scope_hit and scope_hit[0] == "mixed":
+        return _abstain(doc, "exam_method", f"mixed Small Bank and ISB procedures (p{scope_hit[1].page})")
+    if scope_hit:
+        method, s = scope_hit
+        if method == "small" and cd and not OPTIONAL_RE.search(cd[0].norm) and doc.regulator in ("FDIC", "FRB"):
+            return _value(doc, "exam_method", "isb", cd[0], "rating",
+                          f"CD Test rating overrides the Small Bank scope sentence on p{s.page}")
+        return _value(doc, "exam_method", method, s, "scope_of_evaluation")
+    if cd:
+        if OPTIONAL_RE.search(cd[0].norm):
+            return _value(doc, "exam_method", "small", cd[0], "rating", "inferred from the optional CD Test rating")
+        return _value(doc, "exam_method", "isb", cd[0], "rating", "inferred from the CD test rating sentence")
+    appendix = _appendix_method(doc)
+    if appendix:
+        return _value(doc, "exam_method", appendix[0], appendix[1], None, "inferred from the appendix heading")
+    lending = _first(doc, "rating", LENDING_RE)
+    if lending and doc.regulator == "OCC":
+        return _value(doc, "exam_method", "small", lending[0], "rating",
+                      "inferred: the rating page rates the Lending Test and no CD Test")
     return _abstain(doc, "exam_method", "no procedures sentence in the scope section")
 
 

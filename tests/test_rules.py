@@ -338,3 +338,343 @@ def test_doc_page_of():
     doc = Doc("X_1_20240101", "OCC", pages, {})
     # page starts are 0, 5 and 11; the joining form feed belongs to the page before it
     assert [doc.page_of(o) for o in (0, 3, 4, 5, 9, 10, 11, 12)] == [1, 1, 1, 2, 2, 2, 3, 3]
+
+
+# --------------------------------------------------------------------------- 0.2.0: Group A
+#
+# Excerpts below are verbatim from corpus PEs (doc_id and page in each case); the triage that
+# motivated each change is in results/group_a_triage.csv and config/group_a_triage.yaml.
+
+
+def _extract_parts(parts: list[tuple[str | None, str]], regulator: str, doc_id: str = "X_1_20240101"):
+    """Rules output for one page made of (section name or None, text) parts."""
+    text, sections, offset = "", {}, 0
+    for name, part in parts:
+        if name:
+            sections[name] = Section(
+                name=name, doc_id=doc_id, page_start=1, page_end=1,
+                char_start=offset, char_end=offset + len(part), text=part,
+            )
+        text += part
+        offset += len(part)
+    return _by_field(extract(doc_id, [Page(number=1, text=text)], sections, regulator))
+
+
+def test_version_bumped_with_changelog():
+    from cra_extract.rules import CHANGELOG
+
+    assert RULES_VERSION == "0.2.1"
+    assert CHANGELOG[-1][0] == RULES_VERSION
+    versions = [v for v, _date, _text in CHANGELOG]
+    assert versions == sorted(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
+    assert len(set(versions)) == len(versions)
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("Feburary 5, 2024", date(2024, 2, 5)),  # FDIC_11674_20240205 p1
+        ("Aprill 22, 2024", date(2024, 4, 22)),  # FDIC_13951_20240422 p1
+        ("Decmeber 2, 2024", date(2024, 12, 2)),  # FDIC_16344_20241202 p1
+        ("Janurary 21, 2025", date(2025, 1, 21)),  # FDIC_23373_20250121 p1
+        ("August4,2025", date(2025, 8, 4)),  # FRB_980960_20250804 p1
+        ("August 28th, 2023", date(2023, 8, 28)),  # OCC_11916_20230828 p1
+        ("6/26/23", date(2023, 6, 26)),  # OCC_18609_20230626 p1
+        ("Sept. 9, 2024", date(2024, 9, 9)),
+        ("March 27, 2023", date(2023, 3, 27)),
+        ("Suite 10, 2001 Butterfield Road", None),
+        ("market 25, 2023", None),
+    ],
+)
+def test_parse_cover_date(text, expected):
+    from cra_extract.rules import parse_cover_date
+
+    assert parse_cover_date(text) == expected
+
+
+def test_tolerant_dates_stay_out_of_prose_rules():
+    """The prose date parser is unchanged: a misspelled month is not a date there."""
+    assert parse_date("Feburary 5, 2024") is None
+    assert parse_date("6/26/23") is None
+
+
+@pytest.mark.parametrize("token,month", [("decmeber", 12), ("Jan", 1), ("sept", 9), ("market", None), ("mayor", None), ("juneau", None)])
+def test_fuzzy_month(token, month):
+    from cra_extract.rules import fuzzy_month
+
+    assert fuzzy_month(token) == month
+
+
+@pytest.mark.parametrize(
+    "sentence,expected",
+    [
+        # FDIC_14134_20240205 p6 and the next sentence of the same paragraph
+        ("Examiners used the ISI Examination Procedures to evaluate PSB's CRA performance.", "isb"),
+        ("These procedures include two tests: the CRA Small Bank Lending Test and the Community Development Test.", None),
+        # FDIC_33708_20221114 p5
+        ("Examiners used the ISB Examination Procedures to evaluate IBC's CRA performance.", "isb"),
+        # FDIC_10474_20250428 p8 and p9
+        ("Examiners used the Interagency Intermediate Small (ISB) Institution Examination Procedures to evaluate the bank's CRA performance.", "isb"),
+        ("This is the bank's first CRA performance evaluation under the ISB procedures, as its assets exceeded the small bank asset thresholds of the prior two calendar years, January 1, 2025.", "isb"),
+        # FDIC_17280_20221018 p6
+        ("During that time, the bank fell below the asset threshold for Intermediate Small Institution Examination Procedures.", None),
+        ("Therefore, examiners used the Interagency Small Institution Examination Procedures to evaluate The Bank of Tioga's CRA performance.", "small"),
+        # FRB_528102_20221128 p4
+        ("As the bank's assets were also below $376 million, the bank was not considered an intermediate small institution.", "small"),
+        # FRB_214722_20241118 p4
+        ("Chesapeake Bank (CB) was evaluated using the interagency examination procedures for intermediate- small institutions developed by the Federal Financial Institutions Examination Council (FFIEC).", "isb"),
+        # OCC_3180_20221219 p5
+        ("Examiners evaluated FNB using the Intermediate/Small Bank examination procedures, which included a lending test and a community development test.", "isb"),
+        # OCC_13692_20230117 p5
+        ("We evaluated CNB's CRA performance using small bank performance standards, which consists of the Lending Test.", "small"),
+        # OCC_17106_20250616 p4
+        ("The OCC evaluated LNB's CRA activities in meeting the credit needs of its AA by using small bank CRA performance criteria which includes a review of the bank's LTD ratio, responsiveness to CRA complaints, and the lending test.", "small"),
+        # OCC_13835_20230724
+        ("Millbury was evaluated using SB procedures, which assess the bank's performance according to the CRA under components of a Lending Test.", "small"),
+        # FRB_1002953_20230508 and FRB_164975_20250818 p4 (footnote digit)
+        ("Examiners utilized the Federal Financial Institutions Examination Council's Interagency Examination Procedures for Small Institutions to evaluate the bank's CRA performance.", "small"),
+        ("The bank's CRA performance review was conducted using the Federal Financial Institutions Examination Council (FFIEC) Examination Procedures for Small Institutions1.", "small"),
+        # FDIC_12402_20241021 (sic)
+        ("Examiners used the Interagency Small Business Examination Procedures to evaluate Exchange State Bank's (ESB) CRA performance.", "small"),
+        # transitions: OCC_10637_20250707 p5, OCC_24219_20250218
+        ("The OCC evaluated FNB using Small Bank CRA examination procedures, which included the Lending Test, and Intermediate Small Bank CRA examination procedures for the portion of the evaluation period from January 1, 2024, through December 31, 2024, which includes the CD test.", "mixed"),
+        ("This evaluation was conducted using CRA small bank performance standards for the 2021 analysis period, and intermediate-small bank (ISB) performance standards for the 2022-2023 analysis period.", "mixed"),
+        # the prior evaluation's procedures (FDIC_14134_20240205 p4)
+        ("PSB received an Outstanding rating at its previous FDIC CRA evaluation, dated February 8, 2021, based on Interagency Intermediate Small Institution (ISI) Examination Procedures.", None),
+        # a bank whose abbreviation is ISB is not a method statement
+        ("Iowa State Bank (ISB) offers residential and commercial loans.", None),
+    ],
+)
+def test_method_from_sentence(sentence, expected):
+    from cra_extract.rules import method_from_sentence
+
+    assert method_from_sentence(sentence) == expected
+
+
+def test_fdic_cd_rating_overrides_small_scope_sentence():
+    """FDIC_1678_20230814: scope p5 says Small Institution, rating page p3 rates a CD Test."""
+    by = _extract_parts([
+        ("rating", "INSTITUTION'S CRA RATING: This institution is rated Satisfactory.\n"
+                   "The Lending Test is rated Satisfactory.\n"
+                   "The Community Development Test is rated Satisfactory.\n\n"),
+        ("scope_of_evaluation", "SCOPE OF EVALUATION\n\nExaminers used the Interagency Small Institution "
+                                "Examination Procedures to evaluate the institution's CRA performance.\n"),
+    ], "FDIC")
+    assert by["exam_method"].value == "isb"
+    assert "overrides" in by["exam_method"].notes
+    assert by["cd_test_rating"].value == "S"
+
+
+def test_occ_small_scope_sentence_wins_over_cd_rating():
+    """OCC_13770_20241028: the OCC rates an optional CD Test for some Small Banks."""
+    by = _extract_parts([
+        ("rating", "Institution's CRA Rating: This institution is rated Satisfactory.\n"
+                   "The lending test is rated: Satisfactory.\n"
+                   "The community development test is rated: Satisfactory.\n\n"),
+        ("scope_of_evaluation", "Scope of the Evaluation\n\nWe completed a full-scope review of TBNA's CRA activities "
+                                "in its AAs under the Small Bank CRA procedures, which includes the lending test and "
+                                "the optional CD test.\n"),
+    ], "OCC")
+    assert by["exam_method"].value == "small"
+    assert by["cd_test_rating"].status == "absent"
+
+
+@pytest.mark.parametrize(
+    "rating,method,note",
+    [
+        # OCC_13692_20230117 p3
+        ("The Lending Test is rated: Satisfactory.\nThe Optional Community Development (CD) Test is Rated: Outstanding.\n", "small", "optional"),
+        # OCC_23771_20220801 p3
+        ("The Lending Test is rated: Outstanding.\nThe CD Test is rated: Outstanding.\n", "isb", "CD test"),
+        # OCC_17106_20250616 p3 without its scope sentence
+        ("The lending test is rated: Satisfactory.\n", "small", "Lending Test and no CD Test"),
+    ],
+)
+def test_method_fallbacks_on_the_rating_page(rating, method, note):
+    by = _extract_parts([("rating", "Institution's CRA Rating: This institution is rated Satisfactory.\n" + rating)], "OCC")
+    assert by["exam_method"].value == method
+    assert note.lower() in by["exam_method"].notes.lower()
+
+
+def test_method_transition_abstains():
+    by = _extract_parts([
+        ("scope_of_evaluation", "Scope of the Evaluation\n\nThe evaluation was conducted using Small Bank CRA examination "
+                                "procedures with Intermediate Small Bank CRA performance standards considered for the "
+                                "portion of the evaluation period between January 1, 2022, through December 31, 2022.\n"),
+    ], "OCC")
+    assert by["exam_method"].status == "abstain"
+    assert "mixed" in by["exam_method"].notes
+
+
+def test_method_from_fdic_appendix_heading_not_toc():
+    """FDIC_17011_20230307: the appendix heading; the ToC row with a dot leader does not count."""
+    toc = "INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA .........................................16\n"
+    by = _extract_parts([(None, toc)], "FDIC")
+    assert by["exam_method"].status == "abstain"
+    by = _extract_parts([(None, toc + "\nAPPENDICES\n\nINTERMEDIATE SMALL BANK PERFORMANCE CRITERIA\n\nLending Test\n")], "FDIC")
+    assert by["exam_method"].value == "isb"
+    assert by["exam_method"].quote == "INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA"
+
+
+def _cover(lines: list[str]) -> str:
+    return "\n \n".join(["PUBLIC DISCLOSURE", "April 15, 2024", "COMMUNITY REINVESTMENT ACT", "PERFORMANCE EVALUATION", *lines]) + "\n"
+
+
+@pytest.mark.parametrize(
+    "id_line,expected",
+    [
+        ("Charter 13478", "13478"),  # OCC_13478_20240415 p1
+        ("Charter #10161", "10161"),  # OCC_10161_20221219 p1
+        ("Charter # 13557", "13557"),  # OCC_13557_20230530 p1
+        ("Charter: 23393", "23393"),  # OCC_23393_20241113 p1
+        ("Charter No. 23458", "23458"),  # OCC_23458_20240722 p1
+        ("Charter Number 10180", "10180"),
+        ("9773", "9773"),  # OCC_9773_20230109 p1, bare number under the name
+        ("#22327", "22327"),  # OCC_22327_20221003 p1
+        ("RSSD# 465243", "465243"),
+        ("Institution’s Identification Number: 920210", "920210"),  # FRB_920210_20240716 p1
+    ],
+)
+def test_bank_id_labels(id_line, expected):
+    cover = _cover(["First National Bank of Pana", id_line, "306 South Locust Street", "Pana, IL 62557",
+                    "Office of the Comptroller of the Currency"])
+    by = _extract_parts([("cover", cover)], "OCC")
+    assert by["bank_id"].value == expected
+    assert by["bank_name"].value == "First National Bank of Pana"
+
+
+def test_bank_name_stops_at_address_and_drops_label():
+    # FRB Atlanta: address between the name and the id line (FRB_353238_20230925 p1)
+    cover = _cover(["Central State Bank", "11025 Highway 25", "Calera, Alabama  35040", "RSSD ID NUMBER:  353238",
+                    "FEDERAL RESERVE BANK OF ATLANTA"])
+    by = _extract_parts([("cover", cover)], "FRB")
+    assert by["bank_id"].value == "353238"
+    assert by["bank_name"].value == "Central State Bank"
+    # FRB Philadelphia: labelled name line (FRB_920210_20240716 p1)
+    cover = _cover(["Name of Depository Institution:   JIM THORPE NEIGHBORHOOD BANK",
+                    "Institution’s Identification Number: 920210", "Address:"])
+    by = _extract_parts([("cover", cover)], "FRB")
+    assert by["bank_name"].value == "JIM THORPE NEIGHBORHOOD BANK"
+    assert by["bank_name"].quote.startswith("Name of Depository Institution:")
+
+
+def test_chartered_in_is_not_an_id():
+    by = _extract_parts([("cover", _cover(["Golden Bank", "The bank was chartered in 1985.", "Houston, Texas 77036"]))], "OCC")
+    assert by["bank_id"].status == "abstain"
+
+
+def test_bank_id_from_second_cover_page():
+    """FRB_711520_20230925: decorative cover on p1 without an id, full cover on p2."""
+    p1 = ("PUBLIC DISCLOSURE\n\nSeptember 25, 2023\n\nCOMMUNITY REINVESTMENT ACT PERFORMANCE EVALUATION\n\n"
+          "Miners Exchange Bank\n   Coeburn, Virginia\nFederal Reserve Bank of Richmond\nRichmond, Virginia\n")
+    p2 = ("PUBLIC DISCLOSURE\n\nSeptember 25, 2023\n\nCOMMUNITY REINVESTMENT ACT PERFORMANCE EVALUATION\n\n"
+          "Miners Exchange Bank\n711520\n483 Front Street West\nCoeburn, VA 24230\nFederal Reserve Bank of Richmond\n")
+    pages = [Page(number=1, text=p1), Page(number=2, text=p2)]
+    cover = Section(name="cover", doc_id="FRB_711520_20230925", page_start=1, page_end=1,
+                    char_start=0, char_end=len(p1), text=p1)
+    by = _by_field(extract("FRB_711520_20230925", pages, {"cover": cover}, "FRB"))
+    assert by["bank_id"].value == "711520"
+    assert by["bank_id"].page == 2
+    assert by["bank_id"].notes == "second cover page"
+    assert by["bank_name"].value == "Miners Exchange Bank"
+    assert by["exam_date"].value == date(2023, 9, 25)
+    text = doc_text(pages)
+    assert text[by["bank_id"].char_start : by["bank_id"].char_end] == "711520"
+
+
+def test_exam_date_scope_fallback_and_consistency_note():
+    scope = ("SCOPE OF EVALUATION\n\nThis evaluation covers the period from the prior evaluation dated October 22, 2018, "
+             "to the current evaluation dated July 9, 2024.  Examiners used the Interagency Small Institution "
+             "Examination Procedures to evaluate performance.\n")
+    no_date_cover = "PUBLIC DISCLOSURE\n\nCOMMUNITY REINVESTMENT ACT\n\nPERFORMANCE EVALUATION\n\nPeoples Bank\nCertificate Number:  9366\n"
+    by = _extract_parts([("cover", no_date_cover), ("scope_of_evaluation", scope)], "FDIC")  # FDIC_9366_20230821
+    assert by["exam_date"].value == date(2024, 7, 9)
+    assert "no date on the cover" in by["exam_date"].notes
+    dated_cover = no_date_cover.replace("PUBLIC DISCLOSURE\n", "PUBLIC DISCLOSURE\n\nJuly 8, 2024\n")
+    by = _extract_parts([("cover", dated_cover), ("scope_of_evaluation", scope)], "FDIC")  # FDIC_9438_20240709
+    assert by["exam_date"].value == date(2024, 7, 8)
+    assert by["exam_date"].notes == "scope section dates the current evaluation 2024-07-09 (p1)"
+
+
+@pytest.mark.parametrize(
+    "rating_text,code",
+    [
+        ("Institution's CRA rating: Satisfactory\nThe lending test rating: Satisfactory\n", "S"),  # OCC_706517_20230828 p3
+        ("INSTITUTION'S CRA RATING: This institution is Satisfactory.\n", "S"),  # FDIC_4235_20250310 p3
+        ("Bank of 1889 is rated Satisfactory. This rating is based on the following conclusions.\n", "S"),  # FRB_864846_20230821
+        ("The Hamler State Bank (Hamler) is rated “Satisfactory.” This rating is based on the following\n", "S"),  # FRB_887827_20230515
+        ("Wadena State Bank (the bank), Wadena, Minnesota, is rated Outstanding. This rating is based on\n", "O"),  # FRB_210256_20250224
+        ("Clear Lake Bank and Trust Company is rated: Satisfactory\nThe Lending Test is rated: Satisfactory\n", "S"),  # FRB_865544_20221107
+        ("The Community Reinvestment Act (CRA) rating for Western Bank (the bank) is Satisfactory.  This\n", "S"),  # FRB_723653_20230109
+        ("New Century Bank’s (the bank) initial satisfactory Community Reinvestment Act (CRA) rating\n"
+         "has been lowered to Needs to Improve based on substantive violations.\n", "NI"),  # FRB_392152_20210222
+        ("Institution’s CRA Rating: This institution is rate Satisfactory.\n", "S"),  # OCC_5288_20231030 p3
+    ],
+)
+def test_overall_rating_wordings(rating_text, code):
+    by = _extract_parts([("rating", "INSTITUTION'S CRA RATING\n\n" + rating_text)], "FRB")
+    assert by["overall_rating"].value == code
+
+
+@pytest.mark.parametrize(
+    "rating_text",
+    [
+        "The Lending Test is rated: Satisfactory.\n",  # OCC_17548_20190128 p3 prints no institution rating
+        "The bank's performance in the State of Iowa is rated Satisfactory.\n",
+        "The bank's CRA performance was rated Satisfactory at the previous performance evaluation.\n",
+    ],
+)
+def test_overall_rating_not_read_from_other_subjects(rating_text):
+    by = _extract_parts([("rating", "Overall CRA Rating\n\n" + rating_text)], "OCC")
+    assert by["overall_rating"].status == "abstain"
+
+
+def test_component_ratings_read_rating_colon_form():
+    """OCC_11544_20230531 p3: 'The lending test rating: Satisfactory'."""
+    by = _extract_parts([("rating", "Institution's CRA rating: Satisfactory\nThe lending test rating: Satisfactory\n"
+                                    "The community development test rating: Outstanding\n")], "OCC")
+    assert by["lending_test_rating"].value == "S"
+    assert by["cd_test_rating"].value == "O"
+    assert by["exam_method"].value == "isb"
+
+
+# --------------------------------------------------------------------------- FRB locator tuning
+
+
+def test_rules_read_frb_chicago_no_break_space_layout():
+    """FRB_180845_20241104 pages 3 and 4 (Chicago): every space is U+00A0 and the heading
+    apostrophe is U+02B9 ("BANK'S CRA RATING"); before the 2026-10-08 locator tuning no section
+    of these PEs was located, so every rule abstained."""
+    nbsp = " "
+    page1 = "PUBLIC DISCLOSURE \n\nIllini State Bank \nRSSD# 180845 \n"
+    page3 = (
+        "BANKʹS CRA RATING \n\nIllini State Bank is rated Satisfactory. \n\n"
+        "SCOPE OF EXAMINATION \n\nIllini State Bankʹs performance was evaluated using the "
+        "Federal Financial Institutions Examination \nCouncil (FFIEC) Small Institution CRA "
+        "Examination Procedures. \n"
+    )
+    pages = [
+        Page(number=i + 1, text=t.replace(" ", nbsp), chars=len(t))
+        for i, t in enumerate([page1, "Table of Contents\n", page3])
+    ]
+    values = {v.field: v for v in extract_document("FRB_180845_20241104", pages, "FRB")}
+    assert values["overall_rating"].status == "value"
+    assert values["overall_rating"].value == "S"
+    assert values["overall_rating"].scope == "institution"
+
+
+def test_regulator_rule_reads_no_break_space_cover():
+    """FRB_180845_20241104 p1 (Chicago): the agency line is "Federal\xa0Reserve\xa0Bank\xa0of
+    \xa0Chicago"; rules 0.2.0 abstained on regulator for all 46 such covers."""
+    page1 = (
+        "PUBLIC DISCLOSURE \n\nNovember 4, 2024 \n\nCOMMUNITY REINVESTMENT ACT \n"
+        "PERFORMANCE EVALUATION \n\nIllini State Bank \nRSSD# 180845 \n\n"
+        "Federal Reserve Bank of Chicago \n"
+    ).replace(" ", "\u00a0")
+    pages = [Page(number=1, text=page1, chars=len(page1))]
+    values = {v.field: v for v in extract_document("FRB_180845_20241104", pages, "FRB")}
+    assert values["regulator"].status == "value"
+    assert values["regulator"].value == "FRB"
+    assert values["regulator"].quote == "Federal Reserve Bank of Chicago"  # whitespace collapsed
+    span = page1[values["regulator"].char_start : values["regulator"].char_end]
+    assert span == "Federal\u00a0Reserve\u00a0Bank\u00a0of\u00a0Chicago"  # offsets stay verbatim

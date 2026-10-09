@@ -1,0 +1,121 @@
+field,doc_id,regulator,index_value,cause,status_after,value_after,agree_after,quote_after,page_after
+bank_id,FRB_353238_20230925,FRB,353238,rule_gap_fixed; unseen_phrasing: id label,value,353238,True,RSSD ID NUMBER: 353238,1
+bank_id,FRB_465243_20230227,FRB,465243,rule_gap_fixed; unseen_phrasing: id label,value,465243,True,RSSD# 465243,1
+bank_id,OCC_13478_20240415,OCC,13478,rule_gap_fixed; unseen_phrasing: id label,value,13478,True,Charter 13478,1
+bank_id,FRB_715340_20241118,FRB,715340,rule_gap_fixed; unseen_phrasing: id label,value,715340,True,RSSD# 715340,1
+bank_id,FRB_45551_20250519,FRB,45551,rule_gap_fixed; unseen_phrasing: id label,value,45551,True,RSSD# 45551,1
+bank_id,OCC_9773_20230109,OCC,9773,rule_gap_fixed; cover_layout: bare id line under the name,value,9773,True,9773,1
+bank_id,FDIC_15590_20241015,FDIC,15590,locator_miss: cover not found,abstain,,False,,
+bank_id,OCC_3886_20221011,OCC,3886,rule_gap_fixed; cover_layout: bare id line under the name,value,3886,True,3886,1
+bank_id,OCC_14993_20240513,OCC,14993,rule_gap_fixed; cover_layout: bare id line under the name,value,14993,True,14993,1
+bank_id,FRB_711520_20230925,FRB,711520,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,711520,True,711520,2
+bank_id,OCC_7911_20221219,OCC,7911,rule_gap_fixed; cover_layout: bare id line under the name,value,7911,True,7911,1
+bank_id,OCC_706361_20240513,OCC,706361,rule_gap_fixed; cover_layout: bare id line under the name,value,706361,True,706361,1
+bank_id,OCC_8515_20230313,OCC,8515,rule_gap_fixed; cover_layout: bare id line under the name,value,8515,True,8515,1
+bank_id,FRB_479839_20230612,FRB,479839,rule_gap_fixed; unseen_phrasing: id label,value,479839,True,RSSD ID NUMBER: 479839,1
+bank_id,FRB_920210_20240716,FRB,920210,rule_gap_fixed; unseen_phrasing: id label,value,920210,True,Institution’s Identification Number: 920210,1
+bank_id,FRB_722432_20230911,FRB,722432,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,722432,True,722432,2
+bank_id,FRB_540542_20240715,FRB,540542,rule_gap_fixed; unseen_phrasing: id label,value,540542,True,RSSD# 540542,1
+bank_id,FRB_8631_20240129,FRB,8631,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,8631,True,8631,2
+bank_id,FRB_188720_20230508,FRB,188720,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,188720,True,188720,2
+bank_id,FRB_759045_20250324,FRB,759045,rule_gap_fixed; unseen_phrasing: id label,value,759045,True,RSSD# 759045,1
+bank_id,FRB_658924_20230403,FRB,658924,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,658924,True,658924,2
+bank_id,FRB_930442_20240715,FRB,930442,rule_gap_fixed; unseen_phrasing: id label,value,930442,True,RSSD# 930442,1
+bank_id,OCC_10161_20221219,OCC,10161,rule_gap_fixed; unseen_phrasing: id label,value,10161,True,Charter #10161,1
+bank_id,FRB_3342671_20250623,FRB,3342671,rule_gap_fixed; unseen_phrasing: id label,value,3342671,True,RSSD ID NUMBER: 3342671,1
+bank_id,FRB_180845_20241104,FRB,180845,rule_gap_fixed; unseen_phrasing: id label,value,180845,True,RSSD# 180845,1
+bank_id,FRB_177135_20240819,FRB,177135,rule_gap_fixed; unseen_phrasing: id label,value,177135,True,RSSD ID NUMBER: 177135,1
+bank_id,OCC_13557_20230530,OCC,13557,rule_gap_fixed; unseen_phrasing: id label,value,13557,True,Charter # 13557,1
+bank_id,FRB_3869123_20221114,FRB,3869123,rule_gap_fixed; cover_layout: second cover page (FRB Richmond),value,3869123,True,3869123,2
+bank_id,OCC_18431_20240205,OCC,18431,rule_gap_fixed; unseen_phrasing: id label,value,18431,True,Charter #18431,1
+bank_id,OCC_14302_20221205,OCC,14302,rule_gap_fixed; cover_layout: bare id line under the name,value,14302,True,14302,1
+exam_date,FRB_785473_20220418,FRB,2022-04-18,locator_miss: cover not found,abstain,,False,,
+exam_date,FDIC_11674_20240205,FDIC,2024-02-05,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-02-05,True,"Feburary 5, 2024",1
+exam_date,FRB_302133_20230424,FRB,2023-04-24,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-04-24,True,"April 24, 2023",1
+exam_date,FRB_790543_20241028,FRB,2024-10-28,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-10-28,True,"October 28, 2024",1
+exam_date,FRB_427241_20221017,FRB,2022-10-17,rule_gap_fixed; unseen_phrasing: cover date format,value,2022-10-17,True,"October 17, 2022",1
+exam_date,FRB_540542_20240715,FRB,2024-07-15,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-07-15,True,"July 15, 2024",1
+exam_date,FRB_787141_20240212,FRB,2024-02-12,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-02-12,True,"February 12, 2024",1
+exam_date,OCC_11916_20230828,OCC,2023-08-28,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-08-28,True,"August 28th, 2023",1
+exam_date,FRB_382742_20250602,FRB,2025-06-02,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-06-02,True,"June 2, 2025",1
+exam_date,FRB_709143_20230130,FRB,2023-01-30,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-01-30,True,"January 30, 2023",1
+exam_date,FRB_749840_20230905,FRB,2023-09-05,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-09-05,True,"September 5, 2023",1
+exam_date,FRB_932745_20250203,FRB,2025-02-03,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-02-03,True,"February 3, 2025",1
+exam_date,FRB_2044820_20231127,FRB,2023-11-27,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-11-27,True,"November 27, 2023",1
+exam_date,FRB_235446_20241118,FRB,2024-11-18,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-11-18,True,"November 18, 2024",1
+exam_date,FRB_433943_20240122,FRB,2024-01-22,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-01-22,True,"January 22, 2024",1
+exam_date,FRB_502746_20240304,FRB,2024-03-04,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-03-04,True,"March 4, 2024",1
+exam_date,FRB_825847_20240923,FRB,2024-09-23,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-09-23,True,"September 23, 2024",1
+exam_date,FRB_930442_20240715,FRB,2024-07-15,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-07-15,True,"July 15, 2024",1
+exam_date,FDIC_12608_20250210,FDIC,2025-02-10,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-02-10,True,"Feburary 10, 2025",1
+exam_date,FRB_312244_20250303,FRB,2025-03-03,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-03-03,True,"March 3, 2025",1
+exam_date,FRB_247140_20221128,FRB,2022-11-28,rule_gap_fixed; unseen_phrasing: cover date format,value,2022-11-28,True,"November 28, 2022",1
+exam_date,FDIC_15590_20241015,FDIC,2024-10-15,"rule_gap_fixed; cover_layout: no date on the cover, scope date used",value,2024-10-15,True,"This evaluation covers the period from the prior evaluation dated January 7, 2019, to the current evaluation dated October 15, 2024.",7
+exam_date,FRB_807348_20230710,FRB,2023-07-10,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-07-10,True,"July 10, 2023",1
+exam_date,FDIC_9366_20230821,FDIC,2023-08-21,"rule_gap_fixed; cover_layout: no date on the cover, scope date used",value,2023-08-21,True,"This evaluation covers the period from the prior evaluation dated April 26, 2021 to the current evaluation dated August 21, 2023.",5
+exam_date,FRB_879747_20240408,FRB,2024-04-08,rule_gap_fixed; unseen_phrasing: cover date format,value,2024-04-08,True,"April 8, 2024",1
+exam_date,FRB_624246_20250414,FRB,2025-04-14,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-04-14,True,"April 14, 2025",1
+exam_date,FRB_45551_20250519,FRB,2025-05-19,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-05-19,True,"May 19, 2025",1
+exam_date,FRB_448040_20230515,FRB,2023-05-15,rule_gap_fixed; unseen_phrasing: cover date format,value,2023-05-15,True,"May 15, 2023",1
+exam_date,FRB_991135_20250623,FRB,2025-06-23,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-06-23,True,"June 23, 2025",1
+exam_date,FRB_980960_20250804,FRB,2025-08-04,rule_gap_fixed; unseen_phrasing: cover date format,value,2025-08-04,True,"August4,2025",1
+exam_method,OCC_17106_20250616,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The OCC evaluated LNB’s CRA activities in meeting the credit needs of its AA by using small bank CRA performance criteria which includes a review of the bank’s LTD ratio, responsiveness to CRA complaints, and the lending test.",4
+exam_method,OCC_15698_20240603,OCC,isb,"unresolved: section located, no pattern matched",abstain,,False,,
+exam_method,OCC_24827_20240903,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory.,3
+exam_method,FRB_24949_20230424,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,Baraboo State Bank’s CRA performance was evaluated using the Intermediate Small Institution Examination Procedures issued by the Federal Financial Institutions Examination Council (FFIEC).,3
+exam_method,OCC_13972_20240528,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,We evaluated Minnstar’s CRA performance using small bank performance standards.,4
+exam_method,FRB_368054_20230612,FRB,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,Examiners utilized the Federal Financial Institutions Examination Council’s (FFIEC’s) Interagency Examination Procedures for Small Institutions to evaluate the bank’s CRA performance.,3
+exam_method,OCC_7814_20250526,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"Examiners evaluated JNB’s CRA Performance in meeting the credit needs of its AA by using the small bank CRA performance criteria which includes a review of the bank’s loan to deposit ratio, responsiveness to CRA Complaints, and the lending test.",5
+exam_method,FRB_884358_20250303,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,Examiners utilized the Federal Financial Institutions Examination Council's (FFIEC's) lnteragency Examination Procedures for Intermediate Small Institutions to evaluate the bank's CRA performance.,3
+exam_method,FRB_175140_20240812,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,Community First Bankʹs performance was evaluated using the Federal Financial Institutions Examination Council’s (FFIEC) Intermediate Small Institution CRA Examination Procedures.,3
+exam_method,OCC_23006_20221003,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory,3
+exam_method,OCC_10911_20230711,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The scope of this evaluation includes an assessment of FNB under the small bank performance criteria, which consists of the lending test.",5
+exam_method,OCC_24693_20240116,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory.,3
+exam_method,OCC_13975_20231120,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The scope of this evaluation includes an assessment of FNB under the small bank performance criteria, which consists of the lending test.",5
+exam_method,OCC_714810_20240530,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"We evaluated Northwoods’ CRA performance using small bank performance standards, which evaluates the bank’s record of meeting the credit needs of its AA.",4
+exam_method,OCC_24356_20231218,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"We evaluated the bank’s CRA performance using the small bank performance standards, which consists of a Lending Test.",4
+exam_method,OCC_11312_20220906,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory.,3
+exam_method,OCC_14833_20221011,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,Institution’s CRA Rating: This institution is rated Satisfactory The lending test is rated: Satisfactory The major factors that support this rating include:  A substantial majority of the bank’s loans are inside the Assessment Area (AA).,3
+exam_method,OCC_23547_20240408,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory.,3
+exam_method,OCC_5674_20220815,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The Office of the Comptroller of the Currency (OCC) evaluated the CRA performance of FNB using Small Bank performance criteria, which includes the lending test.",4
+exam_method,OCC_9183_20230213,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"We assessed the bank under the Small Bank criterion, which includes a lending test.",9
+exam_method,OCC_13835_20230724,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"Millbury was evaluated using SB procedures, which assess the bank’s performance according to the CRA under components of a Lending Test.",5
+exam_method,OCC_11383_20240722,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The Office of the Comptroller of the Currency (OCC) performed a full-scope review using small bank performance criteria, which includes a lending test.",5
+exam_method,FRB_930442_20240715,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,Bank of Pontiac’s CRA performance was evaluated using the Intermediate Small Institution Examination Procedures issued by the Federal Financial Institutions Examination Council (FFIEC).,3
+exam_method,OCC_707703_20240805,OCC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,"The OCC evaluated the bank using small bank performance criteria, which includes a lending test.",4
+exam_method,OCC_15733_20221128,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,"Institution’s CRA Rating: This institution is rated Satisfactory The lending test is rated: Satisfactory The major factors supporting this rating include:  The quarterly loan-to-deposit (LTD) ratio is reasonable given the bank’s size, financial condition, and assessment area (AA) credit needs.",3
+exam_method,FRB_643340_20230717,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,EMB’s CRA performance was evaluated using the Intermediate Small Bank Examination Procedures issued by the Federal Financial Institution’s Examination Council (FFIEC).,3
+exam_method,FRB_433943_20240122,FRB,isb,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,isb,True,Washington State Bank’s CRA performance was evaluated using the Intermediate Small Institution Examination Procedures issued by the Federal Financial Institutions Examination Council (FFIEC).,3
+exam_method,OCC_7337_20240226,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,The lending test is rated: Satisfactory,3
+exam_method,FDIC_12402_20241021,FDIC,small,rule_gap_fixed; unseen_phrasing: scope procedures sentence,value,small,True,Examiners used the Interagency Small Business Examination Procedures to evaluate Exchange State Bank’s (ESB) CRA performance.,8
+exam_method,OCC_7534_20240401,OCC,small,rule_gap_fixed; unseen_phrasing: inferred: the rating page rates the Lending Test and no CD Test,value,small,True,"The lending test is rated: Satisfactory The major factors that support this rating include:  The Lending Test rating is based on a more than reasonable loan-to-deposit (LTD) ratio, a majority of loans originated inside the assessment area (AA), and reasonable borrower and geographic distributions of loans.",3
+overall_rating,FRB_504311_20240513,FRB,O,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,O,True,The Genoa Banking Company (Genoa) is rated: Outstanding The Lending Test is rated: Satisfactory The Community Development Test is rated: Outstanding,3
+overall_rating,FRB_843476_20230213,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Cornerstone Bank is rated Satisfactory.,3
+overall_rating,FRB_427241_20221017,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,The Friendship State Bank is rated: Satisfactory The Lending Test is rated: Satisfactory The Community Development Test is rated: Satisfactory,3
+overall_rating,OCC_3989_20240401,OCC,S,locator_miss: rating not found,abstain,,False,,
+overall_rating,OCC_706517_20230828,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA rating: Satisfactory,3
+overall_rating,FDIC_4235_20250310,FDIC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,INSTITUTION’S CRA RATING: This institution is Satisfactory.,3
+overall_rating,FRB_540542_20240715,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Jones Exchange Bank is rated Satisfactory.,3
+overall_rating,OCC_13102_20221117,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA Rating: Satisfactory.,3
+overall_rating,FRB_864846_20230821,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Bank of 1889 is rated Satisfactory.,3
+overall_rating,FDIC_31266_20250425,FDIC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,INSTITUTION’S CRA RATING: This institution is Satisfactory.,3
+overall_rating,OCC_5466_20240108,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA Rating: This institution is Satisfactory.,3
+overall_rating,FRB_982348_20240401,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Iowa State Bank is rated: Satisfactory,3
+overall_rating,FRB_709143_20230130,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Midwest Bank is rated: Satisfactory,3
+overall_rating,FDIC_13897_20250623,FDIC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,INSTITUTION’S CRA RATING: This institution is Satisfactory.,3
+overall_rating,FRB_695349_20230814,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Tri‐County Bank is rated: Satisfactory,3
+overall_rating,FDIC_15663_20250224,FDIC,O,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,O,True,INSTITUTION’S CRA RATING: This institution is Outstanding.,3
+overall_rating,FRB_887827_20230515,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,The Hamler State Bank (Hamler) is rated “Satisfactory.”,3
+overall_rating,OCC_11348_20240819,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA rating: Satisfactory,3
+overall_rating,FRB_436542_20250825,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Waukon State Bank is rated Satisfactory.,3
+overall_rating,FRB_371232_20231023,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,First Community Bank and Trust is rated Satisfactory.,3
+overall_rating,FRB_683449_20250616,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Maquoketa State Bank is rated Satisfactory.,3
+overall_rating,FRB_312244_20250303,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,First Bank of Berne is rated: Satisfactory The Lending Test is rated: Satisfactory The Community Development Test is rated: Satisfactory,3
+overall_rating,FRB_189129_20240325,FRB,O,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,O,True,"The Commercial and Savings Bank of Millersburg, Ohio (CSB) is rated: “Outstanding.”",4
+overall_rating,OCC_11544_20230531,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA rating: Satisfactory,3
+overall_rating,FRB_711548_20240226,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Chelsea State Bank is rated: Satisfactory,3
+overall_rating,FRB_749840_20230905,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Farmers State Bank is rated Satisfactory.,3
+overall_rating,OCC_1493_20240708,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA rating: Satisfactory,3
+overall_rating,OCC_715834_20250602,OCC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Institution’s CRA rating: Satisfactory,3
+overall_rating,FDIC_34150_20230530,FDIC,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,INSTITUTION’S CRA RATING: This institution is Satisfactory.,3
+overall_rating,FRB_45551_20250519,FRB,S,rule_gap_fixed; unseen_phrasing: institution rating sentence,value,S,True,Bank Midwest is rated: Satisfactory,3

@@ -15,8 +15,12 @@ records with page and character offsets. It works line by line:
    line whose scope equals the section's declared scope (confidence 1.0; otherwise 0.5). It
    ends at the next heading of a different section, the next scope marker or the next
    ``boundary_patterns`` heading, capped by ``max_pages``. Trailing page furniture (blank
-   lines, page numbers, "Charter Number" lines, running headers) is trimmed so that
-   ``page_end`` is the page of the last content line, not of the next heading.
+   lines, page numbers, "Charter Number" lines, security markings, running headers) is
+   trimmed so that ``page_end`` is the page of the last content line, not of the next heading.
+   Running headers and footers are found per document by :func:`running_lines` (lines that
+   recur at the top or bottom of many pages). A section whose spec sets ``end_at_table_run``
+   also ends where a one-cell-per-line table begins (:func:`table_run_start`): pymupdf can
+   print a table after the review paragraph on the same page.
 
 Character offsets index the document text defined as the pages joined by a form feed,
 as defined by ``parse.doc_text``; this module imports that function and the separator so
@@ -44,14 +48,69 @@ from cra_extract.parse import PAGE_SEPARATOR as FORM_FEED
 from cra_extract.parse import doc_text
 
 MAX_HEADING_CHARS = 100
+TOC_TITLE = re.compile(r"^table of contents$", re.IGNORECASE)
+TOC_TITLE_RANK = 12  # a ToC title sits among the first non-blank lines of its page
+# A criterion name followed by its review period is a row of the FRB "Performance Criterion /
+# Time Period" table in the scope section ("LTD Ratio" then "March 31, 2018 - March 31, 2023",
+# FRB_1007051_20230515 page 3), not the heading of that criterion's section.
+PERIOD_ROW = re.compile(
+    r"^(January|February|March|April|May|June|July|August|September|October|November|December)"
+    r" \d{1,2}, \d{4} *(-|\u2013|through|to) "
+)
+# A bullet glyph on a line of its own (bullet, black small square, white bullet, middle dot,
+# asterisk, hyphen, or the Private Use Area where pdftotext puts Wingdings bullets): the line
+# after it is a list item ("Net LTD Ratio" in the scope list, FRB_3350658_20230612 page 3).
+# The column header just above the first row of that table, when the row is followed by the
+# products reviewed instead of a period ("Time Period" then "Net LTD Ratio", FRB_3350658_20230612
+# page 3).
+PERIOD_HEADER = re.compile(r"^(Time|Evaluation|Review) Period$", re.IGNORECASE)
+LONE_BULLET = re.compile(r"^[\u2022\u25aa\u25e6\u00b7*\-\uf000-\uf8ff]$")
+_HEADING_END = re.compile(r"[.!?:;,]$")  # a line ending a sentence does not wrap a heading
 COLUMN_GAP = re.compile(r"\S {3,}\S")  # pdftotext column gap: a table row or a running header
 FURNITURE_PATTERNS = [  # page furniture, matched against a normalized line
     re.compile(r"^\d{1,3}$"),  # bare page number
     re.compile(r"^[ivxl]{1,6}$", re.IGNORECASE),  # roman page number on front matter
-    re.compile(r"^page \d+ of \d+$", re.IGNORECASE),
+    re.compile(r"^(page )?\d+ of \d+$", re.IGNORECASE),  # "Page 11 of 25", FRB "8 of 29"
     re.compile(r"^charter number:? \d+$", re.IGNORECASE),
+    # security markings printed on every page: "CONTROLLED//FDIC INTERNAL ONLY" (FDIC_11777_20240924
+    # p14), "NONCONFIDENTIAL // EXTERNAL" (FRB_426141_20221212 p13), "PUBLIC/OFFICIAL RELEASE //
+    # EXTERNAL" (FRB_680130_20230724 p10), "RESTRICTED FR // FRSONLY", "NONPUBLIC//FDIC BUSINESS"
+    re.compile(
+        r"^(nonconfidential|controlled|nonpublic|public/official release|restricted fr)"
+        r" ?// ?[a-z /]+$",
+        re.IGNORECASE,
+    ),
 ]
-_QUOTES = str.maketrans({"’": "'", "‘": "'", "“": '"', "”": '"'})
+# Running headers and footers (running_lines): a line among the first RUNNING_TOP or last
+# RUNNING_BOTTOM non-blank lines of a page that recurs on at least RUNNING_MIN_PAGES pages and
+# on at least RUNNING_SHARE of the pages of the document.
+RUNNING_TOP = 6
+RUNNING_BOTTOM = 4
+RUNNING_MIN_PAGES = 3
+RUNNING_SHARE = 0.3
+# A table printed one cell per line (table_run_start): TABLE_RUN_LINES consecutive non-blank
+# lines of at most TABLE_CELL_CHARS characters. Prose lines in the PEs are 60 to 110 long.
+TABLE_RUN_LINES = 6
+TABLE_CELL_CHARS = 25
+TABLE_TITLE_MAX_LINES = 4  # short lines directly above the first cell that go with the table
+TABLE_TITLE_MAX_CHARS = 80
+# Curly quotes, plus the glyphs some FRB (Chicago) PEs print in place of ASCII: no-break space
+# (U+00A0, U+202F) between every word, the Unicode hyphen (U+2010, U+2011) in "Loan-to-Deposit"
+# and the modifier letter prime (U+02B9) as apostrophe in "BANK'S CRA RATING"
+# (FRB_180845_20241104 pages 1 to 3). Each maps to one character, so line lengths are kept.
+_QUOTES = str.maketrans(
+    {
+        "’": "'",
+        "‘": "'",
+        "“": '"',
+        "”": '"',
+        "\u02b9": "'",
+        "\u00a0": " ",
+        "\u202f": " ",
+        "\u2010": "-",
+        "\u2011": "-",
+    }
+)
 
 
 def pages_from_text(text: str) -> list[Page]:
@@ -71,8 +130,26 @@ def normalize_line(line: str) -> str:
 
 
 def is_furniture_line(text: str) -> bool:
-    """True for a normalized line that is a page number, "Page x of y" or a charter-number footer."""
+    """True for a normalized line that is a page number, "Page x of y", a charter-number
+    footer or a security marking."""
     return any(p.search(text) for p in FURNITURE_PATTERNS)
+
+
+def running_lines(pages: list[Page]) -> frozenset[str]:
+    """Normalized lines that are running headers or footers of this document.
+
+    A line counts when it is among the first ``RUNNING_TOP`` or last ``RUNNING_BOTTOM``
+    non-blank lines of at least ``RUNNING_MIN_PAGES`` pages and of at least ``RUNNING_SHARE``
+    of all pages. FRB PEs print the bank name, "CRA Performance Evaluation", the city and the
+    exam date at the top of every page (FRB_137447_20230724 p10), which pymupdf emits as
+    separate lines that no furniture pattern can describe.
+    """
+    counts: Counter[str] = Counter()
+    for page in pages:
+        kept = [t for t in (normalize_line(raw) for raw in page.text.split("\n")) if t]
+        counts.update(set(kept[:RUNNING_TOP]) | set(kept[-RUNNING_BOTTOM:]))
+    need = max(RUNNING_MIN_PAGES, RUNNING_SHARE * len(pages))
+    return frozenset(t for t, n in counts.items() if n >= need)
 
 
 # --------------------------------------------------------------------------- patterns
@@ -86,6 +163,7 @@ class _Patterns:
     sections: dict[str, list[re.Pattern[str]]]
     section_scope: dict[str, str]
     max_pages: dict[str, int | None]
+    end_at_table_run: dict[str, bool]
     boundaries: list[re.Pattern[str]]
     markers: list[tuple[str, list[re.Pattern[str]]]]
 
@@ -103,6 +181,9 @@ def _patterns(regulator: str) -> _Patterns:
         sections={name: _compile(spec.get(regulator, [])) for name, spec in sections.items()},
         section_scope={name: spec.get("scope", "institution") for name, spec in sections.items()},
         max_pages={name: spec.get("max_pages") for name, spec in sections.items()},
+        end_at_table_run={
+            name: bool(spec.get("end_at_table_run")) for name, spec in sections.items()
+        },
         boundaries=_compile(cfg.get("boundary_patterns", {}).get(regulator, [])),
         markers=[
             (scope, _compile(spec.get(regulator, [])))
@@ -129,6 +210,8 @@ class _Line:
     scope: str = "institution"
     event: tuple[str, str] | None = None  # ("section"|"boundary"|"marker", name)
     rank: int = 0  # index among the non-blank lines of its page (running headers rank low)
+    heading: str = ""  # the joined text when a heading is wrapped over two lines
+    running: bool = False  # a running header or footer of this document (running_lines)
 
 
 def _split_lines(pages: list[Page]) -> list[_Line]:
@@ -151,6 +234,19 @@ def is_toc_line(text: str, regulator: str = "OCC") -> bool:
     return any(p.search(text) for p in _patterns(regulator).toc)
 
 
+def _is_prose(text: str) -> bool:
+    """A running-text line: at least 60 characters and 9 words, 3 of them lowercase, and no
+    column gap (a capitalized ToC entry such as "APPENDIX D - LIMITED-SCOPE REVIEW ASSESSMENT
+    AREA LENDING TABLES" is not prose)."""
+    words = text.split()
+    return (
+        len(text) >= 60
+        and len(words) >= 9
+        and sum(w.islower() for w in words) >= 3
+        and not COLUMN_GAP.search(text)
+    )
+
+
 def is_heading_candidate(text: str) -> bool:
     """Short line with no currency or percent sign and no column gap (table rows)."""
     return (
@@ -171,45 +267,137 @@ def _tag_toc(lines: list[_Line], pats: _Patterns, n_pages: int) -> set[int]:
         toc_rows = [i for i, ln in enumerate(page_lines) if ln.is_toc]
         if len(toc_rows) >= 3 and len(toc_rows) >= 0.3 * len(page_lines):
             toc_pages.add(number)
-            for ln in page_lines[: toc_rows[-1] + 1]:
+            # rows after the last leader row belong to the ToC unless prose follows them
+            # ("APPENDIX D - GLOSSARY" without a leader, FRB_623454_20250310 page 2)
+            tail = page_lines[toc_rows[-1] + 1 :]
+            prose_after = any(_is_prose(ln.text) for ln in tail)
+            last = toc_rows[-1] + 1 if prose_after else len(page_lines)
+            for ln in page_lines[:last]:
+                ln.skip = True
+            continue
+        # A ToC whose page numbers sit in a separate text column carries no leaders: a page
+        # titled "Table of Contents" near its top with no prose line after the title is a ToC
+        # page as a whole (FRB_925653_20240916 page 2, OCC_11312_20220906 page 2).
+        title = next(
+            (i for i, ln in enumerate(page_lines[:TOC_TITLE_RANK]) if TOC_TITLE.search(ln.text)),
+            None,
+        )
+        if title is not None and not any(_is_prose(ln.text) for ln in page_lines[title + 1 :]):
+            toc_pages.add(number)
+            for ln in page_lines:
                 ln.skip = True
     return toc_pages
 
 
+def _classify(text: str, pats: _Patterns) -> tuple[str, str] | None:
+    """Heading event of one normalized heading text: a scope marker, a section or a boundary."""
+    marker = next(
+        (name for name, regs in pats.markers if any(r.search(text) for r in regs)),
+        None,
+    )
+    if marker is not None:
+        return ("marker", marker)
+    section = next(
+        (name for name, regs in pats.sections.items() if any(r.search(text) for r in regs)),
+        None,
+    )
+    if section is not None:
+        return ("section", section)
+    if any(r.search(text) for r in pats.boundaries):
+        return ("boundary", text)
+    return None
+
+
+def _next_text(lines: list[_Line], i: int, step: int = 1) -> int | None:
+    """Index of the next (``step=-1``: previous) non-blank line on the page of line ``i``."""
+    j = i + step
+    while 0 <= j < len(lines) and lines[j].page == lines[i].page:
+        if lines[j].text:
+            return j
+        j += step
+    return None
+
+
 def _tag_events_and_scope(lines: list[_Line], pats: _Patterns) -> None:
-    """Record heading events and the running scope on every line."""
+    """Record heading events and the running scope on every line.
+
+    A heading that pdftotext wrapped over two lines ("FAIR LENDING OR OTHER ILLEGAL CREDIT
+    PRACTICES" then "REVIEW") is matched on the two lines joined by a space when the first
+    line matches nothing on its own; the event sits on the first line and the second line is
+    consumed. Page numbers, running headers and one-word lines never start a pair ("LENDING"
+    over "TEST" is a column header of the FRB rating table, FRB_1864197_20230117 page 3), and a
+    section heading needs three words on its first line ("Assessment Area" over
+    "Concentration" is a table header, FDIC_10635_20240122 page 7). Scope markers are never
+    joined: wrapped area names are cells of the FRB lending tables ("MSA 36740 (Orlando-" over
+    "Kissimmee-Sanford, FL)", FRB_3664588_20240116 page 12), and a false marker would move
+    every later line out of institution scope. A
+    section heading followed by a review period ("LTD Ratio" then "March 31, 2018 - March 31,
+    2023") or preceded by the table's "Time Period" column header is a row of the FRB criterion
+    table, and one preceded by a lone bullet glyph is a list item; neither records an event.
+    """
     scope = "institution"
-    for line in lines:
+    consumed: set[int] = set()
+    for i, line in enumerate(lines):
         line.scope = scope
-        if line.skip or line.is_toc or not is_heading_candidate(line.text):
+        if i in consumed or line.skip or line.is_toc or not is_heading_candidate(line.text):
             continue
-        marker = next(
-            (name for name, regs in pats.markers if any(r.search(line.text) for r in regs)),
-            None,
+        event = _classify(line.text, pats)
+        nxt = _next_text(lines, i)
+        above = lines[i - 1] if i > 0 and lines[i - 1].page == line.page else None
+        joinable = not (
+            line.running
+            or _HEADING_END.search(line.text)
+            or is_furniture_line(line.text)
+            or len(line.text.split()) < 2
+            # the first line of a wrapped heading starts a block: the line above is blank,
+            # furniture or a finished sentence, never the previous line of a paragraph. Without
+            # this the last line of a review paragraph joins the rated-area title after it
+            # ("... Examiners did not" / "identify any discriminatory or other illegal credit
+            # practices" / "KANSAS - Full-Scope Review", FDIC_17636_20241028 p11).
+            or (
+                above is not None
+                and bool(above.text)
+                and not above.running
+                and not is_furniture_line(above.text)
+                and not _HEADING_END.search(above.text)
+            )
         )
-        if marker is not None:
-            if scope != "appendix":
-                scope = marker
-            line.scope = scope
-            line.event = ("marker", marker)
+        if event is None and nxt is not None and joinable:
+            follower = lines[nxt]
+            if not (follower.skip or follower.is_toc) and is_heading_candidate(follower.text):
+                joined = f"{line.text} {follower.text}"
+                event = _classify(joined, pats) if is_heading_candidate(joined) else None
+                if event is not None and (
+                    event[0] == "marker"
+                    or (event[0] == "section" and len(line.text.split()) < 3)
+                ):
+                    event = None  # a wrapped table cell, not a heading (see the docstring)
+                if event is not None:
+                    line.heading = joined
+                    consumed.add(nxt)
+                    nxt = _next_text(lines, nxt)
+        if event is None:
             continue
-        section = next(
-            (
-                name
-                for name, regs in pats.sections.items()
-                if any(r.search(line.text) for r in regs)
-            ),
-            None,
-        )
-        if section is not None:
-            line.event = ("section", section)
-        elif any(r.search(line.text) for r in pats.boundaries):
-            line.event = ("boundary", line.text)
+        if event[0] == "section":
+            prev = _next_text(lines, i, -1)
+            if nxt is not None and PERIOD_ROW.search(lines[nxt].text):
+                continue
+            if prev is not None and (
+                LONE_BULLET.search(lines[prev].text) or PERIOD_HEADER.search(lines[prev].text)
+            ):
+                continue
+        if event[0] == "marker" and scope != "appendix":
+            scope = event[1]
+        line.scope = scope
+        line.event = event
 
 
 def _analyze(pages: list[Page], regulator: str) -> tuple[list[_Line], set[int]]:
     pats = _patterns(regulator)
     lines = _split_lines(pages)
+    running = running_lines(pages)
+    for line in lines:
+        line.running = line.text in running
     toc_pages = _tag_toc(lines, pats, len(pages))
     _tag_events_and_scope(lines, pats)
     return lines, toc_pages
@@ -276,12 +464,55 @@ def _first_line_of_page(lines: list[_Line], number: int) -> int:
 
 
 def _is_furniture(line: _Line) -> bool:
-    """Blank line, page number or footer, or a running header (column gap near the page top)."""
+    """Blank line, page number or footer, or a running header (column gap near the page top,
+    or a line that recurs at the top or bottom of many pages)."""
     return (
         not line.text
+        or line.running
         or is_furniture_line(line.text)
         or (line.rank < 3 and bool(COLUMN_GAP.search(line.text)))
     )
+
+
+def table_run_start(lines: list[_Line], start_idx: int, end_idx: int) -> int:
+    """Index of the first line of a one-cell-per-line table inside ``lines[start_idx:end_idx]``.
+
+    A table is ``TABLE_RUN_LINES`` consecutive non-blank lines of at most
+    ``TABLE_CELL_CHARS`` characters; running headers are skipped and a blank line resets the
+    count. Up to ``TABLE_TITLE_MAX_LINES`` lines directly above the first cell go with the
+    table when they are at most ``TABLE_TITLE_MAX_CHARS`` long and do not end a sentence
+    ("Lending Inside and Outside of the Assessment Area", FDIC_109_20250224 p8). Returns
+    ``end_idx`` when there is no table.
+    """
+    run = 0
+    run_start = end_idx
+    for i in range(start_idx + 1, end_idx):
+        line = lines[i]
+        if not line.text:
+            run = 0
+            continue
+        if line.running:
+            continue
+        if len(line.text) > TABLE_CELL_CHARS:
+            run = 0
+            continue
+        if run == 0:
+            run_start = i
+        run += 1
+        if run >= TABLE_RUN_LINES:
+            cut = run_start
+            for _ in range(TABLE_TITLE_MAX_LINES):
+                prev = lines[cut - 1].text
+                if (
+                    cut - 1 <= start_idx
+                    or not prev
+                    or prev.endswith((".", "!", "?"))
+                    or len(prev) > TABLE_TITLE_MAX_CHARS
+                ):
+                    break
+                cut -= 1
+            return cut
+    return end_idx
 
 
 def _trim_end(lines: list[_Line], start_idx: int, end_idx: int) -> int:
@@ -313,6 +544,8 @@ def _locate_from_lines(
     max_pages = pats.max_pages.get(name)
     if max_pages:
         end_idx = min(end_idx, _first_line_of_page(lines, start.page + max_pages))
+    if pats.end_at_table_run.get(name):
+        end_idx = table_run_start(lines, start_idx, end_idx)
     end_idx = _trim_end(lines, start_idx, end_idx)
     end_offset = lines[end_idx].offset if end_idx < len(lines) else len(text)
     return Section(
@@ -324,7 +557,7 @@ def _locate_from_lines(
         char_end=end_offset,
         text=text[start.offset : end_offset],
         scope=start.scope,  # type: ignore[arg-type]
-        heading_matched=start.text,
+        heading_matched=start.heading or start.text,
         confidence=1.0 if start.scope == wanted else 0.5,
     )
 

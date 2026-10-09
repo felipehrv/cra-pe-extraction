@@ -202,8 +202,34 @@ Rules and baseline
   sentence only. Confirm this matches the guide.
 - Lemont prints 54.5 percent inside the AA in the sentence (LM:99) and 54.4 in the table
   (LM:114); the rule and the guide follow the sentence. Candidate data-quality row.
-- `exam_method` reads isb when "intermediate small bank/institution" appears anywhere in
-  the Scope section; run the 12-district pilot through `cra rules` before freezing.
+- Rules 0.2.0 (2026-10-08) come from the corpus-wide Group A comparison with the index
+  (design 6.3): `python -m cra_extract.group_a --rules results/rules_0.2.0_head_locator.csv
+  --before results/rules_0.1.0.csv` writes `results/group_a_agreement.csv`,
+  `group_a_triage.csv` (every disagreement of either version with category and evidence),
+  `group_a_triage_summary.csv`, `group_a_abstention_sample.csv` and
+  `fdic_exam_date_lag.csv`; hand triage lives in `config/group_a_triage.yaml` and the script
+  exits 1 while any disagreement is untriaged. `exam_method` now reads the first Scope
+  sentence that names the procedures (abbreviations, negation, prior-evaluation sentences
+  and mid-period transitions handled; a transition abstains), lets an FDIC or FRB CD Test
+  rating override a Small Bank Scope sentence, and falls back to the CD Test sentence, the
+  FDIC appendix heading and the OCC Lending-Test-only rating page.
+- Rules 0.2.1 (2026-10-08): the regulator rule reads the cover line after `normalize_line`
+  (FRB Chicago U+00A0 covers); otherwise the version records the locator and headings
+  tuning of the same day. `results/rules.csv` and `results/group_a_*.csv` now hold 0.2.1 on
+  the pass-2 locator (`make rules`, `make group-a`); the 0.2.0 attribution run on the HEAD
+  locator stays in `results/rules_0.2.0_head_locator.csv`. Before and after tables of the
+  second corpus pass are in `docs/corpus_pass_2.md`.
+- Decide which exam date the manifest carries for FDIC. The file-id date (YYMMDD in
+  `SYS_EXTRN_FILE_ID`) equals the printed cover date for 1,641 of 1,770 FDIC PEs (92.7
+  percent); where it differs it is later by a median of 5 days (97 within a week, 15 more
+  than 90 days, 9 of those on the first of a month, one impossible 2028 date). The
+  recommendation is to carry the printed evaluation date (cover, cross-checked with the
+  Scope "current evaluation dated" sentence) as `exam_date` and keep the file-id date as a
+  separate provenance column; doc_ids stay as they are. 25 FDIC PEs print a Scope date that
+  differs from their own cover (9 by exactly one year); the rules note it.
+- OCC_9183_20230213: the OCC index row (2023-02-13 exam) links `/apr19/9183.pdf`, the PE of
+  the December 3, 2018 exam, so every value read from that document describes 2018. Re-point
+  or exclude the manifest row before the test draw.
 - Baseline false positives on boilerplate are zero on the samples because negated hits are
   absorbed; the corpus-wide negated-hit count per regulator (`n_negated_hits` in
   `results/baseline.csv`) is what the OCC-separate false-positive rate should use.

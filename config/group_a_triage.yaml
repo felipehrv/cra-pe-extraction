@@ -1,0 +1,304 @@
+# Hand triage of Group A disagreements between the rules (S1) and the agency index
+# (design section 6.3), read by src/cra_extract/group_a.py.
+#
+# Categories:
+#   our_error     the rule read the wrong thing; correct_value is what the document says
+#   source_error  a source is wrong; error_side says which: index (the agency feed) or
+#                 document (the PE itself prints a typo or contradicts itself)
+#   definitional  both sources are right about different things (the FDIC file-id date is
+#                 not the printed evaluation date; a mid-period change of procedures)
+#
+# Two cases are triaged automatically and are not listed here (see group_a.auto_triage):
+# a 0.1.0 disagreement that 0.2.0 resolves to the index value is our_error with the 0.2.0
+# quote as evidence, and an FDIC exam_date that differs from the file-id date is
+# definitional with the printed cover line as evidence. Every other disagreement needs an
+# entry below or the script exits with status 1.
+#
+# evidence_quote is verbatim from the page text (whitespace collapsed); when it is omitted
+# the rules quote of the triaged version is used. Hand-read on 2026-10-08.
+
+entries:
+  # ------------------------------------------------------------------ bank_id
+  - doc_id: FDIC_33450_20250602
+    field: bank_id
+    category: source_error
+    error_side: document
+    correct_value: "33450"
+    evidence_quote: "Certificate Number: 34450"
+    page: 1
+    note: >-
+      Cover typo. The FDIC file id (2025/33450_250602.PDF) and the bank's 2019 and 2022 index
+      rows (Arbor Bank, Nebraska City NE) all carry certificate 33450.
+  - doc_id: FDIC_5981_20240304
+    field: bank_id
+    category: source_error
+    error_side: document
+    correct_value: "5981"
+    evidence_quote: "Certificate Number: 5891"
+    page: 1
+    note: >-
+      Cover typo (transposed digits). File id 2024/5981_240304.PDF and the 2018 and 2021
+      index rows (The Community Bank, Zanesville OH) carry certificate 5981.
+  - doc_id: FRB_853112_20220411
+    field: bank_id
+    category: source_error
+    error_side: document
+    correct_value: "853112"
+    evidence_quote: "RSSD #853113"
+    page: 1
+    note: >-
+      Cover typo. The FRB index lists Heartland Bank under RSSD 853112 for every exam from 1997
+      to 2022, and the PDF URL is keyed 853112_20220411.
+
+  # ------------------------------------------------------------------ overall_rating
+  - doc_id: FDIC_15701_20241118
+    field: overall_rating
+    category: source_error
+    error_side: index
+    correct_value: O
+    evidence_quote: "INSTITUTION’S CRA RATING: This institution is rated Outstanding."
+    page: 3
+    note: >-
+      The PE says Outstanding on the rating page and in the conclusions ("The Seymour Bank
+      demonstrated outstanding performance under the Lending Test", p7); the FDIC index row
+      says Satisfactory.
+
+  # ------------------------------------------------------------------ exam_method
+  - doc_id: FDIC_17011_20230307
+    field: exam_method
+    category: source_error
+    error_side: index
+    correct_value: isb
+    note: >-
+      Scope sentence, CD Test rating on p3 ("The Community Development Test is rated
+      Satisfactory.") and the appendix heading "INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA"
+      all say ISB; the FDIC index says Small Bank.
+  - doc_id: OCC_14294_20240708
+    field: exam_method
+    category: source_error
+    error_side: index
+    correct_value: isb
+    note: >-
+      Scope sentence names intermediate small bank procedures and the rating page rates a CD
+      Test; the OCC index says Small Bank.
+  - doc_id: OCC_18558_20240102
+    field: exam_method
+    category: source_error
+    error_side: index
+    correct_value: isb
+    note: >-
+      The rating page rates both tests; the bank reported $1.53 billion in total assets as of
+      December 31, 2022 (p4), inside the ISB band; the OCC index says Small Bank (its prior
+      2020 row says Intermediate Small Bank).
+  - doc_id: OCC_16625_20231127
+    field: exam_method
+    category: source_error
+    error_side: index
+    correct_value: small
+    note: >-
+      The rating page rates the Lending Test only and the PE reports total assets of $312
+      million as of December 31, 2022 (p4), below the 2023 ISB lower threshold of $376
+      million; the OCC index says Intermediate Small Bank. Probable index error.
+  - doc_id: OCC_15748_20240724
+    field: exam_method
+    category: source_error
+    error_side: index
+    correct_value: small
+    note: >-
+      Seen only with the working-tree locator of 2026-10-08 (the HEAD locator abstains here).
+      The Scope sentence names "Small Bank performance criteria and examination procedures"
+      (p5), the rating page rates the Lending Test only and the bank reported total assets of
+      $192.3 million as of December 31, 2023 (p4); the OCC index says Intermediate Small Bank.
+  - doc_id: OCC_10637_20250707
+    field: exam_method
+    category: definitional
+    error_side: none
+    correct_value: mixed
+    evidence_quote: >-
+      The OCC evaluated FNB using Small Bank CRA examination procedures, which included the
+      Lending Test, and Intermediate Small Bank CRA examination procedures for the portion of the
+      evaluation period from January 1, 2024, through December 31, 2024, which includes the CD
+      test.
+    page: 5
+    note: >-
+      Mid-period transition from Small Bank to ISB. The OCC index labels this PE small; the
+      same construction is labelled isb for OCC_24219_20250218 and OCC_15698_20240603. The
+      0.2.0 rule abstains.
+  - doc_id: OCC_24798_20240226
+    field: exam_method
+    category: definitional
+    error_side: none
+    correct_value: mixed
+    evidence_quote: >-
+      The evaluation was conducted using Small Bank CRA examination procedures with Intermediate
+      Small Bank CRA performance standards considered for the portion of the evaluation period
+      between January 1, 2022, through December 31, 2022.
+    page: 5
+    note: Mid-period transition; index small. The 0.2.0 rule abstains.
+
+  # ------------------------------------------------------------------ exam_date, FDIC
+  - doc_id: FDIC_445_20280408
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-04-08"
+    note: >-
+      The FDIC file id 2024/445_280408.PDF carries an impossible date (2028); the cover and
+      the scope section both print April 8, 2024.
+  - doc_id: FDIC_9438_20240709
+    field: exam_date
+    category: source_error
+    error_side: document
+    correct_value: "2024-07-08"
+    note: >-
+      The PE contradicts itself: the cover prints July 8, 2024 and the scope section "the
+      current evaluation dated July 9, 2024" (p7). The file-id date matches the scope
+      sentence.
+
+  # ------------------------------------------------------------------ exam_date, OCC
+  - doc_id: OCC_9183_20230213
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2023-02-13"
+    note: >-
+      Wrong PDF: the OCC index row for the 2023-02-13 exam (released 2023-04-27) links
+      /apr19/9183.pdf, the PE of the December 3, 2018 exam. Every value read from this document
+      describes the 2018 exam; the manifest row should be re-pointed or excluded.
+  - doc_id: OCC_10180_20231031
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-10-31"
+    note: >-
+      Index is one year later than the cover. The PE's latest data are as of December 31,
+      2021 (p4: "As of December 31, 2021, FNB had total assets of $820 million"), consistent
+      with a 2022 exam.
+  - doc_id: OCC_16626_20230818
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-08-18"
+    note: >-
+      Index is one year later than the cover. The PE reports financials as of December 31,
+      2021 (p4), consistent with a 2022 exam.
+  - doc_id: OCC_708183_20240304
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2023-03-04"
+    note: >-
+      Index is one year later than the cover; the PE's LTD quarters end in 2022 (p3).
+      Probable index error.
+  - doc_id: OCC_12190_20220922
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-09-12"
+    note: >-
+      Index 10 days after the only date the PE prints. OCC_704307_20220922 has the same
+      pair (printed 2022-09-12, index 2022-09-22).
+  - doc_id: OCC_704307_20220922
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-09-12"
+    note: Index 10 days after the only date the PE prints (same pair as OCC_12190_20220922).
+  - doc_id: OCC_15748_20240724
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-06-24"
+    note: >-
+      Index one month after the printed date; OCC_23925_20240724 has the same pair
+      (printed June 24, 2024, index 2024-07-24).
+  - doc_id: OCC_23925_20240724
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-06-24"
+    note: Index one month after the printed date (same pair as OCC_15748_20240724).
+  - doc_id: OCC_23834_20221031
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-09-19"
+    note: Index 42 days after the only date the PE prints.
+  - doc_id: OCC_24685_20221028
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-11-28"
+    note: Index one month before the printed date.
+  - doc_id: OCC_4934_20221215
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2022-12-05"
+    note: Index 10 days after the only date the PE prints.
+  - doc_id: OCC_703997_20240506
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-07-08"
+    note: Index 63 days before the only date the PE prints.
+  - doc_id: OCC_8694_20231023
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2023-10-30"
+    note: Index 7 days before the only date the PE prints.
+
+  # ------------------------------------------------------------------ exam_date, FRB
+  - doc_id: FRB_152057_20240401
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-05-30"
+    note: >-
+      The PE prints May 30, 2024 on the cover and in the running header of all 23 pages; the
+      FRB index (and the PDF URL key 152057_20240401) says 2024-04-01.
+  - doc_id: FRB_560214_20241113
+    field: exam_date
+    category: source_error
+    error_side: index
+    correct_value: "2024-11-12"
+    note: >-
+      The PE prints November 12, 2024 on the cover and in every running header; the FRB index
+      says 2024-11-13.
+
+  # ------------------------------------------------------------------ exam_method, our_error
+  # Listed by hand because the PE is also at fault: its Scope sentence names the Small
+  # Institution procedures while the rating page rates a CD Test and the appendix is the ISB
+  # one. 0.2.0 lets the CD Test rating override the Scope sentence for FDIC and FRB.
+  - doc_id: FDIC_1678_20230814
+    field: exam_method
+    category: our_error
+    error_side: rules
+    correct_value: isb
+    evidence_quote: "The Community Development Test is rated Satisfactory."
+    page: 3
+    note: >-
+      Scope sentence on p5 says "Interagency Small Institution Examination Procedures"; the
+      rating page, the appendix heading "INTERMEDIATE SMALL BANK PERFORMANCE CRITERIA" and the
+      index say ISB. The PE contradicts itself.
+  - doc_id: FDIC_28348_20240813
+    field: exam_method
+    category: our_error
+    error_side: rules
+    correct_value: isb
+    evidence_quote: "The Community Development Test is rated Outstanding."
+    page: 3
+    note: >-
+      Scope sentence on p8 says Small Institution procedures; rating page, ISB appendix and
+      index say ISB. The PE contradicts itself.
+  - doc_id: FDIC_58691_20250407
+    field: exam_method
+    category: our_error
+    error_side: rules
+    correct_value: isb
+    evidence_quote: "The Community Development Test is rated Satisfactory."
+    page: 3
+    note: >-
+      Scope sentence on p9 says Small Institution procedures; rating page, ISB appendix and
+      index say ISB. The PE contradicts itself.
