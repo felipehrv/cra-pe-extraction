@@ -496,6 +496,7 @@ def test_table3_tokens_fallback_and_cost(ws: report.ReportPaths) -> None:
     out = report.table3("test", ws)
     t = _csv(out["csv"]).set_index("system")
     g = t.loc[GEMINI]
+    assert g["field_groups"] == "split"  # legacy run-log entries and listed-group traces
     assert g["n_docs"] == "3" and g["n_calls"] == "12" and g["n_calls_whole_document"] == "1"
     assert g["locator_fallback_rate"] == f"{1 / 12:.4f}"
     assert float(g["input_tokens_per_call_whole_document"]) == 16000
@@ -525,6 +526,8 @@ def test_table3_tokens_fallback_and_cost(ws: report.ReportPaths) -> None:
     assert float(rev["residual_error"].iloc[1]) == pytest.approx(report.residual_at(curve, 0.25), abs=1e-4)
     md = out["md"].read_text(encoding="utf-8")
     assert "wage not set" in md and "corpus tier: not chosen" in md
+    assert f"Field-group mode used: {HAIKU}: split; {GEMINI}: split." in md
+    assert "| System | Field groups | Documents |" in md
 
 
 def test_table3_with_wage_and_corpus_system(ws: report.ReportPaths) -> None:
@@ -574,6 +577,166 @@ def test_cost_attributes_whole_and_closed_book_traces_to_their_systems(ws: repor
     assert float(t.loc[GEMINI, "input_tokens_per_doc"]) == 2000
     assert t.loc[GEMINI + ":whole", "n_calls"] == "1" and t.loc[GEMINI + ":whole", "n_calls_whole_document"] == "1"
     assert float(t.loc[GEMINI + ":closedbook", "input_tokens_per_doc"]) == 100
+
+
+SPLIT_GROUPS = ("cover_and_rating", "institution", "lending_tables", "review")
+
+
+def _ftrace(i: int, doc_id: str, group: str, tin: int, *, minute: int = 0, mode: str = "located",
+            cost: float = 0.0, tout: int = 100) -> Trace:
+    """A gemini trace with a call time (minute past 12:00) and a run mode."""
+    return Trace(trace_id=f"f{i:04d}", doc_id=doc_id, field_group=group, backend="gemini", model="gemini-3.8-flash",
+                 prompt_hash=f"f{i}", input_tokens=tin, output_tokens=tout, cost_usd=cost,
+                 called_at=datetime(2026, 10, 15, 12, minute, 0), mode=mode)
+
+
+def _write_traces(ws: report.ReportPaths, traces: list[Trace]) -> None:
+    (ws.trace_dir / "test" / "gemini.jsonl").write_text(
+        "".join(t.model_dump_json() + "\n" for t in traces), encoding="utf-8")
+
+
+def _append_run_log(ws: report.ReportPaths, entries: list[dict]) -> None:
+    with open(ws.inp("run_log_test.jsonl"), "a", encoding="utf-8") as fh:
+        fh.write("".join(json.dumps(e) + "\n" for e in entries))
+
+
+def test_run_log_field_groups_reads_the_last_successful_llm_entry(tmp_path: Path) -> None:
+    p = tmp_path / "run_log_dev.jsonl"
+    assert report.run_log_field_groups(p) == {}
+    entries = [
+        {"doc_id": "a", "system": GEMINI, "mode": "located", "error": None},  # before --field-groups: split
+        {"doc_id": "a", "system": GEMINI, "mode": "located", "field_groups": "all", "error": None},
+        {"doc_id": "a", "system": GEMINI, "mode": "located", "field_groups": "split", "error": "TraceMissError: x"},
+        {"doc_id": "b", "system": GEMINI, "mode": "located", "error": None},
+        {"doc_id": "b", "system": GEMINI + ":closedbook", "mode": "closedbook", "field_groups": None, "error": None},
+        {"doc_id": "b", "system": "rules", "mode": None, "error": None},
+        {"doc_id": "b", "system": GEMINI + ":whole", "mode": "whole", "field_groups": "all", "error": None},
+    ]
+    p.write_text("".join(json.dumps(e) + "\n" for e in entries), encoding="utf-8")
+    assert report.run_log_field_groups(p) == {
+        ("a", GEMINI): "all", ("b", GEMINI): "split", ("b", GEMINI + ":whole"): "all",
+    }
+
+
+def test_call_modes_give_the_all_call_the_misses_of_every_group_it_covers() -> None:
+    preds = pd.DataFrame([
+        {"doc_id": "d1", "field": "overall_rating", "system": GEMINI, "locator_miss": "0"},
+        {"doc_id": "d1", "field": "avg_ltd_ratio_pct", "system": GEMINI, "locator_miss": "1"},
+        {"doc_id": "d2", "field": "overall_rating", "system": GEMINI, "locator_miss": "0"},
+        {"doc_id": "d2", "field": "finding_present", "system": GEMINI, "locator_miss": "0"},
+        {"doc_id": "d2", "field": "not_a_field", "system": GEMINI, "locator_miss": "1"},
+    ])
+    modes = report._call_modes(preds)
+    assert modes[("d1", "cover_and_rating", GEMINI)] is False
+    assert modes[("d1", "lending_tables", GEMINI)] is True
+    assert modes[("d1", "all", GEMINI)] is True  # the one call sent the whole document
+    assert modes[("d2", "all", GEMINI)] is False
+    assert ("d2", "lending_tables", GEMINI) not in modes
+
+
+def test_field_group_mode_of_traces() -> None:
+    assert report.trace_field_groups(_ftrace(1, "d", "all", 1)) == "all"
+    assert report.trace_field_groups(_ftrace(2, "d", "review", 1, mode="whole")) == "split"
+    assert report.trace_field_groups(_ftrace(3, "d", "closedbook", 1, mode="closedbook")) is None
+    legacy = _ftrace(4, "d", "closedbook", 1).model_copy(update={"mode": None})
+    assert report.trace_field_groups(legacy) is None
+
+
+def test_latest_traces_keeps_one_field_group_mode_per_document() -> None:
+    d, other = "OCC_1_20240101", "OCC_2_20240201"
+    split = [_ftrace(i, d, g, 1000, minute=1) for i, g in enumerate(SPLIT_GROUPS)]
+    all_call = _ftrace(10, d, "all", 5000, minute=2)
+    one_mode = _ftrace(11, other, "all", 4000)
+    closed = _ftrace(12, d, "closedbook", 50, minute=3, mode="closedbook")
+    traces = [*split, all_call, one_mode, closed]
+
+    def kept(ts: list[Trace], recorded: dict | None = None) -> list[tuple[str, str]]:
+        return sorted((t.doc_id, t.field_group) for t in report.latest_traces(ts, recorded))
+
+    # No run-log record: the newest trace of the pair (the all call) decides; closed book is kept.
+    assert kept(traces) == [(d, "all"), (d, "closedbook"), (other, "all")]
+    # The run log records split for the pair: the four split calls count, never both modes.
+    assert kept(traces, {(d, GEMINI): "split"}) == sorted([(d, g) for g in SPLIT_GROUPS]
+                                                        + [(d, "closedbook"), (other, "all")])
+    # A recorded mode with no trace of its own falls back to the newest trace.
+    assert kept(traces, {(other, GEMINI): "split"}) == [(d, "all"), (d, "closedbook"), (other, "all")]
+    # Newest is by call time, not by file position.
+    early_all = _ftrace(13, d, "all", 5000, minute=0)
+    assert kept([*split, early_all]) == sorted((d, g) for g in SPLIT_GROUPS)
+    late_all = _ftrace(14, d, "all", 5000, minute=5)
+    assert kept([late_all, *split]) == [(d, "all")]
+    # The whole-document ablation is its own system: its mode is chosen apart from the located one.
+    whole_split = [_ftrace(20 + i, d, g, 30000, minute=9, mode="whole") for i, g in enumerate(SPLIT_GROUPS)]
+    got = report.latest_traces([*split, all_call, *whole_split], {(d, GEMINI): "all"})
+    assert sorted((report.trace_system(t), t.field_group) for t in got) == sorted(
+        [(GEMINI, "all")] + [(GEMINI + ":whole", g) for g in SPLIT_GROUPS])
+
+
+def test_table3_single_call_mode_counts_each_all_call_once(ws: report.ReportPaths) -> None:
+    docs = ["OCC_1_20240101", "OCC_2_20240201", "FDIC_3_20240301"]
+    # One all call per document. OCC_1 has a locator miss (lending_tables) in the predictions, so its
+    # one call sent the whole document. A whole-document ablation call runs under all too.
+    traces = [_ftrace(i, doc, "all", 20000 if doc == docs[0] else 6000, cost=0.01, tout=300)
+              for i, doc in enumerate(docs)]
+    traces.append(_ftrace(9, docs[0], "all", 45000, mode="whole", cost=0.02))
+    _write_traces(ws, traces)
+    _append_run_log(ws, [{"doc_id": doc, "system": GEMINI, "mode": "located", "field_groups": "all",
+                          "seconds": 5.0, "error": None} for doc in docs])
+    out = report.table3("test", ws)
+    t = _csv(out["csv"]).set_index("system")
+    g = t.loc[GEMINI]
+    assert g["field_groups"] == "all"
+    assert g["n_docs"] == "3" and g["n_calls"] == "3"
+    assert g["n_calls_whole_document"] == "1" and g["n_calls_mode_unknown"] == "0"
+    assert g["locator_fallback_rate"] == f"{1 / 3:.4f}"
+    assert float(g["input_tokens_per_call_whole_document"]) == 20000
+    assert float(g["input_tokens_per_call_located"]) == 6000
+    # Each all call counts once for its document, not once per field group it covers.
+    assert float(g["input_tokens_per_doc"]) == pytest.approx((20000 + 6000 + 6000) / 3)
+    assert float(g["output_tokens_per_doc"]) == 300
+    assert g["cost_spent_usd"] == "0.0300"
+    w = t.loc[GEMINI + ":whole"]
+    assert w["field_groups"] == "all" and w["n_calls"] == "1" and w["n_calls_whole_document"] == "1"
+    assert float(w["input_tokens_per_doc"]) == 45000
+    assert t.loc[HAIKU, "field_groups"] == "split" and t.loc["rules", "field_groups"] == ""
+    md = out["md"].read_text(encoding="utf-8")
+    assert f"Field-group mode used: {HAIKU}: split; {GEMINI}: all; {GEMINI}:whole: all." in md
+    assert f"| {GEMINI} | all | 3 | 3 |" in md
+
+
+def test_table3_mixed_field_group_modes_never_sum_both(ws: report.ReportPaths) -> None:
+    """One split holds the four split calls of every document and, for OCC_1, a later all call."""
+    docs = ["OCC_1_20240101", "OCC_2_20240201", "FDIC_3_20240301"]
+    tokens = {"cover_and_rating": 1000, "institution": 3000, "lending_tables": 2000, "review": 1500}
+    traces, i = [], 0
+    for doc in docs:
+        for group in SPLIT_GROUPS:
+            i += 1
+            traces.append(_ftrace(i, doc, group, tokens[group], minute=1, cost=0.001))
+    traces.append(_ftrace(99, docs[0], "all", 9000, minute=30, cost=0.004))
+    _write_traces(ws, traces)
+    split_per_doc = sum(tokens.values())
+
+    # The run log records split for OCC_1 (entries from before --field-groups): the split calls count.
+    t = _csv(report.table3("test", ws)["csv"]).set_index("system").loc[GEMINI]
+    assert t["field_groups"] == "split" and t["n_calls"] == "12"
+    assert float(t["input_tokens_per_doc"]) == pytest.approx(split_per_doc)
+    assert float(t["cost_spent_usd"]) == pytest.approx(12 * 0.001 + 0.004)  # every call is spent
+
+    # A later all run of OCC_1 recorded in the run log: its one call replaces the four split calls.
+    _append_run_log(ws, [{"doc_id": docs[0], "system": GEMINI, "mode": "located", "field_groups": "all",
+                          "seconds": 4.0, "error": None}])
+    out = report.table3("test", ws)
+    t = _csv(out["csv"]).set_index("system").loc[GEMINI]
+    assert t["field_groups"] == "all (1 doc), split (2 docs)"
+    assert t["n_docs"] == "3" and t["n_calls"] == "9"
+    assert float(t["input_tokens_per_doc"]) == pytest.approx((9000 + 2 * split_per_doc) / 3)
+    # OCC_1's all call sent the whole document (a lending_tables miss); its split calls are left out.
+    assert t["n_calls_whole_document"] == "1"
+    assert float(t["input_tokens_per_call_whole_document"]) == 9000
+    assert float(t["cost_spent_usd"]) == pytest.approx(12 * 0.001 + 0.004)
+    md = out["md"].read_text(encoding="utf-8")
+    assert f"{GEMINI}: all (1 doc), split (2 docs)" in md
 
 
 def test_manual_baseline_includes_blind_audit_minutes(ws: report.ReportPaths) -> None:

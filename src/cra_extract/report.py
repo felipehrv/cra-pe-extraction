@@ -25,8 +25,9 @@ stripped, so the same inputs regenerate byte-identical files (``--check``). Piec
    manual-review error line. Only the inputs that exist are drawn; the caption file lists
    the missing ones.
 3. :func:`table2`: the data-quality table, sorted by root cause and then source.
-4. :func:`table3`: the cost table (tokens, locator fallback rate, cost per document and per
-   correct field, corpus extrapolation, manual baseline, three review operating points).
+4. :func:`table3`: the cost table (field-group mode, tokens, locator fallback rate, cost per
+   document and per correct field, corpus extrapolation, manual baseline, three review
+   operating points).
 5. :func:`descriptive`: the exploratory tables of design section 7 (NI and SN
    decomposition, findings registry, FRB ISB matrix-floor check, rating transitions, exam
    cycle length, publication lag). Generated text carries no comparative language.
@@ -59,6 +60,7 @@ import sys
 import tempfile
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, replace
+from datetime import UTC
 from pathlib import Path
 from typing import Any
 
@@ -79,6 +81,7 @@ from cra_extract.config import (
     load_fields,
 )
 from cra_extract.models import Trace
+from cra_extract.prompts import ALL_GROUP
 from cra_extract.stats import clopper_pearson_ci, wilson_ci
 
 RATINGS = ("O", "S", "NI", "SN")
@@ -96,6 +99,12 @@ NO_GROUNDING_SYSTEMS = ("rules", "baseline")
 WHOLE_SUFFIX = ":whole"
 CLOSED_BOOK_SUFFIX = ":closedbook"
 VARIANT_SUFFIXES = (WHOLE_SUFFIX, CLOSED_BOOK_SUFFIX)
+# Field-group modes of the located and whole-document LLM calls (run --field-groups): "all" is one
+# call per document for every LLM field (Trace.field_group "all"), "split" one call per
+# llm_field_groups entry of fields.yaml. Run-log entries written before --field-groups existed
+# came from the split mode (run.LEGACY_FIELD_GROUPS).
+ALL_FIELD_GROUPS, SPLIT_FIELD_GROUPS = ALL_GROUP, "split"
+LEGACY_FIELD_GROUPS = SPLIT_FIELD_GROUPS
 # Group C fabrication probes (plan, Field groups): on documents whose gold finding_present is false.
 GROUP_C_PROBE_FIELDS = ("rating_before", "rating_after", "laws_cited")
 CLOSED_BOOK_FIELDS = ("overall_rating", "finding_present")
@@ -1368,7 +1377,8 @@ def table2(paths: ReportPaths | None = None) -> dict[str, Path]:
 
 
 TABLE3_COLUMNS = [
-    "system", "n_docs", "n_calls", "n_calls_whole_document", "n_calls_mode_unknown", "locator_fallback_rate",
+    "system", "field_groups", "n_docs", "n_calls", "n_calls_whole_document", "n_calls_mode_unknown",
+    "locator_fallback_rate",
     "input_tokens_per_call_located", "input_tokens_per_call_whole_document",
     "input_tokens_per_doc", "output_tokens_per_doc",
     "price_status", "prices_retrieved", "pricing_mode",
@@ -1416,15 +1426,93 @@ def trace_system(t: Trace) -> str:
     return base + (f":{mode}" if mode in ("whole", "closedbook") else "")
 
 
-def latest_traces(traces: list[Trace]) -> list[Trace]:
+def trace_field_groups(t: Trace) -> str | None:
+    """Field-group mode of a located or whole-document trace: ``all`` for the combined group
+    (one call per document for every LLM field), ``split`` for a listed group; None for a
+    closed-book call, which is one call per document in either mode."""
+    if trace_mode(t) == "closedbook":
+        return None
+    return ALL_FIELD_GROUPS if t.field_group == ALL_GROUP else SPLIT_FIELD_GROUPS
+
+
+def run_log_field_groups(path: Path) -> dict[tuple[str, str], str]:
+    """(doc_id, system) -> field-group mode of the last successful located or whole-document
+    LLM entry of ``run_log_{split}.jsonl``, read as ``run.recorded_field_groups`` reads it: an
+    entry written before ``--field-groups`` existed carries no ``field_groups`` key and counts
+    as ``split``. Closed-book, rules and baseline entries are left out."""
+    out: dict[tuple[str, str], str] = {}
+    if not path.exists():
+        return out
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        e = json.loads(line)
+        system = str(e.get("system", ""))
+        if e.get("error") or not system.startswith("llm:"):
+            continue
+        if e.get("mode") == "closedbook" or system.endswith(CLOSED_BOOK_SUFFIX):
+            continue
+        out[(str(e.get("doc_id")), system)] = str(e.get("field_groups") or LEGACY_FIELD_GROUPS)
+    return out
+
+
+def _called_at_key(t: Trace) -> float:
+    """Call time as a POSIX timestamp; a naive ``called_at`` is read as UTC."""
+    c = t.called_at
+    return (c if c.tzinfo is not None else c.replace(tzinfo=UTC)).timestamp()
+
+
+def field_group_choice(
+    traces: Sequence[Trace], recorded: Mapping[tuple[str, str], str] | None = None
+) -> dict[tuple[str, str], str]:
+    """(doc_id, system) -> the one field-group mode whose calls count for that document.
+
+    One split can hold traces of both modes for the same document (a ``--force`` rerun under
+    the other ``--field-groups``, or a run log kept from before the switch). The mode is the
+    one the run log records for the pair (``recorded``, :func:`run_log_field_groups`) when the
+    traces hold calls of that mode, else the mode of the newest trace (latest ``called_at``,
+    then the later position in ``traces``). Closed-book traces carry no field-group mode and
+    get no entry.
+    """
+    seen: dict[tuple[str, str], set[str]] = {}
+    newest: dict[tuple[str, str], tuple[float, int, str]] = {}
+    for i, t in enumerate(traces):
+        mode = trace_field_groups(t)
+        if mode is None:
+            continue
+        key = (t.doc_id, trace_system(t))
+        seen.setdefault(key, set()).add(mode)
+        stamp = (_called_at_key(t), i, mode)
+        if key not in newest or stamp[:2] >= newest[key][:2]:
+            newest[key] = stamp
+    recorded = recorded or {}
+    return {key: (recorded[key] if recorded.get(key) in modes else newest[key][2]) for key, modes in seen.items()}
+
+
+def latest_traces(
+    traces: list[Trace], recorded: Mapping[tuple[str, str], str] | None = None
+) -> list[Trace]:
     """The last trace per (doc_id, field_group, backend, model, mode, effort), in file order:
     the call whose output the current predictions reflect. Earlier calls still count as
     spent. The mode keeps an ablation call from replacing the located call of the same
-    document and group."""
+    document and group.
+
+    A document with calls of both field-group modes keeps the calls of one mode only
+    (:func:`field_group_choice`: the mode ``recorded`` in the run log, else that of the newest
+    trace), so the tokens of an ``all`` call and of the four ``split`` calls of the same
+    document are never summed; the calls left out still count as spent.
+    """
     last: dict[tuple[str, str, str, str, str, str], Trace] = {}
     for t in traces:
         last[(t.doc_id, t.field_group, t.backend, t.model, trace_mode(t), str(t.effort or ""))] = t
-    return [last[k] for k in sorted(last)]
+    chosen = field_group_choice(traces, recorded)
+    out: list[Trace] = []
+    for k in sorted(last):
+        t = last[k]
+        mode = trace_field_groups(t)
+        if mode is None or chosen[(t.doc_id, trace_system(t))] == mode:
+            out.append(t)
+    return out
 
 
 def read_run_log_latest(path: Path) -> dict[tuple[str, str], dict[str, Any]]:
@@ -1469,10 +1557,18 @@ def _list_cost(entry: dict[str, Any] | None, t: Trace) -> float:
 
 
 def _call_modes(predictions: pd.DataFrame) -> dict[tuple[str, str, str], bool]:
-    """(doc_id, field_group, system) -> whole-document input, from ``locator_miss``."""
+    """(doc_id, field_group, system) -> whole-document input, from ``locator_miss``.
+
+    A listed group's call (``split`` mode) sent the whole document when a field of that group
+    has ``locator_miss`` 1. The combined ``all`` call sent it when any LLM field of the
+    document has ``locator_miss`` 1 (``run.llm_inputs``), so every LLM field also counts
+    toward the key of the ``all`` group it is covered by.
+    """
     if predictions.empty or "locator_miss" not in predictions.columns:
         return {}
-    group_of = {f: g for g, spec in load_fields()["llm_field_groups"].items() for f in spec["fields"]}
+    group_of = {
+        f: g for g, spec in load_fields()["llm_field_groups"].items() if g != ALL_GROUP for f in spec["fields"]
+    }
     out: dict[tuple[str, str, str], bool] = {}
     for doc_id, field, system, miss in zip(
         predictions["doc_id"], predictions["field"], predictions["system"], predictions["locator_miss"], strict=True
@@ -1480,9 +1576,24 @@ def _call_modes(predictions: pd.DataFrame) -> dict[tuple[str, str, str], bool]:
         g = group_of.get(field)
         if g is None:
             continue
-        key = (doc_id, g, system)
-        out[key] = out.get(key, False) or _truthy(miss)
+        for group in (g, ALL_GROUP):
+            key = (doc_id, group, system)
+            out[key] = out.get(key, False) or _truthy(miss)
     return out
+
+
+def _field_groups_label(traces: Sequence[Trace]) -> str:
+    """Field-group mode of a system's counted calls: ``all`` or ``split``, or each mode with
+    its number of documents when the documents of one system ran under different modes
+    (``all (2 docs), split (1 doc)``); empty for closed book or when no call is counted."""
+    docs: dict[str, set[str]] = {}
+    for t in traces:
+        mode = trace_field_groups(t)
+        if mode is not None:
+            docs.setdefault(mode, set()).add(t.doc_id)
+    if len(docs) <= 1:
+        return next(iter(docs), "")
+    return ", ".join(f"{m} ({len(d)} doc{'s' if len(d) != 1 else ''})" for m, d in sorted(docs.items()))
 
 
 def manual_minutes(gold_dir: Path, splits: Sequence[str] = ("dev", "test")) -> tuple[pd.DataFrame, list[str]]:
@@ -1550,10 +1661,13 @@ def released_group_b_values(paths: ReportPaths, n_evaluable: int) -> tuple[int, 
 def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system: str | None = None) -> dict[str, Path]:
     """Cost table (plan, "Cost accounting"; design 6.9).
 
-    Per system: tokens per call under located and whole-document input (call mode from the
-    ``locator_miss`` column of ``predictions_{split}.csv``), tokens per document, the
-    locator fallback rate (whole-document calls over calls), the cost actually recorded in
-    the traces (every call, including superseded ones), the cost per document at the
+    Per system: the field-group mode of the counted calls (``field_groups``: ``all``, one call
+    per document for every LLM field, or ``split``, one call per listed group; see
+    :func:`_field_groups_label`), tokens per call under located and whole-document input
+    (call mode from the ``locator_miss`` column of ``predictions_{split}.csv``,
+    :func:`_call_modes`), tokens per document, the locator fallback rate (whole-document calls
+    over calls), the cost actually recorded in the traces (every call, including superseded
+    ones and calls of the other field-group mode), the cost per document at the
     ``prices.yaml`` list price over the latest call per (document, field group), cost per
     correct field (``scored_{split}.csv``), the corpus cost (spent from
     ``data/traces/corpus`` when the system ran there, else cost per document x evaluable
@@ -1562,6 +1676,14 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
     ("wage not set" while it is null). The review table gives the three operating points
     with the Group B review curve's residual error, reviewer minutes per value from the
     audit timers (:func:`reviewer_minutes`) and the extraction cost of ``corpus_system``.
+
+    Field-group modes: an ``all`` call covers every listed group, and its tokens count once
+    for its document. No per-field-group token view is reported: in the ``all`` mode the
+    system prompt, the schema and the sections sent are shared by every group, so any split
+    of one call's tokens between groups would be an allocation rule, not a measurement, and
+    giving the whole call to each group would count it four times. When a document has calls
+    of both modes, only the mode recorded in the run log (else that of the newest trace) is
+    counted (:func:`latest_traces`).
     """
     paths = paths or ReportPaths()
     prices = yaml.safe_load(paths.prices.read_text(encoding="utf-8")) if paths.prices.exists() else {}
@@ -1572,7 +1694,8 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
 
     traces = read_traces_dir(paths.trace_dir / split)
     corpus_traces = read_traces_dir(paths.trace_dir / "corpus") if split != "corpus" else traces
-    run_log = read_run_log_latest(paths.inp(f"run_log_{split}.jsonl"))
+    run_log_path = paths.inp(f"run_log_{split}.jsonl")
+    run_log = read_run_log_latest(run_log_path)
     pred_path = paths.inp(f"predictions_{split}.csv")
     predictions = _read_csv(pred_path) if pred_path.exists() else pd.DataFrame()
     modes = _call_modes(predictions)
@@ -1580,7 +1703,7 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
     scored = _read_csv(scored_path) if scored_path.exists() else pd.DataFrame()
 
     systems = sorted({s for _, s in run_log} | {trace_system(t) for t in traces})
-    latest = latest_traces(traces)
+    latest = latest_traces(traces, run_log_field_groups(run_log_path))
     rows: list[dict[str, Any]] = []
     for system in systems:
         sys_latest = [t for t in latest if trace_system(t) == system]
@@ -1610,6 +1733,7 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
             cost_total = float(sum(per_doc_cost.values())) if per_doc_cost else math.nan
             cost_per_doc = cost_total / len(per_doc_cost) if per_doc_cost else math.nan
             row.update(
+                field_groups=_field_groups_label(sys_latest),
                 n_calls=n_calls, n_calls_whole_document=len(whole), n_calls_mode_unknown=unknown,
                 locator_fallback_rate=(len(whole) / (len(whole) + len(located))) if (whole or located) else math.nan,
                 input_tokens_per_call_located=float(np.mean([t.input_tokens or 0 for t in located])) if located else math.nan,
@@ -1747,7 +1871,7 @@ def _table3_md(
     sheets: list[str], corpus_system: str | None, n_evaluable: int, wage: Any,
 ) -> str:
     headers = [
-        "System", "Documents", "Calls", "Locator fallback", "Input tokens per call, located",
+        "System", "Field groups", "Documents", "Calls", "Locator fallback", "Input tokens per call, located",
         "Input tokens per call, whole document", "Tokens per document (in / out)", "Price", "Cost spent (USD)",
         "Cost per document (USD)", "Cost per correct field (USD)", "Corpus cost (USD)", "Wall clock (s)",
         "Minutes per document",
@@ -1761,7 +1885,8 @@ def _table3_md(
         if r.get("corpus_cost_basis") and corpus:
             corpus = f"{corpus} ({r['corpus_cost_basis']})"
         body.append([
-            r["system"], cell(r.get("n_docs")), cell(r.get("n_calls")), pct(r.get("locator_fallback_rate")),
+            r["system"], r.get("field_groups") or "", cell(r.get("n_docs")), cell(r.get("n_calls")),
+            pct(r.get("locator_fallback_rate")),
             _num_str(r.get("input_tokens_per_call_located")), _num_str(r.get("input_tokens_per_call_whole_document")),
             tok, r.get("price_status", ""), _usd(r.get("cost_spent_usd")), _usd(r.get("cost_per_doc_usd")),
             _usd(r.get("cost_per_correct_field_usd")), corpus, _num_str(r.get("wall_clock_s"), 1),
@@ -1777,6 +1902,7 @@ def _table3_md(
     man_body = [[r["field"], r.get("source", ""), cell(r["n_rows_timed"]), _num_str(r["mean_minutes"], 2)]
                 for r in manual_fields]
     wage_txt = WAGE_NOT_SET if wage is None else f"{float(wage):.2f} USD per hour"
+    used = "; ".join(f"{r['system']}: {r['field_groups']}" for r in rows if r.get("field_groups"))
     parts = [
         f"# Table 3. Cost ({split} split)",
         "",
@@ -1786,6 +1912,16 @@ def _table3_md(
         "calls with a known input mode. Pricing mode: standard (no Batch API path). Manual baseline: gold "
         f"label timers ({', '.join(sheets) if sheets else 'no sheet found'}); wage: {wage_txt}. Corpus: "
         f"{n_evaluable} evaluable documents.",
+        "",
+        f"Field-group mode used: {used or 'none (no located or whole-document LLM calls)'}. Field groups: all = "
+        "one LLM call per document for every field (run --field-groups all, the default), split = one call per "
+        "llm_field_groups entry of config/fields.yaml; closed book is one call per document in either mode. "
+        "Tokens per document count each call once, so an all call is counted once for its document; no "
+        "per-field-group token view is given, since one all call serves every group. A document with calls of "
+        "both modes counts the mode of its last successful run-log entry (else that of its newest trace); the "
+        "calls of the other mode enter cost spent only. Under all, the one call of a document sends the whole "
+        "document when any field group had no located section, so locator fallback is a share of documents; "
+        "under split it is a share of field-group calls.",
         "",
         md_table(headers, body),
         f"## Review operating points (corpus tier: {corpus_system or 'not chosen'})",

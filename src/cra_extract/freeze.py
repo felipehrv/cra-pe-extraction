@@ -15,11 +15,15 @@ the pre-registration is complete:
    (``cra label hash --split test``).
 3. ``rules.RULES_VERSION``, ``prompts.PROMPT_VERSION``,
    ``prompts.CLOSED_BOOK_PROMPT_VERSION``, the effort per backend (``llm.DEFAULT_EFFORT``,
-   part of the replay key) and the sha256 of ``config/fields.yaml`` and
+   part of the replay key), the field-group mode of the LLM runs (``run --field-groups``:
+   ``all``, one call per document for every field, or ``split``, one call per listed group;
+   the two modes never share a prompt hash) and the sha256 of ``config/fields.yaml`` and
    ``config/headings.yaml`` are appended to
    ``docs/hashes.md`` under a dated "Freeze" heading, and that one file is committed
    so the tag points at a commit that contains the record (``--no-commit`` leaves it
-   in the working tree instead).
+   in the working tree instead). The field-group mode is ``--field-groups`` when given, else
+   the ``FIELD_GROUPS`` default read from the Makefile text, else ``all`` (the run stage's
+   default); a value outside ``all`` and ``split`` fails the checks.
 4. The annotated tag is created with a message listing those versions. An existing
    tag is refused unless ``--force-retag`` moves it (``git tag -f``); tags are never
    deleted.
@@ -27,7 +31,7 @@ the pre-registration is complete:
 CLI::
 
     python -m cra_extract.freeze --tag plan-v1.0 [--check-only] [--date YYYY-MM-DD]
-        [--force-retag] [--no-commit] [--root DIR]
+        [--field-groups all|split] [--force-retag] [--no-commit] [--root DIR]
 
 Exit codes: 0 frozen (or all checks pass with ``--check-only``), 1 a check failed,
 2 git is unavailable or the arguments are invalid.
@@ -59,8 +63,18 @@ HASHES_REL = Path("docs/hashes.md")
 MANIFEST_REL = Path("config/corpus.csv")
 FIELDS_REL = Path("config/fields.yaml")
 HEADINGS_REL = Path("config/headings.yaml")
+MAKEFILE_REL = Path("Makefile")
 
 _HEADING_LINE = re.compile(r"^\s{0,3}#{1,6}\s+(?P<text>.+?)\s*#*\s*$")
+# A Makefile assignment of FIELD_GROUPS (``?=``, ``=``, ``:=`` or ``::=``, optionally exported or
+# overridden); the value runs to the end of the line or to a comment.
+_FIELD_GROUPS_LINE = re.compile(
+    r"^(?:export\s+|override\s+)?FIELD_GROUPS\s*(?:\?|:{1,2})?=[ \t]*(?P<value>[^#\n]*)", re.MULTILINE
+)
+# Sources of the recorded field-group mode.
+FIELD_GROUPS_FROM_CLI = "--field-groups"
+FIELD_GROUPS_FROM_MAKEFILE = "Makefile FIELD_GROUPS default"
+FIELD_GROUPS_FROM_DEFAULT = "run default, no FIELD_GROUPS line in the Makefile"
 
 
 class FreezeError(RuntimeError):
@@ -82,6 +96,8 @@ class FreezeRecord:
     test_doc_hash: str
     closed_book_prompt_version: str = ""
     effort: str = ""
+    field_groups: str = ""
+    field_groups_source: str = ""
 
     def lines(self) -> list[str]:
         """The version list as ``key: value`` lines (shared by the record and the tag)."""
@@ -90,6 +106,9 @@ class FreezeRecord:
             extra.append(f"closed_book_prompt_version: {self.closed_book_prompt_version}")
         if self.effort:
             extra.append(f"effort per backend: {self.effort}")
+        if self.field_groups:
+            source = f" ({self.field_groups_source})" if self.field_groups_source else ""
+            extra.append(f"field_groups: {self.field_groups}{source}")
         return [
             f"rules_version: {self.rules_version}",
             f"prompt_version: {self.prompt_version}",
@@ -246,8 +265,41 @@ def effort_line() -> str:
     return ", ".join(f"{b}={v or 'none'}" for b, v in sorted(DEFAULT_EFFORT.items()))
 
 
-def collect_record(root: Path, tag: str, frozen_on: date, manifest: list[DocRecord]) -> FreezeRecord:
+def makefile_field_groups(path: Path) -> str | None:
+    """The ``FIELD_GROUPS`` default of a Makefile: the value of its first ``FIELD_GROUPS``
+    assignment line, stripped (an empty value gives ``""``), or None when the file or the line
+    is missing."""
+    path = Path(path)
+    if not path.exists():
+        return None
+    m = _FIELD_GROUPS_LINE.search(path.read_text(encoding="utf-8"))
+    return None if m is None else m.group("value").strip()
+
+
+def resolve_field_groups(root: Path, field_groups: str | None = None) -> tuple[str, str]:
+    """(field-group mode, source) the freeze records: ``field_groups`` (``--field-groups``) when
+    given, else the Makefile ``FIELD_GROUPS`` default, else ``all``, the run stage's default."""
+    if field_groups is not None:
+        return field_groups, FIELD_GROUPS_FROM_CLI
+    value = makefile_field_groups(Path(root) / MAKEFILE_REL)
+    if value is not None:
+        return value, FIELD_GROUPS_FROM_MAKEFILE
+    return prompts.ALL_GROUP, FIELD_GROUPS_FROM_DEFAULT
+
+
+def check_field_groups(root: Path, field_groups: str | None = None) -> list[str]:
+    """Problems with the field-group mode to record: a value outside ``prompts.GROUP_MODES``."""
+    mode, source = resolve_field_groups(root, field_groups)
+    if mode in prompts.GROUP_MODES:
+        return []
+    return [f"field-group mode {mode!r} ({source}) is not one of {', '.join(prompts.GROUP_MODES)}"]
+
+
+def collect_record(
+    root: Path, tag: str, frozen_on: date, manifest: list[DocRecord], field_groups: str | None = None
+) -> FreezeRecord:
     """Gather the versions and hashes that the freeze pins down."""
+    mode, source = resolve_field_groups(root, field_groups)
     return FreezeRecord(
         tag=tag,
         frozen_on=frozen_on,
@@ -255,6 +307,8 @@ def collect_record(root: Path, tag: str, frozen_on: date, manifest: list[DocReco
         prompt_version=prompts.PROMPT_VERSION,
         closed_book_prompt_version=prompts.CLOSED_BOOK_PROMPT_VERSION,
         effort=effort_line(),
+        field_groups=mode,
+        field_groups_source=source,
         fields_sha256=sha256_file(root / FIELDS_REL),
         headings_sha256=sha256_file(root / HEADINGS_REL),
         n_test_docs=len(split_docs(manifest, "test")),
@@ -280,7 +334,7 @@ def record_freeze(record: FreezeRecord, hashes_path: Path) -> None:
 # ----------------------------------------------------------------------------- checks
 
 
-def run_checks(root: Path, tag: str, force_retag: bool = False) -> list[str]:
+def run_checks(root: Path, tag: str, force_retag: bool = False, field_groups: str | None = None) -> list[str]:
     """Every precondition of the freeze, as a list of problems (empty means ready).
 
     Creates the analysis plan template when it is missing, which itself fails the
@@ -308,6 +362,7 @@ def run_checks(root: Path, tag: str, force_retag: bool = False) -> list[str]:
     for rel in (FIELDS_REL, HEADINGS_REL):
         if not (root / rel).exists():
             problems.append(f"{rel}: file is missing")
+    problems.extend(check_field_groups(root, field_groups))
 
     if tag_exists(root, tag) and not force_retag:
         problems.append(f"tag {tag} already exists; pass --force-retag to move it (tags are never deleted)")
@@ -321,18 +376,20 @@ def freeze(
     check_only: bool = False,
     force_retag: bool = False,
     commit: bool = True,
+    field_groups: str | None = None,
 ) -> tuple[list[str], FreezeRecord | None]:
     """Run the checks and, when they pass and ``check_only`` is false, record the
-    versions, commit the record and create the tag.
+    versions, commit the record and create the tag. ``field_groups`` is the field-group
+    mode to record (None: the Makefile default, see :func:`resolve_field_groups`).
 
     Returns ``(problems, record)``; ``record`` is None when nothing was written.
     """
     root = Path(root)
-    problems = run_checks(root, tag, force_retag)
+    problems = run_checks(root, tag, force_retag, field_groups)
     if problems or check_only:
         return problems, None
     manifest = read_manifest(root / MANIFEST_REL)
-    record = collect_record(root, tag, frozen_on or date.today(), manifest)
+    record = collect_record(root, tag, frozen_on or date.today(), manifest, field_groups)
     record_freeze(record, root / HASHES_REL)
     if commit:
         commit_paths(root, [HASHES_REL], f"Freeze {tag}: record versions and hashes")
@@ -356,6 +413,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--tag", default=PLAN_TAG, help=f"annotated tag to create (default {PLAN_TAG})")
     p.add_argument("--check-only", action="store_true", help="run the checks and write nothing")
     p.add_argument("--date", type=_parse_date, default=None, help="freeze date for the record (default today)")
+    p.add_argument(
+        "--field-groups", choices=prompts.GROUP_MODES, default=None,
+        help="field-group mode of the LLM runs to record (default: the FIELD_GROUPS default of the "
+        f"Makefile, else {prompts.ALL_GROUP})",
+    )
     p.add_argument("--force-retag", action="store_true", help="move an existing tag instead of refusing")
     p.add_argument("--no-commit", action="store_true", help="leave the docs/hashes.md record uncommitted")
     p.add_argument("--root", type=Path, default=ROOT, help="repository root (default: this checkout)")
@@ -369,6 +431,7 @@ def main(argv: list[str] | None = None) -> int:
             check_only=a.check_only,
             force_retag=a.force_retag,
             commit=not a.no_commit,
+            field_groups=a.field_groups,
         )
     except FreezeError as e:
         print(f"freeze refused: {e}", file=sys.stderr)

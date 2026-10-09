@@ -19,6 +19,7 @@ from cra_extract import freeze, label, prompts, rules
 
 TEST_IDS = ["FDIC_2001_20240101", "OCC_1002_20240202", "FRB_3003_20240303"]
 DEV_IDS = ["OCC_1001_20240404"]
+REPO_MAKEFILE = Path(__file__).parent.parent / "Makefile"
 
 
 def _git(repo: Path, *args: str) -> str:
@@ -43,6 +44,16 @@ def _plan(complete: bool = True, drop: str | None = None) -> str:
         parts.append(f"## {h}\n")
         parts.append("Written.\n" if complete else "TODO: write this.\n")
     return "\n".join(parts)
+
+
+def _makefile(field_groups: str = "all") -> str:
+    """A Makefile with the FIELD_GROUPS default and a recipe that uses it, as in the real one."""
+    return (
+        "PY ?= .venv/bin/python\n"
+        "# LLM calls per document (run --field-groups).\n"
+        f"FIELD_GROUPS ?= {field_groups}\n"
+        "pilot:\n\t$(PY) -m cra_extract.run --split dev --field-groups $(FIELD_GROUPS)\n"
+    )
 
 
 def _write(repo: Path, rel: str, text: str) -> Path:
@@ -77,6 +88,7 @@ def repo(tmp_path: Path, monkeypatch) -> Path:
     _write(repo, "config/fields.yaml", "fields: {}\n")
     _write(repo, "config/headings.yaml", "OCC: []\n")
     _write(repo, "docs/analysis_plan.md", _plan(complete=True))
+    _write(repo, "Makefile", _makefile("all"))
     manifest = label.read_manifest(repo / "config/corpus.csv")
     label.record_hashes("test", 3, label.split_hash(manifest, "test"), None, None, repo / "docs/hashes.md")
     _commit_all(repo, "init")
@@ -232,6 +244,8 @@ def test_freeze_creates_tag_record_and_commit(repo: Path, capsys):
     assert f"prompt_version: {prompts.PROMPT_VERSION}" in msg
     assert f"closed_book_prompt_version: {prompts.CLOSED_BOOK_PROMPT_VERSION}" in msg
     assert "effort per backend: anthropic=low, gemini=low" in msg
+    assert "field_groups: all (Makefile FIELD_GROUPS default)" in msg
+    assert msg.index("effort per backend") < msg.index("field_groups: ") < msg.index("fields.yaml sha256")
     assert f"fields.yaml sha256: {fields_sha}" in msg
     assert f"headings.yaml sha256: {headings_sha}" in msg
     assert f"test split: 3 documents, doc_id list sha256 {expected_hash}" in msg
@@ -240,12 +254,67 @@ def test_freeze_creates_tag_record_and_commit(repo: Path, capsys):
     text = (repo / "docs/hashes.md").read_text()
     assert "## Freeze 2026-10-13 (plan-v1.0)\n" in text
     assert f"- fields.yaml sha256: {fields_sha}" in text
+    assert "- field_groups: all (Makefile FIELD_GROUPS default)\n" in text
     assert text.index("| test | 3 |") < text.index("## Freeze")
     tagged_file = _git(repo, "show", "plan-v1.0:docs/hashes.md")
     assert "## Freeze 2026-10-13 (plan-v1.0)" in tagged_file
     assert _git(repo, "rev-parse", "plan-v1.0^{commit}").strip() != head_before
     assert _git(repo, "log", "-1", "--format=%s").strip() == "Freeze plan-v1.0: record versions and hashes"
     assert _git(repo, "status", "--porcelain") == ""
+
+
+def test_freeze_records_the_field_group_mode_from_the_makefile_or_the_flag(repo: Path, capsys):
+    _write(repo, "Makefile", _makefile("split"))
+    _commit_all(repo, "split default")
+    problems, record = freeze.freeze(repo, frozen_on=date(2026, 10, 13))
+    assert problems == [] and record is not None
+    assert (record.field_groups, record.field_groups_source) == ("split", freeze.FIELD_GROUPS_FROM_MAKEFILE)
+    text = (repo / "docs/hashes.md").read_text()
+    assert "- field_groups: split (Makefile FIELD_GROUPS default)\n" in text
+    assert "field_groups: split" in _git(repo, "show", "plan-v1.0:docs/hashes.md")
+
+    # --field-groups overrides the Makefile text; the record names the source.
+    rc = freeze.main(["--root", str(repo), "--force-retag", "--field-groups", "all", "--date", "2026-10-14"])
+    assert rc == 0
+    assert "field_groups: all (--field-groups)" in capsys.readouterr().out
+    msg = _git(repo, "for-each-ref", "--format=%(contents)", "refs/tags/plan-v1.0")
+    assert "field_groups: all (--field-groups)" in msg
+    assert "## Freeze 2026-10-14 (plan-v1.0)\n" in (repo / "docs/hashes.md").read_text()
+
+
+def test_field_group_mode_defaults_to_all_without_a_makefile_line(repo: Path):
+    (repo / "Makefile").unlink()
+    _commit_all(repo, "drop Makefile")
+    assert freeze.makefile_field_groups(repo / "Makefile") is None
+    assert freeze.resolve_field_groups(repo) == ("all", freeze.FIELD_GROUPS_FROM_DEFAULT)
+    _write(repo, "Makefile", "PY ?= python\npilot:\n\t$(PY) -m cra_extract.run --field-groups $(FIELD_GROUPS)\n")
+    _commit_all(repo, "Makefile without the default")
+    assert freeze.run_checks(repo, "plan-v1.0") == []
+    problems, record = freeze.freeze(repo, frozen_on=date(2026, 10, 13), commit=False)
+    assert problems == [] and record is not None
+    assert "field_groups: all (run default, no FIELD_GROUPS line in the Makefile)" in record.lines()
+
+
+def test_check_fails_on_an_unknown_makefile_field_group_mode(repo: Path, capsys):
+    _write(repo, "Makefile", _makefile("both  # a comment"))
+    _commit_all(repo, "bad default")
+    assert freeze.makefile_field_groups(repo / "Makefile") == "both"
+    rc = freeze.main(["--check-only", "--root", str(repo)])
+    assert rc == 1
+    assert "field-group mode 'both' (Makefile FIELD_GROUPS default) is not one of all, split" in capsys.readouterr().out
+    # The flag sets the mode the freeze records, so the Makefile text is not consulted.
+    assert freeze.run_checks(repo, "plan-v1.0", field_groups="split") == []
+    _write(repo, "Makefile", _makefile(""))
+    _commit_all(repo, "empty default")
+    [msg] = freeze.run_checks(repo, "plan-v1.0")
+    assert msg.startswith("field-group mode '' (Makefile FIELD_GROUPS default)")
+    with pytest.raises(SystemExit):
+        freeze.main(["--check-only", "--root", str(repo), "--field-groups", "both"])
+    assert "invalid choice" in capsys.readouterr().err
+
+
+def test_repo_makefile_field_group_default_is_a_known_mode():
+    assert freeze.makefile_field_groups(REPO_MAKEFILE) in prompts.GROUP_MODES
 
 
 def test_freeze_no_commit_leaves_record_in_tree(repo: Path):

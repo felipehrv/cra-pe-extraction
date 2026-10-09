@@ -180,7 +180,7 @@ eval-dev:
 	$(PY) -m cra_extract.evaluate --split dev
 
 freeze:
-	$(PY) -m cra_extract.freeze --tag plan-v1.0
+	$(PY) -m cra_extract.freeze --tag plan-v1.0 --field-groups $(FIELD_GROUPS)
 
 # Before the single test scoring run: the ablation (if Decision 3 says yes), the closed-book
 # baseline and the S5 rows (make ablation closed-book s5-test), all into predictions_test.csv.
