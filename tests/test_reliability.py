@@ -1,4 +1,5 @@
-"""Tests for cra_extract.reliability (Group B reliability check) on a synthetic manifest."""
+"""Tests for cra_extract.reliability: inter-reader agreement on tiny synthetic reader files, and
+the withdrawn second-coding branch on a synthetic manifest."""
 
 from __future__ import annotations
 
@@ -12,6 +13,7 @@ import yaml
 
 from cra_extract import label, reliability, report
 from cra_extract.models import DocRecord, make_doc_id
+from cra_extract.stats import cohen_kappa, wilson_ci
 from cra_extract.strata import SAMPLE_DOC_IDS
 
 
@@ -149,9 +151,193 @@ def test_every_stage_is_exposed_in_the_cli_and_the_makefile():
     for target in ("overrides", "overrides-check", "tuning-docs", "census-draw", "census-sheet", "census-score",
                    "census-double", "census-compare", "s5-routing", "s5-apply", "s5-test", "group-a-corpus",
                    "risk-corpus", "audit-sheet", "audit", "reliability-draw", "reliability-sheet",
-                   "reliability-compare", "report", "eval-pair", "ablation", "closed-book", "dev-rerun", "project"):
+                   "reliability-compare", "reliability", "report", "eval-pair", "ablation", "closed-book", "dev-rerun", "project"):
         assert f"\n{target}:" in text, target
     assert "TEST_SEED ?= 20261013" in text and "AUDIT_SEED ?= 20261016" in text
     assert "--seed $(TEST_SEED)" in text and "--seed $(AUDIT_SEED)" in text
     assert "--check results/table1_test.csv" in text and "--check results/table1.csv" not in text
     assert "AUDIT_SYSTEM ?= s5" in text
+    assert "-m cra_extract.reliability agreement" in text
+
+
+# ----------------------------------------------------------------------------- agreement
+
+READ_COLUMNS = ["doc_id", "field", "value", "null_reason", "evidence_page", "quote", "notes"]
+CENSUS_FIELDS = [
+    "finding_present", "finding_type", "rating_effect", "rating_lowered", "rating_lowered_level",
+    "rating_before", "rating_after", "laws_cited", "practice_basis", "finding_source",
+    "distractor_laws_named",
+]
+
+
+def _write_doc_reads(folder: Path, doc_id: str, reader: str, cells: dict[str, tuple[str, str]]) -> None:
+    folder.mkdir(parents=True, exist_ok=True)
+    rows = [{"doc_id": doc_id, "field": f, "value": v, "null_reason": nr, "evidence_page": "",
+             "quote": "", "notes": ""} for f, (v, nr) in cells.items()]
+    pd.DataFrame(rows, columns=READ_COLUMNS).to_csv(folder / f"{doc_id}.{reader}.csv", index=False)
+
+
+def _census_row(doc_id: str, **cells: str) -> dict[str, str]:
+    row = {"doc_id": doc_id, **dict.fromkeys(CENSUS_FIELDS, "NA"), "evidence_page": "", "quote": "", "notes": ""}
+    row.update(finding_present="false", rating_lowered="false", distractor_laws_named="false")
+    row.update(cells)
+    return row
+
+
+@pytest.fixture
+def gold(tmp_path) -> Path:
+    """Four dev documents and three census sections, read by A and B."""
+    g = tmp_path / "gold"
+    dev = g / "dev_reads"
+    # overall_rating: A = S S NI O, B = S S S O (3 of 4 agree; both readers use >= 2 classes).
+    # finding_present: false for every document by both readers (one class only).
+    # loan_products_evaluated: order, case and spacing differ but the sets agree on D0..D2;
+    #   D3 differs by one element.
+    # n_full_scope: null code vs "NA" in the value cell is the same category.
+    a_rating = ["S", "S", "NI", "O"]
+    b_rating = ["S", "S", "S", "O"]
+    a_lp = ["home_mortgage|small_business", "consumer", "small_farm", "home_mortgage"]
+    b_lp = ["Small_Business | home_mortgage", "consumer", "small_farm", "home_mortgage|consumer"]
+    for i in range(4):
+        doc = f"FDIC_{100 + i}_20240101"
+        _write_doc_reads(dev, doc, "a", {
+            "overall_rating": (a_rating[i], ""), "finding_present": ("false", ""),
+            "loan_products_evaluated": (a_lp[i], ""), "n_full_scope": ("", "not_applicable"),
+        })
+        _write_doc_reads(dev, doc, "b", {
+            "overall_rating": (b_rating[i], ""), "finding_present": ("FALSE", ""),
+            "loan_products_evaluated": (b_lp[i], ""), "n_full_scope": ("NA", ""),
+        })
+    pd.DataFrame([
+        {"doc_id": "FDIC_102_20240101", "field": "overall_rating", "reader_a": "NI", "reader_b": "S", "final": "NI", "note": ""},
+        {"doc_id": "FDIC_103_20240101", "field": "loan_products_evaluated", "reader_a": "", "reader_b": "", "final": "", "note": ""},
+    ]).to_csv(g / "dev_disputes.csv", index=False)
+    census = g / "census_reads"
+    census.mkdir(parents=True)
+    a_rows = [
+        _census_row("OCC_1_20230101", finding_present="true", finding_type="discrimination",
+                    laws_cited="ECOA_RegB|FHA", practice_basis="ABS", finding_source="this_CRA_exam"),
+        _census_row("OCC_2_20230101"),
+        _census_row("OCC_3_20230101", distractor_laws_named="true"),
+    ]
+    b_rows = [
+        _census_row("OCC_1_20230101", finding_present="True", finding_type="discrimination",
+                    laws_cited="FHA|ECOA_RegB", practice_basis="redlining", finding_source="this_CRA_exam"),
+        _census_row("OCC_2_20230101"),
+        _census_row("OCC_3_20230101", distractor_laws_named="false"),
+    ]
+    pd.DataFrame(a_rows).to_csv(census / "batch1.a.csv", index=False)
+    pd.DataFrame(b_rows).to_csv(census / "batch1.b.csv", index=False)
+    pd.DataFrame([
+        {"doc_id": "OCC_1_20230101", "fields": "practice_basis", "adjudicated": "True"},
+        {"doc_id": "OCC_3_20230101", "fields": "distractor_laws_named|finding_source", "adjudicated": "True"},
+    ]).to_csv(g / "census_disputes.csv", index=False)
+    return g
+
+
+def test_canonical_value_categories():
+    cv = reliability.canonical_value
+    assert cv("n_full_scope", "", "not_applicable") == cv("n_full_scope", "NA") == "null:not_applicable"
+    assert cv("practice_basis", "ABS") == cv("practice_basis", "", "absent_from_document") == "null:absent_from_document"
+    assert cv("practice_basis", "ABS") != cv("practice_basis", "NA")
+    assert cv("laws_cited", "FHA | ECOA_RegB") == cv("laws_cited", "ecoa_regb|fha") == "ecoa_regb|fha"
+    assert cv("finding_present", "True") == "true" and cv("finding_present", "no") == "false"
+    assert cv("bank_name", "  First   State\tBank ") == cv("bank_name", "FIRST STATE BANK") == "first state bank"
+    assert cv("exam_date", "March 4, 2024") == "2024-03-04"
+    assert cv("n_assessment_areas", "2.0") == "2" and cv("avg_ltd_ratio_pct", "71.50") == "71.5"
+    assert cv("bank_name", "") == ""
+
+
+def test_agreement_arithmetic_and_wilson(gold):
+    table, summary = reliability.agreement(gold)
+    assert list(table.columns) == reliability.AGREEMENT_COLUMNS
+    t = table.set_index(["split", "field"])
+    r = t.loc[("dev", "overall_rating")]
+    assert (r["n"], r["agree"]) == (4, 3)
+    assert r["pct"] == pytest.approx(75.0)
+    lo, hi = wilson_ci(3, 4)
+    assert (r["ci_low"], r["ci_high"]) == (pytest.approx(100 * lo), pytest.approx(100 * hi))
+    assert (t.loc[("dev", "n_full_scope"), "n"], t.loc[("dev", "n_full_scope"), "agree"]) == (4, 4)
+    pooled = t.loc[("dev", "pooled")]
+    # 4 fields x 4 documents; disagreements: overall_rating D2, loan_products_evaluated D3.
+    assert (pooled["n"], pooled["agree"]) == (16, 14)
+    assert summary["dev"]["documents"] == 4 and summary["dev"]["fields"] == 4
+    census = t.loc[("census", "pooled")]
+    assert (census["n"], census["agree"]) == (33, 31)  # 11 fields x 3 sections
+    overall = t.loc[("all", "pooled")]
+    assert (overall["n"], overall["agree"]) == (49, 45)
+    fp = t.loc[("all", "finding_present")]
+    assert fp["n"] == 7 and "splits census, dev" in fp["note"]
+
+
+def test_kappa_only_when_both_readers_use_two_classes(gold):
+    table, _ = reliability.agreement(gold)
+    t = table.set_index(["split", "field"])
+    r = t.loc[("dev", "overall_rating")]
+    assert r["kappa"] == pytest.approx(cohen_kappa(["s", "s", "ni", "o"], ["s", "s", "s", "o"]))
+    fp = t.loc[("dev", "finding_present")]
+    assert fp["agree"] == 4 and math.isnan(fp["kappa"])
+    assert "kappa not computed" in fp["note"] and "'false', prevalence 1.000" in fp["note"]
+    # Census: finding_present true on one section, false on two, by both readers.
+    assert t.loc[("census", "finding_present"), "kappa"] == pytest.approx(1.0)
+    # distractor_laws_named: A uses two classes, B only one -> no kappa.
+    dl = t.loc[("census", "distractor_laws_named")]
+    assert math.isnan(dl["kappa"]) and "reader A uses 2 and reader B 1 category" in dl["note"]
+    assert math.isnan(t.loc[("dev", "pooled"), "kappa"])
+
+
+def test_sets_compare_as_sorted_elements(gold):
+    table, _ = reliability.agreement(gold)
+    t = table.set_index(["split", "field"])
+    lp = t.loc[("dev", "loan_products_evaluated")]
+    assert (lp["n"], lp["agree"]) == (4, 3)
+    assert "element-wise 19/20 agree over 5 elements" in lp["note"]
+    laws = t.loc[("census", "laws_cited")]
+    assert laws["agree"] == 3  # "ECOA_RegB|FHA" and "FHA|ECOA_RegB" agree
+    pb = t.loc[("census", "practice_basis")]
+    assert pb["agree"] == 2  # ABS (a null) differs from redlining
+
+
+def test_adjudication_rate_and_dispute_checks(gold):
+    table, summary = reliability.agreement(gold)
+    t = table.set_index(["split", "field"])
+    assert summary["dev"]["n_disputed"] == 2
+    assert "adjudication rate 2/16 = 12.5%" in t.loc[("dev", "pooled"), "note"]
+    assert "adjudicated 1 of 4" in t.loc[("dev", "overall_rating"), "note"]
+    # Census: "fields" holds several fields joined with "|"; finding_source is disputed
+    # although both readers agree on it, and every disagreement is listed.
+    assert summary["census"]["n_disputed"] == 3
+    assert "adjudication rate 3/33" in t.loc[("census", "pooled"), "note"]
+    assert "1 disputed item(s) agree" in t.loc[("census", "finding_source"), "note"]
+    assert summary["census"]["unlisted"] == 0
+    assert "adjudication rate 5/49" in t.loc[("all", "pooled"), "note"]
+    assert "2 items were sent to adjudication (adjudication rate 12.5 percent)" in reliability.split_sentence("dev", summary["dev"])
+
+
+def test_unlisted_disagreement_and_unpaired_items(gold):
+    (gold / "dev_disputes.csv").unlink()
+    doc = "FDIC_900_20240101"
+    _write_doc_reads(gold / "dev_reads", doc, "a", {"overall_rating": ("S", "")})
+    table, summary = reliability.agreement(gold, splits=("dev",))
+    t = table.set_index(["split", "field"])
+    assert summary["dev"]["n_disputed"] == 0 and summary["dev"]["unlisted"] == 2
+    assert "1 disagreement(s) not in the dispute list" in t.loc[("dev", "overall_rating"), "note"]
+    assert "1 item(s) read by one reader only" in t.loc[("dev", "pooled"), "note"]
+    assert ("all", "pooled") not in t.index  # one split: no overall rows
+    assert "not in the dispute list" in reliability.split_sentence("dev", summary["dev"])
+
+
+def test_agreement_cli_writes_csv_and_markdown(gold, tmp_path, capsys):
+    out = tmp_path / "results" / "reliability.csv"
+    assert reliability.main(["agreement", "--gold-dir", str(gold), "--out", str(out)]) == 0
+    df = pd.read_csv(out, dtype=str, keep_default_na=False)
+    assert list(df.columns) == reliability.AGREEMENT_COLUMNS
+    assert {"dev", "census", "all"} == set(df["split"])
+    assert df[(df["split"] == "test")].empty
+    md = out.with_suffix(".md").read_text(encoding="utf-8")
+    assert "| split | field | n | agree | pct |" in md
+    assert "- dev: readers A and B agreed on 14 of 16 items" in md
+    assert "- test: no reader files found" in md
+    assert "\u2014" not in md and "\u2013" not in md
+    assert "dev: readers A and B agreed" in capsys.readouterr().out
+    assert reliability.main(["agreement", "--gold-dir", str(tmp_path / "none"), "--out", str(out)]) == 1

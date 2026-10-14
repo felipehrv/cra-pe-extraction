@@ -1,7 +1,7 @@
 PY ?= .venv/bin/python
 PIP ?= .venv/bin/pip
 
-.PHONY: env index index-replay fetch parse overrides overrides-check locate locator-check-draw locator-check-sheet locator-check-score templates rules baseline tuning-docs census-draw census-sheet census-validate census-score census-double census-compare group-a smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot project dev-rerun eval-dev freeze eval-test eval-pair ablation closed-book scale s5-routing s5-routing-provisional s5-apply s5-test group-a-corpus risk-corpus audit-sheet audit reliability-draw reliability-sheet reliability-compare report reproduce test lint
+.PHONY: env index index-replay fetch parse overrides overrides-check locate locator-check-draw locator-check-sheet locator-check-score templates rules baseline tuning-docs census-draw census-sheet census-validate census-score census-double census-compare group-a smoke-llm draw-dev draw-test draw-audit strata-show label-init label-validate label-hash pilot project dev-rerun eval-dev freeze eval-test eval-pair ablation closed-book scale s5-routing s5-routing-provisional s5-apply s5-test group-a-corpus risk-corpus audit-sheet audit reliability reliability-draw reliability-sheet reliability-compare report reproduce test lint
 
 # Needs a native (arm64 on Apple silicon) Python 3.11+. With an x86_64 Anaconda install,
 # use: CONDA_SUBDIR=osx-arm64 conda create -p ./.venv python=3.12 pip && make env PYTHON=.venv/bin/python
@@ -247,9 +247,15 @@ audit-sheet:
 audit:
 	$(PY) -m cra_extract.audit estimate --system $(AUDIT_SYSTEM) --predictions $(AUDIT_PREDICTIONS)
 
+# Inter-reader agreement (plan "Reliability", protocol of 2026-10-14): readers A and B before
+# adjudication, per split (dev, test, census) and field, from data/gold/{dev,test,census}_reads
+# and the dispute lists; writes results/reliability.csv and results/reliability.md.
+reliability:
+	$(PY) -m cra_extract.reliability agreement --out results/reliability.csv
+
 # Group B reliability (plan "Reliability"): REL_BRANCH=outside (8 test documents, outside coder)
-# or fallback (6 dev documents, author re-codes from 2026-10-13); writes results/reliability.csv,
-# the manual-review error line of Figure 1.
+# or fallback (6 dev documents, author re-codes from 2026-10-13); withdrawn on 2026-10-14, kept
+# for the record; compare writes results/reliability_second_coding.csv.
 REL_BRANCH ?= outside
 reliability-draw:
 	@test -n "$(REL_SEED)" -a -n "$(REL_DATE)" || (echo "set REL_SEED=<seed> REL_DATE=YYYY-MM-DD" && exit 2)

@@ -1211,16 +1211,24 @@ def load_curves(paths: ReportPaths) -> tuple[list[Curve], list[str]]:
 
 
 def manual_review_error(paths: ReportPaths) -> float | None:
-    """One minus pooled agreement on the Group B fields from ``results/reliability.csv``
-    (columns ``field``, ``n`` and ``n_agree``, or ``field``, ``n`` and ``agreement``);
-    ``None`` when the file is missing or holds no Group B row."""
+    """One minus pooled inter-reader agreement on the test split's Group B fields from
+    ``results/reliability.csv`` (columns ``split``, ``field``, ``n``, ``agree``; older layouts
+    with ``n_agree`` or ``agreement`` still read); ``None`` when the file is missing or holds
+    no Group B row. This is the manual-review reference line of Figure 1 (plan, Review curve)."""
     p = paths.inp("reliability.csv")
     if not p.exists():
         return None
     df = _read_csv(p)
+    if "split" in df.columns:
+        df = df[df["split"] == "test"]
     df = df[df["field"].isin(field_names("B"))]
     n = _num(df, "n").fillna(0)
-    agree = _num(df, "n_agree") if "n_agree" in df.columns else _num(df, "agreement") * n
+    if "agree" in df.columns:
+        agree = _num(df, "agree")
+    elif "n_agree" in df.columns:
+        agree = _num(df, "n_agree")
+    else:
+        agree = _num(df, "agreement") * n
     total = float(n.sum())
     return None if total <= 0 else 1.0 - float(agree.fillna(0).sum()) / total
 
