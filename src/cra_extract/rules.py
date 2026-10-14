@@ -62,6 +62,16 @@ CHANGELOG
   unit the LTD ratio and AA concentration sections are institution scope, so ``FieldValue.scope``
   changes for those sections. Manifest overrides (``config/manifest_overrides.yaml``):
   FDIC_445_20280408 is FDIC_445_20240408, FRB_785473_20220418 is parsed from its embedded PE.
+- 0.2.3 (2026-10-14): FDIC total assets read the LTD comparison table in the pymupdf text of
+  ``data/text`` (one cell per line), not only in the pdftotext layout of the fixtures. 0.2.2
+  required a column-gap row, which pymupdf never prints, so on every parsed FDIC PE the figure
+  came from the rounded description sentence (FDIC_12299_20220912 "approximately $1.2
+  billion" for the table's 1,159,094 thousand). The table is read for FDIC only; the subject
+  row is the first best token-set match of the bank name (or its initials, or the only row
+  the PE does not anonymize), the figure must be at least $5 million, and the as-of date also
+  reads a two-digit-year header ("12/31/23"). Otherwise the rule falls back to the sentence.
+  On the 1,757 non-test FDIC documents the table now gives 1,475 values, 1,280 of them
+  within 5 percent of the sentence figure.
 """
 
 from __future__ import annotations
@@ -91,7 +101,7 @@ from cra_extract.locate import (
 )
 from cra_extract.models import RATING_WORDS, FieldValue, Page, Rating, Section
 
-RULES_VERSION = "0.2.2"
+RULES_VERSION = "0.2.3"
 SYSTEM = "rules"
 CHANGELOG: list[tuple[str, str, str]] = [
     ("0.1.0", "2026-10-07", "First version, patterns seeded on the eight sample PEs."),
@@ -118,6 +128,14 @@ CHANGELOG: list[tuple[str, str, str]] = [
         "No pattern change; S1 inputs changed: locate scope_rules (review section always institution "
         "scope; LTD and AA concentration institution scope in one-unit documents) and the manifest "
         "overrides (FDIC_445_20240408 renamed, FRB_785473_20220418 parsed from its embedded PE).",
+    ),
+    (
+        "0.2.3",
+        "2026-10-14",
+        "FDIC total assets read the LTD comparison table in pymupdf one-cell-per-line text (0.2.2 "
+        "read only pdftotext layout rows, so parsed documents always fell back to the rounded "
+        "description sentence); FDIC only, subject row by bank name, initials or the only named "
+        "row, figure at least $5 million, two-digit-year header dates; sentence fallback otherwise.",
     ),
 ]
 
@@ -935,38 +953,208 @@ ASSETS_RES = [
     re.compile(r"(\$\s?\d[\d,]*(?:\.\d+)?\s*(?:billion|million|thousand)?)\s*\(total\s+assets\)", re.IGNORECASE),
 ]
 ASSETS_HEADER_RE = re.compile(r"total\s+assets\s+as\s+of", re.IGNORECASE)
-_HEADER_ROW_RE = re.compile(r"ratio|000|\(%\)|/\d{4}", re.IGNORECASE)
+# Header of the FDIC LTD comparison table. As one pdftotext layout row ("Bank   06/30/2022
+# LTD Ratio") it is recognized by _HEADER_ROW_RE; as one cell per line (pymupdf) every word
+# of the line is a header word once dates and the "($000s)" unit marker are removed
+# ("Average Net Loan-", "to-Deposit Ratio", "Bank Name", "March 31, 2022", "($ 000s)").
+_HEADER_ROW_RE = re.compile(r"ratio|\(\s*\$?\s*000s?\s*\)|\(%\)|\b\d{1,2}/\d{1,2}/\d{2,4}\b|total\s+assets", re.IGNORECASE)
+_HEADER_WORDS = frozenset(
+    "average net loan loans to deposit deposits ltd nltd ratio ratios bank banks name institution "
+    "institutions financial total assets as of in over quarter quarters calendar period".split()
+) | frozenset(_MONTHS)
+_UNIT_MARKER_RE = re.compile(r"\$?\s*\(\s*\$?\s*000s?\s*\)|\(%\)|%")
+_NUMERIC_CELL_RE = re.compile(r"[\d,.\s%$()-]*\d[\d,.\s%$()-]*")
+_TABLE_END_RE = re.compile(r"^source\b", re.IGNORECASE)
+_TABLE_NUM_RE = re.compile(r"\d[\d,]*(?:\.\d+)?")
+# Smallest plausible subject-bank total: a table labeled ($000s) that prints $ millions
+# (FDIC_14995_20240325 p8 "River Bank 1,073" for $1.07 billion) or prints thousands with no
+# unit marker (FDIC_5779_20240715 p7 "295,804") gives a figure below this, and the rule
+# falls back to the description sentence.
+MIN_TABLE_ASSETS = 5_000_000
+
+
+def _is_header_cell(text: str) -> bool:
+    """True for a table header line: only header words, dates and unit markers ("06/30/2022"
+    and "($000s)" alone are header lines)."""
+    rest = _UNIT_MARKER_RE.sub(" ", DATE_RE.sub(" ", _SHORT_NUM_DATE_RE.sub(" ", text)))
+    words = re.findall(r"[a-z]+|\d+", rest.lower())
+    return all(w in _HEADER_WORDS or w.isdigit() for w in words)
+
+
+@dataclass
+class _AssetsRow:
+    """One row of the LTD comparison table: label lines and the number tokens with the line
+    each came from (a layout row is one line holding both)."""
+
+    label: list[Sentence]
+    numbers: list[tuple[str, Sentence]]
+
+    @property
+    def text(self) -> str:
+        return " ".join(ln.text for ln in self.label)
+
+
+def _assets_rows(lines: list[Sentence]) -> list[_AssetsRow]:
+    """Rows of the comparison table below its header, in either text layout.
+
+    ``pdftotext -layout`` (the sample fixtures) prints a row as one line with column gaps;
+    pymupdf ``get_text()`` (``parse.extract_pages``, every ``data/text`` document) prints one
+    cell per line, so a bank name, its city line and its figures arrive on consecutive lines
+    (FDIC_16733_20240410 p7: "North Star Bank", "Roseville, MN", "352,077", "71.5"). Header
+    lines are skipped until the first row starts; the table ends at its "Source" line.
+    """
+    rows: list[_AssetsRow] = []
+    cur: _AssetsRow | None = None
+    for ln in lines:
+        text = ln.text.strip()
+        if _TABLE_END_RE.match(text):
+            break
+        if _NUMERIC_CELL_RE.fullmatch(text):
+            if cur is not None:
+                # "266, 880" (FDIC_254_20231127 p7) is one cell broken after its comma.
+                cell = re.sub(r",\s+(?=\d{3}\b)", ",", text)
+                cur.numbers += [(m.group(0), ln) for m in _TABLE_NUM_RE.finditer(cell)]
+            continue
+        if COLUMN_GAP.search(text):
+            label, rest = (re.split(r" {3,}", text, maxsplit=1) + [""])[:2]
+            nums = [m.group(0) for m in _TABLE_NUM_RE.finditer(rest)]
+            if not nums or _HEADER_ROW_RE.search(text) or _NUMERIC_CELL_RE.fullmatch(label):
+                if not rows and (cur is None or not cur.numbers):
+                    continue
+                break
+            if cur is not None and cur.numbers:
+                rows.append(cur)
+            label_lines = cur.label if cur is not None and not cur.numbers else []
+            cur = _AssetsRow(label_lines + [ln], [(n, ln) for n in nums])
+            continue
+        if not rows and (cur is None or not cur.numbers) and _is_header_cell(text):
+            continue
+        if cur is not None and cur.numbers:
+            rows.append(cur)
+            cur = None
+        if cur is None:
+            cur = _AssetsRow([ln], [])
+        else:
+            cur.label.append(ln)
+    if cur is not None and cur.numbers:
+        rows.append(cur)
+    return rows
+
+
+def _name_head(text: str) -> str:
+    """The name part of a bank label: before the first comma or parenthesis, letters and
+    digits only ("SouthStar Bank, S.S.B., Moulton, TX" gives "southstar bank")."""
+    head = re.split(r"[,(|]", text, maxsplit=1)[0]
+    return " ".join(re.findall(r"[a-z0-9]+", head.lower()))
+
+
+_GENERIC_NAME_WORDS = frozenset({"bank", "the", "of", "and"})
+MIN_NAME_SCORE = 85
+# Comparator rows that the PE anonymizes ("Similarly-Situated Institution #1", "Similarly
+# Situated Bank #2", FDIC_1090_20230117 p7; "Institution A", FDIC_10883_20241106 p7).
+_ANONYMOUS_ROW_RE = re.compile(
+    r"similarly[\s-]+situated|\b(?:institution|bank|peer)\s*#\s*\d|^(?:institution|bank|peer)\s+[a-z]$", re.IGNORECASE
+)
+
+
+def _acronyms(name: str) -> set[str]:
+    """Initials of a bank name with and without "and", "of" and "the" ("Ohnward Bank & Trust"
+    gives "obt"; "Farmers State Bank & Trust Company" gives "fsbtc")."""
+    words = re.findall(r"[a-z0-9]+", name.lower())
+    out = {"".join(w[0] for w in words)}
+    out.add("".join(w[0] for w in words if w not in {"and", "of", "the"}))
+    return {a for a in out if len(a) >= 2}
+
+
+def _subject_row(rows: list[_AssetsRow], bank_name: str | None) -> _AssetsRow | None:
+    """The subject bank's row: the first row with the highest token-set similarity (at least
+    :data:`MIN_NAME_SCORE`) between the name parts of its label and of the bank name, sharing
+    a word other than "bank", "the", "of" or "and" (so "R Bank" never stands in for SouthStar
+    Bank). Ties go to the earlier row because the PE lists the bank under evaluation first
+    (FDIC_1218_20240923 p7 "First State Bank, Spearman, TX" before "First State Bank,
+    Stratford, TX"). The token-set score accepts a shortened label (FDIC_26555_20220919 p7
+    "Norwood Bank" for Norwood Co-operative Bank). Without a bank name only a one-row table
+    is read.
+
+    Two more ways to the subject row: a label that is the bank's initials (FDIC_10111_20250203
+    p7 "OBT, Cascade, Iowa" for Ohnward Bank & Trust), and, when no label matches, the only row
+    the PE does not anonymize (FDIC_10458_20220706 p7 "FSBTC" above six "Similarly-Situated
+    Institution #n" rows)."""
+    if not bank_name:
+        return rows[0] if len(rows) == 1 else None
+    name = _name_head(bank_name)
+    initials = _acronyms(bank_name)
+    best, row = 0.0, None
+    for r in rows:
+        head = _name_head(r.text)
+        if head in initials:
+            score = 100.0
+        elif not (set(head.split()) & set(name.split())) - _GENERIC_NAME_WORDS:
+            continue
+        else:
+            score = fuzz.token_set_ratio(head, name)
+        if score > best:
+            best, row = score, r
+    if best >= MIN_NAME_SCORE:
+        return row
+    named = [r for r in rows if not _ANONYMOUS_ROW_RE.search(r.text)]
+    return named[0] if len(named) == 1 and len(rows) > 1 else None
+
+
+def _table_date(header: str) -> date | None:
+    """As-of date of the table header: "06/30/2022", "June 30, 2022" or "12/31/23"."""
+    d = parse_date(header)
+    if d:
+        return d
+    m = _SHORT_NUM_DATE_RE.search(header)
+    if not m:
+        return None
+    try:
+        return date(2000 + int(m.group(3)), int(m.group(1)), int(m.group(2)))
+    except ValueError:
+        return None
 
 
 def _assets_from_table(doc: Doc, bank_name: str | None) -> list[FieldValue] | None:
-    """FDIC LTD comparison table: the subject bank's "Total Assets as of" cell in $000s."""
+    """FDIC LTD comparison table: the subject bank's "Total Assets as of" cell in $000s.
+
+    The subject row comes from :func:`_subject_row`. The figure is the row's first number
+    without a decimal point (the LTD ratio column prints decimals), scaled by a thousand when
+    the header prints a "000s" marker; a figure below :data:`MIN_TABLE_ASSETS` is not read.
+    The quote runs from the "Total Assets as of" header line to the figure, so it carries the
+    unit marker; the as-of date is read from the header. None sends the caller to the
+    description sentence.
+    """
     lines = doc.lines("ltd_ratio")
-    i = next((k for k, ln in enumerate(lines) if ASSETS_HEADER_RE.search(ln.text)), None)
-    if i is None:
-        return None
-    header = " ".join(ln.text for ln in lines[i : i + 4])
-    asof = parse_date(header[header.lower().find("as of") :])
-    thousands = "000" in header
-    j = next((k for k in range(i, min(i + 4, len(lines))) if DATE_RE.search(lines[k].text)), i)
-    header_span = Sentence(doc.text[lines[i].start : lines[j].end], lines[i].start, lines[j].end, lines[i].page)
-    for row in lines[i + 1 : i + 15]:
-        if not COLUMN_GAP.search(row.text) or _HEADER_ROW_RE.search(row.text):
+    for i, head in enumerate(lines):
+        if not ASSETS_HEADER_RE.search(head.text):
             continue
-        parts = re.split(r" {3,}", row.text.strip(), maxsplit=1)
-        if len(parts) < 2:
+        row = _subject_row(_assets_rows(lines[i + 1 : i + 60]), bank_name)
+        if row is None:
             continue
-        label, rest = parts
-        nums = re.findall(r"\d[\d,]*(?:\.\d+)?", rest)
-        if not nums or re.fullmatch(r"[\d,.\s]*", label):
+        cell = next(((n, ln) for n, ln in row.numbers if "." not in n), None)
+        if cell is None:
             continue
-        if bank_name and fuzz.partial_ratio(label.lower(), bank_name.lower()) < 80:
+        header_end = row.label[0].start
+        header = doc.text[head.start : header_end]
+        thousands = "000" in header
+        value = parse_money(cell[0], "thousand" if thousands else None)
+        if value is None or value < MIN_TABLE_ASSETS:
             continue
-        value = parse_money(nums[0], "thousand" if thousands else None)
-        if value is None:
-            continue
+        span_end = cell[1].end
+        span = Sentence(doc.text[head.start : span_end], head.start, span_end, head.page)
         note = "FDIC LTD comparison table, subject bank row" + ("" if thousands else "; no $000s marker")
-        out = [_value(doc, "total_assets_usd", value, row, "ltd_ratio", note)]
+        out = [_value(doc, "total_assets_usd", value, span, "ltd_ratio", note)]
+        asof = _table_date(header[header.lower().find("as of") :])
         if asof:
+            date_line = next(
+                (
+                    ln for ln in lines[i : i + 6]
+                    if ln.start < header_end and (DATE_RE.search(ln.text) or _SHORT_NUM_DATE_RE.search(ln.text))
+                ),
+                head,
+            )
+            header_span = Sentence(doc.text[head.start : date_line.end], head.start, date_line.end, head.page)
             out.append(_value(doc, "total_assets_asof", asof, header_span, "ltd_ratio", "table header"))
         else:
             out.append(_abstain(doc, "total_assets_asof", "table header carries no date"))
@@ -975,8 +1163,11 @@ def _assets_from_table(doc: Doc, bank_name: str | None) -> list[FieldValue] | No
 
 
 def rule_total_assets(doc: Doc, bank_name: str | None) -> list[FieldValue]:
-    """Total assets and their as-of date: exact table figure when printed, else the sentence."""
-    table = _assets_from_table(doc, bank_name)
+    """Total assets and their as-of date. FDIC: the LTD comparison table's exact figure in
+    $000s with the header's as-of date when the table is printed, else the description
+    sentence (FDIC_12299_20220912 p9 "1,159,094" against p4 "approximately $1.2 billion").
+    OCC and FRB: the description sentence only."""
+    table = _assets_from_table(doc, bank_name) if doc.regulator == "FDIC" else None
     if table:
         return table
     for s in doc.sentences("description_of_institution"):

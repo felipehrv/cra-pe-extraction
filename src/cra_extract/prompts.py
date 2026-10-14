@@ -36,7 +36,12 @@ from cra_extract.models import DocRecord, Section
 # v2 (2026-10-07): header no longer carries the doc_id, bank name or evaluation date
 # (scored Group A answers); field lines use prompt_description; the JSON schema is part
 # of the trace key.
-PROMPT_VERSION = "v2"
+# v3 (2026-10-14, dev tuning): field lines of finding_present and rating_lowered say they are
+# always true or false, never absent; inside_aa_share_number_pct and inside_aa_share_product
+# say which row to read (the combined figure, else the primary product's pooled subtotal) and
+# that the product names the row quoted; the JSON schema's per-field description uses
+# prompt_description too, so the schema no longer carries data-dictionary wording.
+PROMPT_VERSION = "v3"
 
 STATUSES = ["value", "absent", "abstain"]
 
@@ -163,7 +168,9 @@ def build_schema(field_group: str) -> dict[str, Any]:
     The top-level object has one required property per field in the group. Each
     property is an object ``{value, status, quote, page}`` with
     ``additionalProperties: false`` so that it is accepted by the strict modes of
-    the Anthropic, Gemini and OpenAI-compatible structured-output APIs. The combined
+    the Anthropic, Gemini and OpenAI-compatible structured-output APIs. The property
+    description is the field's ``prompt_description`` when ``fields.yaml`` defines one, as in
+    the prompt's field lines, so the schema never carries data-dictionary wording. The combined
     group ``all`` gets one property per field of every listed group: 31 fields, 155
     properties counting the four slots of each, two levels of objects (plus the items of
     the set fields), 173 enum members and about 15,100 characters of JSON, the size of the
@@ -175,7 +182,7 @@ def build_schema(field_group: str) -> dict[str, Any]:
         spec = field_spec(name)
         properties[name] = {
             "type": "object",
-            "description": spec.get("description", name),
+            "description": spec.get("prompt_description", spec.get("description", name)),
             "properties": {
                 "value": _value_schema(spec),
                 "status": {"type": "string", "enum": list(STATUSES)},
@@ -228,8 +235,8 @@ def _field_lines(field_group: str, doc: DocRecord) -> list[str]:
 
     The text comes from ``prompt_description`` when ``fields.yaml`` defines one (fields
     whose data-dictionary ``description`` names a fabrication probe or uses the gold null
-    vocabulary) and from ``description`` otherwise, so the model never reads evaluation
-    metadata.
+    vocabulary, and fields whose instructions were tuned on dev) and from ``description``
+    otherwise, so the model never reads evaluation metadata.
     """
     return [_field_line(name, doc) for name in llm_field_group(field_group)["fields"]]
 

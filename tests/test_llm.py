@@ -313,6 +313,44 @@ def test_prompts_never_leak_evaluation_metadata(doc, sections, regulator, method
             assert word not in text, (group, regulator, method, word)
 
 
+def test_schema_never_leaks_evaluation_metadata():
+    """The per-field schema description is the prompt wording too (v3): before it, the schema
+    sent to the model carried the data-dictionary descriptions, including "fabrication probe"
+    (laws_cited, cd_test_rating) and the gold null codes."""
+    for group in ("cover_and_rating", "institution", "lending_tables", "review", ALL_GROUP):
+        text = json.dumps(prompts.portable_schema(build_schema(group))).lower()
+        for word in ("probe", "absent_from_document", "not_applicable", "fabrication", "gold", "=="):
+            assert word not in text, (group, word)
+
+
+def test_derived_booleans_are_never_absent(doc, sections):
+    """finding_present and rating_lowered are always true or false: the dev pilot (prompt v2)
+    returned rating_lowered with status absent on FDIC_6078_20240805, where finding_present is
+    false. The optional Group C attributes stay absent when there is no finding."""
+    text = build_prompt(doc, sections, ALL_GROUP)
+    for name in ("finding_present", "rating_lowered"):
+        line = text.split(f"\n- {name} (")[1].split("\n")[0]
+        assert "never absent" in line and "true or false" in line, name
+    lowered = text.split("\n- rating_lowered (")[1].split("\n")[0]
+    assert "including when finding_present is false" in lowered
+    for name in ("finding_type", "rating_effect"):
+        line = text.split(f"\n- {name} (")[1].split("\n")[0]
+        assert "status absent when finding_present is false" in line, name
+
+
+def test_inside_aa_lines_name_the_row_to_read(doc, sections):
+    """OCC_11715_20240408 ("54.5 percent of its total loans": all_reviewed_combined, v2 said
+    home_mortgage) and FDIC_12299_20220912 (no Total row; the home mortgage subtotal 75.2:
+    home_mortgage, v2 said all_reviewed_combined)."""
+    text = build_prompt(doc, sections, ALL_GROUP)
+    share = text.split("\n- inside_aa_share_number_pct (")[1].split("\n")[0]
+    assert "Total row" in share and "total loans" in share and "primary loan product" in share
+    assert "subtotal over all years" in share and "not by dollar amount" in share
+    product = text.split("\n- inside_aa_share_product (")[1].split("\n")[0]
+    assert "even when only one product was reviewed" in product and "home mortgage subtotal" in product
+    assert "quote that same row or sentence" in product
+
+
 def test_build_prompt_no_sections(doc):
     text = build_prompt(doc, {}, "review")
     assert "no sections were located" in text
@@ -1036,7 +1074,7 @@ def test_openai_compatible_sends_reasoning_effort():
 def test_closed_book_prompt_has_only_bank_name_and_date(doc, sections):
     text = build_closed_book_prompt(doc)
     assert "Bank: SouthStar Bank, S.S.B." in text and "Evaluation date: 2022-09-12" in text
-    assert CLOSED_BOOK_PROMPT_VERSION in text and PROMPT_VERSION == "v2"
+    assert CLOSED_BOOK_PROMPT_VERSION in text and PROMPT_VERSION == "v3"
     for leaked in (doc.doc_id, "FDIC", "Intermediate", "Regulator", "Certificate", "12299"):
         assert leaked not in text and leaked not in CLOSED_BOOK_SYSTEM_PROMPT
     for sec in sections.values():

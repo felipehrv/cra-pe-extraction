@@ -271,6 +271,18 @@ Rules and baseline
 - FDIC total assets come from the LTD table's "Total Assets as of" column (SS:340,
   LB:300) in preference to the rounded description figure; OCC and FRB use the description
   sentence only. Confirm this matches the guide.
+- Rules 0.2.3 (2026-10-14, dev tuning): rules 0.2.2 read the LTD table only as pdftotext
+  layout rows, but `data/text` is pymupdf text with one table cell per line, so on every
+  parsed FDIC PE (dev included) the figure came from the rounded sentence (SouthStar
+  1,200,000,000, Liberty 12,600,000). The locator was not the cause: the table sits inside
+  the located LTD section. 0.2.3 reads both layouts (FDIC only, sentence fallback); dev now
+  gives 1,159,094,000 and 12,614,000. On the 1,757 non-test FDIC documents the table gives
+  1,475 values, 1,280 within 5 percent of the sentence figure; known misses are labels the
+  name match cannot link (FDIC_14773_20250529 "SSB"), tables printed in $ millions under a
+  ($000s) header (falls back to the sentence) and PEs whose table and sentence disagree.
+  The inside-AA Total-row rule has the same layout gap (it never reads a Total row on
+  `data/text`; all four FDIC dev documents abstain) and is not changed. Every rules test
+  runs on the pdftotext fixtures, so neither gap showed in the suite.
 - Lemont prints 54.5 percent inside the AA in the sentence (LM:99) and 54.4 in the table
   (LM:114); the rule and the guide follow the sentence. Candidate data-quality row.
 - Rules 0.2.0 (2026-10-08) come from the corpus-wide Group A comparison with the index
@@ -363,6 +375,16 @@ LLM
   the model follows the rule, not whether it discovers absence unaided; drop the
   applicability sentence for the probe fields and bump `PROMPT_VERSION` for the harder
   probe.
+- Prompt v3 (2026-10-14, dev tuning after the first gemini-3.5-flash-lite pilot):
+  `prompt_description` for finding_present and rating_lowered (always true or false, never
+  absent), and for inside_aa_share_number_pct and inside_aa_share_product (combined figure
+  first, else the primary product's pooled subtotal; the product names the row quoted).
+  `build_schema` now uses `prompt_description` for the schema's per-field description: in
+  v2 the schema sent to the model carried the data-dictionary descriptions, including
+  "fabrication probe" (cd_test_rating, laws_cited) and the gold null codes. The v3 dev run
+  fixed the three target cells; other cells moved between runs without a wording change
+  (LLM total_assets_usd on SouthStar and Liberty went back to the rounded sentence), so run
+  `make dev-rerun` before reading single-cell differences as prompt effects.
 
 Evaluation
 

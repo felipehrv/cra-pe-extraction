@@ -363,7 +363,7 @@ def _extract_parts(parts: list[tuple[str | None, str]], regulator: str, doc_id: 
 def test_version_bumped_with_changelog():
     from cra_extract.rules import CHANGELOG
 
-    assert RULES_VERSION == "0.2.2"
+    assert RULES_VERSION == "0.2.3"
     assert CHANGELOG[-1][0] == RULES_VERSION
     versions = [v for v, _date, _text in CHANGELOG]
     assert versions == sorted(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
@@ -678,3 +678,127 @@ def test_regulator_rule_reads_no_break_space_cover():
     assert values["regulator"].quote == "Federal Reserve Bank of Chicago"  # whitespace collapsed
     span = page1[values["regulator"].char_start : values["regulator"].char_end]
     assert span == "Federal\u00a0Reserve\u00a0Bank\u00a0of\u00a0Chicago"  # offsets stay verbatim
+
+
+# --------------------------------------------------------------------------- FDIC total assets
+# The LTD comparison table excerpts below are verbatim pymupdf text (``parse.extract_pages``,
+# one table cell per line), the layout of every ``data/text`` document; the pdftotext fixtures
+# print the same tables as one row per line (SS:336-340, LB:297-300), which the sample cases
+# above cover. Rules 0.2.2 read only the pdftotext layout, so on parsed documents the FDIC
+# figure always came from the rounded description sentence.
+
+SS_DESCRIPTION = (
+    "As of June 30, 2022, assets totaled approximately $1.2 billion, consisting primarily of net loans and \n"
+    "leases of $800.6 million, securities of 184.4 million, and cash of $114.2 million. \n"
+)  # FDIC_12299_20220912 p4
+SS_LTD_TABLE = (
+    "LTD Ratio Comparison \nBank \nTotal Assets as of \n06/30/2022 \n($000s) \nAverage Net  \nLTD Ratio \n(%) \n"
+    "SouthStar Bank, S.S.B., Moulton, TX \n1,159,094 \n100.7 \nHorizon Bank, SSB, Austin, TX \n2,424,193 \n70.3 \n"
+    "R Bank, Round Rock, TX \n953,809 \n85.9 \nThe First National Bank of Shiner, Shiner, TX \n867,875 \n17.3 \n"
+    "Source:  Reports of Condition and Income (09/30/2019 – 06/30/2022) \n"
+)  # FDIC_12299_20220912 p9
+LB_DESCRIPTION = (
+    "As of June 30, 2022, the Consolidated Reports of Conditions and Income (Call Report) reported \n"
+    "assets totaling $12.6 million, loans totaling $7.7 million, deposits totaling $10.8 million and \n"
+    "securities of $691,000. \n"
+)  # FDIC_26816_20220809 p4
+LB_LTD_TABLE = (
+    "Loan-to-Deposit Ratio  \nBank \nTotal Assets as of \n6/30/2022 \n($000s) \nAverage Net  \nLTD Ratio \n(%) \n"
+    "Liberty Bank, Inc. \n12,614 \n64.9 \nSource:  Call Reports  \n"
+)  # FDIC_26816_20220809 p8
+
+
+def _assets(parts: list[tuple[str | None, str]], regulator: str = "FDIC") -> dict[str, FieldValue]:
+    by = _extract_parts(parts, regulator)
+    text = "".join(p for _name, p in parts)
+    for field in ("total_assets_usd", "total_assets_asof"):
+        fv = by[field]
+        if fv.status == "value":
+            assert _ws(text[fv.char_start : fv.char_end]) == fv.quote
+    return by
+
+
+def test_fdic_total_assets_prefer_ltd_table_one_cell_per_line():
+    """SouthStar: the subject row is matched by the cover name; the quote runs from the header
+    to the figure so it carries the ($000s) marker."""
+    cover = _cover(["SouthStar Bank, S.S.B.", "Certificate Number: 12299", "Federal Deposit Insurance Corporation"])
+    by = _assets([("cover", cover), ("description_of_institution", SS_DESCRIPTION), ("ltd_ratio", SS_LTD_TABLE)])
+    assert by["bank_name"].value == "SouthStar Bank, S.S.B."
+    assert by["total_assets_usd"].value == 1159094000
+    assert by["total_assets_usd"].quote.startswith("Total Assets as of 06/30/2022 ($000s)")
+    assert by["total_assets_usd"].quote.endswith("SouthStar Bank, S.S.B., Moulton, TX 1,159,094")
+    assert by["total_assets_usd"].notes == "FDIC LTD comparison table, subject bank row"
+    assert by["total_assets_asof"].value == date(2022, 6, 30)
+    assert by["total_assets_asof"].quote == "Total Assets as of 06/30/2022"
+
+
+def test_fdic_total_assets_one_row_table_without_bank_name():
+    """Liberty: a one-row table is read even when the cover gave no name."""
+    by = _assets([("description_of_institution", LB_DESCRIPTION), ("ltd_ratio", LB_LTD_TABLE)])
+    assert by["total_assets_usd"].value == 12614000
+    assert by["total_assets_asof"].value == date(2022, 6, 30)
+
+
+def test_fdic_total_assets_fall_back_to_sentence():
+    # Several rows and no bank name: the subject row is unknown.
+    by = _assets([("description_of_institution", SS_DESCRIPTION), ("ltd_ratio", SS_LTD_TABLE)])
+    assert by["total_assets_usd"].value == 1200000000
+    assert by["total_assets_asof"].value == date(2022, 6, 30)
+    assert by["total_assets_usd"].quote.startswith("As of June 30, 2022, assets totaled")
+    # OCC and FRB read the description sentence only.
+    by = _assets([("description_of_institution", LB_DESCRIPTION), ("ltd_ratio", LB_LTD_TABLE)], "FRB")
+    assert by["total_assets_usd"].value == 12600000
+    # A ($000s) table that prints $ millions (FDIC_14995_20240325 p8) gives an implausible figure.
+    river = (
+        "Loan-to-Deposit Ratio Comparison \nBank \nTotal Assets as of \n12/31/2023 \n($000s) \nAverage Net \n"
+        "LTD Ratio \n(%) \nRiver Bank \n1,073 \n113.4 \nCitizens State Bank La Crosse \n628 \n109.9 \n"
+        "Source:  Reports of Condition and Income 6/30/2021 through 12/31/2023 \n"
+    )
+    cover = _cover(["River Bank", "Certificate Number: 14995", "Federal Deposit Insurance Corporation"])
+    sentence = "As of December 31, 2023, the bank reported total assets of $1.1 billion. \n"
+    by = _assets([("cover", cover), ("description_of_institution", sentence), ("ltd_ratio", river)])
+    assert by["total_assets_usd"].value == 1100000000
+    assert by["total_assets_asof"].value == date(2023, 12, 31)
+
+
+def test_fdic_total_assets_subject_row_not_first_and_short_year():
+    """FDIC_16733_20240410 p9: name and city on two lines, subject in the fifth row, header
+    date "12/31/23"."""
+    table = (
+        "Loan-to-Deposit Ratio Comparison \nBank \nTotal Assets as of \n12/31/23 $(000s) \nAverage Net LTD \n"
+        "Ratio (%) \nBankCherokee \nSaint Paul, MN \n375,627 \n60.5 \nCitizens Independent Bank \n"
+        "Saint Louis Park, MN \n344,578 \n63.8 \nCrown Bank \nEdina, MN \n382,495 \n94.3 \nGateway Bank \n"
+        "Mendota Heights, MN \n271,713 \n73.6 \nNorth Star Bank \nRoseville, MN \n352,077 \n71.5 \n"
+        "Village Bank \nSaint Francis, MN \n410,440 \n62.9 \nSource: Reports of Condition 6/30/2021 through 12/31/2023 \n"
+    )
+    cover = _cover(["North Star Bank", "Certificate Number: 16733", "Federal Deposit Insurance Corporation"])
+    by = _assets([("cover", cover), ("ltd_ratio", table)])
+    assert by["total_assets_usd"].value == 352077000
+    assert by["total_assets_usd"].quote.endswith("North Star Bank Roseville, MN 352,077")
+    assert by["total_assets_asof"].value == date(2023, 12, 31)
+
+
+@pytest.mark.parametrize(
+    "name,rows,expected",
+    [
+        # Same name twice: the bank under evaluation is listed first (FDIC_1218_20240923 p7).
+        ("First State Bank", "First State Bank, Spearman, TX \n180,243 \n81.5 \nFirst State Bank, Stratford, TX \n334,864 \n71.4 \n", 180243000),
+        # Initials (FDIC_10111_20250203 p7).
+        ("Ohnward Bank & Trust", "OBT, Cascade, Iowa \n445,445 \n89.3 \nCentral State Bank, Coralville, Iowa \n477,336 \n99.7 \n", 445445000),
+        # The only row the PE does not anonymize (FDIC_10458_20220706 p7).
+        ("Farmers State Bank & Trust Co.", "FSBTC \n114,295 \n74.9 \nSimilarly-Situated Institution #1 \n127,881 \n48.5 \n", 114295000),
+        # A cell broken after its comma (FDIC_254_20231127 p7).
+        ("First Whitney Bank and Trust", "First Whitney Bank and Trust, Atlantic, Iowa \n266, 880 \n68.3 \nTS Bank, Treynor, Iowa \n423,696 \n40.3 \n", 266880000),
+        # A generic word in common is not a match: "R Bank" never stands in for SouthStar Bank.
+        ("SouthStar Bank, S.S.B.", "Horizon Bank, SSB, Austin, TX \n2,424,193 \n70.3 \nR Bank, Round Rock, TX \n953,809 \n85.9 \n", None),
+    ],
+)
+def test_fdic_total_assets_subject_row(name, rows, expected):
+    table = "Bank \nTotal Assets as of \n6/30/2024 \n($000s) \nAverage Net \nLoan-to-Deposit Ratio \n(%) \n" + rows + "Source: Call Reports \n"
+    cover = _cover([name, "Certificate Number: 1", "Federal Deposit Insurance Corporation"])
+    by = _assets([("cover", cover), ("ltd_ratio", table)])
+    if expected is None:
+        assert by["total_assets_usd"].status == "abstain"
+    else:
+        assert by["total_assets_usd"].value == expected
+        assert by["total_assets_asof"].value == date(2024, 6, 30)

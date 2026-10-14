@@ -214,7 +214,13 @@ fields:
     tolerance: within_0.1pp
     verification: gold
     description: Percent of loans (by number) originated inside the assessment area(s). absent_from_document when narrative only.
-    prompt_description: Percent of loans (by number) originated inside the assessment area(s); status absent when the PE gives no figure.
+    prompt_description: >-
+      Percent of the bank's loans by number (not by dollar amount) originated inside its assessment area(s), for the
+      whole bank rather than one assessment area, as printed. Take the combined figure for all loans reviewed when the PE
+      prints one: a Total row of the inside/outside table, or a sentence about the bank's total loans (when both are
+      printed, use the sentence). Otherwise take the row of the primary loan product, using its subtotal over all years
+      rather than a single-year row. Zero is a value. Status absent when the PE gives no figure (only words such as
+      "a majority").
 
   inside_aa_share_product:
     group: B
@@ -225,7 +231,11 @@ fields:
     tolerance: exact
     verification: gold
     description: Product the inside-AA share refers to. not_applicable when inside_aa_share_number_pct is absent.
-    prompt_description: Product the inside-assessment-area share refers to; status absent when no share figure is stated.
+    prompt_description: >-
+      Product of the row or sentence that inside_aa_share_number_pct was read from, and quote that same row or
+      sentence. all_reviewed_combined when the figure is a Total row or the sentence speaks of the bank's total loans
+      or all loans reviewed, even when only one product was reviewed; otherwise the product of the row quoted (for
+      example home_mortgage for a home mortgage subtotal). Status absent when no share figure is stated.
 
   avg_ltd_ratio_pct:
     group: B
@@ -247,6 +257,10 @@ fields:
     positive: true
     verification: census
     description: The review section states that discriminatory or other illegal credit practices were identified and considered in this rating.
+    prompt_description: >-
+      true when the review section states that discriminatory or other illegal credit practices were identified and
+      considered in this rating; false when it states that none were identified or that none require consideration.
+      Always status value with true or false, never absent.
 
   finding_type:
     group: C
@@ -277,6 +291,10 @@ fields:
     positive: true
     verification: census
     description: rating_effect == substantive_lowered.
+    prompt_description: >-
+      true when the PE states that a CRA rating was lowered because of the discriminatory or other illegal credit
+      practices finding (rating_effect substantive_lowered); false in every other case, including when finding_present
+      is false or the finding did not change the rating. Always status value with true or false, never absent.
 
   rating_lowered_level:
     group: C
