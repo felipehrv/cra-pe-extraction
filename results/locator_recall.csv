@@ -1,0 +1,41 @@
+level,regulator,section_type,section,n_docs,n_present,n_found,n_correct,n_missed,n_false_found,recall,recall_lo,recall_hi,precision,precision_lo,precision_hi,note
+section,all,cover_and_rating,cover,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section,all,cover_and_rating,rating,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section,all,description_of_institution,description_of_institution,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section,all,review_section,illegal_credit_practices_review,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section,all,aa_concentration_and_ltd,aa_concentration,100,100,96,96,4,0,0.9600,0.9016,0.9843,1.0000,0.9615,1.0000,
+section,all,aa_concentration_and_ltd,ltd_ratio,100,100,94,94,6,0,0.9400,0.8752,0.9722,1.0000,0.9607,1.0000,
+section,OCC,cover_and_rating,cover,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section,OCC,cover_and_rating,rating,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section,OCC,description_of_institution,description_of_institution,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section,OCC,review_section,illegal_credit_practices_review,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section,OCC,aa_concentration_and_ltd,aa_concentration,17,17,15,15,2,0,0.8824,0.6566,0.9671,1.0000,0.7961,1.0000,
+section,OCC,aa_concentration_and_ltd,ltd_ratio,17,17,13,13,4,0,0.7647,0.5274,0.9045,1.0000,0.7719,1.0000,
+section,FDIC,cover_and_rating,cover,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section,FDIC,cover_and_rating,rating,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section,FDIC,description_of_institution,description_of_institution,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section,FDIC,review_section,illegal_credit_practices_review,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section,FDIC,aa_concentration_and_ltd,aa_concentration,64,64,62,62,2,0,0.9688,0.8930,0.9914,1.0000,0.9417,1.0000,
+section,FDIC,aa_concentration_and_ltd,ltd_ratio,64,64,62,62,2,0,0.9688,0.8930,0.9914,1.0000,0.9417,1.0000,
+section,FRB,cover_and_rating,cover,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section,FRB,cover_and_rating,rating,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section,FRB,description_of_institution,description_of_institution,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section,FRB,review_section,illegal_credit_practices_review,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section,FRB,aa_concentration_and_ltd,aa_concentration,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section,FRB,aa_concentration_and_ltd,ltd_ratio,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section_type,all,cover_and_rating,all,100,200,200,200,0,0,1.0000,0.9812,1.0000,1.0000,0.9812,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,all,description_of_institution,all,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section_type,all,review_section,all,100,100,100,100,0,0,1.0000,0.9630,1.0000,1.0000,0.9630,1.0000,
+section_type,all,aa_concentration_and_ltd,all,100,200,190,190,10,0,0.9500,0.9104,0.9726,1.0000,0.9802,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,OCC,cover_and_rating,all,17,34,34,34,0,0,1.0000,0.8985,1.0000,1.0000,0.8985,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,OCC,description_of_institution,all,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section_type,OCC,review_section,all,17,17,17,17,0,0,1.0000,0.8157,1.0000,1.0000,0.8157,1.0000,
+section_type,OCC,aa_concentration_and_ltd,all,17,34,28,28,6,0,0.8235,0.6649,0.9165,1.0000,0.8794,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,FDIC,cover_and_rating,all,64,128,128,128,0,0,1.0000,0.9709,1.0000,1.0000,0.9709,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,FDIC,description_of_institution,all,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section_type,FDIC,review_section,all,64,64,64,64,0,0,1.0000,0.9434,1.0000,1.0000,0.9434,1.0000,
+section_type,FDIC,aa_concentration_and_ltd,all,64,128,124,124,4,0,0.9688,0.9224,0.9878,1.0000,0.9700,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,FRB,cover_and_rating,all,19,38,38,38,0,0,1.0000,0.9082,1.0000,1.0000,0.9082,1.0000,two sections per document pooled; the interval treats sections as independent
+section_type,FRB,description_of_institution,all,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section_type,FRB,review_section,all,19,19,19,19,0,0,1.0000,0.8318,1.0000,1.0000,0.8318,1.0000,
+section_type,FRB,aa_concentration_and_ltd,all,19,38,38,38,0,0,1.0000,0.9082,1.0000,1.0000,0.9082,1.0000,two sections per document pooled; the interval treats sections as independent

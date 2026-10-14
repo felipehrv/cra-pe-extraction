@@ -1,0 +1,11 @@
+doc_id,regulator,district,section_type,section,miss_type,found,page,correct_page,notes
+FDIC_2759_20230306,FDIC,,aa_concentration_and_ltd,aa_concentration,not_found,false,,7,missed; heading is 'AA Concentration' on PDF p7
+FDIC_2759_20230306,FDIC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,6,missed; heading is 'LTD Ratio' on PDF p6
+FDIC_30976_20241202,FDIC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,7,missed; heading 'Loan-to-Deposit (LTD) Ratio' on PDF p7
+FDIC_34108_20240226,FDIC,,aa_concentration_and_ltd,aa_concentration,not_found,false,,12,"missed: 'AA Concentration' heading p12, table p13"
+OCC_14769_20230306,OCC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,3,heading Loan-to-Deposit (LTD) Ratio on p3 missed
+OCC_700133_20250728,OCC,,aa_concentration_and_ltd,aa_concentration,not_found,false,,3,missed; heading 'Lending in AA' on page 3
+OCC_700133_20250728,OCC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,3,missed; heading 'LTD Ratio' on page 3
+OCC_713480_20240408,OCC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,3,missed; heading 'Loan-to-Deposit Ratio (LTD)' on page 3
+OCC_8624_20250630,OCC,,aa_concentration_and_ltd,aa_concentration,not_found,false,,3,missed; heading 'Lending in AA' with Table 1 on page 3
+OCC_8624_20250630,OCC,,aa_concentration_and_ltd,ltd_ratio,not_found,false,,3,missed; heading 'LTD Ratio' on page 3
