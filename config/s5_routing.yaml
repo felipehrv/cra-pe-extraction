@@ -4,7 +4,7 @@ computed_on: '2026-10-14'
 rules_version: 0.2.4
 rules_version_source: predictions
 s1_system: rules
-s3_system: llm:gemini:gemini-3.8-flash
+s3_system: llm:gemini:gemini-3.5-flash-lite  # corpus tier recorded at the freeze (3.8-flash unavailable on the free tier)
 s5_system: s5
 rule: route S1 when S1 coverage >= 0.95 and S1 agreement >= 0.98 over evaluable documents
   of split corpus with an index value; S3 corpus tier otherwise

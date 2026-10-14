@@ -1,0 +1,241 @@
+doc_id,regulator,section,found,page_start,page_end,scope,chars,confidence,heading,n_aa_sections
+FDIC_11902_20240815,FDIC,cover,True,1,1,institution,957,1.0,PUBLIC DISCLOSURE,0
+FDIC_11902_20240815,FDIC,rating,True,3,3,institution,1369,1.0,INSTITUTION RATING,0
+FDIC_11902_20240815,FDIC,description_of_institution,True,3,4,institution,3210,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_11902_20240815,FDIC,description_of_assessment_area,True,4,6,institution,5437,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_11902_20240815,FDIC,scope_of_evaluation,True,7,8,institution,3273,1.0,SCOPE OF EVALUATION,0
+FDIC_11902_20240815,FDIC,ltd_ratio,True,8,9,institution,2389,1.0,Loan-to-Deposit Ratio,0
+FDIC_11902_20240815,FDIC,aa_concentration,True,9,10,institution,2065,1.0,Assessment Area Concentration,0
+FDIC_11902_20240815,FDIC,illegal_credit_practices_review,True,10,10,institution,327,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_12305_20250224,FDIC,cover,True,1,1,institution,945,1.0,PUBLIC DISCLOSURE,0
+FDIC_12305_20250224,FDIC,rating,True,3,3,institution,1369,1.0,INSTITUTION RATING,0
+FDIC_12305_20250224,FDIC,description_of_institution,True,3,4,institution,3428,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_12305_20250224,FDIC,description_of_assessment_area,True,4,6,institution,5619,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_12305_20250224,FDIC,scope_of_evaluation,True,6,7,institution,2540,1.0,SCOPE OF EVALUATION,0
+FDIC_12305_20250224,FDIC,ltd_ratio,True,8,8,institution,2293,1.0,Loan-to-Deposit Ratio,0
+FDIC_12305_20250224,FDIC,aa_concentration,True,8,9,institution,1373,1.0,Assessment Area Concentration,0
+FDIC_12305_20250224,FDIC,illegal_credit_practices_review,True,9,9,institution,327,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_12501_20230417,FDIC,cover,True,1,1,institution,959,1.0,PUBLIC DISCLOSURE,2
+FDIC_12501_20230417,FDIC,rating,True,3,3,institution,2074,1.0,INSTITUTION RATING,2
+FDIC_12501_20230417,FDIC,description_of_institution,True,3,4,institution,3351,1.0,DESCRIPTION OF INSTITUTION,2
+FDIC_12501_20230417,FDIC,description_of_assessment_area,True,5,5,institution,1493,1.0,DESCRIPTION OF ASSESSMENT AREAS,2
+FDIC_12501_20230417,FDIC,scope_of_evaluation,True,5,7,institution,5665,1.0,SCOPE OF EVALUATION,2
+FDIC_12501_20230417,FDIC,ltd_ratio,True,7,8,institution,2849,1.0,Loan-to-Deposit Ratio,2
+FDIC_12501_20230417,FDIC,aa_concentration,True,8,9,institution,2640,1.0,Assessment Area Concentration,2
+FDIC_12501_20230417,FDIC,illegal_credit_practices_review,True,13,13,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,2
+FDIC_14851_20250804,FDIC,cover,True,1,1,institution,942,1.0,PUBLIC DISCLOSURE,3
+FDIC_14851_20250804,FDIC,rating,True,3,3,institution,1498,1.0,INSTITUTION RATING,3
+FDIC_14851_20250804,FDIC,description_of_institution,True,3,4,institution,3022,1.0,DESCRIPTION OF INSTITUTION,3
+FDIC_14851_20250804,FDIC,description_of_assessment_area,True,4,5,institution,892,1.0,DESCRIPTION OF ASSESSMENT AREAS,3
+FDIC_14851_20250804,FDIC,scope_of_evaluation,True,5,7,institution,5503,1.0,SCOPE OF EVALUATION,3
+FDIC_14851_20250804,FDIC,ltd_ratio,True,7,8,institution,1375,1.0,Loan-to-Deposit Ratio,3
+FDIC_14851_20250804,FDIC,aa_concentration,True,8,9,institution,4476,1.0,Assessment Area Concentration,3
+FDIC_14851_20250804,FDIC,illegal_credit_practices_review,True,14,14,institution,296,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,3
+FDIC_15799_20231204,FDIC,cover,True,1,1,institution,950,1.0,PUBLIC DISCLOSURE,0
+FDIC_15799_20231204,FDIC,rating,True,3,3,institution,1649,1.0,INSTITUTION RATING,0
+FDIC_15799_20231204,FDIC,description_of_institution,True,4,4,institution,2809,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_15799_20231204,FDIC,description_of_assessment_area,True,5,5,institution,1093,1.0,DESCRIPTION OF ASSESSMENT AREAS,0
+FDIC_15799_20231204,FDIC,scope_of_evaluation,True,5,6,institution,4079,1.0,SCOPE OF EVALUATION,0
+FDIC_15799_20231204,FDIC,ltd_ratio,True,7,7,institution,977,1.0,Loan-to-Deposit Ratio,0
+FDIC_15799_20231204,FDIC,aa_concentration,True,7,8,institution,1833,1.0,Assessment Area Concentration,0
+FDIC_15799_20231204,FDIC,illegal_credit_practices_review,True,10,10,institution,238,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_16600_20230227,FDIC,cover,True,1,1,institution,965,1.0,PUBLIC DISCLOSURE,0
+FDIC_16600_20230227,FDIC,rating,True,3,3,institution,1146,1.0,INSTITUTION RATING,0
+FDIC_16600_20230227,FDIC,description_of_institution,True,3,4,institution,3088,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_16600_20230227,FDIC,description_of_assessment_area,True,5,6,institution,5043,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_16600_20230227,FDIC,scope_of_evaluation,True,6,7,institution,2865,1.0,SCOPE OF EVALUATION,0
+FDIC_16600_20230227,FDIC,ltd_ratio,True,8,8,institution,2268,1.0,Loan-to-Deposit Ratio,0
+FDIC_16600_20230227,FDIC,aa_concentration,True,9,10,institution,2841,1.0,Assessment Area Concentration,0
+FDIC_16600_20230227,FDIC,illegal_credit_practices_review,True,10,10,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_16970_20230406,FDIC,cover,True,1,1,institution,979,1.0,PUBLIC DISCLOSURE,0
+FDIC_16970_20230406,FDIC,rating,True,3,3,institution,1852,1.0,INSTITUTION RATING,0
+FDIC_16970_20230406,FDIC,description_of_institution,True,3,5,institution,4039,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_16970_20230406,FDIC,description_of_assessment_area,True,5,5,institution,1714,1.0,DESCRIPTION OF ASSESSMENT AREAS,0
+FDIC_16970_20230406,FDIC,scope_of_evaluation,True,6,7,institution,4501,1.0,SCOPE OF EVALUATION,0
+FDIC_16970_20230406,FDIC,ltd_ratio,False,,,,0,,,0
+FDIC_16970_20230406,FDIC,aa_concentration,True,7,8,institution,2643,1.0,Assessment Area Concentration,0
+FDIC_16970_20230406,FDIC,illegal_credit_practices_review,True,10,10,institution,421,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_18229_20231010,FDIC,cover,True,1,1,institution,945,1.0,PUBLIC DISCLOSURE,2
+FDIC_18229_20231010,FDIC,rating,True,3,3,institution,1466,1.0,INSTITUTION RATING,2
+FDIC_18229_20231010,FDIC,description_of_institution,True,4,6,institution,6833,1.0,DESCRIPTION OF INSTITUTION,2
+FDIC_18229_20231010,FDIC,description_of_assessment_area,True,6,6,institution,674,1.0,DESCRIPTION OF ASSESSMENT AREAS,2
+FDIC_18229_20231010,FDIC,scope_of_evaluation,True,6,8,institution,5896,1.0,SCOPE OF EVALUATION,2
+FDIC_18229_20231010,FDIC,ltd_ratio,True,8,9,institution,1575,1.0,Loan-to-Deposit Ratio,2
+FDIC_18229_20231010,FDIC,aa_concentration,True,9,10,institution,2842,1.0,Assessment Area Concentration,2
+FDIC_18229_20231010,FDIC,illegal_credit_practices_review,True,15,15,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,2
+FDIC_2036_20230404,FDIC,cover,True,1,1,institution,983,1.0,PUBLIC DISCLOSURE,0
+FDIC_2036_20230404,FDIC,rating,True,3,3,institution,1449,1.0,INSTITUTION RATING,0
+FDIC_2036_20230404,FDIC,description_of_institution,True,4,5,institution,3641,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_2036_20230404,FDIC,description_of_assessment_area,True,5,5,institution,723,1.0,DESCRIPTION OF ASSESSMENT AREAS,0
+FDIC_2036_20230404,FDIC,scope_of_evaluation,True,5,7,institution,5320,1.0,SCOPE OF EVALUATION,0
+FDIC_2036_20230404,FDIC,ltd_ratio,True,7,8,institution,1310,1.0,Loan-to-Deposit Ratio,0
+FDIC_2036_20230404,FDIC,aa_concentration,True,8,8,institution,1880,1.0,Assessment Area Concentration,0
+FDIC_2036_20230404,FDIC,illegal_credit_practices_review,True,12,12,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_25260_20230522,FDIC,cover,True,1,1,institution,951,1.0,PUBLIC DISCLOSURE,0
+FDIC_25260_20230522,FDIC,rating,True,3,3,institution,1323,1.0,INSTITUTION RATING,0
+FDIC_25260_20230522,FDIC,description_of_institution,True,4,5,institution,3764,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_25260_20230522,FDIC,description_of_assessment_area,True,5,7,institution,5800,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_25260_20230522,FDIC,scope_of_evaluation,True,7,8,institution,2862,1.0,SCOPE OF EVALUATION,0
+FDIC_25260_20230522,FDIC,ltd_ratio,True,8,9,institution,4355,1.0,Loan-to-Deposit Ratio,0
+FDIC_25260_20230522,FDIC,aa_concentration,True,9,10,institution,2950,1.0,Assessment Area Concentration,0
+FDIC_25260_20230522,FDIC,illegal_credit_practices_review,True,12,12,institution,292,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_28316_20250122,FDIC,cover,True,1,1,institution,946,1.0,PUBLIC DISCLOSURE,4
+FDIC_28316_20250122,FDIC,rating,True,3,3,institution,1599,1.0,INSTITUTION RATING,4
+FDIC_28316_20250122,FDIC,description_of_institution,True,4,5,institution,3460,1.0,DESCRIPTION OF INSTITUTION,4
+FDIC_28316_20250122,FDIC,description_of_assessment_area,True,5,5,institution,989,1.0,DESCRIPTION OF ASSESSMENT AREAS,4
+FDIC_28316_20250122,FDIC,scope_of_evaluation,True,5,8,institution,6467,1.0,SCOPE OF EVALUATION,4
+FDIC_28316_20250122,FDIC,ltd_ratio,True,8,8,institution,1206,1.0,Loan-to-Deposit Ratio,4
+FDIC_28316_20250122,FDIC,aa_concentration,True,9,10,institution,2845,1.0,Assessment Area Concentration,4
+FDIC_28316_20250122,FDIC,illegal_credit_practices_review,True,13,13,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,4
+FDIC_35439_20231212,FDIC,cover,True,1,1,institution,952,1.0,PUBLIC DISCLOSURE,0
+FDIC_35439_20231212,FDIC,rating,True,3,3,institution,1061,1.0,INSTITUTION RATING,0
+FDIC_35439_20231212,FDIC,description_of_institution,True,3,4,institution,2224,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_35439_20231212,FDIC,description_of_assessment_area,True,4,6,institution,4735,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_35439_20231212,FDIC,scope_of_evaluation,True,6,8,institution,3682,1.0,SCOPE OF EVALUATION,0
+FDIC_35439_20231212,FDIC,ltd_ratio,True,8,8,institution,1104,1.0,Loan-to-Deposit Ratio,0
+FDIC_35439_20231212,FDIC,aa_concentration,True,8,9,institution,2006,1.0,Assessment Area Concentration,0
+FDIC_35439_20231212,FDIC,illegal_credit_practices_review,True,11,11,institution,321,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FDIC_8207_20240916,FDIC,cover,True,1,1,institution,966,1.0,PUBLIC DISCLOSURE,0
+FDIC_8207_20240916,FDIC,rating,True,3,3,institution,1073,1.0,INSTITUTION RATING,0
+FDIC_8207_20240916,FDIC,description_of_institution,True,3,4,institution,2995,1.0,DESCRIPTION OF INSTITUTION,0
+FDIC_8207_20240916,FDIC,description_of_assessment_area,True,4,6,institution,4701,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FDIC_8207_20240916,FDIC,scope_of_evaluation,True,6,7,institution,2327,1.0,SCOPE OF EVALUATION,0
+FDIC_8207_20240916,FDIC,ltd_ratio,True,7,7,institution,1161,1.0,Loan-to-Deposit Ratio,0
+FDIC_8207_20240916,FDIC,aa_concentration,True,7,8,institution,2522,1.0,Assessment Area Concentration,0
+FDIC_8207_20240916,FDIC,illegal_credit_practices_review,True,10,10,institution,325,1.0,DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_164975_20250818,FRB,cover,True,1,1,institution,856,1.0,PUBLIC DISCLOSURE,0
+FRB_164975_20250818,FRB,rating,True,3,3,institution,962,1.0,INSTITUTION'S CRA RATING: This institution is rated SATISFACTORY.,0
+FRB_164975_20250818,FRB,description_of_institution,True,4,5,institution,1427,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_164975_20250818,FRB,description_of_assessment_area,True,5,8,institution,7707,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FRB_164975_20250818,FRB,scope_of_evaluation,True,4,4,institution,755,1.0,SCOPE OF EXAMINATION,0
+FRB_164975_20250818,FRB,ltd_ratio,True,8,9,institution,1739,1.0,Loan-to-Deposit Ratio,0
+FRB_164975_20250818,FRB,aa_concentration,True,9,10,institution,5961,1.0,Assessment Area Concentration,0
+FRB_164975_20250818,FRB,illegal_credit_practices_review,False,,,,0,,,0
+FRB_312244_20250303,FRB,cover,True,1,1,institution,810,1.0,PUBLIC DISCLOSURE,3
+FRB_312244_20250303,FRB,rating,True,3,3,institution,1267,1.0,INSTITUTION'S CRA RATING,3
+FRB_312244_20250303,FRB,description_of_institution,True,7,8,institution,2989,1.0,DESCRIPTION OF INSTITUTION,3
+FRB_312244_20250303,FRB,description_of_assessment_area,True,5,6,institution,3916,1.0,DESCRIPTION OF ASSESSMENT AREA,3
+FRB_312244_20250303,FRB,scope_of_evaluation,True,3,5,institution,4878,1.0,SCOPE OF EXAMINATION,3
+FRB_312244_20250303,FRB,ltd_ratio,True,8,9,institution,1131,1.0,Loan-to-Deposit Ratio,3
+FRB_312244_20250303,FRB,aa_concentration,True,9,10,institution,2529,1.0,Assessment Area Concentration,3
+FRB_312244_20250303,FRB,illegal_credit_practices_review,True,12,12,institution,197,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,3
+FRB_3322468_20240819,FRB,cover,True,1,1,institution,823,1.0,PUBLIC DISCLOSURE,0
+FRB_3322468_20240819,FRB,rating,True,3,3,institution,754,1.0,INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING,0
+FRB_3322468_20240819,FRB,description_of_institution,True,3,4,institution,1460,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_3322468_20240819,FRB,description_of_assessment_area,True,4,6,institution,5179,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FRB_3322468_20240819,FRB,scope_of_evaluation,True,3,3,institution,880,1.0,SCOPE OF EXAMINATION,0
+FRB_3322468_20240819,FRB,ltd_ratio,True,7,7,institution,1073,1.0,Net Loan-to-Deposit Ratio,0
+FRB_3322468_20240819,FRB,aa_concentration,True,7,8,institution,2575,1.0,Assessment Area Concentration,0
+FRB_3322468_20240819,FRB,illegal_credit_practices_review,True,10,10,institution,482,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_41553_20240226,FRB,cover,True,1,1,institution,798,1.0,PUBLIC DISCLOSURE,0
+FRB_41553_20240226,FRB,rating,True,3,3,institution,1282,1.0,INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING,0
+FRB_41553_20240226,FRB,description_of_institution,True,4,4,institution,1623,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_41553_20240226,FRB,description_of_assessment_area,True,5,7,institution,5409,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FRB_41553_20240226,FRB,scope_of_evaluation,True,3,4,institution,1427,1.0,SCOPE OF EXAMINATION,0
+FRB_41553_20240226,FRB,ltd_ratio,True,7,8,institution,1804,1.0,Net Loan-to-Deposit Ratio,0
+FRB_41553_20240226,FRB,aa_concentration,True,8,9,institution,2795,1.0,Assessment Area Concentration,0
+FRB_41553_20240226,FRB,illegal_credit_practices_review,True,14,14,institution,482,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_669555_20231127,FRB,cover,True,1,1,institution,787,1.0,PUBLIC DISCLOSURE,4
+FRB_669555_20231127,FRB,rating,True,3,3,institution,1047,1.0,INSTITUTION'S COMMUNITY REINVESTMENT ACT RATING,4
+FRB_669555_20231127,FRB,description_of_institution,True,4,4,institution,1568,1.0,DESCRIPTION OF INSTITUTION,4
+FRB_669555_20231127,FRB,description_of_assessment_area,False,,,,0,,,4
+FRB_669555_20231127,FRB,scope_of_evaluation,True,3,4,institution,1801,1.0,SCOPE OF EXAMINATION,4
+FRB_669555_20231127,FRB,ltd_ratio,True,5,5,institution,1036,1.0,Net Loan-to-Deposit Ratio,4
+FRB_669555_20231127,FRB,aa_concentration,True,5,6,institution,1636,1.0,Assessment Area Concentration,4
+FRB_669555_20231127,FRB,illegal_credit_practices_review,True,7,8,institution,650,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,4
+FRB_699105_20241104,FRB,cover,True,1,1,institution,833,1.0,PUBLIC DISCLOSURE,0
+FRB_699105_20241104,FRB,rating,True,3,3,institution,322,1.0,INSTITUTION'S CRA RATING: This institution is rated SATISFACTORY.,0
+FRB_699105_20241104,FRB,description_of_institution,True,5,6,institution,6175,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_699105_20241104,FRB,description_of_assessment_area,True,7,10,institution,10388,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FRB_699105_20241104,FRB,scope_of_evaluation,True,4,5,institution,4208,1.0,SCOPE OF EXAMINATION,0
+FRB_699105_20241104,FRB,ltd_ratio,True,11,12,institution,2070,1.0,Loan-to-Deposit Ratio,0
+FRB_699105_20241104,FRB,aa_concentration,True,12,13,institution,3898,1.0,Assessment Area Concentration,0
+FRB_699105_20241104,FRB,illegal_credit_practices_review,True,22,23,institution,312,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_711548_20240226,FRB,cover,True,1,1,institution,819,1.0,PUBLIC DISCLOSURE,0
+FRB_711548_20240226,FRB,rating,True,3,3,institution,1110,1.0,INSTITUTION'S CRA RATING,0
+FRB_711548_20240226,FRB,description_of_institution,True,4,5,institution,2264,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_711548_20240226,FRB,description_of_assessment_area,True,5,8,institution,6719,1.0,DESCRIPTION OF ASSESSMENT AREA,0
+FRB_711548_20240226,FRB,scope_of_evaluation,True,3,4,institution,3251,1.0,SCOPE OF EXAMINATION,0
+FRB_711548_20240226,FRB,ltd_ratio,True,11,12,institution,1659,1.0,Loan-to-Deposit Ratio,0
+FRB_711548_20240226,FRB,aa_concentration,True,12,13,institution,3536,1.0,Assessment Area Concentration,0
+FRB_711548_20240226,FRB,illegal_credit_practices_review,True,16,16,institution,196,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_753324_20240916,FRB,cover,True,1,1,institution,919,1.0,PUBLIC DISCLOSURE,0
+FRB_753324_20240916,FRB,rating,True,4,4,institution,1013,1.0,INSTITUTION'S CRA RATING:  This institution is rated: SATISFACTORY,0
+FRB_753324_20240916,FRB,description_of_institution,True,4,7,institution,8282,1.0,DESCRIPTION OF INSTITUTION,0
+FRB_753324_20240916,FRB,description_of_assessment_area,False,,,,0,,,0
+FRB_753324_20240916,FRB,scope_of_evaluation,True,4,4,institution,1590,1.0,SCOPE OF EXAMINATION,0
+FRB_753324_20240916,FRB,ltd_ratio,True,10,10,institution,633,1.0,Loan-To-Deposit Ratio,0
+FRB_753324_20240916,FRB,aa_concentration,True,10,11,institution,6529,1.0,Lending In Assessment Area,0
+FRB_753324_20240916,FRB,illegal_credit_practices_review,True,16,17,institution,692,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,0
+FRB_813572_20250414,FRB,cover,True,1,1,institution,904,1.0,PUBLIC DISCLOSURE,1
+FRB_813572_20250414,FRB,rating,True,4,4,institution,1002,1.0,INSTITUTION'S CRA RATING:  This institution is rated Needs to Improve.,1
+FRB_813572_20250414,FRB,description_of_institution,True,4,5,institution,2929,1.0,DESCRIPTION OF INSTITUTION,1
+FRB_813572_20250414,FRB,description_of_assessment_area,False,,,,0,,,1
+FRB_813572_20250414,FRB,scope_of_evaluation,True,4,4,institution,934,1.0,SCOPE OF EXAMINATION,1
+FRB_813572_20250414,FRB,ltd_ratio,True,9,9,institution,866,1.0,Loan-To-Deposit Ratio,1
+FRB_813572_20250414,FRB,aa_concentration,True,9,10,institution,4151,1.0,Lending In Assessment Area,1
+FRB_813572_20250414,FRB,illegal_credit_practices_review,True,11,11,institution,323,1.0,FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW,1
+OCC_11642_20240812,OCC,cover,True,1,1,institution,888,1.0,PUBLIC DISCLOSURE,0
+OCC_11642_20240812,OCC,rating,True,3,3,institution,610,1.0,Overall CRA Rating,0
+OCC_11642_20240812,OCC,description_of_institution,True,4,4,institution,2128,1.0,Description of Institution,0
+OCC_11642_20240812,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_11642_20240812,OCC,scope_of_evaluation,True,5,5,institution,2239,1.0,Scope of the Evaluation,0
+OCC_11642_20240812,OCC,ltd_ratio,True,3,3,institution,1064,1.0,Loan-to-Deposit Ratio,0
+OCC_11642_20240812,OCC,aa_concentration,True,3,3,institution,659,1.0,Lending in Assessment Area,0
+OCC_11642_20240812,OCC,illegal_credit_practices_review,True,6,6,institution,1299,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_12141_20230601,OCC,cover,True,1,1,institution,900,1.0,PUBLIC DISCLOSURE,0
+OCC_12141_20230601,OCC,rating,True,3,3,institution,541,1.0,Overall CRA Rating,0
+OCC_12141_20230601,OCC,description_of_institution,True,5,6,institution,2043,1.0,Description of Institution,0
+OCC_12141_20230601,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_12141_20230601,OCC,scope_of_evaluation,True,6,6,institution,1569,1.0,Scope of the Evaluation,0
+OCC_12141_20230601,OCC,ltd_ratio,True,3,4,institution,3832,1.0,Loan-to-Deposit Ratio,0
+OCC_12141_20230601,OCC,aa_concentration,True,5,5,institution,623,1.0,Lending in Assessment Area,0
+OCC_12141_20230601,OCC,illegal_credit_practices_review,True,6,7,institution,1337,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_1253_20230320,OCC,cover,True,1,1,institution,847,1.0,PUBLIC DISCLOSURE,0
+OCC_1253_20230320,OCC,rating,True,3,3,institution,813,1.0,Overall CRA Rating,0
+OCC_1253_20230320,OCC,description_of_institution,True,4,4,institution,2338,1.0,Description of Institution,0
+OCC_1253_20230320,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_1253_20230320,OCC,scope_of_evaluation,True,4,5,institution,2858,1.0,Scope of the Evaluation,0
+OCC_1253_20230320,OCC,ltd_ratio,True,3,3,institution,577,1.0,Loan-to-Deposit Ratio,0
+OCC_1253_20230320,OCC,aa_concentration,True,3,3,institution,927,1.0,Lending in Assessment Area,0
+OCC_1253_20230320,OCC,illegal_credit_practices_review,True,6,6,institution,1247,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_3147_20230703,OCC,cover,True,1,1,institution,847,1.0,PUBLIC DISCLOSURE,0
+OCC_3147_20230703,OCC,rating,True,3,3,institution,815,1.0,Overall CRA Rating,0
+OCC_3147_20230703,OCC,description_of_institution,True,4,5,institution,2273,1.0,Description of Institution,0
+OCC_3147_20230703,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_3147_20230703,OCC,scope_of_evaluation,True,5,5,institution,1633,1.0,Scope of the Evaluation,0
+OCC_3147_20230703,OCC,ltd_ratio,True,3,3,institution,1302,1.0,Loan-to-Deposit Ratio,0
+OCC_3147_20230703,OCC,aa_concentration,True,3,4,institution,1002,1.0,Lending in Assessment Area,0
+OCC_3147_20230703,OCC,illegal_credit_practices_review,True,6,6,institution,1857,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_704171_20240528,OCC,cover,True,1,1,institution,887,1.0,PUBLIC DISCLOSURE,0
+OCC_704171_20240528,OCC,rating,True,3,3,institution,766,1.0,Overall CRA Rating,0
+OCC_704171_20240528,OCC,description_of_institution,True,4,4,institution,2149,1.0,Description of Institution,0
+OCC_704171_20240528,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_704171_20240528,OCC,scope_of_evaluation,True,5,6,institution,3310,1.0,Scope of the Evaluation,0
+OCC_704171_20240528,OCC,ltd_ratio,True,3,3,institution,515,1.0,Loan-to-Deposit Ratio,0
+OCC_704171_20240528,OCC,aa_concentration,True,3,4,institution,968,1.0,Lending in Assessment Area,0
+OCC_704171_20240528,OCC,illegal_credit_practices_review,True,6,6,institution,1277,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_708039_20200504,OCC,cover,True,1,1,institution,884,1.0,PUBLIC DISCLOSURE,0
+OCC_708039_20200504,OCC,rating,True,3,3,institution,928,1.0,Overall CRA Rating,0
+OCC_708039_20200504,OCC,description_of_institution,True,4,5,institution,3141,1.0,Description of Institution,0
+OCC_708039_20200504,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_708039_20200504,OCC,scope_of_evaluation,True,5,6,institution,4851,1.0,Scope of the Evaluation,0
+OCC_708039_20200504,OCC,ltd_ratio,True,3,3,institution,1411,1.0,Loan-to-Deposit Ratio,0
+OCC_708039_20200504,OCC,aa_concentration,True,3,4,institution,1472,1.0,Lending in Assessment Area,0
+OCC_708039_20200504,OCC,illegal_credit_practices_review,True,7,7,institution,1298,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_708286_20250512,OCC,cover,True,1,1,institution,866,1.0,PUBLIC DISCLOSURE,0
+OCC_708286_20250512,OCC,rating,True,3,4,institution,2630,1.0,Overall CRA Rating,0
+OCC_708286_20250512,OCC,description_of_institution,True,4,5,institution,2680,1.0,Description of Institution,0
+OCC_708286_20250512,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_708286_20250512,OCC,scope_of_evaluation,True,5,5,institution,1022,1.0,Scope of the Evaluation,0
+OCC_708286_20250512,OCC,ltd_ratio,False,,,,0,,,0
+OCC_708286_20250512,OCC,aa_concentration,False,,,,0,,,0
+OCC_708286_20250512,OCC,illegal_credit_practices_review,True,5,5,institution,1393,1.0,Discriminatory or Other Illegal Credit Practices Review,0
+OCC_9734_20250623,OCC,cover,True,1,1,institution,867,1.0,PUBLIC DISCLOSURE,0
+OCC_9734_20250623,OCC,rating,True,3,3,institution,796,1.0,Overall CRA Rating,0
+OCC_9734_20250623,OCC,description_of_institution,True,4,5,institution,4199,1.0,Description of Institution,0
+OCC_9734_20250623,OCC,description_of_assessment_area,False,,,,0,,,0
+OCC_9734_20250623,OCC,scope_of_evaluation,True,5,6,institution,3277,1.0,Scope of the Evaluation,0
+OCC_9734_20250623,OCC,ltd_ratio,True,3,3,institution,1913,1.0,Loan-to-Deposit Ratio,0
+OCC_9734_20250623,OCC,aa_concentration,True,4,4,institution,1541,1.0,Lending in Assessment Area,0
+OCC_9734_20250623,OCC,illegal_credit_practices_review,True,7,7,institution,1388,1.0,Discriminatory or Other Illegal Credit Practices Review,0

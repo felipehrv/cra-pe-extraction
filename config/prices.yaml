@@ -20,7 +20,7 @@ gemini:
     gemini-3.6-flash: { input: null, output: null, free_tier: true }
     gemini-3.5-flash-lite: { input: null, output: null, free_tier: true }  # first live call succeeded 2026-10-14 (3.8 and 3.6 Flash returned 503 high demand that day)
   free_tier:
-    requests_per_minute: null
+    requests_per_minute: 15  # observed 2026-10-14: generate_content_free_tier_requests limit 15 per minute for gemini-3.5-flash-lite (429 message)
     requests_per_day: null
     # Daily quota reset (run.gemini_limiter); the llm.py RateLimiter note says midnight Pacific
     # time. Verify on the AI Studio plan page when the limits are filled in.

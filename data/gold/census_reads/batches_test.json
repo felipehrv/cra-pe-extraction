@@ -1,0 +1,29 @@
+[
+ {
+  "batch": 21,
+  "rows": [
+   {
+    "doc_id": "OCC_3147_20230703",
+    "regulator": "OCC",
+    "pdf": "data/pdfs/OCC_3147_20230703.pdf",
+    "located": "true",
+    "page_start": "6",
+    "page_end": "6",
+    "rating_pages": "3",
+    "candidate_pages": "6",
+    "section_text": "Discriminatory or Other Illegal Credit Practices Review \nPursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank\u2019s or federal \nsavings association\u2019s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or \nother illegal credit practices in any geography by the bank, or in any AA by an affiliate whose loans \nhave been considered as part of the bank\u2019s lending performance. As part of this evaluation process, the \nOCC consults with other federal agencies with responsibility for compliance with the relevant laws and \nregulations, including the U.S. Department of Justice, the U.S. Department of Housing and Urban \nDevelopment, and the Bureau of Consumer Financial Protection, as applicable. \n \nThe OCC has not identified that this institution (or any affiliate whose loans have been considered as \npart of the institution\u2019s lending performance) has engaged in discriminatory or other illegal credit \npractices that require consideration in this evaluation. \n \nThe CRA performance rating was not lowered as a result of these findings. We considered the nature, \nextent, and strength of the evidence of the practices; the extent to which institu"
+   },
+   {
+    "doc_id": "FRB_164975_20250818",
+    "regulator": "FRB",
+    "pdf": "data/pdfs/FRB_164975_20250818.pdf",
+    "located": "false",
+    "page_start": "",
+    "page_end": "",
+    "rating_pages": "3",
+    "candidate_pages": "",
+    "section_text": ""
+   }
+  ]
+ }
+]
