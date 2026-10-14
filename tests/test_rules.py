@@ -34,10 +34,9 @@ from cra_extract.rules import (
 EXPECTED_PATH = Path(__file__).parent / "fixtures" / "expected_samples.yaml"
 
 # (sample stem, field): the rules abstain on purpose; see the module docstring of rules.py.
+# SouthStar's inside-AA share left this set in rules 0.2.4 (primary-product subtotal).
 KNOWN_ABSTAIN = {
     ("OCC_11715_LemontNB_2024_SN", "n_assessment_areas"),
-    ("FDIC_12299_SouthStar_2022_ISB_NI_fairlending", "inside_aa_share_number_pct"),
-    ("FDIC_12299_SouthStar_2022_ISB_NI_fairlending", "inside_aa_share_product"),
 }
 APPLICABILITY_FIELDS = {"lending_test_rating", "cd_test_rating"}
 
@@ -363,7 +362,7 @@ def _extract_parts(parts: list[tuple[str | None, str]], regulator: str, doc_id: 
 def test_version_bumped_with_changelog():
     from cra_extract.rules import CHANGELOG
 
-    assert RULES_VERSION == "0.2.3"
+    assert RULES_VERSION == "0.2.4"
     assert CHANGELOG[-1][0] == RULES_VERSION
     versions = [v for v, _date, _text in CHANGELOG]
     assert versions == sorted(versions, key=lambda v: tuple(int(x) for x in v.split(".")))
@@ -802,3 +801,348 @@ def test_fdic_total_assets_subject_row(name, rows, expected):
     else:
         assert by["total_assets_usd"].value == expected
         assert by["total_assets_asof"].value == date(2024, 6, 30)
+
+
+# --------------------------------------------------------------------------- inside-AA share
+# The inside/outside table in both text layouts: pymupdf (``data/text``, one cell per line)
+# and pdftotext -layout (the sample fixtures, or ``pdftotext -layout`` of the dev PDF page).
+# Rules 0.2.3 matched a Total row only as one layout line, so all four FDIC dev documents
+# abstained on ``data/text``. Rows marked "rows omitted" drop whole table rows and keep the
+# rest verbatim.
+
+FDIC_AA_HEADER_PYMUPDF = (
+    "Lending Inside and Outside of the Assessment Area \n  \nNumber of Loans \n  \nDollar Amount of Loans $(000s) \n"
+    "  \nLoan Category \nInside \nOutside \nTotal \nInside \nOutside \nTotal \n  \n# \n% \n# \n% \n# \n$ \n% \n$ \n% \n"
+    "$(000s) \n"
+)  # FDIC_6078_20240805 p10
+OA_AA_PYMUPDF = FDIC_AA_HEADER_PYMUPDF + (
+    "Small Farm \n \n2022 \n13 \n100.0 \n0 \n0.0 \n13 \n2,669 \n100.0 \n0 \n0.0 \n2,669 \n"
+    "2023 \n15 \n93.8 \n1 \n6.3 \n16 \n2,787 \n98.6 \n40 \n1.4 \n2,827 \n"
+    "Subtotal \n28 \n96.6 \n1 \n3.4 \n29 \n5,456 \n99.3 \n40 \n0.7 \n5,496 \n"
+    "Total \n82 \n0.9 \n9,272 \n99.1 \n9,354 \n15,872 \n0.5 \n3,123,667 \n99.5 \n3,139,540 \n"
+    "Source: HMDA Data; Bank Data.  Due to rounding, totals may not equal 100.0 \n"
+)  # FDIC_6078_20240805 p10, rows omitted (home mortgage, consumer, small business)
+OA_AA_LAYOUT = (
+    "                                 Lending Inside and Outside of the Assessment Area\n"
+    " Loan Category                    Inside            Outside          Total         Inside             Outside          Total\n"
+    "                              #            %       #         %          #      $            %        $          %      $(000s)\n"
+    " Small Farm\n"
+    "              2022           13        100.0       0         0.0      13      2,669     100.0          0       0.0      2,669\n"
+    "              2023           15         93.8       1         6.3      16      2,787      98.6         40       1.4      2,827\n"
+    "          Subtotal           28         96.6       1         3.4      29      5,456      99.3         40       0.7      5,496\n"
+    " Total                       82          0.9     9,272      99.1     9,354   15,872       0.5     3,123,667   99.5    3,139,540\n"
+    " Source: HMDA Data; Bank Data. Due to rounding, totals may not equal 100.0\n"
+)  # FDIC_6078_OneAmericanBank_2024_ISB_NI.txt lines 375 to 395 (FDIC_6078_20240805 p10), rows omitted
+LB_AA_PYMUPDF = (
+    "Lending Inside and Outside of the Assessment Area \n  \nNumber of Loans \n  \nDollar Amount of Loans $(000s) \n"
+    "  \nLoan \nCategory \nInside \nOutside \nTotal \nInside \nOutside \nTotal \n  \n# \n% \n# \n% \n# \n$ \n% \n$ \n% \n"
+    "$(000s) \nSmall Business Loans \n2021 \n0 \n0.0 \n0 \n0.0 \n0 \n0 \n0,0 \n0 \n0,0 \n0 \n"
+    "2022 YTD \n0 \n0.0 \n2 \n100.0 \n2 \n0 \n0.0 \n65 \n100.0 \n65 \n"
+    "Subtotal \n0 \n0.0 \n2 \n100.0 \n2 \n0 \n0.0 \n65 \n100.0 \n65 \n"
+    "Total \n0 \n0.0 \n61 \n100.0 \n61 \n0 \n0.0 \n4,162 \n100.0 \n4,162 \n"
+    "Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.  \n"
+)  # FDIC_26816_20220809 p8, rows omitted (consumer)
+SS_WEIGHT_PYMUPDF = (
+    "As reflected in the following table, examiners considered the universes by dollar volume and \n"
+    "number of loans originated in 2021, as well as management’s stated business strategy to determine \n"
+    "the weighting applied to the loan categories reviewed, when arriving at applicable conclusions.  \n"
+    "Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.  \n"
+    "However, in the College Station MSA AA, Houston MSA AA, and Non-MSA AA, small business \n"
+    "lending represents the primary product of those reviewed and therefore, small business loans \n"
+    "received more weight when arriving at applicable conclusions.   \n \n"
+)  # FDIC_12299_20220912 p8 (Scope of Evaluation)
+SS_AA_PYMUPDF = (
+    "Lending Inside and Outside of the Assessment Area \nNumber of Loans \nDollar Amount of Loans $(000s) \nInside \n"
+    "Outside \nInside \nOutside \nLoan Category \n# \n% \n# \n% \nTotal \n# \n$ \n% \n$ \n% \nTotal \n$(000s) \n"
+    "Home Mortgage \n \n2019 \n190 \n80.2 \n47 \n19.8 \n237 \n99,709 \n83.5 \n19,670 \n16.5 \n119,379 \n"
+    "2020 \n321 \n77.0 \n96 \n23.0 \n417 \n113,583 \n79.5 \n29,278 \n20.5 \n142,861 \n"
+    "2021 \n202 \n68.7 \n92 \n31.3 \n294 \n99,558 \n72.7 \n37,360 \n27.3 \n136,918 \n"
+    "Subtotal \n713 \n75.2 \n235 \n24.8 \n948 \n312,850 \n78.4 \n86,308 \n21.6 \n399,158 \n"
+    "Small Business \n403 \n77.1 \n120 \n22.9 \n523 \n38,274 \n76.6 \n11,716 \n23.4 \n49,990 \n"
+    "Source:  2021 Bank Data; 2019, 2020, 2021 HMDA Reported Data \n"
+)  # FDIC_12299_20220912 p9
+SS_WEIGHT_LAYOUT = (
+    "As reflected in the following table, examiners considered the universes by dollar volume and\n"
+    "number of loans originated in 2021, as well as management’s stated business strategy to determine\n"
+    "the weighting applied to the loan categories reviewed, when arriving at applicable conclusions.\n"
+    "Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.\n"
+    "However, in the College Station MSA AA, Houston MSA AA, and Non-MSA AA, small business\n"
+    "lending represents the primary product of those reviewed and therefore, small business loans\n"
+    "received more weight when arriving at applicable conclusions.\n\n"
+)  # FDIC_12299_SouthStar_2022_ISB_NI_fairlending.txt lines 286 to 292
+SS_AA_LAYOUT = (
+    "                                   Lending Inside and Outside of the Assessment Area\n"
+    "                                  Number of Loans                            Dollar Amount of Loans $(000s)\n"
+    "                                                                     Total                                         Total\n"
+    "Loan Category                  Inside             Outside                       Inside              Outside\n"
+    "                                                                      #                                           $(000s)\n"
+    "                             #          %         #         %                   $        %          $         %\n"
+    "Home Mortgage\n"
+    "                  2019      190       80.2       47        19.8      237     99,709      83.5     19,670   16.5   119,379\n"
+    "                  2020      321       77.0       96        23.0      417     113,583     79.5     29,278   20.5   142,861\n"
+    "                  2021      202       68.7       92        31.3      294     99,558      72.7     37,360   27.3   136,918\n"
+    "             Subtotal       713       75.2       235       24.8      948     312,850     78.4     86,308   21.6   399,158\n"
+    "Small Business              403       77.1       120       22.9      523     38,274      76.6     11,716   23.4   49,990\n"
+    "Source: 2021 Bank Data; 2019, 2020, 2021 HMDA Reported Data\n"
+)  # FDIC_12299_SouthStar_2022_ISB_NI_fairlending.txt lines 357 to 369
+NS_AA_PYMUPDF = (
+    "North Star Bank originated a majority of small business loans within the assessment area as shown in \n"
+    "the following table. \n \nLending Inside and Outside of the Assessment Area \n \nNumber of Loans \n \n"
+    "Dollar Amount of Loans $(000s) \n \nLoan Category \nInside \nOutside \nTotal \nInside \nOutside \nTotal \n \n"
+    "# \n% \n# \n% \n# \n$ \n% \n$ \n% \n$(000s) \n"
+    "Small Business \n93 \n82.3 \n20 \n17.7 \n113 \n31,528 \n82.4 \n6,744 \n17.6 \n38,272 \nSource: 2023 Bank records \n"
+)  # FDIC_16733_20240410 p9
+NS_AA_LAYOUT = (
+    "North Star Bank originated a majority of small business loans within the assessment area as shown in\n"
+    "the following table.\n\n"
+    "                                     Lending Inside and Outside of the Assessment Area\n"
+    "                                    Number of Loans                                Dollar Amount of Loans $(000s)\n"
+    "Loan Category                    Inside              Outside            Total          Inside            Outside          Total\n"
+    "                               #          %          #       %           #            $         %       $          %      $(000s)\n"
+    "Small Business                 93         82.3      20       17.7       113        31,528       82.4   6,744    17.6      38,272\n"
+    "Source: 2023 Bank records\n"
+)  # pdftotext -layout of FDIC_16733_20240410 p9
+FP_AA_PYMUPDF = (
+    "Lending Inside and Outside the Assessment Areas \nJanuary 1, 2017 to December 31, 2022 \nLoan Types \nInside \n"
+    "Outside \n \n# \n% \n$(000s) \n% \n# \n% \n$(000s) \n% \n"
+    "Refinancing \n49 \n38.6% \n$94,989 \n39.8% \n78 \n61.4% \n$143,423 \n60.2% \n"
+    "Total HMDA \n108 \n41.2% \n$229,462 \n45.2% \n154 \n58.8% \n$277,871 \n54.8% \n"
+    "Small Business \n63 \n40.1% \n$17,311 \n29.8% \n94 \n59.9% \n$40,856 \n70.2% \n"
+    "Total Small \nBusiness \n63 \n40.1% \n$17,311 \n29.8% \n94 \n59.9% \n$40,856 \n70.2% \n"
+    "Total Loans \n171 \n40.8% \n$246,773 \n43.6% \n248 \n59.2% \n$318,727 \n56.4% \nSource: Bank records \n"
+)  # FRB_3664588_20240116 p10, rows omitted (four HMDA purposes)
+FP_AA_LAYOUT = (
+    "                                Lending Inside and Outside the Assessment Areas\n"
+    "                                     January 1, 2017 to December 31, 2022\n"
+    "      Loan Types                           Inside                               Outside\n"
+    "                            #        %       $(000s)       %         #         %         $(000s)         %\n"
+    " Refinancing               49      38.6%     $94,989     39.8%      78      61.4%       $143,423       60.2%\n"
+    " Total HMDA               108      41.2%    $229,462     45.2%      154     58.8%       $277,871       54.8%\n"
+    " Small Business            63      40.1%     $17,311     29.8%      94      59.9%        $40,856       70.2%\n"
+    " Total Small              63       40.1%    $17,311      29.8%      94      59.9%       $40,856        70.2%\n"
+    " Business\n"
+    " Total Loans              171      40.8%    $246,773     43.6%      248     59.2%       $318,727       56.4%\n"
+    " Source: Bank records\n"
+)  # FRB_3664588_FieldPoint_2024_ISB_NI.txt lines 394 to 410 (FRB_3664588_20240116 p10), rows omitted
+SB_AA_PYMUPDF = (
+    "Table 7 \nLending\xa0Inside\xa0and\xa0Outside\xa0the\xa0Assessment\xa0Area\xa0\nLoan\xa0Type\xa0\nInside\xa0\n"
+    "Outside\xa0\n#\xa0\n#%\xa0\n$(000)\xa0\n$%\xa0\n#\xa0\n#%\xa0\n$(000)\xa0\n$%\xa0\n"
+    "Small\xa0Business\xa0\n36\xa0\n21.3\xa0\n1,528\xa0\n17.3\xa0\n133\xa0\n78.7\xa0\n7,325\xa0\n82.7\xa0\n"
+    "Total\xa0Loans\xa0\n36\xa0\n21.3\xa0\n1,528\xa0\n17.3\xa0\n133\xa0\n78.7\xa0\n7,325\xa0\n82.7\xa0\nNote:\xa0\n"
+)  # FRB_663656_20241118 p10
+SB_AA_LAYOUT = (
+    "                                                            Table 7\n"
+    "                                Lending Inside and Outside the Assessment Area\n"
+    "                                                    Inside                         Outside\n"
+    "            Loan Type\n"
+    "                                          #      #%     $(000)    $%      #      #%     $(000)   $%\n"
+    " Small Business                             36    21.3   1,528     17.3    133    78.7   7,325    82.7\n"
+    " Total Loans                                36    21.3   1,528     17.3    133    78.7   7,325    82.7\n"
+    " Note:   Percentages may not total 100.0 percent due to rounding.\n"
+)  # FRB_663656_SmallBusinessBank_2024_SM_NI.txt lines 415 to 422 (FRB_663656_20241118 p10)
+
+
+def _inside_aa(parts: list[tuple[str | None, str]], regulator: str) -> dict[str, FieldValue]:
+    """Rules output for one page; every inside-AA value must quote its span verbatim and pass
+    the grounding locate and value-presence checks."""
+    from cra_extract import grounding
+    from cra_extract.config import field_spec
+
+    by = _extract_parts(parts, regulator)
+    text = "".join(p for _name, p in parts)
+    page = Page(number=1, text=text)
+    for field in ("inside_aa_share_number_pct", "inside_aa_share_product"):
+        fv = by[field]
+        if fv.status == "value":
+            assert _ws(text[fv.char_start : fv.char_end]) == fv.quote
+            assert grounding.locate_quote(fv.quote, [page]) is not None
+            assert grounding.value_in_quote(fv.value, fv.quote, field_spec(field)), (field, fv.value, fv.quote)
+    return by
+
+
+@pytest.mark.parametrize(
+    "table,regulator,value,product,quote_end",
+    [
+        (OA_AA_PYMUPDF, "FDIC", 0.9, "all_reviewed_combined", "Total 82 0.9"),
+        (OA_AA_LAYOUT, "FDIC", 0.9, "all_reviewed_combined", "Total 82 0.9"),
+        (LB_AA_PYMUPDF, "FDIC", 0.0, "all_reviewed_combined", "Total 0 0.0"),
+        (NS_AA_PYMUPDF, "FDIC", 82.3, "small_business", "Small Business 93 82.3"),
+        (NS_AA_LAYOUT, "FDIC", 82.3, "small_business", "Small Business 93 82.3"),
+        # FRB: the outside columns follow the inside dollar columns; "Total HMDA" is a product subtotal.
+        (FP_AA_PYMUPDF, "FRB", 40.8, "all_reviewed_combined", "Total Loans 171 40.8%"),
+        (FP_AA_LAYOUT, "FRB", 40.8, "all_reviewed_combined", "Total Loans 171 40.8%"),
+        (SB_AA_PYMUPDF, "FRB", 21.3, "all_reviewed_combined", "Total Loans 36 21.3"),
+        (SB_AA_LAYOUT, "FRB", 21.3, "all_reviewed_combined", "Total Loans 36 21.3"),
+    ],
+    ids=["OA-pymupdf", "OA-layout", "LB-pymupdf", "NS-pymupdf", "NS-layout", "FP-pymupdf", "FP-layout", "SB-pymupdf", "SB-layout"],
+)
+def test_inside_aa_table_both_layouts(table, regulator, value, product, quote_end):
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n\n" + table)], regulator)
+    share, prod = by["inside_aa_share_number_pct"], by["inside_aa_share_product"]
+    assert share.status == "value" and share.value == pytest.approx(value)
+    assert prod.value == product
+    assert share.quote.startswith("Lending") and share.quote.endswith(quote_end)
+    assert share.quote == prod.quote
+
+
+@pytest.mark.parametrize(
+    "weight,table", [(SS_WEIGHT_PYMUPDF, SS_AA_PYMUPDF), (SS_WEIGHT_LAYOUT, SS_AA_LAYOUT)], ids=["pymupdf", "layout"]
+)
+def test_inside_aa_primary_product_subtotal_without_total_row(weight, table):
+    """SouthStar (FDIC_12299_20220912): no Total row; the Scope sentence makes home mortgage
+    primary (the next sentence, about three MSA AAs, does not count), so the home mortgage
+    subtotal is read, not a single-year row and not the small business row."""
+    parts = [
+        ("scope_of_evaluation", "Scope of Evaluation \n\n" + weight),
+        ("aa_concentration", "Assessment Area Concentration \n\n" + table),
+    ]
+    by = _inside_aa(parts, "FDIC")
+    assert by["inside_aa_share_number_pct"].value == pytest.approx(75.2)
+    assert by["inside_aa_share_product"].value == "home_mortgage"
+    assert by["inside_aa_share_number_pct"].quote.endswith("Subtotal 713 75.2")
+    assert "primary product" in by["inside_aa_share_number_pct"].notes
+    # Without the weighting sentence the primary product is unknown: abstain.
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n\n" + table)], "FDIC")
+    assert by["inside_aa_share_number_pct"].status == "abstain"
+    assert by["inside_aa_share_product"].status == "abstain"
+
+
+def test_inside_aa_combined_sentence_wins_over_total_row():
+    """OCC_11715_20240408 p4: the sentence prints 54.5 and the Total row 54.4; the codebook
+    follows the sentence."""
+    section = (
+        "Lending in Assessment Area \nA majority of the bank’s loans are inside its assessment area(s) (AAs). \n"
+        "The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the \n"
+        "evaluation period. This analysis is performed at the bank, rather than the AA, level. \n"
+        "Lending Inside and Outside of the Assessment Area \nLoan Category \nNumber of Loans \nTotal \n# \n"
+        "Dollar Amount of Loans $(000s) \nTotal \n$(000s) \nInside \nOutside \nInside \nOutside \n# \n% \n# \n% \n$ \n% \n"
+        "$ \n% \nHome Mortgage \n6 \n54.5 \n5 \n45.4 \n11 \n1,863 \n52.9 \n1,657 \n47.1 \n3,520 \n"
+        "Total \n6 \n54.4 \n5 \n45.4 \n11 \n1,863 \n52.9 \n1,657 \n47.1 \n3,520 \n"
+    )
+    by = _inside_aa([("aa_concentration", section)], "OCC")
+    assert by["inside_aa_share_number_pct"].value == 54.5
+    assert by["inside_aa_share_number_pct"].quote.startswith("The bank originated and purchased 54.5 percent")
+    # Without the sentence the Total row is read.
+    table = section[section.index("Lending Inside") :]
+    by = _inside_aa([("aa_concentration", "Lending in Assessment Area \n" + table)], "OCC")
+    assert by["inside_aa_share_number_pct"].value == 54.4
+    assert by["inside_aa_share_product"].value == "all_reviewed_combined"
+
+
+def test_inside_aa_sentence_within_and_number_in_parentheses():
+    """FRB_722432_20230911 p6: the table is unreadable; the sentence says "within" and puts
+    the share by number in parentheses before the dollar share."""
+    section = (
+        "Lending In Assessment Area \n \n"
+        "To determine the institution’s volume of lending within its assessment area, the geographic location of \n"
+        "the bank’s HMDA loans originated during calendar years 2021 and 2022 and the sample of consumer \n"
+        "motor vehicle loans originated during 2022, were considered.  The lending distribution inside and \n"
+        "outside of the bank's assessment area is depicted in the following table. \n \n \n \n"
+        "As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were \n"
+        "extended within the bank’s assessment area.  Overall, the institution’s level of lending within its \n"
+        "assessment areas is considered responsive to community credit needs. \n"
+    )
+    by = _extract_parts([("aa_concentration", section)], "FRB")
+    assert by["inside_aa_share_number_pct"].value == 70.7
+    assert by["inside_aa_share_product"].value == "all_reviewed_combined"
+    assert by["inside_aa_share_number_pct"].quote.startswith("As indicated in the preceding table")
+
+
+def test_inside_aa_total_row_wins_over_one_product_sentence():
+    """A sentence about one product's share comes after the table's Total row (constructed
+    sentence; table FDIC_6078_20240805 p10, rows omitted)."""
+    sentence = "The bank originated 96.6 percent of its small farm loans inside the assessment area. \n\n"
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n" + sentence + OA_AA_PYMUPDF)], "FDIC")
+    assert by["inside_aa_share_number_pct"].value == 0.9
+    assert by["inside_aa_share_product"].value == "all_reviewed_combined"
+    # With no table, the one-product sentence is read and names its product.
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n" + sentence)], "FDIC")
+    assert by["inside_aa_share_number_pct"].value == 96.6
+    assert by["inside_aa_share_product"].value == "small_farm"
+
+
+def test_inside_aa_rows_must_add_up():
+    """A row whose counts do not reproduce its share is not read: the "Totals" row of the
+    geographic distribution table (FDIC_16733_20240410 p9) prints 100.0 then 93."""
+    table = (
+        "Lending Inside and Outside of the Assessment Area \nLoan Category \nInside \nOutside \n# \n% \n# \n% \n"
+        "Totals \n100.0 \n93 \n100.0 \n31,528 \n100.0 \nSource: 2023 D&B Data; 2023 Bank Data \n"
+    )
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n\n" + table)], "FDIC")
+    assert by["inside_aa_share_number_pct"].status == "abstain"
+
+
+@pytest.mark.parametrize(
+    "sentence,product",
+    [
+        ("Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.", "home_mortgage"),  # FDIC_12299_20220912 p8
+        ("Examiners gave more weight to small business loans than to home mortgage loans.", "small_business"),
+        ("Small farm lending is the bank's primary product.", "small_farm"),
+        ("However, in the College Station MSA AA, Houston MSA AA, and Non-MSA AA, small business lending represents "
+         "the primary product of those reviewed and therefore, small business loans received more weight.", None),  # FDIC_12299_20220912 p8
+        ("While a majority of the small business and small farm loans were made inside the assessment area, consumer "
+         "and home mortgage lending carried more weight.", None),  # FDIC_6078_20240805 p10
+        ("Examiners placed less weight on consumer loans.", None),
+    ],
+)
+def test_weighted_product(sentence, product):
+    from cra_extract.rules import _weighted_product
+
+    assert _weighted_product(sentence) == product
+
+
+@pytest.mark.parametrize(
+    "sentence,value,product",
+    [
+        # Verbatim sentences from aa_concentration sections of corpus PEs (doc_id in each case).
+        ("For the 2022 loan originations reviewed, a majority of home mortgage loans (92.6 percent) and small "
+         "business loans (96.1 percent) by number were extended within the assessment area.", 92.6, "home_mortgage"),  # FDIC_28401_20230130
+        ("Overall, Guardian Bank originated, by number, an average of 78.1 percent of the home mortgage and 79.4 "
+         "percent of the small business loans inside the AAs.", 78.1, "home_mortgage"),  # FDIC_57127_20220912
+        ("As indicated in the preceding table, a majority of the total number (76%) and dollar amount (73.3%) of HMDA "
+         "and small business loans were extended within the bank’s assessment areas.", 76.0, "all_reviewed_combined"),  # FRB_214722_20241118
+        ("As shown above, 73.3 percent of the HMDA-reportable loans (by number), 90.6 percent of small business loans "
+         "(by number), and 77.5 percent of total loans (by number) are to borrowers and businesses inside the bank’s "
+         "AAs.", 77.5, "all_reviewed_combined"),  # FRB_2793593_20240610
+        ("During the evaluation period, 98.0% by volume and 97.6% by dollar amount of the bank’s total loans were "
+         "made inside the AA.", 98.0, "all_reviewed_combined"),  # FRB_1017425_20240729
+        ("As the table displays, 78.4 percent of small business loans, by number, are originated inside the "
+         "assessment area.", 78.4, "small_business"),  # FRB_242949_20250324
+        # Not a share by number of the current evaluation: dollar shares, the prior evaluation, demographics.
+        ("The percentage of loans by dollar amount outside of the assessment area is driven primarily by the 2022 "
+         "loans (79.2 percent), as a majority of loans by dollar amount (51.2 percent) were originated inside the "
+         "assessment areas in 2023.", None, None),  # FDIC_6803_20240903
+        ("This is an increase in performance from the previous CRA evaluation where the bank’s performance averaged "
+         "75.5 percent inside the AA.", None, None),  # FDIC_21247_20230308
+        ("However, examiners considered that 10.3 percent of families within the assessment area live below the "
+         "poverty level.", None, None),  # FDIC_10635_20240122
+    ],
+)
+def test_inside_aa_sentence_share_and_product(sentence, value, product):
+    by = _extract_parts([("aa_concentration", "Assessment Area Concentration \n\n" + sentence + "\n")], "FDIC")
+    if value is None:
+        assert by["inside_aa_share_number_pct"].status == "abstain"
+    else:
+        assert by["inside_aa_share_number_pct"].value == value
+        assert by["inside_aa_share_product"].value == product
+
+
+def test_inside_aa_row_cut_after_outside_count_and_broken_cell():
+    """FRB_884358_20250303 p10 prints the outside shares elsewhere, so the row ends at the
+    outside count (the counts must give the share within 0.1); FRB_919568_20230227 p5 breaks
+    the cell "10,978" over two lines ("10,97", "8")."""
+    from cra_extract.rules import Sentence, _AARow
+
+    cut = (
+        "Table 8 \nLending Inside and Outside the Assessment Area \nInside \nLoan Type \n# \n#% \n$(000) \n$% \n# \n"
+        "Consumer - Unsecured \n93 \n90.3 \n326 \n90.5 \n10 \nSmall Business \n41 \n82.0 \n4,180 \n93.0 \n9 \n"
+        "Total Loans \n134 \n87.6 \n4,506 \n92.8 \n19 \nNote: \n"
+    )
+    by = _inside_aa([("aa_concentration", "Assessment Area Concentration \n" + cut)], "FRB")
+    assert by["inside_aa_share_number_pct"].value == 87.6
+    assert by["inside_aa_share_product"].value == "all_reviewed_combined"
+    ln = Sentence("x", 0, 1, 1)
+    row = _AARow([ln], [])
+    row.add([("148", 1, ln), ("86.4", 2, ln), ("10,97", 3, ln)])
+    row.add([("8", 4, ln), ("82.4", 5, ln)])
+    assert [t[0] for t in row.tokens] == ["148", "86.4", "10,978", "82.4"]

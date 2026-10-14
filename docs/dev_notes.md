@@ -262,10 +262,9 @@ Rules and baseline
 - Verify every line citation in `tests/fixtures/expected_samples.yaml` against the .txt
   files; the tests pass against the fixture, so an error there would pass silently.
 - Known abstentions: `n_assessment_areas` on Lemont (count only in the State of Illinois
-  section, LM:222, and Appendix A); `inside_aa_share_number_pct` and
-  `inside_aa_share_product` on SouthStar (no Total row, SS:363-368; gold is the home
-  mortgage subtotal 75.2 at SS:367). Decide whether the rules should read Appendix A and
-  primary-product subtotals.
+  section, LM:222, and Appendix A). Decide whether the rules should read Appendix A. Since
+  rules 0.2.4 SouthStar's inside-AA share is read (home mortgage subtotal 75.2, SS:367), so
+  the "the rules abstain" notes on SS in `tests/fixtures/expected_samples.yaml` are stale.
 - Genuinely missing sentences (First Neighbor `prior_evaluation_date`, `prior_rating`,
   `total_assets_asof`) give abstain, not absent, on purpose.
 - FDIC total assets come from the LTD table's "Total Assets as of" column (SS:340,
@@ -280,9 +279,33 @@ Rules and baseline
   1,475 values, 1,280 within 5 percent of the sentence figure; known misses are labels the
   name match cannot link (FDIC_14773_20250529 "SSB"), tables printed in $ millions under a
   ($000s) header (falls back to the sentence) and PEs whose table and sentence disagree.
-  The inside-AA Total-row rule has the same layout gap (it never reads a Total row on
-  `data/text`; all four FDIC dev documents abstain) and is not changed. Every rules test
-  runs on the pdftotext fixtures, so neither gap showed in the suite.
+  The inside-AA Total-row rule had the same layout gap (fixed in 0.2.4). Every rules test
+  ran on the pdftotext fixtures, so neither gap showed in the suite.
+- Rules 0.2.4 (2026-10-14, dev tuning): the inside-AA share reads the inside/outside table
+  in both layouts, in the codebook order (combined sentence, Total row by number, primary
+  product's subtotal or only row, one-product sentence). The primary product is the only
+  product in the table or the one a bank-level weighting sentence names (Scope, Description,
+  AA concentration); otherwise the rule abstains. Rows must pass the count check (inside #
+  over inside plus outside # within one point of the printed share). Dev: the four FDIC
+  documents go from abstain to SS 75.2 home_mortgage, LB 0.0, OA 0.9 (all as expected) and
+  North Star 82.3 small_business (only product, no expected entry); FRB_722432 goes from
+  abstain to 70.7 ("within" sentence; its table is unreadable OCR). Non-test corpus values
+  for the share: FDIC 179 to 1,403 of 1,757, FRB 289 to 379 of 408, OCC 538 to 566 of 597.
+  0.2.2 had 280 values of 100.0 read from table cells joined into one "sentence"; those are
+  gone. FDIC abstentions left: 258 multi-product tables with no Total row and no
+  single-product weighting sentence (equal weight, two co-primary products, AA-specific
+  weighting), 35 where the primary product has year rows but no subtotal, 27 with no table
+  title, 21 with no located section. Sentence and Total row agree within 0.1 on 411 of 450
+  OCC, 121 of 131 FRB and 29 of 35 FDIC documents that print both (OCC gaps are mostly the
+  sentence rounding, which the codebook prefers).
+- The rules' `all_reviewed_combined` sentence quotes that say neither "total", "combined",
+  "all loans" nor "loans reviewed" (FieldPoint "lending inside the assessment area was
+  40.8% by number") still fail value presence in grounding (`WORD_FORMS`); about 15 percent
+  of sentence-based product values in a 400-document sample.
+- Grounding (2026-10-14): value presence reads two-digit-year dates (M/D/YY, MM/DD/YY), so
+  an FDIC as-of date quoted from the LTD table header "12/31/23" is supported (49 non-test
+  FDIC rules values move from quote_does_not_support to supported). Numeric date forms must
+  not continue another number, so "2/28/2023" no longer matches inside "12/28/2023".
 - Lemont prints 54.5 percent inside the AA in the sentence (LM:99) and 54.4 in the table
   (LM:114); the rule and the guide follow the sentence. Candidate data-quality row.
 - Rules 0.2.0 (2026-10-08) come from the corpus-wide Group A comparison with the index
@@ -385,6 +408,10 @@ LLM
   fixed the three target cells; other cells moved between runs without a wording change
   (LLM total_assets_usd on SouthStar and Liberty went back to the rounded sentence), so run
   `make dev-rerun` before reading single-cell differences as prompt effects.
+- 2026-10-14: `total_assets_usd` gained a `prompt_description` (FDIC: prefer the LTD table's
+  "Total Assets as of" figure in thousands over a rounded description sentence).
+  `PROMPT_VERSION` is still v3 in `prompts.py`; bump it to v4 before the next LLM run so the
+  traces record the change.
 
 Evaluation
 

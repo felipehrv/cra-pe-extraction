@@ -26,9 +26,9 @@ Known abstentions on the samples, documented in ``tests/test_rules.py``:
 
 - ``n_assessment_areas`` on OCC_11715_LemontNB_2024_SN: the count is printed only in the
   State of Illinois section (line 222 of the sample text), which is state scope.
-- ``inside_aa_share_number_pct`` on FDIC_12299_SouthStar: the inside/outside table has no
-  Total row (lines 363 to 368); gold takes the primary product's subtotal, which needs the
-  weighting sentence of the Scope section, so the rule abstains.
+
+Since 0.2.4 the inside-AA rule reads SouthStar's home mortgage subtotal (no Total row, lines
+363 to 368) with the primary product taken from the Scope weighting sentence (line 289).
 
 CHANGELOG
 ---------
@@ -72,6 +72,24 @@ CHANGELOG
   reads a two-digit-year header ("12/31/23"). Otherwise the rule falls back to the sentence.
   On the 1,757 non-test FDIC documents the table now gives 1,475 values, 1,280 of them
   within 5 percent of the sentence figure.
+- 0.2.4 (2026-10-14): the inside-AA share reads the inside/outside table in both text
+  layouts. 0.2.3 matched a Total row only as one pdftotext layout line, so on every parsed
+  PE the table was never read and all four FDIC dev documents abstained. The order follows
+  the codebook: a sentence stating the combined share ("of its total loans"); else the
+  table's Total row, by number; else, with no Total row, the primary product's pooled row
+  (its subtotal, or its only row), the product being the only one in the table or the one a
+  weighting sentence names ("home mortgage loans received heavier weighting",
+  FDIC_12299_20220912 p8); else a sentence about one product. A row is read only when its
+  counts reproduce the printed inside share within one point and the inside and outside
+  shares add up to 100, which also places the outside columns of FRB tables after the
+  inside dollar columns. The quote runs from the table title to the figure (from the first
+  table line of the figure's page when the table crosses a page). Sentences: "within the
+  bank's assessment area" when no sentence says "inside", "number (70.7%)"
+  (FRB_722432_20230911 p6), the share of total loans first among several, no dollar,
+  prior-evaluation, one-year, geography, deposit or demographic shares, no runs of table
+  cells joined into a sentence, and the product read on both sides of the percent. On the
+  2,762 non-test documents the share now has a value on 2,348 (FDIC 1,403 of 1,757, FRB 379
+  of 408, OCC 566 of 597; 0.2.2/0.2.3: 179, 289 and 538, the FDIC ones all from sentences).
 """
 
 from __future__ import annotations
@@ -98,10 +116,11 @@ from cra_extract.locate import (
     locate_all,
     normalize_line,
     pages_from_text,
+    running_lines,
 )
 from cra_extract.models import RATING_WORDS, FieldValue, Page, Rating, Section
 
-RULES_VERSION = "0.2.3"
+RULES_VERSION = "0.2.4"
 SYSTEM = "rules"
 CHANGELOG: list[tuple[str, str, str]] = [
     ("0.1.0", "2026-10-07", "First version, patterns seeded on the eight sample PEs."),
@@ -136,6 +155,17 @@ CHANGELOG: list[tuple[str, str, str]] = [
         "read only pdftotext layout rows, so parsed documents always fell back to the rounded "
         "description sentence); FDIC only, subject row by bank name, initials or the only named "
         "row, figure at least $5 million, two-digit-year header dates; sentence fallback otherwise.",
+    ),
+    (
+        "0.2.4",
+        "2026-10-14",
+        "Inside-AA share reads the inside/outside table in pymupdf one-cell-per-line text as well as "
+        "pdftotext layout rows (0.2.3 never read a Total row on parsed documents). Combined-share "
+        "sentence first, then the Total row by number, then the primary product's subtotal or only "
+        "row (only product in the table, or named by a weighting sentence), then a one-product "
+        "sentence; rows checked by count arithmetic; sentences also read 'within the assessment area' "
+        "and 'number (X%)', skip dollar, prior-evaluation, one-year and geography shares and read the "
+        "product on both sides of the percent.",
     ),
 ]
 
@@ -1234,37 +1264,484 @@ BY_NUMBER_RE = re.compile(
     r"(\d{1,3}(?:\.\d+)?)\s*(?:percent|%)(?:\s+of\s+(?:its|the)\s+(?:bank's|institution's)?\s*(?:total\s+)?(?:loans|lending))?\s+by\s+number",
     re.IGNORECASE,
 )
-TOTAL_ROW_RE = re.compile(r"^total(?:\s+loans)?\b(.*)$", re.IGNORECASE)
+# "82.8 percent of small business loans (by number)" (FRB_648130_20250203 p9).
+BY_NUMBER_LOOSE_RE = re.compile(
+    r"(\d{1,3}(?:\.\d+)?)\s*(?:percent|%)(?:\s+of\s+[\w\s'-]{0,60}?(?:loans|lending))?\s*,?\s*\(?\s*by\s+number",
+    re.IGNORECASE,
+)
+# "a majority of the number (70.7%) and dollar amount (54.9%)" (FRB_722432_20230911 p6).
+NUMBER_PAREN_RE = re.compile(r"\bnumber\s*(?:of\s+loans\s*)?\(\s*(\d{1,3}(?:\.\d+)?)\s*%\s*\)", re.IGNORECASE)
+INSIDE_WORD_RE = re.compile(r"\binside\b", re.IGNORECASE)
+# "within" the bank's assessment area(s), read only when no sentence says "inside"
+# (FRB_722432_20230911 p6 "were extended within the bank's assessment area"). The sentence
+# must speak of loans and not of demographics or market share ("10.3 percent of families
+# within the assessment area live below the poverty level", FDIC_10635_20240122).
+WITHIN_AA_RE = re.compile(
+    r"\bwithin\s+(?:the\s+|its\s+|their\s+)?(?:bank's\s+|institution's\s+)?(?:combined\s+|delineated\s+)?"
+    r"(?:assessment\s+areas?|AAs?)\b",
+    re.IGNORECASE,
+)
+WITHIN_LOANS_RE = re.compile(r"\b(?:total|all|its|of)\s+loans\b|\bby\s+number\b|\bnumber\s*\(", re.IGNORECASE)
+NOT_LOAN_SHARE_RE = re.compile(
+    r"market\s+share|famil(?:y|ies)|households?|population|poverty|census\s+tracts?|geograph|\bfarms\b|"
+    r"\bbusinesses\b|deposits?|branch|offices?|\bcounties\b",
+    re.IGNORECASE,
+)
+# A percent after "previous evaluation" describes that evaluation ("has increased since the
+# previous evaluation, when 37.2 percent of small business loans ... were inside",
+# FDIC_10903_20241113).
+# Not a lending share in either pass: geography or deposit shares ("19.4 percent of the loans
+# were to businesses located in moderate-income CTs", FDIC_1980_20250714; "approximately 60.5
+# percent, came from inside the AAs" for deposits, FRB_352651_20230417).
+NOT_AA_SHARE_RE = re.compile(
+    r"market\s+share|deposits?\b|(?:low|moderate)-income|census\s+tracts?|\bCTs?\b|famil(?:y|ies)|households?|poverty",
+    re.IGNORECASE,
+)
+# A one-year share ("at just 50.3 percent in 2022", FDIC_11407_20231002).
+_YEAR_AFTER_RE = re.compile(r"^\s*(?:percent|%)?\)?\s*(?:in|during|for)\s+(?:19|20)\d{2}\b(?!\s*(?:and|through|to|-))", re.IGNORECASE)
+PRIOR_EVAL_PHRASE_RE = re.compile(r"\b(?:previous|prior|preceding|last)\s+(?:cra\s+)?(?:evaluation|examination|exam)\b", re.IGNORECASE)
+
+# Inside/outside table (FDIC and OCC "Lending Inside and Outside of the Assessment Area", FRB
+# "Lending Inside and Outside the Assessment Area(s)"), in either text layout: pdftotext
+# -layout prints a row as one line ("Total   82   0.9   9,272   99.1 ..."), pymupdf prints one
+# cell per line ("Total", "82", "0.9", ...).
+AA_TABLE_TITLE_RE = re.compile(r"inside\s+(?:and|&|/)\s+outside", re.IGNORECASE)
+AA_TABLE_END_RE = re.compile(r"^(?:source|note)s?\b", re.IGNORECASE)
+_AA_YEAR_RE = re.compile(r"^(?:19|20)\d{2}(?:\s*(?:ytd|\*))?$", re.IGNORECASE)
+_AA_SUBTOTAL_RE = re.compile(r"^sub-?\s?totals?:?$", re.IGNORECASE)
+_AA_TOTAL_RE = re.compile(r"^(?:grand\s+)?totals?(?:\s+(?:of\s+)?(?:all\s+)?loans(?:\s+reviewed)?)?:?$", re.IGNORECASE)
+_AA_TOTAL_PRODUCT_RE = re.compile(r"^totals?\s+(.+)$", re.IGNORECASE)
+_AA_UNIT_CELL_RE = re.compile(r"^\$?\s*\(?\s*\$?\s*000s?\s*\)?$")
+_AA_TOKEN_RE = re.compile(r"\$?\d[\d,]*(?:\.\d+)?%?")
+_AA_HEADER_WORDS = frozenset(
+    "number of loans loan dollar dollars amount amounts inside outside total totals category categories type types "
+    "product products year years and in the to assessment area areas count s".split()
+) | frozenset(_MONTHS)
+# Weighting sentence naming the primary product ("Therefore, home mortgage loans received
+# heavier weighting when arriving at overall conclusions", FDIC_12299_20220912 p5).
+WEIGHT_RE = re.compile(
+    r"\b(?:more|most|greater|greatest|heavier|heaviest|significant|substantial|primary)\s+weight(?:ing|ed)?\b|"
+    r"\bweighted\s+(?:more|most)\s+heavily\b|\b(?:more|most)\s+heavily\s+weighted\b",
+    re.IGNORECASE,
+)
+# "FMB's primary product focus is home mortgage lending" (FDIC_10280_20221213 p5); "home
+# mortgage loans are the bank's primary business focus" (FDIC_10989_20240103 p5).
+PRIMARY_PRODUCT_RE = re.compile(
+    r"\b(?:primary|principal|main)\s+(?:loan\s+|lending\s+|credit\s+|business\s+)?(?:product|focus)\b", re.IGNORECASE
+)
+# Where the named product stops: "more weight on small business loan performance relative to
+# small farm and home mortgage loans" (FDIC_10015_20241104 p4). Commas do not stop it, so a
+# list ("a primary focus on small business, small farm, and home mortgage lending",
+# FDIC_10015_20241104 p3) names several products and gives none.
+_TAIL_END = r"(?:\bthan\b|\brelative\b|\bcompared\b|\bfollowed\b|\bover\b|\bversus\b|\bwhile\b|\bwhereas\b|[;.]|$)"
+_WEIGHT_TAIL_RE = re.compile(
+    r"^\s*(?:(?:was|is|were|are|has\s+been|had\s+been)\s+)?(?:(?:given|placed|applied|assigned|accorded|afforded|attributed)\s+)?"
+    r"(?:to|on)\s+([^;.]{0,120}?)" + _TAIL_END,
+    re.IGNORECASE,
+)
+_PRIMARY_TAIL_RE = re.compile(
+    r"^\s*(?:(?:focus|line)s?\s+)?(?:is|was|are|were|on)\s+([^;.]{0,120}?)" + _TAIL_END, re.IGNORECASE
+)
+# A weighting sentence about one assessment area or state, not the bank ("However, in the
+# College Station MSA AA, Houston MSA AA, and Non-MSA AA, small business lending represents
+# the primary product", FDIC_12299_20220912 p5).
+_AREA_SPECIFIC_RE = re.compile(r"\bMSA\b|\bMD\b|\bnon-?metropolitan\b|\bstate\s+of\b", re.IGNORECASE)
+# A named assessment area ("received the most weight in the Grand Forks Assessment Area",
+# FDIC_15539_20230119); case-sensitive, so "in the assessment area" is not one.
+_NAMED_AREA_RE = re.compile(r"\b(?:in|for|within)\s+the\s+(?:[A-Z][\w.'&-]*\s+){1,5}(?:Assessment\s+Areas?|AAs?)\b")
+_LESS_WEIGHT_RE = re.compile(r"\b(?:less|least|lesser|equal|no|minimal|limited)\s+weight", re.IGNORECASE)
+PRIMARY_PRODUCT_SECTIONS = ("scope_of_evaluation", "description_of_institution", "aa_concentration")
+
+
+def _products_in(text: str) -> list[str]:
+    """Products named in ``text``, in :data:`PRODUCT_KEYWORDS` order, each once."""
+    return [p for p, pat in PRODUCT_KEYWORDS.items() if pat.search(text)]
+
+
+def _weighted_product(norm: str) -> str | None:
+    """The one product a weighting or primary-product sentence names, or None.
+
+    The product is read after the phrase ("more weight to home mortgage loans than ...",
+    "the primary product is ...") or, failing that, in the clause before it ("home mortgage
+    loans received heavier weighting"). A clause that names two products ("consumer and home
+    mortgage lending carried more weight", FDIC_6078_20240805 p10) gives no product.
+    """
+    if _LESS_WEIGHT_RE.search(norm) or _AREA_SPECIFIC_RE.search(norm) or _NAMED_AREA_RE.search(norm):
+        return None
+    for pattern, tail_re in ((WEIGHT_RE, _WEIGHT_TAIL_RE), (PRIMARY_PRODUCT_RE, _PRIMARY_TAIL_RE)):
+        for m in pattern.finditer(norm):
+            tail = tail_re.match(norm[m.end() :])
+            if tail:
+                products = _products_in(tail.group(1))
+                if len(products) == 1:
+                    return products[0]
+                if products:
+                    return None
+            # The clause before the phrase, or the whole text before it when that clause
+            # continues a list ("..., and consumer loans at 21.6 percent ... represent the
+            # bank's primary product", FDIC_12315_20250127).
+            clause = re.split(r"[,;:]", norm[: m.start()])[-1]
+            if re.match(r"\s*(?:and|or)\b", clause, re.IGNORECASE):
+                clause = norm[: m.start()]
+            products = _products_in(clause)
+            if len(products) == 1:
+                return products[0]
+    return None
+
+
+def primary_product(doc: Doc) -> tuple[str, Sentence] | None:
+    """The bank-level primary product from the first weighting sentence that names exactly
+    one product, searched in :data:`PRIMARY_PRODUCT_SECTIONS` order."""
+    for name in PRIMARY_PRODUCT_SECTIONS:
+        for s in doc.sentences(name):
+            product = _weighted_product(s.norm)
+            if product:
+                return product, s
+    return None
+
+
+def _aa_is_header(text: str) -> bool:
+    """True for a header line of the inside/outside table ("Loan Category", "Number of
+    Loans", "Dollar Amount of Loans $(000s)", "#", "%", "$(000s)", a date range)."""
+    rest = DATE_RE.sub(" ", text)
+    words = re.findall(r"[a-z]+|\d+", rest.lower())
+    return all(w in _AA_HEADER_WORDS or w in {"000", "000s"} or w.isdigit() for w in words)
+
+
+@dataclass
+class _AARow:
+    """One row of the inside/outside table: label lines and number tokens, each token with
+    the document offset where it ends."""
+
+    def add(self, tokens: list[tuple[str, int, Sentence]]) -> None:
+        """Append tokens; a cell broken inside its last digit group ("10,97" then "8",
+        FRB_919568_20230227 p5) is joined back into one number."""
+        for tok in tokens:
+            if self.tokens:
+                prev = self.tokens[-1][0]
+                group = re.search(r",(\d{1,2})$", prev)
+                if group and re.fullmatch(r"\d+", tok[0]) and len(group.group(1)) + len(tok[0]) == 3:
+                    self.tokens[-1] = (prev + tok[0], tok[1], tok[2])
+                    continue
+            self.tokens.append(tok)
+
+    label: list[Sentence]
+    tokens: list[tuple[str, int, Sentence]]
+    kind: str = "other"  # total, subtotal, year, product, other
+    product: str | None = None
+
+    def share(self) -> tuple[float, int, Sentence] | None:
+        """Inside share by number, its end offset and line, when the row reads as
+        inside #, inside %, then outside # and % either next (FDIC, OCC) or after the
+        inside dollar columns (FRB); the counts must reproduce the printed share within one
+        point and the two shares must add up to 100 within one point."""
+        toks = self.tokens
+        if len(toks) < 4:
+            return None
+
+        def count(i: int) -> int | None:
+            t = toks[i][0] if i < len(toks) else ""
+            return int(t.replace(",", "")) if t and re.fullmatch(r"\d[\d,]*", t) else None
+
+        def pct(i: int) -> float | None:
+            t = toks[i][0] if i < len(toks) else ""
+            if not t or t.startswith("$") or not ("." in t or t.endswith("%")):
+                return None
+            x = float(t.rstrip("%").replace(",", ""))
+            return x if 0 <= x <= 100 else None
+
+        n_in, p_in = count(0), pct(1)
+        if n_in is None or p_in is None:
+            return None
+        for j in (2, 4):
+            n_out, p_out = count(j), pct(j + 1)
+            if n_out is None or n_in + n_out == 0:
+                continue
+            computed = 100 * n_in / (n_in + n_out)
+            if p_out is None:
+                # The row ends at the outside count (FRB_884358_20250303 p10 prints the outside
+                # shares elsewhere on the page): the counts alone must give the printed share.
+                if j + 1 == len(toks) and abs(computed - p_in) <= 0.1:
+                    return p_in, toks[1][1], toks[1][2]
+                continue
+            if abs(computed - p_in) <= 1.0 and abs(p_in + p_out - 100) <= 1.0:
+                return p_in, toks[1][1], toks[1][2]
+        return None
+
+
+def _aa_cells(ln: Sentence) -> tuple[list[Sentence], list[tuple[str, int, Sentence]]]:
+    """Label cells and number tokens of one line. A pdftotext layout row splits on runs of
+    two or more spaces; a leading year cell ("2019") is a label; a unit marker ("$(000s)")
+    is neither."""
+    labels: list[Sentence] = []
+    tokens: list[tuple[str, int, Sentence]] = []
+    for m in re.finditer(r"\S+(?:\s\S+)*", ln.text):
+        cell = m.group(0)
+        is_number = bool(_NUMERIC_CELL_RE.fullmatch(cell)) and not _AA_UNIT_CELL_RE.match(cell)
+        if is_number and not tokens and _AA_YEAR_RE.match(cell):
+            is_number = False
+        if is_number:
+            # "266, 880" style breaks after a comma are one number.
+            for t in _AA_TOKEN_RE.finditer(cell):
+                tokens.append((t.group(0).lstrip("$"), ln.start + m.start() + t.end(), ln))
+        elif tokens:
+            break
+        else:
+            start = ln.start + m.start()
+            labels.append(Sentence(cell, start, start + len(cell), ln.page))
+    return labels, tokens
+
+
+def _aa_rows(lines: list[Sentence], skip: frozenset[str]) -> list[_AARow]:
+    """Rows of one inside/outside table below its title, in either layout, up to the
+    "Source" or "Note" line, the next table title or a prose line. Header lines before a
+    row's label are dropped; ``skip`` holds the document's running header and footer lines."""
+    rows: list[_AARow] = []
+    pending: list[Sentence] = []
+    cur: _AARow | None = None
+    for ln in lines:
+        text = ln.text.strip()
+        clean = normalize_line(text)
+        if AA_TABLE_END_RE.match(clean) or AA_TABLE_TITLE_RE.search(clean):
+            break
+        if not clean or clean in skip:
+            continue
+        labels, tokens = _aa_cells(ln)
+        if not tokens and is_furniture_line(clean):
+            continue  # a bare count line ("93") is a cell, not a page number
+        if labels and not tokens and (len(clean.split()) > 10 or clean.endswith(".")):
+            break  # prose after the table
+        if labels:
+            pending += labels
+        if tokens:
+            if pending:
+                label = pending
+                while len(label) > 1 and _aa_is_header(label[0].text):
+                    label = label[1:]
+                cur = _AARow(label, [])
+                cur.add(tokens)
+                rows.append(cur)
+                pending = []
+            elif cur is not None:
+                cur.add(tokens)
+    _classify_aa_rows(rows)
+    return rows
+
+
+def _classify_aa_rows(rows: list[_AARow]) -> None:
+    """Kind and product of each row: a product label sets the current product, year and
+    "Subtotal" rows belong to it, "Total <product>" is that product's subtotal (FRB "Total
+    HMDA"), "Total" or "Total Loans" is the combined row."""
+    current: str | None = None
+    for row in rows:
+        texts = [normalize_line(ln.text) for ln in row.label]
+        last = texts[-1]
+        last_two = " ".join(texts[-2:])
+        names = " ".join(t for t in texts if not _AA_YEAR_RE.match(t) and not _AA_SUBTOTAL_RE.match(t))
+        if _AA_TOTAL_RE.match(last) or _AA_TOTAL_RE.match(last_two):
+            row.kind = "total"
+            continue
+        total_of = _AA_TOTAL_PRODUCT_RE.match(last_two) or _AA_TOTAL_PRODUCT_RE.match(last)
+        if total_of and len(_products_in(total_of.group(1))) == 1:
+            row.kind, row.product = "subtotal", _products_in(total_of.group(1))[0]
+            continue
+        products = _products_in(names)
+        if len(products) == 1:
+            current = products[0]
+        elif products:
+            current = None
+        if _AA_SUBTOTAL_RE.match(last):
+            row.kind, row.product = "subtotal", current
+        elif _AA_YEAR_RE.match(last):
+            row.kind, row.product = "year", current
+        elif len(products) == 1:
+            row.kind, row.product = "product", current
+
+
+def _aa_quote(doc: Doc, title: Sentence, lines: list[Sentence], end: int, end_line: Sentence) -> Sentence:
+    """Span from the table title to the end of the figure; when the table runs onto another
+    page, from the first table line on the figure's page."""
+    start_line = title
+    if end_line.page != title.page:
+        start_line = next(ln for ln in lines if ln.page == end_line.page and ln.start <= end_line.start)
+    return Sentence(doc.text[start_line.start : end], start_line.start, end, start_line.page)
+
+
+def _inside_aa_from_table(doc: Doc) -> list[FieldValue] | None:
+    """Inside-AA share by number from the inside/outside table: the Total row; else, with no
+    Total row, the pooled row of the primary product (its subtotal, or its single row when
+    the product has no year rows). The primary product is the only product in the table or
+    the one a weighting sentence names (:func:`primary_product`)."""
+    lines = doc.lines("aa_concentration")
+    skip = running_lines(doc.pages)
+    titles = [
+        i for i, ln in enumerate(lines)
+        if AA_TABLE_TITLE_RE.search(ln.text) and len(ln.text.split()) <= 14 and not ln.text.rstrip().endswith(".")
+    ]
+    for i in titles:
+        title = lines[i]
+        rows = _aa_rows(lines[i + 1 : i + 400], skip)
+        for row in rows:
+            if row.kind == "total" and (share := row.share()):
+                value, end, line = share
+                span = _aa_quote(doc, title, lines[i:], end, line)
+                note = "table Total row, number column"
+                return [
+                    _value(doc, "inside_aa_share_number_pct", value, span, "aa_concentration", note),
+                    _value(doc, "inside_aa_share_product", "all_reviewed_combined", span, "aa_concentration", note),
+                ]
+        if any(r.kind == "total" for r in rows):
+            continue
+        products = {r.product for r in rows if r.product}
+        pooled: dict[str, _AARow] = {}
+        for p in products:
+            own = [r for r in rows if r.product == p]
+            subtotals = [r for r in own if r.kind == "subtotal"]
+            if subtotals:
+                pooled[p] = subtotals[-1]
+            elif len(own) == 1 and own[0].kind in ("product", "year"):
+                pooled[p] = own[0]  # one row, or one year reviewed (FDIC_10280_20221213 p9 "Home Mortgage 2021")
+        if len(products) == 1:
+            product, how = next(iter(products)), "the only product in the table"
+        else:
+            found = primary_product(doc)
+            if not found:
+                continue
+            product, how = found[0], f"primary product from the weighting sentence on p{found[1].page}"
+        row = pooled.get(product)
+        share = row.share() if row else None
+        if not share:
+            continue
+        value, end, line = share
+        span = _aa_quote(doc, title, lines[i:], end, line)
+        kind = "subtotal" if row.kind == "subtotal" else "row"
+        note = f"table {kind} of {product} by number, no Total row; {how}"
+        return [
+            _value(doc, "inside_aa_share_number_pct", value, span, "aa_concentration", note),
+            _value(doc, "inside_aa_share_product", product, span, "aa_concentration", note),
+        ]
+    return None
+
+
+def _current_share(n: str, m: re.Match[str]) -> bool:
+    """False for a percent that describes the previous evaluation (a mention of it before the
+    percent or right after it: "dropped from 86.0 percent at the previous evaluation to the
+    current 67.3 percent", FDIC_26941_20240923) or one year ("50.3 percent in 2022")."""
+    prior = PRIOR_EVAL_PHRASE_RE.search(n)
+    if prior and (prior.start() < m.start() or prior.start() - m.end(1) < 40):
+        return False
+    return not _YEAR_AFTER_RE.match(n[m.end(1) :])
+
+
+def _share_by_number(n: str) -> re.Match[str] | None:
+    """The percent of a sentence that is a share by number of the current evaluation: "X
+    percent ... by number", then "number (X%)", then the first percent that no dollar phrase
+    qualifies; among several shares by number the one of total or all loans wins ("73.3
+    percent of the HMDA-reportable loans (by number), ..., and 77.5 percent of total loans (by
+    number)", FRB_2793593_20240610). A percent is skipped when a dollar phrase qualifies it,
+    just before it ("by dollar amount (51.2 percent)", FDIC_6803_20240903) or after it before
+    the next "and" ("44.7 percent of small business loans, per dollar amount",
+    FDIC_245_20240715), and when :func:`_current_share` rejects it."""
+    by_number = [m for m in BY_NUMBER_LOOSE_RE.finditer(n) if _current_share(n, m)]
+    combined = [m for m in by_number if re.search(r"\btotal\b|\ball\s+loans\b", m.group(0), re.IGNORECASE)]
+    paren = [m for m in NUMBER_PAREN_RE.finditer(n) if _current_share(n, m)]
+    m = (combined or by_number or paren or [None])[0]
+    if m:
+        return m
+    for m in PCT_RE.finditer(n):
+        before = n[max(0, m.start() - 25) : m.start()].lower()
+        after = re.split(r"\band\b|;", n[m.end() : m.end() + 40].lower(), maxsplit=1)[0]
+        if "dollar" in before and "number" not in before:
+            continue
+        if "dollar" in after and "number" not in after.split("dollar")[0]:
+            continue
+        if not _current_share(n, m):
+            continue
+        return m
+    return None
+
+
+_COMBINED_WORDS_RE = re.compile(r"\btotal\b|\ball\s+(?:loans|lending)\b|\bloans\s+reviewed\b", re.IGNORECASE)
+
+
+def _sentence_product(n: str, m: re.Match[str], place: re.Match[str]) -> str:
+    """Product a share sentence speaks of, read on two sides of the percent. Before it, in
+    its clause (after the last comma); after it, up to the next percent or the place word.
+    A parenthesized percent belongs to the words before it ("a majority of home mortgage
+    loans (92.6 percent) and small business loans (96.1 percent)", FDIC_28401_20230130),
+    any other to the words after it ("78.1 percent of the home mortgage and 79.4 percent of
+    the small business loans", FDIC_57127_20220912). A side that says total, all loans or
+    loans reviewed, or names several products, means all_reviewed_combined ("the total
+    number (76%) and dollar amount (73.3%) of HMDA and small business loans",
+    FRB_214722_20241118); a side that names one product gives that product."""
+    before = re.split(r"[,;:]", n[: m.start()])[-1]
+    stops = [x for x in [place.start()] + [p.start() for p in PCT_RE.finditer(n, m.end(1))] if x > m.end(1)]
+    after = n[m.end(1) : min(stops, default=len(n))]
+    sides = (before, after) if before.rstrip().endswith("(") else (after, before)
+    # Last, the words from the percent to the place word ("87.7 percent by number and 86.3
+    # percent by dollar of its HMDA-reportable loans inside", FRB_427241_20221017).
+    segment = n[m.end(1) : place.start()] if place.start() > m.end(1) else ""
+    for side in (*sides, segment):
+        if _COMBINED_WORDS_RE.search(side):
+            return "all_reviewed_combined"
+        products = _products_in(side)
+        if len(products) == 1:
+            return products[0]
+        if products:
+            return "all_reviewed_combined"
+    return "all_reviewed_combined"
+
+
+def _inside_aa_sentences(doc: Doc) -> list[tuple[Sentence, float, str]]:
+    """aa_concentration sentences that place a share of loans by number inside the AA, as
+    (sentence, percent, product): every "inside" sentence, or, when there is none, the
+    "within the assessment area" sentences about loans. Sentences about geography, deposits
+    or demographics (:data:`NOT_AA_SHARE_RE`) are skipped, and so is a run of table cells that
+    the sentence splitter joined (more than eight numbers)."""
+    out: list[tuple[Sentence, float, str]] = []
+    for place_re in (INSIDE_WORD_RE, WITHIN_AA_RE):
+        for s in doc.sentences("aa_concentration"):
+            n = s.norm
+            place = place_re.search(n)
+            if not place or len(re.findall(r"\d[\d,.]*", n)) > 8:
+                continue
+            if NOT_AA_SHARE_RE.search(n):
+                continue
+            if place_re is WITHIN_AA_RE and (not WITHIN_LOANS_RE.search(n) or NOT_LOAN_SHARE_RE.search(n)):
+                continue
+            m = _share_by_number(n)
+            if not m:
+                continue
+            out.append((s, float(m.group(1)), _sentence_product(n, m, place)))
+        if out:
+            break
+    return out
 
 
 def rule_inside_aa(doc: Doc) -> list[FieldValue]:
-    """Share of loans by number inside the AA: the narrative sentence, else the table Total row."""
-    for s in doc.sentences("aa_concentration"):
-        n = s.norm
-        if "inside" not in n.lower():
-            continue
-        m = BY_NUMBER_RE.search(n) if "by number" in n.lower() else PCT_RE.search(n)
-        if not m:
-            continue
-        segment = n[m.start() : n.lower().find("inside")] if n.lower().find("inside") > m.start() else ""
-        product = next((p for p, pat in PRODUCT_KEYWORDS.items() if pat.search(segment)), "all_reviewed_combined")
+    """Share of loans by number inside the AA, in the codebook's order: a sentence stating
+    the combined share ("54.5 percent of its total loans inside", OCC_11715_20240408 p4);
+    else the inside/outside table's Total row, by number; else, with no Total row, the
+    primary product's pooled row (:func:`_inside_aa_from_table`); else a sentence about one
+    product."""
+    sentences = _inside_aa_sentences(doc)
+    combined = next((x for x in sentences if x[2] == "all_reviewed_combined"), None)
+    if combined:
+        s, value, product = combined
         return [
-            _value(doc, "inside_aa_share_number_pct", float(m.group(1)), s, "aa_concentration"),
+            _value(doc, "inside_aa_share_number_pct", value, s, "aa_concentration"),
             _value(doc, "inside_aa_share_product", product, s, "aa_concentration"),
         ]
-    for row in doc.lines("aa_concentration"):
-        if not COLUMN_GAP.search(row.text):
-            continue
-        m = TOTAL_ROW_RE.match(row.text)
-        if not m:
-            continue
-        nums = re.findall(r"\$?(\d[\d,]*(?:\.\d+)?)%?", m.group(1))
-        if len(nums) >= 2 and "." in nums[1] and 0 <= float(nums[1]) <= 100:
-            return [
-                _value(doc, "inside_aa_share_number_pct", float(nums[1]), row, "aa_concentration", "table Total row, number column"),
-                _value(doc, "inside_aa_share_product", "all_reviewed_combined", row, "aa_concentration", "table Total row"),
-            ]
-    note = "no inside-AA sentence with a percent and no Total row"
+    table = _inside_aa_from_table(doc)
+    if table:
+        return table
+    if sentences:
+        s, value, product = sentences[0]
+        return [
+            _value(doc, "inside_aa_share_number_pct", value, s, "aa_concentration"),
+            _value(doc, "inside_aa_share_product", product, s, "aa_concentration"),
+        ]
+    note = "no inside-AA sentence with a percent and no readable inside/outside table row"
     return [_abstain(doc, "inside_aa_share_number_pct", note), _abstain(doc, "inside_aa_share_product", note)]
 
 

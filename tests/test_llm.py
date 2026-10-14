@@ -1074,7 +1074,7 @@ def test_openai_compatible_sends_reasoning_effort():
 def test_closed_book_prompt_has_only_bank_name_and_date(doc, sections):
     text = build_closed_book_prompt(doc)
     assert "Bank: SouthStar Bank, S.S.B." in text and "Evaluation date: 2022-09-12" in text
-    assert CLOSED_BOOK_PROMPT_VERSION in text and PROMPT_VERSION == "v3"
+    assert CLOSED_BOOK_PROMPT_VERSION in text and PROMPT_VERSION == "v4"
     for leaked in (doc.doc_id, "FDIC", "Intermediate", "Regulator", "Certificate", "12299"):
         assert leaked not in text and leaked not in CLOSED_BOOK_SYSTEM_PROMPT
     for sec in sections.values():

@@ -287,7 +287,9 @@ def parse_date(value: Any) -> date | None:
 
 
 def date_forms(d: date) -> list[str]:
-    """Normalized strings under which a date may be printed in a PE."""
+    """Normalized strings under which a date may be printed in a PE, including the
+    two-digit-year forms of FDIC table headers (M/D/YY and MM/DD/YY: "Total Assets as of
+    12/31/23 $(000s)", FDIC_16733_20240410 p9)."""
     forms = [
         d.isoformat(),
         f"{d:%B} {d.day}, {d.year}",
@@ -296,8 +298,19 @@ def date_forms(d: date) -> list[str]:
         f"{d:%b}. {d.day}, {d.year}",
         f"{d.month}/{d.day}/{d.year}",
         f"{d:%m/%d/%Y}",
+        f"{d.month}/{d.day}/{d:%y}",
+        f"{d:%m/%d/%y}",
     ]
     return [normalize(f) for f in forms]
+
+
+def date_in_text(d: date, norm_text: str) -> bool:
+    """True when ``norm_text`` (normalized) prints ``d`` in one of :func:`date_forms`. A
+    numeric form must not continue another number on either side, so "12/31/20" is not
+    read inside "12/31/2021" and "2/28/2023" is not read inside "12/28/2023"."""
+    return any(
+        re.search(rf"(?<![\d/]){re.escape(f)}(?![\d/])", norm_text) for f in date_forms(d)
+    )
 
 
 UNIT_MARKER_RE = re.compile(r"\(?000s?\)?|thousand|million|billion|\$")
@@ -441,7 +454,7 @@ def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
         return not asserts_finding_sentence(norm_quote)
     if ftype == "date":
         d = parse_date(value)
-        return d is not None and any(f in norm_quote for f in date_forms(d))
+        return d is not None and date_in_text(d, norm_quote)
     if ftype in {"int", "float"}:
         try:
             target = float(str(value).replace(",", "").replace("$", "").replace("%", ""))

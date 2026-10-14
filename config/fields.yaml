@@ -135,6 +135,13 @@ fields:
     tolerance: within_1pct_same_quarter
     verification: index_if_same_quarter_else_gold
     description: Total assets in US dollars as stated in the Description of Institution.
+    prompt_description: >-
+      Total assets of the bank in US dollars as printed in the PE, usually in the Description of Institution. For FDIC
+      PEs, when the loan-to-deposit comparison table prints the bank's own row under a "Total Assets as of" column (in
+      thousands, $(000s)), take that figure times 1,000 (a cell of 123,456 is 123456000) rather than a rounded figure
+      in the description sentence ("approximately $X billion"), and quote the table from the "Total Assets as of"
+      header through the bank's figure; total_assets_asof is then the header's date. Never take a peer bank's row.
+      Status absent when the PE gives no figure.
 
   total_assets_asof:
     group: B

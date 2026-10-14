@@ -41,7 +41,7 @@ from cra_extract.models import DocRecord, Section
 # say which row to read (the combined figure, else the primary product's pooled subtotal) and
 # that the product names the row quoted; the JSON schema's per-field description uses
 # prompt_description too, so the schema no longer carries data-dictionary wording.
-PROMPT_VERSION = "v3"
+PROMPT_VERSION = "v4"
 
 STATUSES = ["value", "absent", "abstain"]
 

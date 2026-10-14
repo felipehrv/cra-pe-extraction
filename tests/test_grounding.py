@@ -355,3 +355,32 @@ def test_cli(capsys):
     ])
     assert rc == 0
     assert '"supports": true' in capsys.readouterr().out
+
+
+# ----------------------------------------------------------- two-digit-year dates
+
+
+@pytest.mark.parametrize(
+    "value,quote,ok",
+    [
+        # FDIC_16733_20240410 p9: the LTD table header prints the as-of date with a two-digit year.
+        ("2023-12-31", "Total Assets as of 12/31/23 $(000s)", True),
+        ("2022-06-30", "Total Assets as of 6/30/22 ($000s)", True),
+        ("2022-06-30", "Total Assets as of 06/30/22 ($000s)", True),
+        ("2022-06-30", "Total Assets as of 06/30/2022 ($000s)", True),
+        # A two-digit form is not read inside a longer date, nor a short date inside another.
+        ("2020-12-31", "Total Assets as of 12/31/2021", False),
+        ("2023-02-28", "Total Assets as of 12/28/2023", False),
+        ("2023-02-28", "Total Assets as of 12/28/23", False),
+        ("2023-12-31", "Total Assets as of 12/31/24", False),
+    ],
+)
+def test_two_digit_year_dates_in_quote(value, quote, ok):
+    assert grounding.value_in_quote(value, quote, field_spec("total_assets_asof")) is ok
+
+
+def test_date_forms_include_two_digit_years():
+    from datetime import date
+
+    forms = grounding.date_forms(date(2023, 6, 5))
+    assert "6/5/23" in forms and "06/05/23" in forms
