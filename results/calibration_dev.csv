@@ -1,0 +1,5 @@
+system,n_flags,n,error_rate,ece,ece_se
+llm:gemini:gemini-3.5-flash-lite,0,81,0.04938,0.03960,0.02171
+llm:gemini:gemini-3.5-flash-lite,1,20,0.25000,0.03960,0.02171
+rules,0,60,0.00000,0.02941,0.01011
+rules,1,8,0.00000,0.02941,0.01011

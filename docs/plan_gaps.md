@@ -16,20 +16,20 @@ decisions still open (five marker lines; the FDIC state-marker item needs none, 
 
 ## Author decisions still open
 
-- [ ] **Manual-baseline wage** (plan "Cost accounting", marker line). State the hourly wage and
+- [x] **Manual-baseline wage** (decided 2026-10-14: $45.27 per hour, BLS median for Financial Examiners, May 2025 data, applied at 60 pages per hour (Surani et al. 2025) to each PE's page count; plan "Cost accounting" and config/prices.yaml `manual_baseline`) (plan "Cost accounting", marker line). State the hourly wage and
   its source in the plan and in config/prices.yaml (`manual_baseline.wage_usd_per_hour` is
   null).
-- [ ] **Corpus tier margin** (plan "Decisions that depend on dev results", item 2, marker
+- [x] **Corpus tier margin** (decided 2026-10-14: margin confirmed 3 pp; the tier is recorded from table1_dev.csv as a step of the freeze order, plan "Deviations log and freeze") (plan "Decisions that depend on dev results", item 2, marker
   line). Confirm the 3 percentage-point margin and record the chosen tier with its dev
   accuracy and cost per document.
-- [ ] **Whole-document ablation** (plan "Decisions", item 3, marker line). Record yes or no,
+- [x] **Whole-document ablation** (decided 2026-10-14: yes; the corpus tier is on the free tier, so projected spend is zero) (plan "Decisions", item 3, marker line). Record yes or no,
   with the projected spend (projection rule now in plan "Cost accounting") and the dev token
   figures used.
 - [x] **ISB_OVERALL_FLOOR** (verified 2026-10-08 against Appendix A to 12 CFR 345 (d)(3), 2023 CFR edition; matrix corrected: floor S when both tests are at least S, else SN) (was section 10; plan "Descriptive analyses (exploratory)", marker
   line). It rests on recollection of Appendix A to 12 CFR 228 and 345 and 228.28(c) /
   345.28(c). Someone must verify it against the regulation text in force on each exam date
   before any matrix-floor result is quoted.
-- [ ] **Outside coder** (plan "Reliability", marker line). State whether an outside coder
+- [x] **Outside coder** (decided 2026-10-14: none; both branches withdrawn, reliability is inter-reader agreement between the two model readers before adjudication plus the adjudication rate, plan "Reliability") (plan "Reliability", marker line). State whether an outside coder
   exists (branch outside) or the fallback runs. The draw seed, 20261017, is fixed for either
   branch.
 - [ ] **False markers still feed the count and the grounding scope** (was section 6; pending

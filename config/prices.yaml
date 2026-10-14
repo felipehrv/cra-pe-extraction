@@ -36,5 +36,10 @@ local:
   electricity_usd_per_kwh: null
 
 manual_baseline:
-  wage_usd_per_hour: null
-  note: minutes per field come from the timer column in the label file, not from an assumed pages-per-hour figure
+  wage_usd_per_hour: 45.27
+  wage_source: "BLS Occupational Outlook Handbook, Financial Examiners, median hourly wage, May 2025 data (bls.gov/ooh/business-and-financial/financial-examiners.htm)"
+  wage_retrieved: 2026-10-14
+  pages_per_hour: 60
+  pages_per_hour_source: "Surani et al. 2025, AI for Scaling Legal Reform: Mapping and Redacting Racial Covenants in Santa Clara County, manual deed-review convention"
+  pages_per_hour_retrieved: 2026-10-14
+  note: "decided 2026-10-14 (analysis plan, Cost accounting): manual cost per document = pages (config/corpus.csv) / pages_per_hour x wage_usd_per_hour; there are no human timers, and the model readers' reported minutes are reported as reader time, not as a human baseline"
