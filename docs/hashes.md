@@ -16,3 +16,4 @@ Doc hash = sha256 of the sorted doc_id list of the split (one per line). Label h
 - fields.yaml sha256: 9100209bd5c682b9eace3799adf4874e25615e2e8cd44d86e699affcea779bb5
 - headings.yaml sha256: 5409f5090e3fb9c12fb50c6a2594f718e699466357dbc935b7f4682441994384
 - test split: 30 documents, doc_id list sha256 641232fa5594981252b28029f1611d1581ea783267079e7a72aefb3dda3c7459
+| 2026-10-14T11:28:02 | test | 30 | 641232fa5594981252b28029f1611d1581ea783267079e7a72aefb3dda3c7459 | data/gold/labels_test.csv | 03b896eeed4db2c59e893959a2ba299d08a7d6f360cff40a77edb307d5686b84 |

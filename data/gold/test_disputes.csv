@@ -1,0 +1,3 @@
+doc_id,field,reader_a,reader_b,final,note
+FDIC_35439_20231212,lending_data_period_start,,2022-01-01,,analysis_periods=SB 2022 (calendar year); HMDA 2022 (calendar year). Adjudicated ABS: the Activities Reviewed text on PDF p7 gives only 'ori
+FDIC_35439_20231212,lending_data_period_end,,2022-12-31,,Same window and rule as start (start is ABS so end is ABS). Adjudicated ABS: p7 prose gives only 'calendar year 2022'; the 12/31/2022 date o
