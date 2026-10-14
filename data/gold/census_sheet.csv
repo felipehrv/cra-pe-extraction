@@ -30,7 +30,7 @@ therefore, this factor did not affect the Lending Test rating.
  
 • The bank’s qualified investments and services enhance credit availability in the assessment 
 area. 
-",15,,,,,,,,,,,,,,,,,
+",15,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,15,Examiners did not identify any evidence of discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named.
 FDIC_12299_20220912,flagged,FDIC,isb,"SouthStar Bank, S.S.B.",2022-09-12,dev,data/pdfs/FDIC_12299_20220912.pdf,NI,true,14,14,fdic_examiners_reviewed_no_evidence,61.4,962,"consistent with the cra, regulators must consider discriminatory and other illegal credit practices when arriving at the bank's cra rating. examiners considered the nature and extent of the violations, policies and procedures in place to prevent the practice, corrective action by the bank taken or committed to take, and other relevant information to determine the impact on the rating. the fdic lowered the cra rating from satisfactory to needs to improve due to discriminatory lending practices pr","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Consistent with the CRA, regulators must consider discriminatory and other illegal credit practices 
@@ -88,7 +88,7 @@ Discriminatory or Other Illegal Credit Practices
 As noted above, although the bank demonstrated satisfactory performances under the Lending Test 
 and Community Development Test, violations of the Equal Credit Opportunity Act and the Fair 
 Housing Act resulted in the bank’s rating being lowered to Needs to Improve.  
-",3;14,,,,,,,,,,,,,,,,,
+",3;14,true,discrimination,substantive_lowered,true,overall,S,NI,ECOA_RegB|FHA,redlining,this_CRA_exam,false,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices present during the review period.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Violations of ECOA and FHA on the basis of redlining; restated on rating page PDF p3 (institution rated Needs to Improve).
 FDIC_12402_20241021,flagged,FDIC,small,Exchange State Bank,2024-10-21,corpus,data/pdfs/FDIC_12402_20241021.pdf,S,true,13,13,fdic_no_evidence_inconsistent_helping_meet,82.3,170,examiners did not identify any evidence of discriminatory or other illegal credit practices during the concurrent compliance examination that affected the overall rating.,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices during the 
@@ -121,7 +121,7 @@ the geographies in the bank’s assessment area are classified as middle-income.
  
 • The bank has not received any substantiated CRA-related complaints since the prior 
 evaluation. 
-",3;13,,,,,,,,,,,,,,,,,
+",3;13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,13,Examiners did not identify any evidence of discriminatory or other illegal credit practices during the concurrent compliance examination that affected the overall rating.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative; wording 'that affected the overall rating' is mildly ambiguous but no violation is stated, coded as no finding."
 FDIC_13198_20230112,flagged,FDIC,isb,Cornerstone Bank,2023-01-12,corpus,data/pdfs/FDIC_13198_20230112.pdf,S,true,13,14,fdic_no_evidence_inconsistent_helping_meet,61.7,777,"examiners identified a discriminatory violation of the equal credit opportunity act during the concurrent consumer compliance examination related to the buy now, pay later product. this product was not reviewed for the cra evaluation. the violation did not affect the cra rating due to the limited impact on the bank's overall business and lending operations, and the corrective measures taken by the institution, including management's commitment to enhance the compliance management system to preve","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners identified a discriminatory violation of the Equal Credit Opportunity Act during the 
@@ -177,7 +177,7 @@ Discriminatory or Other Illegal Credit Practices
 • Examiners identified a discriminatory violation of the Equal Credit Opportunity Act during 
 the concurrent consumer compliance examination, but it did not result in the downgrade of 
 the bank’s overall CRA rating.    
-",3;13;22,,,,,,,,,,,,,,,,,
+",3;13;22,true,discrimination,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,ECOA_RegB,other,concurrent_compliance_exam,false,13,Examiners identified a discriminatory violation of the Equal Credit Opportunity Act during the concurrent consumer compliance examination,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"practice_basis other: violation tied to a buy now, pay later product, no practice type named (alternative reading ABS). PE: violation did not affect the CRA rating; rating page PDF p3 says it did not result in downgrade. Section spans PDF p13 only (p14 is North Dakota)."
 FDIC_1607_20221025,flagged,FDIC,isb,The Bank of Elk River,2022-10-25,corpus,data/pdfs/FDIC_1607_20221025.pdf,S,true,15,15,fdic_no_substantive_violations_identified,57.8,538,"a violation of regulation b, which implements the equal credit opportunity act, was identified during this evaluation. however, the violation's effect on the bank's ability to meet community credit needs was considered limited, and bank management promptly addressed the violation. further, management committed to enhance its compliance management system and implement appropriate oversight to prevent recurrence. the violation was considered in the overall evaluation of the bank, but it did not ul","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 A violation of Regulation B, which implements the Equal Credit Opportunity Act, was identified 
@@ -224,7 +224,7 @@ Discriminatory or Other Illegal Credit Practices
 A violation of Regulation B, which implements the Equal Credit Opportunity Act, was identified 
 during the CRA evaluation period but did not result in the downgrade of the bank’s overall CRA 
 rating.   
-",3;15,,,,,,,,,,,,,,,,,
+",3;15,true,discrimination,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,ECOA_RegB,absent_from_document,this_CRA_exam,false,15,"The violation was considered in the overall evaluation of the bank, but it did not ultimately affect the bank’s CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Regulation B violation identified during this evaluation; no practice named. Rating page PDF p3 restates: did not result in downgrade.
 FDIC_16916_20240603,flagged,FDIC,small,F & M Bank and Trust Company,2024-06-03,corpus,data/pdfs/FDIC_16916_20240603.pdf,S,true,12,12,fdic_no_evidence_inconsistent_identified,92.9,194,"examiners evaluated the bank's compliance with antidiscrimination laws, including the fair housing act. the fair lending review conducted concurrently with this performance evaluation identified","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners evaluated the bank’s compliance with antidiscrimination laws, including the Fair 
@@ -253,7 +253,7 @@ reasonable penetration among businesses of different sizes.
  
 • The bank did not receive any CRA-related complaints since the previous evaluation.  
 Therefore, this factor did not affect the Lending Test rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,"Examiners evaluated the bank’s compliance with antidiscrimination laws, including the Fair Housing Act.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative; Fair Housing Act named only in negated boilerplate.
 FDIC_17115_20220328,flagged,FDIC,isb,Partners Bank of New England,2022-03-28,corpus,data/pdfs/FDIC_17115_20220328.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,76.7,198,examiners reviewed the bank's compliance with the laws relating to discrimination and other illegal credit practices. examiners did not identify any discriminatory or other illegal credit practices.,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -292,7 +292,7 @@ of its combined assessment area through community development loans, qualified
 investments, and community development services, as appropriate.  Examiners considered 
 the institution’s capacity and the need and availability of such opportunities for community 
 development in the assessment areas. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named.
 FDIC_17115_20250407,flagged,FDIC,isb,Partners Bank of New England,2025-04-07,corpus,data/pdfs/FDIC_17115_20250407.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,76.7,198,examiners reviewed the bank's compliance with the laws relating to discrimination and other illegal credit practices. examiners did not identify any discriminatory or other illegal credit practices.,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -328,7 +328,7 @@ of its combined assessment area through community development loans, qualified
 investments, and community development services, as appropriate.  Examiners considered 
 the institution’s capacity and the need and availability of such opportunities for community 
 development in the assessment areas. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named.
 FDIC_175_20240520,flagged,FDIC,isb,The Commercial Bank,2024-05-20,corpus,data/pdfs/FDIC_175_20240520.pdf,S,true,17,17,fdic_examiners_reviewed_no_evidence,85.1,234,"examiners evaluated the bank's compliance with anti-discrimination laws, including the fair housing act and the equal credit opportunity act. examiners did not identify any evidence of discriminatory or other illegal credit practices.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners evaluated the bank’s compliance with anti-discrimination laws, including the Fair 
@@ -367,7 +367,7 @@ assessment areas through community development loans, qualified investments, and
 community development services.  Examiners considered the institution’s capacity and the 
 need and availability of such opportunities for community development in its assessment 
 area. 
-",17,,,,,,,,,,,,,,,,,
+",17,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,17,Examiners did not identify any evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative review section; FHA and ECOA named in the sentence on evaluating compliance, section reports no finding."
 FDIC_21557_20231001,flagged,FDIC,small,Three Rivers Bank of Montana,2023-10-01,corpus,data/pdfs/FDIC_21557_20231001.pdf,S,true,11,11,fdic_laws_reviewed_ecoa_only,86.7,234,"examiners considered the bank's compliance with the laws relating to discrimination, including the fair housing act and the equal credit opportunity act. examiners did not identify any discriminatory or other illegal credit practices.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners considered the bank’s compliance with the laws relating to discrimination, including the 
@@ -393,7 +393,7 @@ income levels and businesses of different sizes.
  
 • The bank did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the overall rating. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named in the compliance-considered sentence of a section that reports no finding.
 FDIC_23966_20220621,flagged,FDIC,isb,OneUnited Bank,2022-06-21,corpus,data/pdfs/FDIC_23966_20220621.pdf,S,true,3,3,fdic_examiners_reviewed_identified_no_evidence,46.7,165,"a violation of section 5 of the federal trade commission (ftc) act, which prohibits udap, satisfactory because the section 5 ftc was specific to one lending product.","Discriminatory or Other Illegal Credit Practices Review 
  
 A violation of Section 5 of the Federal Trade Commission (FTC) Act, which prohibits UDAP, 
@@ -430,7 +430,7 @@ The institution's CD performance demonstrates adequate responsiveness to CD need
 through CD loans, qualified investments, and CD services, as appropriate, considering the 
 institution's capacity and the need and availability of such opportunities for CD in the 
 institution's AAs. 
-",3;12;45,,,,,,,,,,,,,,,,,
+",3;12;45,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,this_CRA_exam,false,12,"A violation of Section 5 of the Federal Trade Commission Act (FTC), which prohibits UDAP, was cited at the examination.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Full review section on PDF p12; rating page p3 restates it. Rating remained Satisfactory because violation was specific to one lending product; product not named so practice_basis ABS. Source says only 'cited at the examination', no separate compliance exam named."
 FDIC_26816_20220809,flagged,FDIC,small,"Liberty Bank, Inc.",2022-08-09,dev,data/pdfs/FDIC_26816_20220809.pdf,SN,true,9,9,fdic_no_evidence,58,786,"the fdic identified illegal credit practices during the evaluation period. examiners cited a violation of the federal trade commission act, section 5 unfair or deceptive acts of practices (udap). the udap violation caused substantial harm to a majority of the bank's mortgage loan borrowers. management has not completed corrective action to address the violation, and management has not committed to implementing corrective action. further, the bank does not have sufficient policies, procedures, tr","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The FDIC identified illegal credit practices during the evaluation period.  Examiners cited a 
@@ -470,7 +470,7 @@ therefore, this factor did not affect the rating.
 • Examiners identified an illegal credit practice during the CRA evaluation period.  However, 
 considering the bank’s already substantially deficient performance, this factor did not affect 
 the rating. 
-",3;9,,,,,,,,,,,,,,,,,
+",3;9,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,this_CRA_exam,false,9,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Guide example LB. 'The FDIC identified illegal credit practices during the evaluation period'; harmed mortgage borrowers but no product or practice named; 'did not affect the CRA rating'.
 FDIC_28396_20220920,flagged,FDIC,isb,First Palmetto Bank,2022-09-20,corpus,data/pdfs/FDIC_28396_20220920.pdf,NI,true,13,13,fdic_examiners_reviewed_no_evidence_credit_needs_of_community,58.8,753,"consistent with the cra, regulators must consider discriminatory and other illegal credit practices when arriving at the bank's cra rating. the fdic adjusted the bank's cra rating downward from satisfactory to needs to improve due to the identification of discriminatory lending practices that were present in the columbia assessment area during this cra evaluation's review period. examiners identified violations of the equal credit opportunity act and fair housing act pertaining to home mortgage ","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Consistent with the CRA, regulators must consider discriminatory and other illegal credit practices 
@@ -525,7 +525,7 @@ Discriminatory or Other Illegal Credit Practices
 As noted above, although the bank demonstrated satisfactory performances under the Lending Test 
 and Community Development Test, violations of the Equal Credit Opportunity Act and the Fair 
 Housing Act resulted in the bank’s rating being lowered to Needs to Improve.  
-",3;13,,,,,,,,,,,,,,,,,
+",3;13,true,discrimination,substantive_lowered,true,overall,S,NI,ECOA_RegB|FHA,redlining,this_CRA_exam,false,13,The FDIC adjusted the bank’s CRA rating downward from Satisfactory to Needs to Improve due to the identification of discriminatory lending practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Examiners identified ECOA and FHA violations in home mortgage lending based on redlining (Columbia AA). Rating page p3 restates downgrade; overall rating Needs to Improve.
 FDIC_28405_20220321,flagged,FDIC,isb,First Fed Bank,2022-03-21,corpus,data/pdfs/FDIC_28405_20220321.pdf,S,true,13,14,fdic_laws_reviewed_no_evidence_inconsistent,80.6,1443,"first fed's compliance with laws relating to discrimination and other illegal credit practices was reviewed during the evaluation, including the equal credit opportunity act and fair housing act. illegal credit practices inconsistent with helping to meet community credit needs were identified during the cra evaluation period. violations of section 1024.14 of regulation x, which implement section 8 of respa, were cited at the examination. the bank's overall cra rating was not lowered from satisfa","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 First Fed’s compliance with laws relating to discrimination and other illegal credit practices was 
@@ -589,7 +589,7 @@ addition, Violations of Section 5 of the Federal Trade Commission Act of 1914 (1
 that prohibit unfair and deceptive acts or practices were cited at the examination.  The bank’s 
 overall CRA rating was not lowered from a Satisfactory because the impact of the violations were 
 not related to commercial or residential mortgage lending.   
-",3;6;13,,,,,,,,,,,,,,,,,
+",3;6;13,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,RESPA_s8|FTC_s5_UDAP,absent_from_document,this_CRA_exam,true,13,"Violations of Section 1024.14 of Regulation X, which implement Section 8 of RESPA, were cited at the examination.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Two findings (RESPA s8 via Reg X 1024.14 and FTC Act s5 UDAP), rating not lowered from Satisfactory for either. ECOA and FHA named only in the compliance-reviewed boilerplate sentence, so distractor true. Practice only described as relationships the bank exited; UDAP not related to mortgage lending;"
 FDIC_30043_20240415,flagged,FDIC,small,Beardstown Savings s.b.,2024-04-15,corpus,data/pdfs/FDIC_30043_20240415.pdf,O,true,12,12,fdic_examiners_reviewed_no_practices_therefore,83.9,197,"examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this review was a non-existent factor with no impact on the institution's overall cra rating.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; 
@@ -621,7 +621,7 @@ therefore, this factor did not affect the Lending Test rating.
  
 • The bank’s qualified community development investments and services enhance credit 
 availability in the assessment area. 
-",5;12,,,,,,,,,,,,,,,,,
+",5;12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,12,Examiners did not identify any evidence of discriminatory or other illegal credit practices;,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named.
 FDIC_35151_20231106,flagged,FDIC,isb,New Millennium Bank,2023-11-06,corpus,data/pdfs/FDIC_35151_20231106.pdf,S,true,11,12,fdic_no_evidence,64.4,1183,"the cra requires regulatory agencies to consider any evidence of discriminatory violations or other illegal credit practices by a bank when assigning the overall cra rating. in determining the effect of evidence of practices on the bank's assigned rating, the fdic considers the nature, extent, and strength of evidence of the practices; the policies and procedures in place to prevent the practices; any corrective action the bank has taken or has committed to take, including voluntary corrective a","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The CRA requires regulatory agencies to consider any evidence of discriminatory violations or other 
@@ -676,7 +676,7 @@ community development needs in its assessment areas through community developmen
 qualified investments, and community development services, considering the institution’s capacity 
 and the need and availability of such opportunities for community development in the institution’s 
 assessment areas. 
-",11,,,,,,,,,,,,,,,,,
+",11,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,this_CRA_exam,false,11,"The FDIC identified violations of Section 5 of the Federal Trade Commission Act (Unfair or Deceptive Acts or Practices, or UDAP)",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,UDAP relating to 'credit products offered by the bank' during the evaluation period; no specific product named. Corrected with restitution; 'did not result in the downward adjustment of the CRA rating'. Opening paragraph is consideration boilerplate naming no law.
 FDIC_35513_20220907,flagged,FDIC,isb,Community Bank of Pickens County,2022-09-07,corpus,data/pdfs/FDIC_35513_20220907.pdf,S,true,16,16,fdic_laws_reviewed_no_practices,100,752,"the bank's "" mountain education charter high school ctae - banking officer presented financial literacy community service 2019, 2020 friends of pickens library – banking officer served as treasurer community service 2019, 2020 pickens county junior high school - banking officer presented financial literacy community service 2019, 2020 mountain education charter school career day - two banking officers presented financial literacy community service 2019, 2020 redemption outreach – banking officer","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -775,7 +775,7 @@ The bank demonstrated an overall adequate responsiveness to the community develo
 its assessment areas through community development loans, qualified investments, and community 
 development services.  Examiners considered the institution’s capacity and the need and availability 
 of such opportunities for community development within its assessment area. 
-",16,,,,,,,,,,,,,,,,,
+",16,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,16,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative FDIC template; FHA and ECOA named in the 'was reviewed, including' sentence (printed p.14)."
 FDIC_57359_20210315,flagged,FDIC,small,American Eagle Bank,2021-03-15,corpus,data/pdfs/FDIC_57359_20210315.pdf,NI,true,14,14,fdic_no_evidence_inconsistent_identified,82.7,890,"discriminatory credit practices inconsistent with helping to meet community credit needs were identified during the review period. a violation of regulation b, which implements the equal credit opportunity act, was cited. consistent with the cra, regulators must consider discriminatory and other illegal credit practices when arriving at the bank's cra rating. the fdic lowered the bank's cra rating from ""satisfactory"" to a ""needs to improve,"" due to the identification of a discriminatory violatio","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Discriminatory credit practices inconsistent with helping to meet community credit needs were 
@@ -810,7 +810,7 @@ area.
 of different income levels and businesses of different sizes.   
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",14,,,,,,,,,,,,,,,,,
+",14,true,discrimination,substantive_lowered,true,overall,S,NI,ECOA_RegB,absent_from_document,this_CRA_exam,false,14,"The FDIC lowered the bank’s CRA rating from “Satisfactory” to a “Needs to Improve,” due to the identification of a discriminatory violation",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Regulation B (ECOA) violation identified during the review period; practice described only as involving the bank's major product line, so practice_basis ABS. Rating page p.3 restates downgrade Satisfactory to Needs to Improve; overall rating NI. Printed p.12."
 FDIC_57379_20220124,flagged,FDIC,small,Independence Bank,2022-01-24,corpus,data/pdfs/FDIC_57379_20220124.pdf,SN,true,13,13,fdic_no_evidence_inconsistent_helping_meet,67.8,1523,"the cra requires regulatory agency examiners to consider any evidence of discriminatory violations or other illegal credit practices by a bank when assigning its overall cra rating. examiners must consider the nature, extent, strength of evidence of the practices, the policies and procedures in place to prevent the practices, any corrective action the bank has taken or committed to take, including voluntary corrective action resulting from self-assessment, and any other relevant information. dur","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The CRA requires regulatory agency examiners to consider any evidence of discriminatory 
@@ -871,7 +871,7 @@ penetration among businesses of different sizes.
  
 • The bank has not received any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",3;13,,,,,,,,,,,,,,,,,
+",3;13,true,other_illegal_credit_practice,substantive_lowered,true,overall,NI,SN,FTC_s5_UDAP,UDAP_product,this_CRA_exam,false,13,"As a result, we adjusted the bank’s overall CRA rating to “Substantial Noncompliance.”",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"FTC Act Section 5 UDAP: impermissible fees on SBA loans and fee misrepresentations on SBA loan disclosures. Review section gives only the to-rating; rating page p.3 says performance would have resulted in Needs to Improve, giving before NI. Overall rating SN. Printed p.11."
 FDIC_57614_20220809,flagged,FDIC,isb,Forbright Bank,2022-08-09,corpus,data/pdfs/FDIC_57614_20220809.pdf,NI,true,20,20,fdic_no_evidence_inconsistent_helping_meet,67.8,1234,"the cra requires regulatory agency examiners to consider any evidence of discriminatory violations or other illegal credit practices by a bank when assigning its overall cra rating. examiners must consider the nature, extent, strength of evidence of the practices, policies, or procedures in place to prevent the practices, any corrective action taken by the bank, or committed to take, including voluntary corrective action resulting from self-assessments, and any other relevant information. during","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The CRA requires regulatory agency examiners to consider any evidence of discriminatory 
@@ -932,7 +932,7 @@ regarding Unfair or Deceptive Acts or Practices (UDAP) with respect to a consume
 product.  In consideration of these violations, Forbright’s overall CRA rating was adjusted from 
 “Satisfactory” to “Needs to Improve.”  Please refer to the Discriminatory or Other Illegal Credit 
 Practices section of this evaluation for additional information regarding this adjustment. 
-",3;20,,,,,,,,,,,,,,,,,
+",3;20,true,other_illegal_credit_practice,substantive_lowered,true,overall,S,NI,FTC_s5_UDAP,UDAP_product,this_CRA_exam,false,20,The nature and extent of the UDAP violations resulted in an adjustment to the overall CRA rating from “Satisfactory” to “Needs to Improve.”,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Deceptive disclosure of fees on a consumer line of credit product with a third-party lender. Review section says only 'UDAP'; rating page p.3 restatement names Section 5 of the FTC Act. Overall rating NI. Printed p.18.
 FDIC_58010_20240624,flagged,FDIC,small,Freedom Bank,2024-06-24,corpus,data/pdfs/FDIC_58010_20240624.pdf,S,true,12,12,fdic_laws_reviewed_ecoa_only,85.6,230,"examiners considered the bank's compliance with laws relating to discrimination, including the fair housing act and the equal credit opportunity act. examiners did not identify any discriminatory or other illegal credit practices.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners considered the bank’s compliance with laws relating to discrimination, including the Fair 
@@ -960,7 +960,7 @@ income levels and businesses of different revenue sizes.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the Lending Test rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative; FHA and ECOA named in 'Examiners considered the bank's compliance' sentence (printed p.10).
 FDIC_58037_20221206,flagged,FDIC,small,California Business Bank,2022-12-06,corpus,data/pdfs/FDIC_58037_20221206.pdf,S,true,9,9,fdic_laws_reviewed_ecoa_only,79.1,196,"the bank's compliance with the laws relating to discrimination and other illegal credit practices was reviewed, and examiners did not identify any discriminatory or other illegal credit practices.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -989,7 +989,7 @@ Since the previous evaluation, the institution continues to face legal and finan
 restricting its ability to lend.  Examiners noted the overall volume of lending is low, which was 
 affected by the bank’s capital requirements, liquidity issues, and requirement to develop a viable 
 business plan. 
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,9,examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative; no law named (printed p.7).
 FDIC_58443_20230320,flagged,FDIC,small,First Security Bank of Nevada,2023-03-20,corpus,data/pdfs/FDIC_58443_20230320.pdf,S,true,12,12,fdic_laws_reviewed_ecoa_first_no_evidence,77.5,168,the bank's compliance with the laws relating to discrimination and other illegal credit practices was not identify any discriminatory or other illegal credit practices.,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -1020,7 +1020,7 @@ revenue sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the Rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative; FHA and ECOA named in the 'was reviewed, including' sentence (printed p.10)."
 FDIC_58619_20240422,flagged,FDIC,isb,MRV Banks,2024-04-22,corpus,data/pdfs/FDIC_58619_20240422.pdf,S,true,11,11,fdic_no_evidence_inconsistent_identified,79.1,622,"illegal credit practices inconsistent with helping to meet community credit needs were identified during the cra evaluation period. violations of section 5 of the federal trade commission act, which prohibits deceptive acts or practices, were cited at the examination. the bank's overall cra rating was not lowered from a satisfactory because the impact and severity of these violations was minimal compared to the overall scale of the bank's business and lending activity. management committed to ta","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Illegal credit practices inconsistent with helping to meet community credit needs were identified 
@@ -1068,7 +1068,7 @@ Discriminatory or Other Illegal Credit Practices
 Violations of Section 5 of the Federal Trade Commission Act, which prohibits deceptive acts or 
 practices, were identified during the CRA evaluation period but did not result in the downgrade of 
 the bank's overall CRA rating. 
-",3;11,,,,,,,,,,,,,,,,,
+",3;11,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,this_CRA_exam,false,11,The bank’s overall CRA rating was not lowered from a Satisfactory because the impact and severity of these violations was minimal,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"FTC Act Section 5 deceptive acts or practices cited; no specific product, fee or term named, so practice_basis ABS. Effect coded substantive_not_lowered (considered, rating not lowered; not called technical or isolated), borderline with technical_only_noted given 'minimal' impact. Source: 'identifie"
 FDIC_58852_20250818,flagged,FDIC,isb,Liberty Capital Bank,2025-08-18,corpus,data/pdfs/FDIC_58852_20250818.pdf,S,true,13,13,fdic_examiners_reviewed_no_practices_therefore,83.8,194,"examiners reviewed the compliance with laws relating to discrimination and other illegal credit practices, including fair housing and equal credit opportunity, and did not identify any concerns.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the compliance with laws relating to discrimination and other illegal credit 
@@ -1111,7 +1111,7 @@ community development needs in its assessment area through community development
 qualified investments, and community development services, as appropriate, considering the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in the institution’s assessment area. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,"including Fair Housing and Equal Credit Opportunity, and did not identify any concerns.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated review sentence
 FDIC_59296_20241015,flagged,FDIC,small,Bank Irvine,2024-10-15,corpus,data/pdfs/FDIC_59296_20241015.pdf,NI,true,13,13,fdic_examiners_reviewed_no_evidence,79.9,1717,"examiners reviewed bi's compliance with the laws relating to discrimination and other illegal credit practices, including the fair housing act and equal credit opportunity act. pursuant to section 345.28(c) of the fdic rules and regulations, evidence of discriminatory or other illegal credit practices in any geography or assessment area can adversely affect the bank's cra performance. examiners must consider the nature, extent, strength of evidence of the practices, the policies and procedures i","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed BI’s compliance with the laws relating to discrimination and other illegal 
@@ -1167,7 +1167,7 @@ During a concurrent consumer compliance examination, examiners identified illega
 inconsistent with helping to meeting community credit needs.  The bank’s overall CRA Rating was 
 not reduced despite the substantive nature of the violation cited.  Please refer to the Discriminatory 
 or Other Illegal Credit Practices section of this evaluation for more details. 
-",3;13,,,,,,,,,,,,,,,,,
+",3;13,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,TILA,other,concurrent_compliance_exam,true,13,"examiners identified a substantive violation of Section 1026.40 (d)-(e) of the Truth in Lending Act, as implemented by Regulation Z.",1.2,claude:adjudicated,2026-10-14T11:09:44,"Adjudicated practice_basis (PDF p13): the violated provision is Reg Z 1026.40(d)-(e), HELOC disclosure content and home equity brochure, and the remedy is that the bank agreed to update disclosures; practice = HELOC disclosures, coded other. The sentence on policies insufficient to mitigate risks of"
 FDIC_8120_20221011,flagged,FDIC,isb,"Magnolia Bank, Incorporated",2022-10-11,corpus,data/pdfs/FDIC_8120_20221011.pdf,S,true,19,19,fdic_no_evidence_inconsistent_identified,79.1,659,"illegal credit practices inconsistent with helping to meet community credit needs were identified during the cra evaluation period. a violation of section 1024.14 of regulation x, which implements section 8 of the real estate settlement procedures act, was cited at the examination. the bank's overall cra rating was not lowered from a satisfactory rating because the impact and severity of this violation was minimal compared to the overall scale of the bank's lending activity. in addition, the ban","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Illegal credit practices inconsistent with helping to meet community credit needs were identified 
@@ -1212,7 +1212,7 @@ community development needs of it assessment area through community development 
 qualified investments, and community development services, as appropriate, considering the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in the assessment area.   
-",19,,,,,,,,,,,,,,,,,
+",19,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,RESPA_s8,absent_from_document,this_CRA_exam,false,19,The bank’s overall CRA rating was not lowered from a Satisfactory rating because the impact and severity of this violation was minimal,1.2,claude:adjudicated,2026-10-14T11:09:44,"Adjudicated practice_basis (PDF p19): the section names only the provision violated (Reg X 1024.14, RESPA Section 8) and describes no practice (no kickback, referral fee, product or term named); per codebook 17g and the LB precedent, naming the law without the practice is ABS, so reader B is correct"
 FDIC_8848_20240404,flagged,FDIC,small,CenBank,2024-04-04,corpus,data/pdfs/FDIC_8848_20240404.pdf,S,true,8,9,fdic_no_evidence_inconsistent_identified,79.1,750,"illegal credit practices inconsistent with helping to meet community credit needs were identified during the cra evaluation period. an isolated violation of section 1026.23 of regulation z, which implements provisions regarding a consumer's right of rescission under truth in lending, was cited at the examination. the bank's overall cra rating was not lowered from a satisfactory because the impact and severity of this violation was minimal compared to the overall scale of the bank's business and ","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Illegal credit practices inconsistent with helping to meet community credit needs were identified 
@@ -1264,7 +1264,7 @@ therefore, this factor did not affect the rating.
  
 Violations of Regulation Z, which implements the Truth in Lending Act, were identified during the 
 CRA evaluation period but did not result in the downgrade of the bank’s overall CRA rating. 
-",8,,,,,,,,,,,,,,,,,
+",8,true,other_illegal_credit_practice,technical_only_noted,false,not_applicable,not_applicable,not_applicable,TILA,other,this_CRA_exam,false,8,"An isolated violation of Section 1026.23 of Regulation Z, which implements provisions regarding a consumer’s right of rescission under Truth in Lending",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"coded technical_only_noted because PE calls it isolated (guide 17b); PE also states rating not lowered from Satisfactory, so substantive_not_lowered is the alternative; practice is right of rescission; rating p3 restates"
 FDIC_90208_20220324,flagged,FDIC,isb,Pentucket  Bank,2022-03-24,corpus,data/pdfs/FDIC_90208_20220324.pdf,S,true,19,19,fdic_examiners_reviewed_no_practices_therefore,65,148,"no discriminatory or other illegal credit practice occurred during the evaluation period. as such, there is no impact on the bank's cra performance.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 No discriminatory or other illegal credit practice occurred during the evaluation period. As such, there 
@@ -1300,7 +1300,7 @@ The Community Development Test is rated Satisfactory.
 assessment area through community development loans, qualified investments, and community 
 development services.  Examiners considered the bank’s capacity and the need and availability 
 of community development opportunities within the assessment area. 
-",19;20,,,,,,,,,,,,,,,,,
+",19;20,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,19,No discriminatory or other illegal credit practice occurred during the evaluation period.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_9100_20220822,flagged,FDIC,isb,Pilot Grove Savings Bank,2022-08-22,corpus,data/pdfs/FDIC_9100_20220822.pdf,S,true,17,17,fdic_laws_reviewed_no_practices,86.4,641,"the bank's compliance with the laws relating to discrimination and other illegal credit practices was reviewed, including the fair housing act and the equal credit opportunity act. the fair lending visitation identified a violation of the equal credit opportunity act and the implementing regulation, regulation b. although substantive in nature, the violation did not warrant a downgrade of the bank's cra rating due to the limited impact on the assessment area, and the corrective measures taken by","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -1346,7 +1346,7 @@ The Community Development Test is rated Satisfactory.
 needs of its assessment area through community development loans, qualified investments, and 
 the provision of community development services.  Examiners considered the institution’s 
 capacity, as well as the needs and availability of opportunities in the assessment area. 
-",17,,,,,,,,,,,,,,,,,
+",17,true,discrimination,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,ECOA_RegB,absent_from_document,concurrent_compliance_exam,true,17,"Although substantive in nature, the violation did not warrant a downgrade of the bank’s CRA rating",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,source is a fair lending visitation (separate compliance review); quote of finding: The fair lending visitation identified a violation of the Equal Credit Opportunity Act; no practice named; FHA named only in boilerplate sentence; rating p3 does not restate
 FRB_2562164_20220307,flagged,FRB,isb,COASTAL COMMUNITY BANK,2022-03-07,corpus,data/pdfs/FRB_2562164_20220307.pdf,S,true,11,11,frb_federal_reserve_review_found_no_violations,87.1,295,"concurrent with this cra evaluation, a review of the bank's compliance with consumer protection laws and regulations was conducted. the review found no evidence of violations of the substantive provisions of anti-discrimination, fair lending, or other credit practice rules, laws or regulations.","Fair Lending or Other Illegal Practices Review 
  
 Concurrent with this CRA evaluation, a review of the bank’s compliance with consumer 
@@ -1409,7 +1409,7 @@ Everett, Washington
 March 7, 2022 
 Page 2 of 24 
 INSTITUTION 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,11,"The review found no evidence of violations of the substantive provisions of anti-discrimination, fair lending, or other credit practice rules",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no specific law named
 FRB_2668598_20241202,flagged,FRB,isb,PORTAGE COMMUNITY BANK,2024-12-02,corpus,data/pdfs/FRB_2668598_20241202.pdf,O,true,29,29,frb_fair_lending_activities_evaluated,100,305,"17 bank on rubber city is a coalition led by united way of summit & medina counties and the city of akron and is committed to helping residents, particularly lmi unbanked and underbanked residents, access safe and affordable banking products and services to help build financial sufficiency and stability.","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 An evaluation of the bank’s fair lending activities was conducted during the examination to 
@@ -1445,7 +1445,7 @@ The geographic distribution of loans reflects reasonable dispersion throughout t
 The bank’s community development performance demonstrates excellent responsiveness 
 to the community development needs of the AA, considering the bank’s capacity and the 
 need and availability of such opportunities in the bank’s AA. 
-",29,,,,,,,,,,,,,,,,,
+",29,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,29,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; ECOA and FHA named in negated boilerplate
 FRB_3465392_20241118,flagged,FRB,isb,PEGASUS BANK,2024-11-18,corpus,data/pdfs/FRB_3465392_20241118.pdf,S,true,14,14,frb_no_evidence_inconsistent_identified,58.8,1055,"the dodd-frank wall street reform and consumer protection act of 2010 (dodd-frank act) established the consumer financial protection bureau (cfpb). in general, the dodd-frank act gives the cfpb, among other things, primary supervisory authority over insured depository institutions with total consolidated assets of more than $10 billion when assessing compliance with the requirements of federal consumer financial laws. the federal reserve system retains authority to enforce compliance with the cr","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The Dodd-Frank Wall Street Reform and Consumer Protection Act of 2010 (Dodd-Frank Act) 
 established the Consumer Financial Protection Bureau (CFPB). In general, the Dodd-Frank Act 
@@ -1481,7 +1481,7 @@ The bank has taken appropriate action in response to substantiated complaints.
 • 
 Community development (CD) activity reflects excellent responsiveness to the needs of 
 the AA. 
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,the Federal Reserve Bank of Dallas did not cite violations involving illegal discrimination or other illegal credit practices that adversely affected the evaluation,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative review section. ECOA/Reg B, FHA and UDAAP named only in negated sentence (unaware of any violations identified by the CFPB); Dodd-Frank named in CFPB jurisdiction boilerplate."
 FRB_3567269_20230417,flagged,FRB,isb,SELECT BANK,2023-04-17,corpus,data/pdfs/FRB_3567269_20230417.pdf,S,true,7,7,frb_fair_lending_activities_evaluated,52.8,526,"the fair lending review performed concurrently with this evaluation identified substantive violations of technical provisions within the equal credit opportunity act. the violations impacted a minimal number of borrowers. during this evaluation, management began taking action to address the violations and implemented controls to prevent such violations in the future. given the limited number of affected borrowers, the bank's cra rating was not downgraded based on the violations of the equal cred","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The fair lending review performed concurrently with this evaluation identified substantive violations of 
@@ -1514,7 +1514,7 @@ dispersion throughout the bank’s assessment areas overall.
  The bank’s responsiveness to the community development needs of its assessment areas 
 through community development loans, qualified investments, and services is considered 
 adequate. 
-",7,,,,,,,,,,,,,,,,,
+",7,true,discrimination,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,ECOA_RegB,absent_from_document,concurrent_compliance_exam,false,7,the bank's CRA rating was not downgraded based on the violations of the Equal Credit Opportunity Credit Act.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"PE says substantive violations of technical provisions of ECOA, minimal number of borrowers; coded substantive_not_lowered since PE calls them substantive (technical_only_noted is the alternative). Source is a fair lending review performed concurrently with this evaluation. No practice named. Rating"
 FRB_369453_20250324,flagged,FRB,small,IMPACT BANK,2025-03-24,corpus,data/pdfs/FRB_369453_20250324.pdf,S,true,12,12,frb_kansas_city_compliance,87.4,668,"compliance with the substantive provisions of antidiscrimination and other consumer protection laws and regulations, including the equal credit opportunity act and the fair housing act, was considered as part of this cra evaluation. no evidence of a pattern or practice of discrimination on a prohibited basis was identified. however, a substantive violation of section 5(a) of the federal trade commission act involving an unfair practice was identified. the violation did not result in a change to ","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 Compliance with the substantive provisions of antidiscrimination and other consumer 
 protection laws and regulations, including the Equal Credit Opportunity Act and the Fair 
@@ -1538,7 +1538,7 @@ different sizes.
 • Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank) 
 received any Community Reinvestment Act (CRA)-related complaints since the 
 previous evaluation. 
-",12,,,,,,,,,,,,,,,,,
+",12,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,this_CRA_exam,true,12,a substantive violation of Section 5(a) of the Federal Trade Commission Act involving an unfair practice was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"ECOA and FHA named in compliance-considered boilerplate followed by no pattern or practice of discrimination; finding is UDAP only. Unfair practice affected consumer loans but no specific product, fee or term named, so practice_basis ABS. Source: identified as part of this CRA evaluation, no separat"
 FRB_392152_20210222,flagged,FRB,small,NEW CENTURY BANK,2021-02-22,corpus,data/pdfs/FRB_392152_20210222.pdf,NI,true,6,7,frb_fair_lending_activities_evaluated,82.9,757,"an evaluation of the bank's fair lending activities was conducted during the examination to determine compliance with the substantive provisions of antidiscrimination laws and regulations, including the equal credit opportunity act and the fair housing act. the concurrent consumer compliance examination identified substantive violations of the ecoa and the fha. the bank's policies were insufficient to prevent these violations. as a result of the examination, management will be expected to take a","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 An evaluation of the bank’s fair lending activities was conducted during the examination to 
@@ -1584,7 +1584,7 @@ meaningful.
 including low- and moderate-income (LMI), and businesses of different sizes. 
  Neither the bank nor this Reserve Bank received any CRA-related complaints since 
 the previous evaluation. 
-",3;6,,,,,,,,,,,,,,,,,
+",3;6,true,discrimination,substantive_lowered,true,overall,S,NI,ECOA_RegB|FHA,absent_from_document,concurrent_compliance_exam,true,6,These discriminatory credit practices contributed to the downgrade from Satisfactory to Needs to lmprove.,1.2,claude:adjudicated,2026-10-14T11:09:44,"Adjudicated distractor_laws_named = true (reader A). The review section on PDF page 6 (printed Page 5) opens with the standard FRB boilerplate sentence: an evaluation was conducted to determine compliance with antidiscrimination laws, including the Equal Credit Opportunity Act and the Fair Housing A"
 FRB_528102_20221128,flagged,FRB,small,NORTH BROOKFIELD SAVINGS BANK,2022-11-28,corpus,data/pdfs/FRB_528102_20221128.pdf,S,true,15,16,frb_no_evidence_inconsistent_identified,51.9,293,a substantive violation of section 5(a) of the federal trade commission act involving unfair or deceptive practices was identified in the concurrent consumer compliance examination. bank management is committed to correcting the violation. the violation did not impact the bank's cra rating. a,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW  
  
 A substantive violation of Section 5(a) of the Federal Trade Commission Act involving unfair or 
@@ -1628,7 +1628,7 @@ A reasonable geographic distribution of loans given the bank’s assessment area
 • 
 There have been no complaints regarding the bank's CRA performance since the last CRA 
 examination. 
-",15,,,,,,,,,,,,,,,,,
+",15,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,concurrent_compliance_exam,false,15,violation of Section 5(a) of the Federal Trade Commission Act involving unfair or deceptive practices was identified in the concurrent consumer compliance examination,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Substantive UDAP violation; did not impact the CRA rating (Satisfactory, page 3). No product or practice named."
 FRB_736550_20211206,flagged,FRB,small,"UNION STATE BANK OF EVEREST, THE",2021-12-06,corpus,data/pdfs/FRB_736550_20211206.pdf,S,true,7,7,frb_concurrent_review_no_evidence,52.7,776,"the fair lending review performed concurrently with this evaluation identified a substantive violation of the equal credit opportunity act and regulation b. the violation was limited in nature. subsequent to this evaluation, management began taking action to address the violation and implemented controls to prevent such a violation in the future. additionally, a udap review was performed concurrently with this evaluation. while management has implemented policies, procedures, training programs, ","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The fair lending review performed concurrently with this evaluation identified a 
@@ -1654,7 +1654,7 @@ levels, including low- and moderate-income (LMI), and businesses and farms
 of different sizes. 
  Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank) 
 received any CRA-related complaints since the previous evaluation. 
-",7,,,,,,,,,,,,,,,,,
+",7,true,both,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,ECOA_RegB|FTC_s5_UDAP,absent_from_document,concurrent_compliance_exam,false,7,The fair lending review performed concurrently with this evaluation identified a substantive violation of the Equal Credit Opportunity Act and Regulation B.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Also substantive FTC Act Section 5 unfair acts and practices found in a concurrent UDAP review; violations did not result in an adjustment to the CRA rating. No product or practice named.
 FRB_823656_20230814,flagged,FRB,isb,FIRST STATE BANK SOUTHWEST,2023-08-14,corpus,data/pdfs/FRB_823656_20230814.pdf,O,true,19,20,frb_examination_did_not_reveal_hmda,99.1,216,"9 although examiners did not evaluate the bank's performance in the sioux falls aa, the bank made one donation in this aa to an organization that provides community services to low- or moderate-income people. page 18","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The examination did not reveal any evidence of violations of antidiscrimination laws or regulations 
@@ -1716,7 +1716,7 @@ qualified investments and donations are excellent.
  
 The bank received an Outstanding rating at the previous evaluation dated February 20, 2018. At that time, 
 examiners evaluated the bank’s CRA performance using the Small Bank Examination Procedures.  
-",19,,,,,,,,,,,,,,,,,
+",19,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,19,The examination did not reveal any evidence of violations of antidiscrimination laws or regulations (including Regulation B—Equal Credit Opportunity Act,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative review section; Reg B/ECOA, Reg C/HMDA and FHA named inside negated sentence."
 FRB_853112_20220411,flagged,FRB,isb,HEARTLAND BANK,2022-04-11,corpus,data/pdfs/FRB_853112_20220411.pdf,O,true,15,15,frb_no_evidence_inconsistent_identified,62.5,558,"in the most recent consumer examination conducted by the federal reserve bank of cleveland, a violation of section (5) of the federal trade commission act involving unfair and deceptive practices was identified. heartland has policies, procedures, training programs, internal assessments, and other practices in place to help prevent discriminatory or other illegal credit practices. furthermore, management has committed to take prompt corrective action to address the violation. as a result, the vi","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 In the most recent consumer examination conducted by the Federal Reserve Bank of Cleveland, 
@@ -1748,7 +1748,7 @@ businesses of different sizes; and,
 The bank’s community development performance demonstrates an excellent 
 responsiveness to the community development needs of the AA, considering the bank’s 
 capacity and the need and availability of such opportunities in the bank’s AA. 
-",15,,,,,,,,,,,,,,,,,
+",15,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP,absent_from_document,concurrent_compliance_exam,false,15,a violation of Section (5) of the Federal Trade Commission Act involving unfair and deceptive practices was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Violation found in the most recent consumer examination by FRB Cleveland (not stated as concurrent; prior_exam_referenced is the alternative). PE does not call it substantive or technical; did not result in an adjustment to the CRA rating. No product named.
 FRB_94522_20220815,flagged,FRB,isb,BENCHMARK COMMUNITY BANK,2022-08-15,corpus,data/pdfs/FRB_94522_20220815.pdf,S,true,8,9,frb_no_evidence_adequate_policies,100,248,"1 of this amount, $1.3 million is invested in an equity fund that benefits bcb's assessment areas in virginia and north carolina. the remaining $249,980 million of qualified investments benefit the commonwealth of virginia. commonwealth of virginia","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
@@ -1792,7 +1792,7 @@ as appropriate, considering the bank’s capacity and the need and availability 
 opportunities in bank’s assessment areas. 
 • The institution has not received any complaints regarding its Community Reinvestment Act 
 (CRA) performance since the previous evaluation.  
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,8,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB negative review section; no law named.
 OCC_10161_20221219,flagged,OCC,small,The First National Bank of Spearville,2022-12-19,corpus,data/pdfs/OCC_10161_20221219.pdf,S,true,5,5,occ_pursuant_2024,100,446,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self- assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -1824,7 +1824,7 @@ Area (AA).
 originated in the bank’s AA. 
  The bank’s amount of lending to borrowers of different income levels, given the opportunities within 
 the bank’s AA, is reasonable. 
-",5;6,,,,,,,,,,,,,,,,,
+",5;6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC negative standard text; 'not lowered as a result of these findings' and forward-looking sentence are boilerplate; no law named.
 OCC_11544_20230531,flagged,OCC,isb,The Citizens National Bank of Somerset,2023-05-31,corpus,data/pdfs/OCC_11544_20230531.pdf,S,true,6,7,occ_pursuant_2024,99.9,124,. middle-income tracts in the aa were designated as distressed or underserved or carried both designations in 2020 and 2021.,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national banks or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -1880,7 +1880,7 @@ geography.
 originated inside the bank’s assessment areas (AA).  
  The community development (CD) test rating is based on adequate responsiveness to community 
 needs through qualified CD investments, services, and loans. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC negative standard text plus forward-looking boilerplate; no law named. DRAFT watermark.
 OCC_13102_20221117,flagged,OCC,small,The First National Bank of Mount Dora,2022-11-17,corpus,data/pdfs/OCC_13102_20221117.pdf,S,true,6,6,occ_pursuant_2024,100,445,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self-assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or 
 federal savings association’s (collectively, bank) CRA rating, the OCC considers evidence of 
@@ -1912,7 +1912,7 @@ factors.
 sizes is reasonable. 
  The distribution of home mortgage and business loans originations across geographies of 
 different income levels is reasonable. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC negative standard text; 'not lowered' sentence and forward-looking sentence are boilerplate; no law named.
 OCC_23516_20220928,flagged,OCC,isb,Liberty National Bank,2022-09-28,corpus,data/pdfs/OCC_23516_20220928.pdf,S,true,7,7,occ_will_consider,99.7,447,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self-assessment; and other relevant information. .","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
 (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal credit 
@@ -1948,7 +1948,7 @@ reflects reasonable distribution.
  The Community Development (CD) Test rating is based on the two full-scope AAs in the state of 
 Oklahoma. 
  CD activities reflect adequate responsiveness to the needs of communities within the bank’s AAs. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC negative standard text; 'not lowered' and forward-looking boilerplate; no law named.
 OCC_23903_20230308,flagged,OCC,isb,"Blue Ridge Bank, National Association",2023-03-08,corpus,data/pdfs/OCC_23903_20230308.pdf,S,true,7,7,occ_will_consider,99.7,1468,"the occ identified the following public information regarding non-compliance with the statutes and regulations prohibiting discriminatory or other illegal credit practices with respect to this institution: the occ does n as a result of these findings, and after consideration of the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; the extent to which the institution has taken or has commit","Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c), respectively, in determining a national banks or federal savings association’s 
@@ -2017,7 +2017,7 @@ businesses of different sizes, given the product lines offered by the bank.
 of its AAs demonstrated through CD activities in Virginia and North Carolina. 
 • The bank exhibits reasonable responsiveness to CD needs in the AAs through CD loans, qualified 
 investments, grants and donations, and CD services. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,The OCC does not have (additional1) public information regarding non-compliance with statutes and regulations prohibiting discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Unfilled OCC template: keeps both alternatives incl. placeholder 'lowered from (preliminary rating) to (final rating)' and 'not lowered'; no actual practice identified, treated as negative; ambiguous, flag for review."
 OCC_25307_20230815,flagged,OCC,isb,"Affinity Bank, National Association",2023-08-15,corpus,data/pdfs/OCC_25307_20230815.pdf,S,true,5,6,occ_will_consider,100,154,for years 2020-2021 the demographics comparator is 2015 acs. for 2022 the demographic comparator is 2020 us census and aggregate peer data is unavailable.,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c), in determining a national bank’s or federal savings association’s 
 (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal credit 
@@ -2061,7 +2061,7 @@ Affinity Bank’s average loan-to-deposit ration reflects a more than reasonable
 businesses of different sizes. 
  The bank demonstrated adequate responsiveness to the community development (CD) lending and 
 investment needs within its assessment area. 
-",5;6,,,,,,,,,,,,,,,,,
+",5;6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Section starts on PDF p5 and the negative statement is on p6; forward-looking boilerplate; no law named.
 OCC_3147_20230703,flagged,OCC,small,The National Bank of Malvern,2023-07-03,test,data/pdfs/OCC_3147_20230703.pdf,S,true,6,6,occ_pursuant_2024,100,446,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self- assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -2130,7 +2130,7 @@ The major factors that support this rating include:
  Lending to borrowers of different incomes is outstanding. 
  The loan-to-deposit (LTD) ratio is more than reasonable. 
  The majority of lending is within the assessment area (AA). 
-",6;7,,,,,,,,,,,,,,,,,
+",6;7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC negative standard text; 'not lowered' and forward-looking boilerplate; no law named.
 OCC_716195_20240506,flagged,OCC,isb,The Federal Savings Bank,2024-05-06,corpus,data/pdfs/OCC_716195_20240506.pdf,S,true,6,6,occ_will_consider,99.7,1488,"the occ found, during an examination in 2023, that tfsb had violated section 5 of the federal trade commission act due to statements made to potential customers by the bank's loan officers when discussing the bank's veterans affairs interest rate reduction refinance loan (va irrrl) program. the consumers who received the communications at issue did not enter loan transactions, and the occ did not identify quantifiable consumer harm in connection with these violations. the bank's management team ","Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) (March 29, 2024), in determining a national bank or federal savings 
@@ -2189,7 +2189,7 @@ is reasonable.
   
  TFSB’s combined community development (CD) loans, investments, and services exhibit adequate 
 responsiveness to the CD needs in the bank’s AA.  
-",4;6,,,,,,,,,,,,,,,,,
+",4;6,true,other_illegal_credit_practice,substantive_not_lowered,false,not_applicable,not_applicable,not_applicable,FTC_s5_UDAP|TILA,marketing|other,concurrent_compliance_exam,false,6,"The OCC found, during an examination in 2023, that TFSB had violated section 5 of the Federal Trade Commission Act",1.2,claude:adjudicated,2026-10-14T11:09:44,"Adjudicated finding_source only; the readers agree on every other field and the PDF supports them. PDF p6 (printed p5), review section: the OCC found a FTC Act s5 UDAP violation at a 2023 examination (loan officer statements about the VA IRRRL program, no quantifiable harm) and one TILA violation of"
 OCC_7911_20221219,flagged,OCC,small,The Marion National Bank,2022-12-19,corpus,data/pdfs/OCC_7911_20221219.pdf,S,true,5,5,occ_pursuant_2024,99.9,456,". cra performance rating has not been lowered due to any of these findings. examiners consider the nature, extent, and strength of the evidence of the practices; the extent to which the institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self-assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -2218,7 +2218,7 @@ financial condition, and lending opportunities within assessment area (AA).
  MNB meets community credit needs as most loans were originated within the AA. 
  Bank lending reflects a reasonable pattern of providing lending to borrowers of different income 
 levels. 
-",5;6,,,,,,,,,,,,,,,,,
+",5;6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Standard OCC negative template; boilerplate sentence 'CRA performance rating has not been lowered due to any of these findings' is not a finding. Only 12 CFR 25.28(c)/195.28(c) cited; no law named. Forward-looking boilerplate present.
 OCC_8808_20220829,flagged,OCC,small,The First National Bank of Scott City,2022-08-29,corpus,data/pdfs/OCC_8808_20220829.pdf,S,true,5,5,occ_pursuant_2024,99.9,446,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self- assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -2248,7 +2248,7 @@ its asset size, financial condition, and lending opportunities within the assess
  The institution meets the credit needs of the community as a majority of loan originations were made 
 inside the bank’s AA. 
  Given the opportunities within the AA, lending to borrowers of different income levels is reasonable.  
-",5;6,,,,,,,,,,,,,,,,,
+",5;6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Standard OCC negative template; boilerplate 'The CRA performance rating was not lowered as a result of these findings' is not a finding. No law named. Forward-looking boilerplate present.
 OCC_9773_20230109,flagged,OCC,small,The First National Bank of Dighton,2023-01-09,corpus,data/pdfs/OCC_9773_20230109.pdf,S,true,5,5,occ_pursuant_2024,100,446,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self- assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -2279,7 +2279,7 @@ size, financial condition, and lending opportunities within the assessment area 
 were made inside the bank’s AA. 
  Given the opportunities within the AA, lending to borrowers of difference income levels is 
 reasonable. 
-",5;6;7,,,,,,,,,,,,,,,,,
+",5;6;7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Standard OCC negative template; boilerplate 'The CRA performance rating was not lowered as a result of these findings' is not a finding. No law named. Forward-looking boilerplate present.
 FDIC_12969_20230221,locator_miss,FDIC,isb,The Union Bank Company,2023-02-21,corpus,data/pdfs/FDIC_12969_20230221.pdf,S,false,,,,,,,,3,"INSTITUTION RATING 
  
 INSTITUTION’S CRA RATING:  This institution is rated Satisfactory. 
@@ -2316,7 +2316,7 @@ Discriminatory or Other Illegal Credit Practices
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; 
 therefore, this consideration did not affect the institutions overall CRA rating.   
-",3,,,,,,,,,,,,,,,,,
+",3,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institutions overall CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Locator missed it: review paragraph sits on the rating page (PDF p3, printed p1) under heading 'Discriminatory or Other Illegal Credit Practices'. No law named."
 FDIC_14769_20231218,locator_miss,FDIC,isb,DMB Community Bank,2023-12-18,corpus,data/pdfs/FDIC_14769_20231218.pdf,S,false,,,,,,,,3,"INSTITUTION RATING 
  
 INSTITUTION’S CRA RATING:  This institution is rated Satisfactory.   
@@ -2347,7 +2347,7 @@ The Community Development Test is rated Satisfactory.
 of its AA through community development loans, qualified donations, and community 
 development services.  Examiners considered the institution's capacity and the need and 
 availability of such opportunities for community development within the AA. 
-",,,,,,,,,,,,,,,,,,
+",,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"No fair lending or illegal credit practices review section in this PDF (reader note: no review section. Searched rating page (PDF p3), TOC, full text for discriminat/illegal/fair lending/ECOA/FHA, and end )",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"no review section. Searched rating page (PDF p3), TOC, full text for discriminat/illegal/fair lending/ECOA/FHA, and end of CD Test (PDF p20) before appendices (p21); none found."
 FDIC_29227_20231016,locator_miss,FDIC,isb,Washington Savings Bank,2023-10-16,corpus,data/pdfs/FDIC_29227_20231016.pdf,S,false,,,,,,,,3,"INSTITUTION RATING 
  
 INSTITUTION’S CRA RATING:  This institution is rated Satisfactory.   
@@ -2380,7 +2380,7 @@ community development needs in its assessment area through community development
 qualified investments, and community development services, as appropriate.  Examiners considered 
 the institution’s capacity and the need and availability of such opportunities for community 
 development in the institution’s assessment area. 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"No fair lending or illegal credit practices review section in this PDF (reader note: no review section. Only hit is AA delineation boilerplate on PDF p5 ('does not reflect illegal discrimination'), not a r)",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"no review section. Only hit is AA delineation boilerplate on PDF p5 ('does not reflect illegal discrimination'), not a review. Checked rating page p3, TOC, end of CD Test p15 and appendices p16."
 FDIC_57301_20230222,locator_miss,FDIC,isb,"United Community Bank of West Kentucky, Inc.",2023-02-22,corpus,data/pdfs/FDIC_57301_20230222.pdf,S,false,,,,,,,,3,"INSTITUTION RATING 
  
 INSTITUTION’S CRA RATING:  This institution is rated Satisfactory. 
@@ -2409,7 +2409,7 @@ The institution’s CD performance demonstrates adequate responsiveness to the C
 through CD loans, qualified investments, and CD services, as appropriate considering the 
 institution’s capacity and the need and availability of such opportunities for CD in the institution’s 
 AA.   
-",,,,,,,,,,,,,,,,,,
+",,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"No fair lending or illegal credit practices review section in this PDF (reader note: no review section. Searched rating page (PDF p3), TOC, full text, and end of CD Test (PDF p12) before appendices (p13); )",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"no review section. Searched rating page (PDF p3), TOC, full text, and end of CD Test (PDF p12) before appendices (p13); none found."
 FRB_164975_20250818,locator_miss,FRB,small,STOUGHTON CO-OPERATIVE BANK,2025-08-18,test,data/pdfs/FRB_164975_20250818.pdf,S,false,,,,,,,,3,"INSTITUTION'S CRA RATING: This institution is rated SATISFACTORY. 
  
 Stoughton Co-operative Bank (Stoughton or the bank) demonstrates an adequate responsiveness 
@@ -2466,7 +2466,7 @@ CRA evaluation.
 Qualified community development loans, investments, and services were also reviewed at the 
 bank’s request. These activities enhanced credit availability in the assessment area and 
 support the overall rating. 
-",,,,,,,,,,,,,,,,,,
+",,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"No fair lending or illegal credit practices review section in this PDF (reader note: no review section; searched rating page (p3), scope, conclusion (p20) and full text, no fair lending or illegal credit p)",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"no review section; searched rating page (p3), scope, conclusion (p20) and full text, no fair lending or illegal credit practices statement"
 FRB_816304_20220912,locator_miss,FRB,small,MARBLEHEAD BANK,2022-09-12,corpus,data/pdfs/FRB_816304_20220912.pdf,S,false,,,,,,,,3,"INSTITUTION'S CRA RATING: This institution is rated SATISFACTORY. 
  
 Marblehead Bank (Marblehead or the bank) demonstrates an adequate responsiveness to the 
@@ -2493,7 +2493,7 @@ geographies, in the bank’s assessment area.
 • 
 There have been no complaints regarding the bank's CRA performance since the last CRA 
 examination. 
-",,,,,,,,,,,,,,,,,,
+",,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,3,"No fair lending or illegal credit practices review section in this PDF (reader note: no review section; searched rating page (p3), conclusion (p16) and full text, no fair lending or illegal credit practice)",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"no review section; searched rating page (p3), conclusion (p16) and full text, no fair lending or illegal credit practices statement"
 FRB_956376_20230515,locator_miss,FRB,small,BANK OF EASTON,2023-05-15,corpus,data/pdfs/FRB_956376_20230515.pdf,S,false,,,,,,,,3,"INSTITUTION'S CRA RATING: This institution is rated SATISFACTORY. 
  
 Bank of Easton (BOE or the bank) demonstrates an adequate responsiveness to the credit needs 
@@ -2520,7 +2520,7 @@ A reasonable geographic distribution of loans given the bank’s assessment area
 • 
 There have been no complaints regarding the bank's CRA performance since the last CRA 
 examination. 
-",17,,,,,,,,,,,,,,,,,
+",17,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,17,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"negative statement sits in the CONCLUSION section, no separate review heading; no law named"
 FDIC_10212_20220919,random_unflagged,FDIC,small,Commerce Bank,2022-09-19,corpus,data/pdfs/FDIC_10212_20220919.pdf,S,true,7,7,fdic_laws_reviewed_no_evidence_inconsistent_therefore,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices 
@@ -2552,7 +2552,7 @@ different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; no law named
 FDIC_10344_20250421,random_unflagged,FDIC,isb,Schertz Bank & Trust,2025-04-21,corpus,data/pdfs/FDIC_10344_20250421.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices 
@@ -2589,7 +2589,7 @@ community development needs in its assessment areas through community developmen
 qualified investments, and community development services, as appropriate, considering the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in the institution’s assessment areas. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in negated boilerplate
 FDIC_10500_20231024,random_unflagged,FDIC,small,Farmers Savings Bank,2023-10-24,corpus,data/pdfs/FDIC_10500_20231024.pdf,S,true,13,13,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2624,7 +2624,7 @@ income levels and businesses and farms of different revenue sizes.
 • 
 The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating.  
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in negated boilerplate
 FDIC_107_20220920,random_unflagged,FDIC,small,The Merchants & Planters Bank,2022-09-20,corpus,data/pdfs/FDIC_107_20220920.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2656,7 +2656,7 @@ would not result in meaningful conclusions.  Therefore, this criterion was not e
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating.     
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in negated boilerplate
 FDIC_11669_20250331,random_unflagged,FDIC,small,First State Bank of Forrest,2025-03-31,corpus,data/pdfs/FDIC_11669_20250331.pdf,S,true,8,8,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2690,7 +2690,7 @@ businesses and small farms of different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",5;8,,,,,,,,,,,,,,,,,
+",5;8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act. Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in negated boilerplate
 FDIC_11788_20240812,random_unflagged,FDIC,small,Bank of Sunset and Trust Company,2024-08-12,corpus,data/pdfs/FDIC_11788_20240812.pdf,S,true,8,8,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2720,7 +2720,7 @@ moderate-income) and businesses of different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the Lending Test rating.  
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_12136_20250609,random_unflagged,FDIC,small,The Wilson State Bank,2025-06-09,corpus,data/pdfs/FDIC_12136_20250609.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,99.8,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2751,7 +2751,7 @@ income levels and farms and businesses of different revenue sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,Examiners did not identify any discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate; sentence lacks final period on page
 FDIC_12246_20250401,random_unflagged,FDIC,small,Commercial Bank,2025-04-01,corpus,data/pdfs/FDIC_12246_20250401.pdf,S,true,9,9,fdic_laws_reviewed_no_evidence_inconsistent_therefore,97,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
 reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not 
@@ -2779,7 +2779,7 @@ different sizes.
  
 • The bank did not receive any complaints related to its Community Reinvestment Act (CRA) 
 performance since the previous evaluation; therefore, this factor did not affect the rating.   
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,9,Examiners did not identify any evidence of discrimination or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_12627_20230501,random_unflagged,FDIC,isb,Bank of Washington,2023-05-01,corpus,data/pdfs/FDIC_12627_20230501.pdf,S,true,14,14,fdic_examiners_reviewed_no_evidence,99.2,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -2816,7 +2816,7 @@ The Community Development Test is rated Satisfactory.
 its assessment area through community development loans, qualified investments, and 
 community development services, considering the institution’s capacity and the need and 
 availability of such opportunities in the institution’s assessment area.  
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,Examiners did not identify any evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_12869_20250804,random_unflagged,FDIC,isb,Farmers Bank and Trust Company,2025-08-04,corpus,data/pdfs/FDIC_12869_20250804.pdf,S,true,9,9,fdic_no_evidence,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, 
@@ -2844,7 +2844,7 @@ The institution’s community development performance demonstrates adequate resp
 needs of its AAs through community development loans, qualified investments and donations, and 
 community development services.  Examiners considered the institution’s capacity and need and 
 availability of such opportunities for community development in the institution’s AAs. 
-",4;9,,,,,,,,,,,,,,,,,
+",4;9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,9,Examiners did not identify any evidence of discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_13032_20230213,random_unflagged,FDIC,small,Citizens First Bank,2023-02-13,corpus,data/pdfs/FDIC_13032_20230213.pdf,S,true,7,7,fdic_no_evidence,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; 
@@ -2876,7 +2876,7 @@ different sizes and individuals of different income levels (including low- and m
  
 • The institution did not receive any CRA-related complaints since the previous examination; 
 therefore, this factor did not affect the rating. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,Examiners did not identify any evidence of discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_1376_20230710,random_unflagged,FDIC,isb,Citizens Bank & Trust Company,2023-07-10,corpus,data/pdfs/FDIC_1376_20230710.pdf,S,true,16,16,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2914,7 +2914,7 @@ The institution’s community development (CD) performance demonstrates adequate
 to CD needs in its assessment area through CD loans, qualified investments (QIs), and CD services, 
 as appropriate, considering the institution’s capacity and the need and availability of such 
 opportunities for CD in the institution’s assessment area. 
-",16,,,,,,,,,,,,,,,,,
+",16,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,16,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_13946_20250401,random_unflagged,FDIC,small,First Bank & Trust Company,2025-04-01,corpus,data/pdfs/FDIC_13946_20250401.pdf,S,true,8,8,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2941,7 +2941,7 @@ penetration among farms and businesses of different sizes.
  
 • The institution did not receive any Community Reinvestment Act (CRA)-related complaints 
 since the previous evaluation; therefore, this criterion did not affect the rating.  
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_14269_20221107,random_unflagged,FDIC,isb,The Citizens State Bank,2022-11-07,corpus,data/pdfs/FDIC_14269_20221107.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -2982,7 +2982,7 @@ The Community Development Test is rated Satisfactory.
 its assessment area through community development loans, qualified investments, and 
 community development services.  Examiners considered the institution’s capacity and the need 
 and availability of opportunities for community development in the assessment area. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_14851_20221107,random_unflagged,FDIC,isb,Citizens Bank,2022-11-07,corpus,data/pdfs/FDIC_14851_20221107.pdf,S,true,14,14,fdic_laws_reviewed_no_practices,97.3,22,examiners reviewed for,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed for compliance with the laws relating to discrimination and other illegal credit 
@@ -3019,7 +3019,7 @@ The institution’s community development (CD) performance demonstrates adequate
 to CD needs in its AAs through community development loans (CDLs), qualified investments (QIs), 
 and CD services, as appropriate, considering the institution’s capacity and the need and availability 
 of such opportunities for CD in the AAs.   
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_15423_20231010,random_unflagged,FDIC,isb,American Bank Of Freedom,2023-10-10,corpus,data/pdfs/FDIC_15423_20231010.pdf,S,true,13,13,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
 reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not 
@@ -3050,7 +3050,7 @@ responsiveness to the community development needs of its assessment areas throug
 community development loans, qualified investments, and community development 
 services, considering the institution’s capacity and the need and availability of such 
 opportunities for community development in the institution’s assessment areas. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_15523_20250512,random_unflagged,FDIC,small,Muenster State Bank,2025-05-12,corpus,data/pdfs/FDIC_15523_20250512.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,98.4,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with laws relating to discrimination and other illegal credit practices was 
@@ -3079,7 +3079,7 @@ income) and businesses of different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the overall rating.  
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_15970_20230123,random_unflagged,FDIC,isb,Ulster Savings Bank,2023-01-23,corpus,data/pdfs/FDIC_15970_20230123.pdf,S,true,20,20,fdic_examiners_reviewed_no_practices_therefore,100,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -3121,7 +3121,7 @@ community development needs in its assessment area through its community develop
 qualified investments, and community development services, as appropriate, considering the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in its assessment area. 
-",20,,,,,,,,,,,,,,,,,
+",20,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,20,"Examiners did not identify any discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in review sentence
 FDIC_16177_20250507,random_unflagged,FDIC,small,First State Bank,2025-05-07,corpus,data/pdfs/FDIC_16177_20250507.pdf,S,true,8,8,fdic_laws_reviewed_no_evidence_inconsistent,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3152,7 +3152,7 @@ different revenue sizes and individuals of varying income levels.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping meet community credit needs.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_16333_20230411,random_unflagged,FDIC,small,First State Bank,2023-04-11,corpus,data/pdfs/FDIC_16333_20230411.pdf,S,true,9,9,fdic_laws_reviewed_no_practices,99.2,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with laws relating to discrimination and other illegal credit practices was 
@@ -3180,7 +3180,7 @@ different sizes.
 • The institution did not receive any complaints regarding its Community Reinvestment Act 
 (CRA) performance since the previous evaluation.  As a result, examiners did not evaluate the 
 bank’s record of responding to CRA-related complaints.   
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,9,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; FHA and ECOA named only in review sentence
 FDIC_16453_20250218,random_unflagged,FDIC,small,Whitesville State Bank,2025-02-18,corpus,data/pdfs/FDIC_16453_20250218.pdf,S,true,9,9,fdic_no_evidence_inconsistent_helping_meet,99.7,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices 
@@ -3210,7 +3210,7 @@ reasonable penetration among individuals and households of different income leve
 • The institution has not received any Community Reinvestment Act (CRA)-related 
 complaints since the previous evaluation; therefore, this factor did not affect the Lending 
 Test rating.  
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,9,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping meet community credit needs;,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named in review section
 FDIC_16609_20240610,random_unflagged,FDIC,small,Rochelle State Bank,2024-06-10,corpus,data/pdfs/FDIC_16609_20240610.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,100,21,rochelle state bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Rochelle State Bank’s compliance with the laws relating to discrimination and other illegal credit 
@@ -3238,7 +3238,7 @@ reasonable penetration among businesses and farms of different sizes.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the Lending Test rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_16778_20230522,random_unflagged,FDIC,small,Franklin State Bank,2023-05-22,corpus,data/pdfs/FDIC_16778_20230522.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3268,7 +3268,7 @@ different revenue sizes and individuals of different income levels.
  
 • The bank did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_17671_20250527,random_unflagged,FDIC,small,Bank of Prairie Village,2025-05-27,corpus,data/pdfs/FDIC_17671_20250527.pdf,S,true,11,11,fdic_laws_reviewed_no_evidence_inconsistent_therefore,97.8,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3298,7 +3298,7 @@ revenue sizes and individuals of different income levels.
  
 • The institution has not received any complaints relating to its CRA performance since the 
 previous evaluation; therefore, this factor did not affect the rating. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_1980_20250714,random_unflagged,FDIC,small,Valley Bank of Kalispell,2025-07-14,corpus,data/pdfs/FDIC_1980_20250714.pdf,S,true,14,14,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3326,7 +3326,7 @@ including LMI.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the Lending Test rating. 
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_1992_20240603,random_unflagged,FDIC,small,Pathway Bank,2024-06-03,corpus,data/pdfs/FDIC_1992_20240603.pdf,S,true,7,7,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
 reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not 
@@ -3354,7 +3354,7 @@ different sizes and individuals of different income levels.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,7,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_1993_20250127,random_unflagged,FDIC,small,CerescoBank,2025-01-27,corpus,data/pdfs/FDIC_1993_20250127.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
 reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not 
@@ -3382,7 +3382,7 @@ different sizes and individuals of different income levels.
  
 • The institution has not received any Community Reinvestment Act (CRA)-related 
 complaints since the previous evaluation; therefore, this criterion did not affect the rating. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_21219_20250114,random_unflagged,FDIC,small,"Bank of the Mountains, Inc.",2025-01-14,corpus,data/pdfs/FDIC_21219_20250114.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,95.2,96,"the bank's t practices; therefore, this conclusion did not affect the bank's overall cra rating.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3409,7 +3409,7 @@ and AA credit needs.
 penetration among businesses of different sizes and individuals of different income levels.  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate; adds 'did not affect the bank's overall CRA rating'
 FDIC_2328_20250825,random_unflagged,FDIC,small,"American Exchange Bank, Lindsay, Oklahoma",2025-08-25,corpus,data/pdfs/FDIC_2328_20250825.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,99.2,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3437,7 +3437,7 @@ income levels (including low and moderate income).
  
 • The institution did not receive any Community Reinvestment Act (CRA)-related complaints 
 since the previous evaluation; therefore, this factor did not affect the overall rating.  
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative review section; FHA and ECOA named only in the 'was reviewed' boilerplate
 FDIC_23376_20230213,random_unflagged,FDIC,isb,"First Jackson Bank, Inc.",2023-02-13,corpus,data/pdfs/FDIC_23376_20230213.pdf,S,true,11,11,fdic_no_substantive_violations_identified,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 No substantive violations of the provisions of the anti-discrimination laws and regulations or other 
@@ -3471,7 +3471,7 @@ community development needs in its assessment areas.  The bank met these needs t
 community development loans, qualified investments, and community development 
 services, as appropriate.  Examiners considered the bank’s capacity and the need and 
 availability of such opportunities for community development in its assessment areas. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,11,No substantive violations of the provisions of the anti-discrimination laws and regulations or other illegal credit practices were identified during this CRA evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative boilerplate; no specific law named (generic anti-discrimination laws only)
 FDIC_24332_20250811,random_unflagged,FDIC,isb,First Credit Bank,2025-08-11,corpus,data/pdfs/FDIC_24332_20250811.pdf,S,true,14,14,fdic_laws_reviewed_ecoa_only,98.6,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3508,7 +3508,7 @@ The institution’s community development (CD) performance demonstrates adequate
 to the CD needs of its AA through CD loans, qualified investments, and CD services, as 
 appropriate, considering the institution’s capacity and the need and availability of such 
 opportunities for CD in the institution’s AA. 
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,"reviewed, including the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory or illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; ECOA named only in negated boilerplate
 FDIC_25291_20230117,random_unflagged,FDIC,isb,Bank of the Valley,2023-01-17,corpus,data/pdfs/FDIC_25291_20230117.pdf,S,true,13,13,fdic_laws_reviewed_no_evidence_inconsistent_therefore,98,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent 
@@ -3546,7 +3546,7 @@ in its assessment area through community development loans, qualified investment
 community development services, as appropriate.  Examiners considered the institution’s 
 capacity and the need and availability of such opportunities for community development in 
 the assessment area. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,13,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping meet to community credit needs.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_26738_20230918,random_unflagged,FDIC,small,Texas Financial Bank,2023-09-18,corpus,data/pdfs/FDIC_26738_20230918.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3576,7 +3576,7 @@ reasonable penetration among businesses of different sizes.
  
 • The bank did not receive any CRA-related complaints during the evaluation period; 
 therefore, this factor did not affect the Lending Test rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in negated boilerplate
 FDIC_29809_20230710,random_unflagged,FDIC,isb,First Savings Bank of Hegewisch,2023-07-10,corpus,data/pdfs/FDIC_29809_20230710.pdf,S,true,16,16,fdic_no_evidence,96.6,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; 
@@ -3614,7 +3614,7 @@ The institution demonstrated excellent responsiveness to the community developme
 AA through community development lending, qualified investments, and community development 
 services, as appropriate.  Examiners considered the institution's capacity, and the need and 
 availability of such opportunities for community development in the AA. 
-",16,,,,,,,,,,,,,,,,,
+",16,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution's CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_29839_20231024,random_unflagged,FDIC,isb,Crossroads Bank,2023-10-24,corpus,data/pdfs/FDIC_29839_20231024.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,99.2,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with laws relating to discrimination and other illegal credit practices was 
@@ -3648,7 +3648,7 @@ The institution demonstrates adequate responsiveness to the community developmen
 assessment areas through community development loans, qualified investments, and community 
 development services, as appropriate.  Examiners considered the institution’s capacity and the need 
 and availability of such opportunities for community development in the assessment areas.  
-",5;10,,,,,,,,,,,,,,,,,
+",5;10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in negated boilerplate
 FDIC_30103_20240506,random_unflagged,FDIC,small,Monroe Savings Bank,2024-05-06,corpus,data/pdfs/FDIC_30103_20240506.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3675,7 +3675,7 @@ penetration among individuals of different income levels.
  
 • The institution did not receive any CRA-related complaints during the evaluation period; 
 therefore, this factor did not affect the rating.  
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in negated boilerplate
 FDIC_30332_20250909,random_unflagged,FDIC,small,Abbeville Building & Loan (A State-Chartered Savings Bank),2025-09-09,corpus,data/pdfs/FDIC_30332_20250909.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3704,7 +3704,7 @@ moderate-income).
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this performance criterion did not affect the rating.   
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,"reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in negated boilerplate
 FDIC_30704_20220906,random_unflagged,FDIC,isb,Magyar Bank,2022-09-06,corpus,data/pdfs/FDIC_30704_20220906.pdf,O,true,19,19,fdic_no_evidence,99.4,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, 
@@ -3740,7 +3740,7 @@ The Community Development Test is rated Outstanding.
 its assessment area through community development loans, qualified investments, and 
 community development services.  Examiners considered the bank’s capacity and the need and 
 availability of community development opportunities within the assessment area. 
-",19,,,,,,,,,,,,,,,,,
+",19,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,19,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institutions overall CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named in section
 FDIC_31711_20250407,random_unflagged,FDIC,small,RiverBank,2025-04-07,corpus,data/pdfs/FDIC_31711_20250407.pdf,S,true,10,10,fdic_laws_reviewed_no_evidence_inconsistent_therefore,97.8,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3767,7 +3767,7 @@ penetration among farms of different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,Examiners did not identify any evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate
 FDIC_3178_20240401,random_unflagged,FDIC,isb,Bank of Houston,2024-04-01,corpus,data/pdfs/FDIC_3178_20240401.pdf,S,true,12,12,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3807,7 +3807,7 @@ The institution’s community development (CD) performance demonstrates adequate
 to CD needs in its AAs through CD loans, qualified investments (QIs), and CD services, as 
 appropriate, considering the institution’s capacity and the need and availability of such 
 opportunities for CD in the institution’s AAs.  
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate; institution-level section before Houston MSA AA
 FDIC_34900_20231121,random_unflagged,FDIC,small,Preferred Bank,2023-11-21,corpus,data/pdfs/FDIC_34900_20231121.pdf,S,true,10,10,fdic_examiners_reviewed_no_evidence,98,102,"examiners reviewed the ba ; therefore, this consideration did not affect the institution's cra rating.","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with laws relating to discrimination and other illegal 
@@ -3838,7 +3838,7 @@ of different sizes.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating.  
-",4;10,,,,,,,,,,,,,,,,,
+",4;10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s CRA rating.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate
 FDIC_34978_20230620,random_unflagged,FDIC,isb,Synergy Bank,2023-06-20,corpus,data/pdfs/FDIC_34978_20230620.pdf,S,true,18,18,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3876,7 +3876,7 @@ The institution’s community development (CD) performance demonstrates adequate
 to CD needs in its assessment area through CD loans, qualified investments (QIs), and CD services, 
 as appropriate, considering the institution’s capacity and the need and availability of such 
 opportunities for CD in the institution’s assessment area. 
-",18,,,,,,,,,,,,,,,,,
+",18,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,18,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate
 FDIC_35056_20231127,random_unflagged,FDIC,small,Madison County Community Bank,2023-11-27,corpus,data/pdfs/FDIC_35056_20231127.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,100,12,"the bank's ""","DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3905,7 +3905,7 @@ different sizes and individuals of different incomes.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the Lending Test rating. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate; stray closing quote mark after sentence on page omitted from quote
 FDIC_39_20250520,random_unflagged,FDIC,isb,Robertson Banking Company,2025-05-20,corpus,data/pdfs/FDIC_39_20250520.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3943,7 +3943,7 @@ community development needs in its assessment areas through community developmen
 qualified investments, and community development services, as appropriate, considering the bank’s 
 capacity and the need and availability of such opportunities for community development in its 
 assessment areas. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate; institution-level section before NMSA AA
 FDIC_4144_20240108,random_unflagged,FDIC,small,Farmers and Merchants Bank,2024-01-08,corpus,data/pdfs/FDIC_4144_20240108.pdf,S,true,9,9,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -3975,7 +3975,7 @@ among businesses of different sizes.
 • 
 The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating. 
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,9,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named only in 'compliance ... was reviewed' boilerplate
 FDIC_5673_20231031,random_unflagged,FDIC,isb,Citizens Bank and Trust,2023-10-31,corpus,data/pdfs/FDIC_5673_20231031.pdf,S,true,13,13,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -4014,7 +4014,7 @@ assessment areas.  The institution met those needs through community development
 investments, and community development services, as appropriate.  Examiners considered the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in the assessment areas.  
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_57784_20240401,random_unflagged,FDIC,small,Nantahala Bank & Trust Company,2024-04-01,corpus,data/pdfs/FDIC_57784_20240401.pdf,S,true,12,12,fdic_no_evidence_inconsistent_helping_meet,99.7,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices 
@@ -4041,7 +4041,7 @@ income levels and businesses of different sizes.
  
 • The institution did not receive any Community Reinvestment Act (CRA) related complaints 
 since the previous evaluation.  Therefore, this factor did not affect the Lending Test rating. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,12,Examiners did not identify any evidence of discriminatory or other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_58114_20221206,random_unflagged,FDIC,small,Bank of Belleville,2022-12-06,corpus,data/pdfs/FDIC_58114_20221206.pdf,S,true,14,14,fdic_no_evidence,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; 
@@ -4072,7 +4072,7 @@ sizes and poor penetration among individuals of different income levels.
  
 • The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the overall rating.   
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,14,Examiners did not identify any evidence of discriminatory or other illegal credit practices;,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_58203_20240116,random_unflagged,FDIC,isb,NewBank,2024-01-16,corpus,data/pdfs/FDIC_58203_20240116.pdf,S,true,16,16,fdic_examiners_reviewed_identified_no_evidence,100,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4112,7 +4112,7 @@ community development needs in its assessment area through its community develop
 qualified investments, and community development services, as appropriate, considering the 
 institution’s capacity and the need and availability of such opportunities for community 
 development in its assessment area. 
-",16,,,,,,,,,,,,,,,,,
+",16,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,16,Examiners identified no evidence of discriminatory or other illegal credit practices inconsistent with helping meet community credit needs;,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_58584_20240812,random_unflagged,FDIC,small,American Pride Bank,2024-08-12,corpus,data/pdfs/FDIC_58584_20240812.pdf,S,true,9,9,fdic_laws_reviewed_no_practices,100,21,american pride bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 American Pride Bank’s compliance with the laws relating to discrimination and other illegal credit 
@@ -4141,7 +4141,7 @@ reasonable penetration among businesses of different sizes.
 • The institution has not received any Community Reinvestment Act (CRA)-related 
 complaints since the previous evaluation; therefore, this criterion did not affect the Lending 
 Test rating. 
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,9,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_58727_20250224,random_unflagged,FDIC,isb,Access Bank,2025-02-24,corpus,data/pdfs/FDIC_58727_20250224.pdf,S,true,14,14,fdic_laws_reviewed_no_evidence_inconsistent_therefore,97,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
 reviewed, including the Fair Housing Act and the Equal Credit Opportunity Act.  Examiners did not 
@@ -4177,7 +4177,7 @@ The institution demonstrated adequate responsiveness to community development ne
 assessment area through community development loans, qualified investments, and community 
 development services, as appropriate.  Examiners considered the institution’s capacity as well as the 
 need and availability of community development activities inside the assessment area. 
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,Examiners did not identify evidence of discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_59273_20240415,random_unflagged,FDIC,small,Gainey Business Bank,2024-04-15,corpus,data/pdfs/FDIC_59273_20240415.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -4208,7 +4208,7 @@ penetration among businesses of different sizes.
  
 • The institution has not received any CRA-related complaints; therefore, this criterion did not 
 affect the overall rating. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; FHA and ECOA named in negated boilerplate
 FDIC_5962_20220715,random_unflagged,FDIC,isb,Sutton Bank,2022-07-15,corpus,data/pdfs/FDIC_5962_20220715.pdf,S,true,10,10,fdic_no_evidence,100,0,,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, 
@@ -4241,7 +4241,7 @@ The institution's community development performance demonstrates adequate respon
 community development needs in its AAs through community development loans, qualified 
 investments, and community development services, as appropriate.  Examiners considered the 
 institution’s capacity and the need and availability of such opportunities in the institution's AAs. 
-",3;10,,,,,,,,,,,,,,,,,
+",3;10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,10,Examiners did not identify any evidence of discriminatory or other illegal credit practices;,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; no law named
 FDIC_6100_20240508,random_unflagged,FDIC,small,Lineage Bank,2024-05-08,corpus,data/pdfs/FDIC_6100_20240508.pdf,S,true,8,8,fdic_laws_reviewed_no_practices,94.5,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with laws relating to discrimination and other illegal 
@@ -4268,7 +4268,7 @@ different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous 
 evaluation; therefore, this factor did not affect the rating. 
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,including the Fair Housing Act and the Equal Credit Opportunity Act and did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named only in the negated review sentence.
 FDIC_6194_20240603,random_unflagged,FDIC,small,Citizens State Bank,2024-06-03,corpus,data/pdfs/FDIC_6194_20240603.pdf,S,true,7,7,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -4296,7 +4296,7 @@ businesses of different sizes.
 • 
 The institution did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the rating.  
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,7,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named in the preceding sentence of the negated boilerplate.
 FDIC_7848_20240701,random_unflagged,FDIC,isb,Community Bank,2024-07-01,corpus,data/pdfs/FDIC_7848_20240701.pdf,S,true,13,13,fdic_laws_reviewed_no_practices,95.2,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4337,7 +4337,7 @@ of its assessment areas through community development loans, qualified investmen
 community development services, as appropriate, considering the institution’s capacity and 
 the need and availability of such opportunities for community development in the 
 institution’s assessment areas. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,"including the Fair Housing Act and the Equal Credit Opportunity Act, and did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named only in the negated review sentence.
 FDIC_8067_20240226,random_unflagged,FDIC,small,Community State Bank,2024-02-26,corpus,data/pdfs/FDIC_8067_20240226.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,97.3,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4366,7 +4366,7 @@ sizes.
  
 • The institution did not receive any CRA-related complaints since the prior evaluation; 
 therefore, this factor did not affect the Lending Test rating.   
-",4;11,,,,,,,,,,,,,,,,,
+",4;11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named in the preceding sentence of the negated boilerplate.
 FDIC_8250_20240722,random_unflagged,FDIC,small,Bank of Wiggins,2024-07-22,corpus,data/pdfs/FDIC_8250_20240722.pdf,O,true,13,13,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -4397,7 +4397,7 @@ moderate-income) and businesses of different sizes.
  
 • The institution did not receive any CRA-related complaints since the previous 
 evaluation; therefore, this factor did not affect the rating. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named in the preceding sentence of the negated boilerplate.
 FDIC_8853_20240122,random_unflagged,FDIC,isb,Glenwood State Bank (Incorporated),2024-01-22,corpus,data/pdfs/FDIC_8853_20240122.pdf,S,true,14,14,fdic_laws_reviewed_no_practices,95.2,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4438,7 +4438,7 @@ responsiveness to community development needs in its assessment area through com
 development loans, qualified investments, and community development services.  
 Examiners considered the institution’s capacity and the need and availability of such 
 opportunities for community development in the assessment area.  
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,"including the Fair Housing Act and the Equal Credit Opportunity Act, and did not identify any discriminatory or other illegal credit practices.",1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named only in the negated review sentence.
 FDIC_8943_20250303,random_unflagged,FDIC,small,Merchants Bank,2025-03-03,corpus,data/pdfs/FDIC_8943_20250303.pdf,S,true,7,8,fdic_laws_reviewed_no_practices,100,23,the bank's north dakota,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The bank’s compliance with the laws relating to discrimination and other illegal credit practices was 
@@ -4471,7 +4471,7 @@ assessment areas.
 different revenue sizes. 
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,7,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative institution-level review section (page 7); page 8 begins North Dakota state section. FHA and ECOA named in negated boilerplate.
 FDIC_8975_20220912,random_unflagged,FDIC,small,Community Bank,2022-09-12,corpus,data/pdfs/FDIC_8975_20220912.pdf,S,true,11,11,fdic_laws_reviewed_no_practices,97.3,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4499,7 +4499,7 @@ penetration among businesses of different sizes and individuals of different inc
 • 
 The bank did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this factor did not affect the Lending Test rating. 
-",11,,,,,,,,,,,,,,,,,
+",11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,11,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; FHA and ECOA named in the preceding sentence of the negated boilerplate.
 FDIC_9007_20250519,random_unflagged,FDIC,small,Heartland State Bank,2025-05-19,corpus,data/pdfs/FDIC_9007_20250519.pdf,S,true,9,9,fdic_laws_reviewed_no_practices,100,10,the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES 
 REVIEW 
  
@@ -4529,7 +4529,7 @@ different revenue sizes.
  
 • The institution has not received any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the rating. 
-",9,,,,,,,,,,,,,,,,,
+",9,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,9,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FDIC boilerplate; FHA and ECOA named in negated review sentence
 FDIC_9438_20240709,random_unflagged,FDIC,small,The Mt. Victory State Bank,2024-07-09,corpus,data/pdfs/FDIC_9438_20240709.pdf,S,true,10,10,fdic_laws_reviewed_no_practices,95.6,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
 credit practices, including the Fair Housing and Equal Credit Opportunity Act.  Examiners did not 
@@ -4553,7 +4553,7 @@ AA credit needs.
 different income levels and businesses of different sizes. 
 • The bank did not receive any CRA-related complaints since the previous evaluation; 
 therefore, this criterion did not affect the Lending Test rating. 
-",3;6;10,,,,,,,,,,,,,,,,,
+",3;6;10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FDIC boilerplate; Fair Housing and ECOA named in negated review sentence
 FDIC_9450_20231127,random_unflagged,FDIC,small,First Bank of Ohio,2023-11-27,corpus,data/pdfs/FDIC_9450_20231127.pdf,NI,true,7,7,fdic_laws_reviewed_no_practices,97.3,29,examiners reviewed the bank's,"DISCRIMINATORY OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Examiners reviewed the bank’s compliance with the laws relating to discrimination and other illegal 
@@ -4584,7 +4584,7 @@ individuals of different income levels.
  
 • The institution did not receive any Community Reinvestment Act (CRA)-related complaints 
 since the previous evaluation; therefore, this factor did not affect the rating. 
-",3;4;7;10;15;20,,,,,,,,,,,,,,,,,
+",3;4;7;10;15;20,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,7,Examiners did not identify any discriminatory or other illegal credit practices.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FDIC boilerplate; FHA and ECOA named in negated review sentence
 FRB_1014853_20230814,random_unflagged,FRB,isb,CITIZENS BANK OF KANSAS,2023-08-14,corpus,data/pdfs/FRB_1014853_20230814.pdf,S,true,8,9,frb_kansas_city_compliance,100,45,wichita msa assessment area metropolitan area,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Compliance with the substantive provisions of antidiscrimination and other consumer 
@@ -4632,7 +4632,7 @@ received any Community Reinvestment Act (CRA)-related complaints since the
 previous evaluation. 
 • Community development (CD) activity reflects adequate responsiveness to the 
 CD needs of its AAs. 
-",8,,,,,,,,,,,,,,,,,
+",8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,8,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FRB boilerplate; ECOA and FHA named in negated sentence
 FRB_126553_20230508,random_unflagged,FRB,isb,NORTH SHORE BANK OF COMMERCE,2023-05-08,corpus,data/pdfs/FRB_126553_20230508.pdf,S,true,18,19,frb_examination_did_not_reveal_hmda,99.1,7,page 17,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 The examination did not reveal any evidence of violations of antidiscrimination laws or regulations 
@@ -4694,7 +4694,7 @@ the AA.
  
 The bank received a Satisfactory rating at the previous evaluation dated December 18, 2018. At that time, 
 examiners evaluated the bank’s CRA performance using the Small Bank Examination Procedures.  
-",18,,,,,,,,,,,,,,,,,
+",18,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,18,The examination did not reveal any evidence of violations of antidiscrimination laws or regulations,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"negative; Reg B ECOA, Reg C HMDA and FHA named in negated sentence"
 FRB_225559_20220328,random_unflagged,FRB,isb,BANK OF BARTLETT,2022-03-28,corpus,data/pdfs/FRB_225559_20220328.pdf,S,true,17,17,frb_consumer_affairs_fair_lending_analysis,99.7,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
 Based on findings from the Consumer Affairs examination, including a fair lending analysis 
 performed under Regulation B – Equal Credit Opportunity and the Fair Housing Act requirements, 
@@ -4734,7 +4734,7 @@ During the COVID-19 pandemic, the bank responded to the needs of the community t
 participation in the CARES Act1 Paycheck Protection Program (PPP). The bank’s participation in 
 the PPP was also considered in the bank’s rating. 
 1 Coronavirus Aid, Relief, and Economic Security Act, signed into law on March 27, 2020. 
-",17,,,,,,,,,,,,,,,,,
+",17,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,17,no evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative; concurrent Consumer Affairs exam fair lending analysis under Reg B and FHA found no evidence
 FRB_2317672_20250811,random_unflagged,FRB,small,FIRST AMERICAN STATE BANK,2025-08-11,corpus,data/pdfs/FRB_2317672_20250811.pdf,S,true,13,13,frb_kansas_city_compliance,100,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Compliance with the substantive provisions of antidiscrimination and other consumer 
@@ -4757,7 +4757,7 @@ sizes.
 • Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank) 
 received any Community Reinvestment Act (CRA)-related complaints since the 
 previous evaluation. 
-",13,,,,,,,,,,,,,,,,,
+",13,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,13,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FRB boilerplate; ECOA and FHA named in negated sentence
 FRB_2396604_20241209,random_unflagged,FRB,small,"BANK OF STAR VALLEY, THE",2024-12-09,corpus,data/pdfs/FRB_2396604_20241209.pdf,S,true,12,12,frb_kansas_city_compliance,100,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Compliance with the substantive provisions of antidiscrimination and other consumer 
@@ -4780,7 +4780,7 @@ sizes.
  Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank) 
 received any Community Reinvestment Act (CRA)-related complaints since the 
 previous evaluation. 
-",12,,,,,,,,,,,,,,,,,
+",12,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,12,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,negative FRB boilerplate; ECOA and FHA named in negated sentence
 FRB_266945_20230905,random_unflagged,FRB,isb,MONTICELLO BANKING COMPANY,2023-09-05,corpus,data/pdfs/FRB_266945_20230905.pdf,S,true,10,11,frb_consumer_affairs_fair_lending_analysis,99.7,49,central kentucky nonmetropolitan statistical area,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Based on findings from the Consumer Affairs examination, including a fair lending analysis 
@@ -4843,7 +4843,7 @@ the PPP was also considered in the bank’s rating.
  
  
 1 Coronavirus Aid, Relief, and Economic Security Act, signed into law on March 27, 2020. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,no evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB concurrent Consumer Affairs template; Regulation B/ECOA and Fair Housing Act named only in the negated sentence; no enforcement or prior-finding references found in PDF
 FRB_2903123_20230612,random_unflagged,FRB,isb,BANK OF OAK RIDGE,2023-06-12,corpus,data/pdfs/FRB_2903123_20230612.pdf,S,true,14,15,frb_no_evidence_adequate_policies,100,97,"cra appendix a full-scope review tables greensboro-high point, nc aa borrower distribution tables","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
@@ -4892,7 +4892,7 @@ Overall, the bank’s lending reflects a reasonable dispersion throughout the as
  The bank’s community development (CD) performance demonstrates adequate responsiveness 
 to community credit needs considering the bank’s capacity and availability of such 
 opportunities within the assessment area.  
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named; no enforcement or prior-finding references found in PDF
 FRB_2939001_20240617,random_unflagged,FRB,small,CENTURY BANK OF FLORIDA,2024-06-17,corpus,data/pdfs/FRB_2939001_20240617.pdf,S,true,14,14,frb_fair_lending_activities_evaluated,100,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit 
@@ -4908,7 +4908,7 @@ area (AA) credit needs.
  The distribution of borrowers reflects reasonable penetration among borrowers of different income levels 
 and businesses of different sizes.  
  The bank has not received any CRA-related complaints during the review period.  
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,Negative review section; no law named; no enforcement or prior-finding references found in PDF
 FRB_382256_20250224,random_unflagged,FRB,small,STANTON STATE BANK,2025-02-24,corpus,data/pdfs/FRB_382256_20250224.pdf,S,true,14,14,frb_kansas_city_compliance,100,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Compliance with the substantive provisions of antidiscrimination and other consumer 
@@ -4931,7 +4931,7 @@ of different sizes.
  Neither the bank nor the Federal Reserve Bank of Kansas City (Reserve Bank) 
 received any Community Reinvestment Act (CRA)-related complaints since the 
 previous evaluation. 
-",14,,,,,,,,,,,,,,,,,
+",14,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,14,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB template naming ECOA and Fair Housing Act in boilerplate followed by no-evidence sentence; no enforcement or prior-finding references found in PDF
 FRB_613558_20230501,random_unflagged,FRB,isb,MONTGOMERY BANK,2023-05-01,corpus,data/pdfs/FRB_613558_20230501.pdf,S,true,10,11,frb_consumer_affairs_fair_lending_analysis,99.6,64,"partial st. louis, missouri-illinois metropolitan stastical area","FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Based on findings from the Consumer Affairs examination, including a fair lending analysis 
@@ -4989,7 +4989,7 @@ areas.
 • During the COVID-19 pandemic, the bank responded to the needs of the community 
 through its participation in the CARES Act1 Paycheck Protection Program (PPP). The 
 bank’s participation in the PPP was also considered in the bank’s rating. 
-",10,,,,,,,,,,,,,,,,,
+",10,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,10,no evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB concurrent Consumer Affairs template; Regulation B/ECOA and Fair Housing Act named only in the negated sentence; no enforcement or prior-finding references found in PDF
 FRB_722816_20230626,random_unflagged,FRB,isb,SOLVAY BANK,2023-06-26,corpus,data/pdfs/FRB_722816_20230626.pdf,S,true,32,33,frb_new_york_compliance,100,118,solvay cra appendix a aggregate comparison loan distribution tables home mortgage lending by income level of geography,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Solvay was in compliance with the substantive provisions of the anti-discrimination laws and 
@@ -5013,7 +5013,7 @@ Home Mortgage Lending by Income Level of Geography
 INSTITUTION'S CRA RATING: This institution is rated Satisfactory.   
 The Lending Test is rated: Satisfactory.   
 The Community Development Test is rated: Satisfactory. 
-",32,,,,,,,,,,,,,,,,,
+",32,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,32,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"Negative review section; refers only generically to anti-discrimination laws, no specific law named; no enforcement or prior-finding references found in PDF"
 FRB_733540_20231030,random_unflagged,FRB,small,GATEWAY BANK,2023-10-30,corpus,data/pdfs/FRB_733540_20231030.pdf,S,true,7,7,frb_consumer_affairs_fair_lending_analysis,99.7,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Based on findings from the Consumer Affairs examination, including a fair lending analysis 
@@ -5039,7 +5039,7 @@ different sizes.
  
 • Neither the bank nor this Reserve Bank received any CRA-related complaints since the 
 previous evaluation. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,7,no evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB concurrent Consumer Affairs template; Regulation B/ECOA and Fair Housing Act named only in the negated sentence; no enforcement or prior-finding references found in PDF
 FRB_78241_20221205,random_unflagged,FRB,small,FIRST NATURALSTATE BANK,2022-12-05,corpus,data/pdfs/FRB_78241_20221205.pdf,S,true,16,16,frb_consumer_affairs_fair_lending_analysis,99.7,0,,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW 
  
 Based on findings from the Consumer Affairs examination, including a fair lending analysis 
@@ -5066,7 +5066,7 @@ assessment area.
  
 • There were no CRA-related complaints filed against the bank since the previous CRA 
 evaluation. 
-",16,,,,,,,,,,,,,,,,,
+",16,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,true,16,no evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,FRB concurrent Consumer Affairs template; Regulation B/ECOA and Fair Housing Act named only in the negated sentence; no enforcement or prior-finding references found in PDF
 OCC_10354_20230626,random_unflagged,OCC,isb,"Midstates Bank, National Association",2023-06-26,corpus,data/pdfs/OCC_10354_20230626.pdf,S,true,7,7,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or 
 federal savings association’s (collectively, bank) CRA rating, the OCC considers evidence of 
@@ -5101,7 +5101,7 @@ income levels is reasonable.
 needs of its AA. 
  Midstates Bank’s Community development (CD) activities represent excellent 
 responsiveness to the AAs needs and opportunities. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_11754_20250623,random_unflagged,OCC,small,The First National Bank of Okawville,2025-06-23,corpus,data/pdfs/OCC_11754_20250623.pdf,O,true,6,6,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) (March 29, 2024) in determining a national banks or federal savings 
@@ -5142,7 +5142,7 @@ sizes is excellent throughout its AA.
   
 x There were no complaints with respect to the bank’s CRA performance during the evaluation  
 period.  
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_13731_20240722,random_unflagged,OCC,isb,"Classic Bank, National Association",2024-07-22,corpus,data/pdfs/OCC_13731_20240722.pdf,S,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
@@ -5183,7 +5183,7 @@ businesses, and small loans to farms.
 to farms. 
  The bank exhibits reasonable responsiveness to community development (CD) needs, 
 considering the bank’s capacity and the need and availability of CD opportunities in the AAs. 
-",6;18,,,,,,,,,,,,,,,,,
+",6;18,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_14370_20220822,random_unflagged,OCC,small,First National Bank in Fredonia,2022-08-22,corpus,data/pdfs/OCC_14370_20220822.pdf,S,true,5,5,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
 (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal credit 
@@ -5208,7 +5208,7 @@ The Lending Test rating is based on:
  A substantial majority of loans by both number and dollar made in the assessment area (AA). 
  Excellent distribution of consumer loans to moderate-income geographies. 
  Reasonable distribution of consumer loans to low- and moderate-income borrowers. 
-",5;8,,,,,,,,,,,,,,,,,
+",5;8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_14418_20241028,random_unflagged,OCC,isb,Peoples National Bank of Kewanee,2024-10-28,corpus,data/pdfs/OCC_14418_20241028.pdf,S,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
@@ -5250,7 +5250,7 @@ The major factors that support this rating include:
  The Community Development (CD) Test rating is based on outstanding performance.  
  The bank exhibits excellent responsiveness to community development needs in the state through 
 CD investments and CD services. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_15198_20230206,random_unflagged,OCC,small,St. Martin National Bank,2023-02-06,corpus,data/pdfs/OCC_15198_20230206.pdf,O,true,6,6,occ_pursuant_2024,99.9,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank or federal 
@@ -5284,7 +5284,7 @@ excellent.
 • The loan-to-deposit (LTD) ratio is reasonable based on the institution’s size, financial condition, and 
 AA credit needs.  
 • The bank did not receive any CRA-related complaints during the evaluation period. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_15733_20221128,random_unflagged,OCC,small,The Pennsville National Bank,2022-11-28,corpus,data/pdfs/OCC_15733_20221128.pdf,S,true,7,7,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of  
@@ -5312,7 +5312,7 @@ income (LMI) census tracts.
  The bank’s distribution of loans by income level of the borrower represents excellent distribution 
 to individuals of different income levels. 
  The bank did not receive any CRA-related complaints during the evaluation period. 
-",7,,,,,,,,,,,,,,,,,
+",7,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,7,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_18214_20230828,random_unflagged,OCC,small,First National Bank Northwest Florida,2023-08-28,corpus,data/pdfs/OCC_18214_20230828.pdf,S,true,5,5,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
 (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other illegal credit 
@@ -5339,7 +5339,7 @@ complaints during the review period.
 The Lending Test rating is based on the Satisfactory performance in the state of Florida. First National 
 Bank of Northwest Florida (FNB Northwest Florida, bank) exhibits reasonable geographic and borrower 
 distribution of small business loans. 
-",3;5,,,,,,,,,,,,,,,,,
+",3;5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,OCC standard negative review section; forward-looking boilerplate only; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_20493_20230605,random_unflagged,OCC,small,Pike National Bank,2023-06-05,corpus,data/pdfs/OCC_20493_20230605.pdf,S,true,7,8,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s CRA rating, 
@@ -5488,7 +5488,7 @@ criteria.
  
 The table below illustrates PNB’s distribution of loans and proceeds within and outside its AA over the 
 current assessment period: 
-",7;8,,,,,,,,,,,,,,,,,
+",7;8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,8,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this performance evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies); section spans PDF pages 7-8
 OCC_21165_20230404,random_unflagged,OCC,small,The First National Bank of Izard County,2023-04-04,corpus,data/pdfs/OCC_21165_20230404.pdf,O,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal savings 
 association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other 
@@ -5512,7 +5512,7 @@ The major factors that support this rating include:
 performance in the state of Arkansas. During the evaluation period, the bank’s loan-to-deposit 
 (LTD) ratio is reasonable, and a substantial majority of their loans originated within the 
 assessment area (AA). 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies); quote is tail of sentence that also names affiliates
 OCC_24131_20220621,random_unflagged,OCC,isb,"Leader Bank, National Association",2022-06-21,corpus,data/pdfs/OCC_24131_20220621.pdf,O,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
@@ -5548,7 +5548,7 @@ borrowers of different income levels.
 • Given the bank’s size, capacity and performance context factors, the Community Development (CD) 
 Test rating is based on Leader’s excellent responsiveness to the credit needs of its delineated AA 
 through its CD loans, qualified investments, and CD services. 
-",6;7;11,,,,,,,,,,,,,,,,,
+",6;7;11,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_24458_20240909,random_unflagged,OCC,small,First National Bank of Decatur County,2024-09-09,corpus,data/pdfs/OCC_24458_20240909.pdf,S,true,5,5,occ_will_consider,99.7,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
@@ -5586,7 +5586,7 @@ The major factors that support this rating include:
  The bank’s geographic distribution of loans is reasonable. 
  
  The bank exhibits a reasonable distribution of loans to borrowers of different income levels. 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies); quote is tail of sentence that also names affiliates
 OCC_24637_20240129,random_unflagged,OCC,isb,First National Bank of Michigan,2024-01-29,corpus,data/pdfs/OCC_24637_20240129.pdf,S,true,5,5,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal savings 
 association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other 
@@ -5614,7 +5614,7 @@ distribution of small loans to businesses and distribution of small business loa
 The Community Development (CD) Test rating is based on excellent responsiveness to community 
 needs through qualified investments and services, with a reasonable responsiveness to community 
 needs through qualified CD loans. 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_4241_20230103,random_unflagged,OCC,isb,The First National Bank of Bellville,2023-01-03,corpus,data/pdfs/OCC_4241_20230103.pdf,S,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -5642,7 +5642,7 @@ different sizes. The bank had excellent performance on loans to small businesses
 and revenue distribution tests. 
  The Community Development (CD) Test rating is based on a substantial amount of CD loans and 
 CD investments and a reasonable amount of CD services. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies); quote is tail of sentence that also names affiliates
 OCC_4410_20250113,random_unflagged,OCC,small,First National Bank of Giddings,2025-01-13,corpus,data/pdfs/OCC_4410_20250113.pdf,S,true,5,5,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
@@ -5680,7 +5680,7 @@ borrower distribution.
 • Community Development (CD) efforts, although optional, were made by the bank. This included 
 two CD loans and several donations to organizations providing services to low- or moderate-income 
 (LMI) families. 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_5635_20230508,random_unflagged,OCC,small,The First National Bank of Waverly,2023-05-08,corpus,data/pdfs/OCC_5635_20230508.pdf,O,true,6,6,occ_will_consider,99.7,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -5706,7 +5706,7 @@ and businesses of different sizes.
 of moderate-income and distressed non-metropolitan middle-income geographies. 
  The bank’s loan-to-deposit (LTD) ratio is reasonable. 
  A majority of the bank’s loans are inside its AA. 
-",6;8,,,,,,,,,,,,,,,,,
+",6;8,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,standard OCC negative statement plus forward-looking boilerplate; no law named (only 12 CFR 25.28(c) and agencies)
 OCC_6813_20230130,random_unflagged,OCC,small,First National Bank,2023-01-30,corpus,data/pdfs/OCC_6813_20230130.pdf,S,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -5730,7 +5730,7 @@ The lending test is rated: Satisfactory
  The bank received no Community Reinvestment Act (CRA) related complaints during the evaluation 
 period. 
  The distribution of loans to geographies of different income levels is reasonable.  
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding"
 OCC_700646_20240108,random_unflagged,OCC,small,Community Savings,2024-01-08,corpus,data/pdfs/OCC_700646_20240108.pdf,S,true,6,6,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c), respectively, in determining a national bank’s or federal savings 
 association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or other 
@@ -5754,7 +5754,7 @@ The major factors that support this rating include:
  The Lending Test rating is based on the reasonable distribution of home mortgage loans among 
 borrowers of different incomes and excellent geographic distribution of home mortgage loans. 
  The bank did not receive any CRA-related complaints during the evaluation period. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding"
 OCC_701305_20240708,random_unflagged,OCC,small,"Auburn Savings Bank, FSB",2024-07-08,corpus,data/pdfs/OCC_701305_20240708.pdf,S,true,6,6,occ_will_consider,99.7,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
@@ -5789,7 +5789,7 @@ to-deposit (LTD) ratio is more than reasonable.
 • The bank exhibits an excellent geographic distribution of loans in the AA. 
 • The bank exhibits a reasonable distribution of loans to individuals of different income levels. 
 • The bank was not subject to any CRA related complaints during the evaluation period. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding"
 OCC_702228_20231030,random_unflagged,OCC,small,Kentland FS &amp; LA,2023-10-30,corpus,data/pdfs/OCC_702228_20231030.pdf,NI,true,5,5,occ_will_consider,96,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
@@ -5831,7 +5831,7 @@ distribution of home mortgage loans.
 • Kentland FSLA’s loan-to deposit ratio is more than reasonable. 
  
 • The bank did not receive any CRA-related complaints during the evaluation period. 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding; quote is the tail of the sentence beginning 'The OCC has not identified that Kentland FSLA (or any affiliate...)'"
 OCC_704656_20220720,random_unflagged,OCC,small,First FS & LA of Greensburg,2022-07-20,corpus,data/pdfs/OCC_704656_20220720.pdf,S,true,5,5,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -5853,7 +5853,7 @@ The major factors that support this rating include:
  The Lending Test rating is based on the rating in the State of Indiana. 
  The bank’s loan-to-deposit (LTD) ratio is reasonable. 
  A majority of the bank’s loans are made in its assessment areas (AAs). 
-",5,,,,,,,,,,,,,,,,,
+",5,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,5,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding"
 OCC_707674_20230213,random_unflagged,OCC,small,First Western Federal Savings Bank,2023-02-13,corpus,data/pdfs/OCC_707674_20230213.pdf,S,true,6,6,occ_pursuant_2024,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
@@ -5974,7 +5974,7 @@ borrowers located inside the bank’s AA. Management primarily relies on wholesa
 outside of the bank’s AA to fund loan originations. Therefore, we determined there are no disparities 
 between lending and deposit-taking, as the bank’s strategy supports nationwide lending and deposit-
 taking.  
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding; quote is the tail of the sentence beginning 'The OCC has not identified that this institution (or any affiliate...)'"
 OCC_707794_20230925,random_unflagged,OCC,isb,Rollstone Bank &amp; Trust,2023-09-25,corpus,data/pdfs/OCC_707794_20230925.pdf,S,true,6,6,occ_will_consider,100,0,,"Discriminatory or Other Illegal Credit Practices Review 
  
 Pursuant to 12 CFR 25.28(c) in determining a national bank’s or federal savings association’s 
@@ -6016,4 +6016,4 @@ evaluation period.
 • The Community Development (CD) Test rating is based on RBT’s adequate 
 responsiveness to CD needs in the AA through CD loans, qualified investments, and 
 CD services.  
-",3;6,,,,,,,,,,,,,,,,,
+",3;6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:09:44,"OCC standard negative review section; only 12 CFR 25.28(c) cited as authority, no fair lending law named; forward-looking boilerplate is not a finding"
