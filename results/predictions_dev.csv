@@ -19,363 +19,6 @@ OCC_13682_20240819,finding_present,baseline,value,false,,6,institution,,,,hits=1
 OCC_13682_20240819,rating_lowered,baseline,value,false,,6,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
 OCC_703395_20230327,finding_present,baseline,value,false,,5,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
 OCC_703395_20230327,rating_lowered,baseline,value,false,,5,institution,,,,hits=1 negated=1 triggers=identified_practice!,quote_not_found,0
-FDIC_12299_20220912,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,239,276,,,,0
-FDIC_12299_20220912,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"SouthStar Bank, S.S.B.","SouthStar Bank, S.S.B.",1,institution,130,152,,,,0
-FDIC_12299_20220912,bank_id,llm:gemini:gemini-3.5-flash-lite,value,12299,Certificate Number:  12299,1,institution,156,182,,,,0
-FDIC_12299_20220912,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2022-09-12,"September 12, 2022",1,institution,38,56,,,,0
-FDIC_12299_20220912,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,Interagency Intermediate Small Institution CRA Examination Procedures,4,institution,5386,5456,,,,0
-FDIC_12299_20220912,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,INSTITUTION’S CRA RATING:  This institution is rated Needs to Improve.,3,institution,2691,2761,,,,0
-FDIC_12299_20220912,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Lending Test is rated Satisfactory.,3,institution,3327,3366,,,,0
-FDIC_12299_20220912,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Community Development Test is rated Satisfactory.,3,institution,4180,4233,,,,0
-FDIC_12299_20220912,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2019-07-15,"dated July 15, 2019",4,institution,5356,5375,,,,0
-FDIC_12299_20220912,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019",4,institution,5223,5375,,,,0
-FDIC_12299_20220912,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,1200000000,assets totaled approximately $1.2 billion,4,institution,6511,6552,,,,0
-FDIC_12299_20220912,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,"As of June 30, 2022, assets totaled approximately $1.2 billion",4,institution,6490,6552,,,,0
-FDIC_12299_20220912,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2019-01-01,This includes 2019 data showing 237 loans,7,institution,14209,14250,,,quote_does_not_support,0
-FDIC_12299_20220912,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,and 2021 data showing 294 loans totaling $136.9 million.,7,institution,14330,14387,,,quote_does_not_support,0
-FDIC_12299_20220912,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,5,"SouthStar Bank, S.S.B. designated five assessment areas",5,institution,8615,8670,,,,0
-FDIC_12299_20220912,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,2,"Consequently, examiners applied full-scope procedures to and placed the greatest weight on the bank’s performance in the Austin MSA AA.  Examiners also applied full-scope procedures to the Killeen MSA AA",6,institution,11329,11534,,,quote_does_not_support,0
-FDIC_12299_20220912,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage|small_business,"For the Lending Test, examiners determined that the bank’s major product lines include home mortgage and small business lending.",7,institution,12668,12797,,,,0
-FDIC_12299_20220912,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.",8,institution,16178,16273,,,,0
-FDIC_12299_20220912,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,75.2,Subtotal 713 75.2 235 24.8,9,institution,19933,19963,,,,0
-FDIC_12299_20220912,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,Subtotal 713 75.2 235 24.8,9,institution,19933,19963,,,quote_does_not_support,0
-FDIC_12299_20220912,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,100.7,averaged 100.7 percent over the past 12 calendar quarters,8,institution,17800,17858,,,,0
-FDIC_12299_20220912,finding_present,llm:gemini:gemini-3.5-flash-lite,value,true,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices present during the review period.,14,institution,30957,31101,,,,0
-FDIC_12299_20220912,finding_type,llm:gemini:gemini-3.5-flash-lite,value,discrimination,"Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act, pertaining to the bank’s lending practices on the basis of redlining.",14,institution,31103,31264,,,,0
-FDIC_12299_20220912,rating_effect,llm:gemini:gemini-3.5-flash-lite,value,substantive_lowered,violations of the Equal Credit Opportunity Act and the Fair Housing Act resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3131,3320,,,,0
-FDIC_12299_20220912,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,true,violations of the Equal Credit Opportunity Act and the Fair Housing Act resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3131,3320,,,,0
-FDIC_12299_20220912,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,value,overall,resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3204,3320,,,quote_does_not_support,0
-FDIC_12299_20220912,rating_before,llm:gemini:gemini-3.5-flash-lite,value,S,lowered from Satisfactory to Needs to Improve.,3,institution,3273,3320,,,,0
-FDIC_12299_20220912,rating_after,llm:gemini:gemini-3.5-flash-lite,value,NI,lowered from Satisfactory to Needs to Improve.,3,institution,3273,3320,,,,0
-FDIC_12299_20220912,laws_cited,llm:gemini:gemini-3.5-flash-lite,value,ECOA_RegB|FHA,Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act,14,institution,31103,31192,,,,0
-FDIC_12299_20220912,practice_basis,llm:gemini:gemini-3.5-flash-lite,value,redlining,pertaining to the bank’s lending practices on the basis of redlining.,14,institution,31194,31264,,,quote_does_not_support,0
-FDIC_12299_20220912,finding_source,llm:gemini:gemini-3.5-flash-lite,value,this_CRA_exam,Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act,14,institution,31103,31192,,,,0
-FDIC_16733_20240410,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,226,263,,,,0
-FDIC_16733_20240410,bank_name,llm:gemini:gemini-3.5-flash-lite,value,North Star Bank,North Star Bank,1,institution,117,132,,,,0
-FDIC_16733_20240410,bank_id,llm:gemini:gemini-3.5-flash-lite,value,16733,Certificate Number:  16733,1,institution,134,160,,,,0
-FDIC_16733_20240410,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-04-10,"April 10, 2024",1,institution,35,49,,,,0
-FDIC_16733_20240410,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Interagency Small Institution Examination Procedures,4,institution,3773,3825,,,,0
-FDIC_16733_20240410,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,S,This institution is rated Satisfactory.,3,institution,2145,2184,,,,0
-FDIC_16733_20240410,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-04-05,"April 5, 2021",4,institution,3748,3762,,,,0
-FDIC_16733_20240410,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The institution received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021",4,institution,3650,3762,,,,0
-FDIC_16733_20240410,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,352077000,"As of December 31, 2023, assets totaled approximately $352,077,000",4,institution,4643,4709,,,,0
-FDIC_16733_20240410,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"As of December 31, 2023, assets totaled approximately $352,077,000",4,institution,4643,4709,,,,0
-FDIC_16733_20240410,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2023-01-01,"all small business loans originated, purchased, or renewed in 2023",5,,,,,quote_not_located,quote_not_found,0
-FDIC_16733_20240410,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"all small business loans originated, purchased, or renewed in 2023",5,,,,,quote_not_located,quote_not_found,0
-FDIC_16733_20240410,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,North Star Bank designated a single contiguous assessment area,5,institution,5864,5927,,,quote_does_not_support,0
-FDIC_16733_20240410,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,small_business,"For this evaluation, examiners focused solely on the bank’s small business lending to derive overall conclusions.",7,institution,13104,13218,,,,0
-FDIC_16733_20240410,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,"For this evaluation, examiners focused solely on the bank’s small business lending to derive overall conclusions.",7,institution,13104,13218,,,,0
-FDIC_16733_20240410,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,82.3,A majority of the small business loans reviewed were located inside the assessment area.,3,institution,2746,2834,,,quote_does_not_support,0
-FDIC_16733_20240410,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,A majority of the small business loans reviewed were located inside the assessment area.,3,institution,2746,2834,,,,0
-FDIC_16733_20240410,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,71.5,"averaged 71.5 percent over the past 11 calendar quarters from June 30, 2021, to December 31, 2023.",8,institution,15262,15361,,,,0
-FDIC_16733_20240410,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,11,institution,19663,19813,,,,0
-FDIC_16733_20240410,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,11,institution,19663,19813,,,,0
-FDIC_16733_20240410,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_16733_20240410,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,228,265,,,,0
-FDIC_26816_20220809,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"Liberty Bank, Inc.","Liberty Bank, Inc.",1,institution,120,138,,,,0
-FDIC_26816_20220809,bank_id,llm:gemini:gemini-3.5-flash-lite,value,26816,Certificate Number:  26816,1,institution,142,168,,,,0
-FDIC_26816_20220809,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2022-08-09,"August 9, 2022",1,institution,32,46,,,,0
-FDIC_26816_20220809,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Interagency Small Institution Examination Procedures,3,institution,3950,4003,,,,0
-FDIC_26816_20220809,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,This institution is rated Substantial Noncompliance.,3,institution,2182,2234,,,,0
-FDIC_26816_20220809,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-04-12,"April 12, 2021",3,institution,3921,3935,,,,0
-FDIC_26816_20220809,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,The institution received a “Substantial Noncompliance” CRA Rating at its previous CRA,3,institution,3805,3890,,,,0
-FDIC_26816_20220809,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,12600000,assets totaling $12.6 million,4,institution,4706,4735,,,,0
-FDIC_26816_20220809,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,"As of June 30, 2022",4,institution,4611,4630,,,,0
-FDIC_26816_20220809,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,Evaluation Period: 1/1/2021 – 6/30/2022,8,institution,15453,15492,,,,0
-FDIC_26816_20220809,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,Evaluation Period: 1/1/2021 – 6/30/2022,8,institution,15453,15492,,,,0
-FDIC_26816_20220809,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,"LBI is headquartered in Salt Lake City, Utah and operates one branch.",3,institution,3486,3555,,,,0
-FDIC_26816_20220809,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,"Consumer – Tiny Home Loans
-Small Business Loans",8,,,,,quote_not_located,quote_not_found,0
-FDIC_26816_20220809,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,The bank’s primary lending product is a consumer loan product referred to as Tiny Home Loans.,3,institution,4009,4102,,,,0
-FDIC_26816_20220809,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,0.0,"Total
-0
-0.0
-61
-100.0
-61",8,institution,15386,15414,,,,0
-FDIC_26816_20220809,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total
-0
-0.0
-61
-100.0
-61",8,institution,15386,15414,,,,0
-FDIC_26816_20220809,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,64.9,"averaged 64.9 percent over the past five calendar quarters from June 30, 2021, to June 30, 2022.",7,institution,13320,13417,,,,0
-FDIC_26816_20220809,finding_present,llm:gemini:gemini-3.5-flash-lite,value,true,Examiners identified an illegal credit practice during the CRA evaluation period.,3,institution,3252,3333,,,,0
-FDIC_26816_20220809,finding_type,llm:gemini:gemini-3.5-flash-lite,value,other_illegal_credit_practice,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",9,institution,16117,16239,,,,0
-FDIC_26816_20220809,rating_effect,llm:gemini:gemini-3.5-flash-lite,value,substantive_not_lowered,"considering the bank’s already substantially deficient performance, this factor did not affect the rating.",3,institution,3345,3452,,,quote_does_not_support,0
-FDIC_26816_20220809,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"considering the bank’s already substantially deficient performance, this factor did not affect the rating.",3,institution,3345,3452,,,,0
-FDIC_26816_20220809,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_26816_20220809,laws_cited,llm:gemini:gemini-3.5-flash-lite,value,FTC_s5_UDAP,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",9,institution,16117,16239,,,,0
-FDIC_26816_20220809,practice_basis,llm:gemini:gemini-3.5-flash-lite,value,UDAP_product,The UDAP violation caused substantial harm to a majority of the bank’s mortgage loan borrowers.,9,institution,16241,16337,,,,0
-FDIC_26816_20220809,finding_source,llm:gemini:gemini-3.5-flash-lite,value,this_CRA_exam,The FDIC identified illegal credit practices during the evaluation period.,9,institution,16041,16115,,,,0
-FDIC_6078_20240805,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,220,257,,,,0
-FDIC_6078_20240805,bank_name,llm:gemini:gemini-3.5-flash-lite,value,One American Bank,One American Bank,1,institution,109,126,,,,0
-FDIC_6078_20240805,bank_id,llm:gemini:gemini-3.5-flash-lite,value,6078,Certificate Number:  6078,1,institution,128,153,,,,0
-FDIC_6078_20240805,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-08-05,"August 5, 2024",1,institution,29,43,,,,0
-FDIC_6078_20240805,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,Interagency Intermediate Small Institution Examination Procedures,7,institution,14507,14572,,,,0
-FDIC_6078_20240805,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,INSTITUTION’S CRA RATING:  This institution is rated Needs to Improve.,3,institution,2101,2171,,,,0
-FDIC_6078_20240805,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Lending Test is rated Needs to Improve.,3,institution,2416,2459,,,,0
-FDIC_6078_20240805,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Community Development Test is rated Needs to Improve.,3,institution,3196,3253,,,,0
-FDIC_6078_20240805,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-12-03,"At the previous evaluation, dated December 3, 2018",4,institution,3871,3922,,,,0
-FDIC_6078_20240805,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,the institution received a Satisfactory rating.,4,institution,4028,4075,,,,0
-FDIC_6078_20240805,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,463000000,"As of March 31, 2024, the institution reported total assets of $463 million",4,institution,5101,5176,,,,0
-FDIC_6078_20240805,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2024-03-31,"As of March 31, 2024, the institution reported total assets of $463 million",4,institution,5101,5176,,,,0
-FDIC_6078_20240805,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,"This evaluation covers the period from the prior CRA evaluation dated December 3, 2018, to the current evaluation dated August 5, 2024.",7,institution,14207,14343,,,quote_does_not_support,0
-FDIC_6078_20240805,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2024-08-05,"This evaluation covers the period from the prior CRA evaluation dated December 3, 2018, to the current evaluation dated August 5, 2024.",7,institution,14207,14343,,,,0
-FDIC_6078_20240805,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,One American Bank has designated a single assessment area,5,institution,7055,7112,,,,0
-FDIC_6078_20240805,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|home_mortgage|small_business|small_farm,"Given the shift in lending focus during the evaluation period, examiners reviewed consumer, small business, small farm, and home mortgage loans.",8,institution,16190,16336,,,,0
-FDIC_6078_20240805,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,"The bank’s primary lending focus is consumer lending, followed by commercial and agricultural lending.",7,institution,14974,15077,,,,0
-FDIC_6078_20240805,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,0.9,"Total 82 0.9 9,272 99.1 9,354 15,872 0.5 3,123,667 99.5 3,139,540",10,institution,21983,22058,,,,0
-FDIC_6078_20240805,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total 82 0.9 9,272 99.1 9,354 15,872 0.5 3,123,667 99.5 3,139,540",10,institution,21983,22058,,,,0
-FDIC_6078_20240805,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,128.1,The bank’s average net loan-to-deposit ratio is 128.1 percent over the past 22 calendar quarters,9,institution,19395,19492,,,,0
-FDIC_6078_20240805,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",16,institution,32543,32719,,,,0
-FDIC_6078_20240805,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",16,institution,32543,32719,,,,0
-FDIC_6078_20240805,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FDIC_6078_20240805,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of New York,1,institution,352,384,,,,0
-FRB_3664588_20240116,bank_name,llm:gemini:gemini-3.5-flash-lite,value,Fieldpoint Private Bank & Trust,Fieldpoint Private Bank & Trust,1,institution,242,273,,,,0
-FRB_3664588_20240116,bank_id,llm:gemini:gemini-3.5-flash-lite,value,3664588,RSSD No. 3664588,1,institution,277,293,,,,0
-FRB_3664588_20240116,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-01-16,"January 16, 2024",1,institution,158,174,,,,0
-FRB_3664588_20240116,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,Interagency Intermediate Small Institution Examination Procedures,6,institution,12129,12195,,,,0
-FRB_3664588_20240116,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,INSTITUTION'S CRA RATING: This institution is rated Needs to Improve.,4,institution,7282,7351,,,,0
-FRB_3664588_20240116,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Lending Test is rated: Needs to Improve.,4,institution,7354,7398,,,,0
-FRB_3664588_20240116,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Community Development Test is rated: Satisfactory.,4,institution,7401,7455,,,,0
-FRB_3664588_20240116,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-02-12,"Performance Evaluation dated February 12, 2018",6,institution,12069,12115,,,,0
-FRB_3664588_20240116,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation,6,institution,12015,12091,,,,0
-FRB_3664588_20240116,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,1700000000,the bank had total assets of $1.7 billion,5,institution,10177,10218,,,,0
-FRB_3664588_20240116,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-09-30,"Based on the September 30, 2023, Federal Financial Institutions Examination Council (FFIEC)",5,institution,10025,10116,,,,0
-FRB_3664588_20240116,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2017-01-01,"Examiners reviewed the bank’s home mortgage loans and small business loans from January 1, 2017, to",8,institution,15515,15614,,,,0
-FRB_3664588_20240116,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-12-31,"December 31, 2022.",8,institution,15616,15634,,,,0
-FRB_3664588_20240116,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,4,The CRA performance evaluation included the following four bank delineated assessment areas:,7,institution,13074,13166,,,,0
-FRB_3664588_20240116,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,4,Examiners used full-scope examination procedures to evaluate the bank’s performance for all included assessment areas.,8,institution,15085,15204,,,quote_does_not_support,0
-FRB_3664588_20240116,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage|small_business,Examiners reviewed the bank’s home mortgage loans and small business loans,8,institution,15515,15589,,,,0
-FRB_3664588_20240116,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"When evaluating the bank’s performance under the Lending Test, examiners placed more weight on home mortgage loans when compared to small business loans based on the number of loans originated.",8,institution,16116,16311,,,,0
-FRB_3664588_20240116,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,40.8,"During the evaluation period, lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.",10,institution,23548,23661,,,,0
-FRB_3664588_20240116,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"During the evaluation period, lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.",10,institution,23548,23661,,,quote_does_not_support,0
-FRB_3664588_20240116,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,91.1,"Fieldpoint’s average LTD ratio for the 24-quarters from January 1, 2017, to December 31, 2022, was 91.1%",10,institution,23070,23175,,,,0
-FRB_3664588_20240116,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,14,institution,32221,32385,,,,0
-FRB_3664588_20240116,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,14,institution,32221,32385,,,,0
-FRB_3664588_20240116,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_3664588_20240116,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of Kansas City,1,institution,197,232,,,,0
-FRB_663656_20241118,bank_name,llm:gemini:gemini-3.5-flash-lite,value,Small Business Bank,Small Business Bank,1,institution,112,131,,,,0
-FRB_663656_20241118,bank_id,llm:gemini:gemini-3.5-flash-lite,value,663656,RSSD# 663656,1,institution,133,145,,,,0
-FRB_663656_20241118,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-11-18,"November 18, 2024",1,institution,33,50,,,,0
-FRB_663656_20241118,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,"Examiners utilized the Federal Financial Institutions Examination Council’s (FFIEC’s) 
-Interagency Examination Procedures for Small Institutions to evaluate the bank’s CRA 
-performance.",3,institution,2910,3095,,,,0
-FRB_663656_20241118,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,Small Business Bank (the bank) is rated Needs to Improve.,3,institution,2181,2238,,,,0
-FRB_663656_20241118,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2020-03-23,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance 
-evaluation.",4,institution,5386,5478,,,,0
-FRB_663656_20241118,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance 
-evaluation.",4,institution,5386,5478,,,,0
-FRB_663656_20241118,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,94200000,"The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4057,4120,,,,0
-FRB_663656_20241118,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2024-06-30,"The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4057,4120,,,,0
-FRB_663656_20241118,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2020-03-24,"A statistical sample of 169 small business loans from a universe of 1,005 loans 
-originated between March 24, 2020, and December 31, 2023.",3,institution,3656,3794,,,,0
-FRB_663656_20241118,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"A statistical sample of 169 small business loans from a universe of 1,005 loans 
-originated between March 24, 2020, and December 31, 2023.",3,institution,3656,3794,,,,0
-FRB_663656_20241118,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,"Lending 
-performance was assessed within the bank’s only AA.",3,institution,3501,3561,,,quote_does_not_support,0
-FRB_663656_20241118,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,small_business,"A statistical sample of 169 small business loans from a universe of 1,005 loans 
-originated between March 24, 2020, and December 31, 2023.",3,institution,3656,3794,,,,0
-FRB_663656_20241118,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,"A statistical sample of 169 small business loans from a universe of 1,005 loans 
-originated between March 24, 2020, and December 31, 2023.",3,institution,3656,3794,,,,0
-FRB_663656_20241118,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,21.3,"As noted in Table 7, only 21.3 percent 
-of the bank’s lending by number and 17.3 percent by dollar volume was originated inside 
-the AA.",10,institution,18023,18159,,,,0
-FRB_663656_20241118,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"As noted in Table 7, only 21.3 percent 
-of the bank’s lending by number and 17.3 percent by dollar volume was originated inside 
-the AA.",10,institution,18023,18159,,,quote_does_not_support,0
-FRB_663656_20241118,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,85.9,"The bank’s 19-quarter average NLTD ratio of 
-85.9 percent was comparable to those of four similarly situated institutions with ratios 
-ranging from 34.8 percent to 90.0 percent.",9,institution,16987,17164,,,,0
-FRB_663656_20241118,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of a pattern or 
-practice of discrimination on a prohibited basis or of other illegal credit practices 
-inconsistent with helping to meet community credit needs was identified.",12,institution,22057,22245,,,,0
-FRB_663656_20241118,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of a pattern or 
-practice of discrimination on a prohibited basis or of other illegal credit practices 
-inconsistent with helping to meet community credit needs was identified.",12,institution,22057,22245,,,,0
-FRB_663656_20241118,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_663656_20241118,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of Richmond,1,institution,133,165,,,,0
-FRB_722432_20230911,bank_name,llm:gemini:gemini-3.5-flash-lite,value,The Bank of Romney,The Bank of Romney,1,institution,90,108,,,,0
-FRB_722432_20230911,bank_id,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2023-09-11,"September 11, 2023",1,institution,19,37,,,,0
-FRB_722432_20230911,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,"The Bank of Romney (BOR) was evaluated using the interagency examination procedures for small 
-institutions developed by the Federal Financial Institutions Examination Council (FFIEC).",4,institution,4545,4729,,,,0
-FRB_722432_20230911,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,O,INSTITUTION'S CRA RATING:  This institution is rated Outstanding.,4,institution,3687,3752,,,,0
-FRB_722432_20230911,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2017-09-11,"The institution’s previous CRA rating dated September 11, 2017, 
-was Outstanding.",4,institution,5996,6077,,,,0
-FRB_722432_20230911,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,O,"The institution’s previous CRA rating dated September 11, 2017, 
-was Outstanding.",4,institution,5996,6077,,,,0
-FRB_722432_20230911,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,354900000,"As of June 30, 2023, the bank’s assets totaled $354.9 million",4,institution,6199,6260,,,,0
-FRB_722432_20230911,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-06-30,"As of June 30, 2023, the bank’s assets totaled $354.9 million",4,institution,6199,6260,,,,0
-FRB_722432_20230911,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,"The evaluation was based on 
-all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor 
-vehicle loans originated during 2022.",4,institution,4912,5070,,,quote_does_not_support,0
-FRB_722432_20230911,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-12-31,"The evaluation was based on 
-all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor 
-vehicle loans originated during 2022.",4,institution,4912,5070,,,quote_does_not_support,0
-FRB_722432_20230911,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,2,"Currently, BoR serves two assessment areas located within West Virginia.",4,institution,5231,5303,,,,0
-FRB_722432_20230911,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,1,"full-scope evaluation procedures were applied to the Winchester, WV 
-investment area and limited-scope procedures were applied to the Hagerstown-Martinsburg, WV 
-investment area.",4,,,,,quote_not_located,quote_does_not_support,0
-FRB_722432_20230911,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|home_mortgage,"HMDA loans and 
-consumer motor vehicle loans were identified as primary credit products.",4,institution,4823,4911,,,,0
-FRB_722432_20230911,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"HMDA loans and 
-consumer motor vehicle loans were identified as primary credit products.",4,institution,4823,4911,,,,0
-FRB_722432_20230911,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,70.7,"As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were 
-extended within the bank’s assessment area.",6,institution,12338,12483,,,,0
-FRB_722432_20230911,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were 
-extended within the bank’s assessment area.",6,institution,12338,12483,,,quote_does_not_support,0
-FRB_722432_20230911,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,97.9,"The bank’s current loan-to-deposit ratio is 99.4% and averaged 97.9% for the preceding 24-quarter 
-period ending June 30, 2023.",6,institution,11279,11406,,,,0
-FRB_722432_20230911,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
-community credit needs was identified.",6,institution,12670,12807,,,,0
-FRB_722432_20230911,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
-community credit needs was identified.",6,institution,12670,12807,,,,0
-FRB_722432_20230911,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-FRB_722432_20230911,finding_source,llm:gemini:gemini-3.5-flash-lite,value,unstated,"No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
-community credit needs was identified.",6,institution,12670,12807,,,quote_does_not_support,0
-OCC_11715_20240408,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,204,245,,,,0
-OCC_11715_20240408,bank_name,llm:gemini:gemini-3.5-flash-lite,value,The Lemont National Bank,The Lemont National Bank,1,institution,85,109,,,,0
-OCC_11715_20240408,bank_id,llm:gemini:gemini-3.5-flash-lite,value,11715,Charter Number 11715,1,institution,112,132,,,,0
-OCC_11715_20240408,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-04-08,"April 8, 2024",1,institution,18,31,,,,0
-OCC_11715_20240408,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,We assessed the bank under the small bank CRA evaluation procedures.,4,institution,6428,6497,,,,0
-OCC_11715_20240408,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,This institution is rated Substantial Noncompliance.,3,institution,1621,1673,,,,0
-OCC_11715_20240408,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,The lending test is rated: Substantial Noncompliance.,3,institution,1675,1728,,,,0
-OCC_11715_20240408,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-06-19,"dated June 19, 2021",4,institution,6170,6190,,,,0
-OCC_11715_20240408,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation,4,institution,6085,6168,,,,0
-OCC_11715_20240408,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,65400000,"As of December 31, 2023, Lemont reported total assets of $65.4 million",4,institution,5109,5180,,,,0
-OCC_11715_20240408,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"As of December 31, 2023, Lemont reported total assets of $65.4 million",4,institution,5109,5180,,,,0
-OCC_11715_20240408,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,The evaluation period includes calendar years 2021 through 2023.,4,institution,6361,6425,,,quote_does_not_support,0
-OCC_11715_20240408,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,The evaluation period includes calendar years 2021 through 2023.,4,institution,6361,6425,,,quote_does_not_support,0
-OCC_11715_20240408,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,The bank is a single state institution with five branch offices in Cook and Will counties.,4,institution,5253,5343,,,quote_does_not_support,0
-OCC_11715_20240408,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"Based upon the examiner’s analysis of the bank’s lending activity, home mortgage loans represent the bank’s primary lending product.",4,institution,6499,6632,,,,0
-OCC_11715_20240408,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"Based upon the examiner’s analysis of the bank’s lending activity, home mortgage loans represent the bank’s primary lending product.",4,institution,6499,6632,,,,0
-OCC_11715_20240408,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,54.5,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,4,institution,3942,4059,,,,0
-OCC_11715_20240408,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,4,institution,3942,4059,,,,0
-OCC_11715_20240408,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,10.6,The Lemont National Bank’s (“Lemont” or “bank”) average LTD for the 16-quarter period since the preceding CRA evaluation was 10.6 percent.,3,institution,2364,2503,,,,0
-OCC_11715_20240408,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution (or any affiliate whose loans have been considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,9303,9565,,,,0
-OCC_11715_20240408,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution (or any affiliate whose loans have been considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,9303,9565,,,,0
-OCC_11715_20240408,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_11715_20240408,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,228,269,,,,0
-OCC_13682_20240819,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"First Neighbor Bank, National Association","First Neighbor Bank, National Association",1,institution,116,157,,,,0
-OCC_13682_20240819,bank_id,llm:gemini:gemini-3.5-flash-lite,value,13682,Charter Number 13682,1,institution,159,179,,,,0
-OCC_13682_20240819,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-08-19,"August 19, 2024",1,institution,41,56,,,,0
-OCC_13682_20240819,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,intermediate small bank evaluation procedures,5,institution,7473,7519,,,,0
-OCC_13682_20240819,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,O,Institution’s CRA Rating: This institution is rated Outstanding.,3,institution,2811,2875,,,,0
-OCC_13682_20240819,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,O,The lending test is rated: Outstanding.,3,institution,2883,2922,,,,0
-OCC_13682_20240819,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,O,The community development test is rated: Outstanding.,3,institution,2925,2978,,,,0
-OCC_13682_20240819,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,prior_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,593700000,"First Neighbor Bank, N.A, (First Neighbor) is a $593.7 million (total assets) intrastate financial",4,institution,5662,5760,,,,0
-OCC_13682_20240819,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,Source: Sample of 20 consumer and 20 business loans originated between 1/1/2021 - 12/31/2023.,4,institution,5488,5581,,,,0
-OCC_13682_20240819,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,Source: Sample of 20 consumer and 20 business loans originated between 1/1/2021 - 12/31/2023.,4,institution,5488,5581,,,,0
-OCC_13682_20240819,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,First Neighbor established one contiguous AA in Illinois,4,institution,6429,6485,,,,0
-OCC_13682_20240819,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,"As a result, we sampled consumer and business loans for this evaluation.",5,institution,8461,8534,,,quote_does_not_support,0
-OCC_13682_20240819,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,First Neighbor’s primary lending products are consumer and business loans.,5,institution,8120,8195,,,,0
-OCC_13682_20240819,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,87.5,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
-OCC_13682_20240819,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
-OCC_13682_20240819,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,85.5,"During the evaluation period, the bank’s quarterly LTD ratio averaged 85.5 percent and ranged",3,institution,4096,4189,,,,0
-OCC_13682_20240819,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,10175,10335,,,,0
-OCC_13682_20240819,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,10175,10335,,,,0
-OCC_13682_20240819,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_13682_20240819,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,208,249,,,,0
-OCC_703395_20230327,bank_name,llm:gemini:gemini-3.5-flash-lite,value,GN Bank,GN Bank,1,institution,113,120,,,,0
-OCC_703395_20230327,bank_id,llm:gemini:gemini-3.5-flash-lite,value,703395,Charter Number: 703395,1,institution,131,153,,,,0
-OCC_703395_20230327,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2023-03-27,"March 27, 2023",1,institution,39,53,,,,0
-OCC_703395_20230327,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Under interagency small bank CRA procedures,5,institution,8943,8986,,,,0
-OCC_703395_20230327,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,Institution’s CRA Rating: This institution is rated Needs to Improve.,3,institution,1662,1731,,,,0
-OCC_703395_20230327,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The lending test is rated: Needs to Improve.,3,institution,1740,1784,,,,0
-OCC_703395_20230327,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-10-01,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
-OCC_703395_20230327,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
-OCC_703395_20230327,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,84700000,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",4,institution,5302,5374,,,,0
-OCC_703395_20230327,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",4,institution,5302,5374,,,,0
-OCC_703395_20230327,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2019-01-01,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",5,institution,7923,8012,,,,0
-OCC_703395_20230327,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",5,institution,7923,8012,,,,0
-OCC_703395_20230327,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,"The bank delineated one AA consisting of 184 census tracts (CT) located in the southern portion of Cook County within the Chicago-Naperville-Evanston, IL Metropolitan Division (MD) of the Chicago-Naperville-Elgin, IL-IN-WI Metropolitan Statistical Area (MSA).",4,,,,,quote_not_located,,0
-OCC_703395_20230327,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,the OCC determined the primary loan products were consumer and small business loans.,5,institution,8105,8190,,,,0
-OCC_703395_20230327,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,the OCC determined the primary loan products were consumer and small business loans.,5,institution,8105,8190,,,,0
-OCC_703395_20230327,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,3.4,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,3,institution,3003,3120,,,,0
-OCC_703395_20230327,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,3,institution,3003,3120,,,,0
-OCC_703395_20230327,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,54.32,"The bank’s quarterly average LTD ratio since the end of the last performance evaluation period, June 30, 2018 to December 31, 2021, was 54.32 percent.",3,institution,2413,2564,,,,0
-OCC_703395_20230327,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this bank (or any affiliate whose loans have been considered as part of the bank’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,5,institution,10377,10625,,,,0
-OCC_703395_20230327,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this bank (or any affiliate whose loans have been considered as part of the bank’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,5,institution,10377,10625,,,,0
-OCC_703395_20230327,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
-OCC_703395_20230327,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
 FDIC_12299_20220912,regulator,rules,value,FDIC,Federal Deposit Insurance Corporation,1,institution,239,276,,,,0
 FDIC_12299_20220912,bank_name,rules,value,"SouthStar Bank, S.S.B.","SouthStar Bank, S.S.B.",1,institution,130,152,,,,0
 FDIC_12299_20220912,bank_id,rules,value,12299,Certificate Number: 12299,1,institution,156,182,,,,0
@@ -546,3 +189,439 @@ OCC_703395_20230327,inside_aa_share_number_pct,rules,value,3.4,The bank originat
 OCC_703395_20230327,inside_aa_share_product,rules,value,all_reviewed_combined,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,3,institution,3003,3120,,,,0
 OCC_703395_20230327,n_assessment_areas,rules,value,1,"The bank delineated one AA consisting of 184 census tracts (CT) located in the southern portion of Cook County within the Chicago-Naperville-Evanston, IL Metropolitan Division (MD) of the Chicago- Naperville-Elgin, IL-IN-WI Metropolitan Statistical Area (MSA).",4,institution,4350,4611,,,,0
 OCC_703395_20230327,loan_products_evaluated,rules,value,consumer|small_business,"Based on the bank’s internal reports for lending activity and discussions with management, the OCC determined the primary loan products were consumer and small business loans.",5,institution,8013,8190,,small_business: p5; consumer: p5,,0
+FDIC_12299_20220912,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,239,276,,,,0
+FDIC_12299_20220912,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"SouthStar Bank, S.S.B.","SouthStar Bank, S.S.B.",1,institution,130,152,,,,0
+FDIC_12299_20220912,bank_id,llm:gemini:gemini-3.5-flash-lite,value,12299,Certificate Number:  12299,1,institution,156,182,,,,0
+FDIC_12299_20220912,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2022-09-12,"September 12, 2022",1,institution,38,56,,,,0
+FDIC_12299_20220912,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,Interagency Intermediate Small Institution CRA Examination Procedures,4,institution,5386,5456,,,,0
+FDIC_12299_20220912,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,This institution is rated Needs to Improve.,3,institution,2718,2761,,,,0
+FDIC_12299_20220912,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Lending Test is rated Satisfactory.,3,institution,3327,3366,,,,0
+FDIC_12299_20220912,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Community Development Test is rated Satisfactory.,3,institution,4180,4233,,,,0
+FDIC_12299_20220912,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2019-07-15,"dated July 15, 2019",4,institution,5356,5375,,,,0
+FDIC_12299_20220912,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019",4,institution,5223,5375,,,,0
+FDIC_12299_20220912,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,1159094000,"Total Assets as of
+06/30/2022
+($000s)
+SouthStar Bank, S.S.B., Moulton, TX
+1,159,094",7,,,,,quote_not_located,quote_not_found,0
+FDIC_12299_20220912,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,"Total Assets as of
+06/30/2022",9,institution,18555,18585,,,,0
+FDIC_12299_20220912,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_12299_20220912,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,"January 1, 2021, to December 31, 2021",7,institution,14882,14920,,,,0
+FDIC_12299_20220912,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,5,"SouthStar Bank, S.S.B. designated five assessment areas",5,institution,8615,8670,,,,0
+FDIC_12299_20220912,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,2,"Consequently, examiners applied full-scope procedures to and placed the greatest weight on the bank’s performance in the Austin MSA AA.  Examiners also applied full-scope procedures to the Killeen MSA AA",6,institution,11329,11534,,,quote_does_not_support,0
+FDIC_12299_20220912,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage|small_business,"For the Lending Test, examiners determined that the bank’s major product lines include home mortgage and small business lending.",7,institution,12668,12797,,,,0
+FDIC_12299_20220912,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.",8,institution,16178,16273,,,,0
+FDIC_12299_20220912,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,75.2,Subtotal 713 75.2 235 24.8,9,institution,19933,19963,,,,0
+FDIC_12299_20220912,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,Subtotal 713 75.2 235 24.8,9,institution,19933,19963,,,quote_does_not_support,0
+FDIC_12299_20220912,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,100.7,"averaged 100.7 percent over the past 12 calendar quarters from September 30, 2019, to June 30, 2022",8,institution,17800,17900,,,,0
+FDIC_12299_20220912,finding_present,llm:gemini:gemini-3.5-flash-lite,value,true,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices present during the review period.,14,institution,30957,31101,,,,0
+FDIC_12299_20220912,finding_type,llm:gemini:gemini-3.5-flash-lite,value,discrimination,"Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act, pertaining to the bank’s lending practices on the basis of redlining.",14,institution,31103,31264,,,,0
+FDIC_12299_20220912,rating_effect,llm:gemini:gemini-3.5-flash-lite,value,substantive_lowered,violations of the Equal Credit Opportunity Act and the Fair Housing Act resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3131,3320,,,,0
+FDIC_12299_20220912,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,true,violations of the Equal Credit Opportunity Act and the Fair Housing Act resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3131,3320,,,,0
+FDIC_12299_20220912,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,value,overall,resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,3,institution,3204,3320,,,quote_does_not_support,0
+FDIC_12299_20220912,rating_before,llm:gemini:gemini-3.5-flash-lite,value,S,being lowered from Satisfactory to Needs to Improve.,3,institution,3267,3320,,,,0
+FDIC_12299_20220912,rating_after,llm:gemini:gemini-3.5-flash-lite,value,NI,being lowered from Satisfactory to Needs to Improve.,3,institution,3267,3320,,,,0
+FDIC_12299_20220912,laws_cited,llm:gemini:gemini-3.5-flash-lite,value,ECOA_RegB|FHA,Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act,14,institution,31103,31192,,,,0
+FDIC_12299_20220912,practice_basis,llm:gemini:gemini-3.5-flash-lite,value,redlining,pertaining to the bank’s lending practices on the basis of redlining.,14,institution,31194,31264,,,quote_does_not_support,0
+FDIC_12299_20220912,finding_source,llm:gemini:gemini-3.5-flash-lite,value,this_CRA_exam,"Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act, pertaining to the bank’s lending practices on the basis of redlining.",14,institution,31103,31264,,,,0
+FDIC_16733_20240410,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,226,263,,,,0
+FDIC_16733_20240410,bank_name,llm:gemini:gemini-3.5-flash-lite,value,North Star Bank,North Star Bank,1,institution,117,132,,,,0
+FDIC_16733_20240410,bank_id,llm:gemini:gemini-3.5-flash-lite,value,16733,Certificate Number:  16733,1,institution,134,160,,,,0
+FDIC_16733_20240410,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-04-10,"April 10, 2024",1,institution,35,49,,,,0
+FDIC_16733_20240410,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Small Institution Examination Procedures,4,institution,3785,3825,,,,0
+FDIC_16733_20240410,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,S,This institution is rated Satisfactory.,3,institution,2145,2184,,,,0
+FDIC_16733_20240410,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-04-05,"April 5, 2021",4,institution,3748,3762,,,,0
+FDIC_16733_20240410,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The institution received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021",4,institution,3650,3762,,,,0
+FDIC_16733_20240410,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,352077000,"North Star Bank
+Roseville, MN
+352,077",9,institution,16181,16220,,,quote_does_not_support,0
+FDIC_16733_20240410,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"Total Assets as of
+12/31/23 $(000s)",9,institution,15918,15954,,,,0
+FDIC_16733_20240410,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2023-01-01,"originated, purchased, or renewed in 2023",8,institution,13649,13690,,,quote_does_not_support,0
+FDIC_16733_20240410,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"originated, purchased, or renewed in 2023",8,institution,13649,13690,,,quote_does_not_support,0
+FDIC_16733_20240410,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,North Star Bank designated a single contiguous assessment area,5,institution,5864,5927,,,quote_does_not_support,0
+FDIC_16733_20240410,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,small_business,"For this evaluation, examiners focused solely on the bank’s small business lending to derive overall conclusions.",7,institution,13104,13218,,,,0
+FDIC_16733_20240410,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,"For this evaluation, examiners focused solely on the bank’s small business lending to derive overall conclusions.",7,institution,13104,13218,,,,0
+FDIC_16733_20240410,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,82.3,"Small Business
+93
+82.3",9,institution,16701,16725,,,,0
+FDIC_16733_20240410,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,"Small Business
+93
+82.3",9,institution,16701,16725,,,,0
+FDIC_16733_20240410,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,71.5,averaged 71.5 percent,8,institution,15262,15283,,,,0
+FDIC_16733_20240410,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,11,institution,19663,19813,,,,0
+FDIC_16733_20240410,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,11,institution,19663,19813,,,,0
+FDIC_16733_20240410,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_16733_20240410,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,228,265,,,,0
+FDIC_26816_20220809,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"Liberty Bank, Inc.","Liberty Bank, Inc.",1,institution,120,138,,,,0
+FDIC_26816_20220809,bank_id,llm:gemini:gemini-3.5-flash-lite,value,26816,Certificate Number:  26816,1,institution,142,168,,,,0
+FDIC_26816_20220809,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2022-08-09,"August 9, 2022",1,institution,32,46,,,,0
+FDIC_26816_20220809,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Interagency Small Institution Examination Procedures,3,institution,3950,4003,,,,0
+FDIC_26816_20220809,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,This institution is rated Substantial Noncompliance.,3,institution,2182,2234,,,,0
+FDIC_26816_20220809,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-04-12,"April 12, 2021",3,institution,3921,3935,,,,0
+FDIC_26816_20220809,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,The institution received a “Substantial Noncompliance” CRA Rating at its previous CRA,3,institution,3805,3890,,,,0
+FDIC_26816_20220809,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,12614000,"Liberty Bank, Inc.
+12,614",8,institution,14382,14408,,,quote_does_not_support,0
+FDIC_26816_20220809,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,"Total Assets as of
+6/30/2022",8,institution,14312,14341,,,,0
+FDIC_26816_20220809,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.,8,institution,15445,15503,,,,0
+FDIC_26816_20220809,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-06-30,Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.,8,institution,15445,15503,,,,0
+FDIC_26816_20220809,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,"LBI has defined its AA as
+all of Salt Lake County",4,institution,5963,6013,,,quote_does_not_support,0
+FDIC_26816_20220809,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,"Consumer – Tiny Home Loans
+37
+2,401
+22
+1,696
+Small Business Loans
+0
+0
+2
+65",7,institution,12307,12390,,,,0
+FDIC_26816_20220809,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,The bank’s primary lending product is a consumer loan product referred to as Tiny Home Loans.,3,institution,4009,4102,,,,0
+FDIC_26816_20220809,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,0.0,"Total
+0
+0.0
+61
+100.0
+61
+0
+0.0
+4,162
+100.0
+4,162",8,institution,15386,15443,,,,0
+FDIC_26816_20220809,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total
+0
+0.0
+61
+100.0
+61
+0
+0.0
+4,162
+100.0
+4,162",8,institution,15386,15443,,,,0
+FDIC_26816_20220809,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,64.9,"The bank’s net LTD ratio, calculated from Call Report data, averaged 64.9 percent over the past five calendar quarters",7,institution,13260,13379,,,,0
+FDIC_26816_20220809,finding_present,llm:gemini:gemini-3.5-flash-lite,value,true,The FDIC identified illegal credit practices during the evaluation period.,9,institution,16041,16115,,,,0
+FDIC_26816_20220809,finding_type,llm:gemini:gemini-3.5-flash-lite,value,other_illegal_credit_practice,"Examiners cited a 
+violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices 
+(UDAP).",9,institution,16117,16239,,,,0
+FDIC_26816_20220809,rating_effect,llm:gemini:gemini-3.5-flash-lite,value,substantive_not_lowered,"Although the bank’s practices harmed consumers, 
+considering the bank’s already substantially deficient performance, this illegal credit practice did 
+not affect the CRA rating.",9,institution,16663,16840,,,quote_does_not_support,0
+FDIC_26816_20220809,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"considering the bank’s already substantially deficient performance, this illegal credit practice did 
+not affect the CRA rating.",9,institution,16712,16840,,,,0
+FDIC_26816_20220809,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_26816_20220809,laws_cited,llm:gemini:gemini-3.5-flash-lite,value,FTC_s5_UDAP,"Examiners cited a 
+violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices 
+(UDAP).",9,institution,16117,16239,,,,0
+FDIC_26816_20220809,practice_basis,llm:gemini:gemini-3.5-flash-lite,value,UDAP_product,"Examiners cited a 
+violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices 
+(UDAP).  The UDAP violation caused substantial harm to a majority of the bank’s mortgage loan 
+borrowers.",9,institution,16117,16337,,,,0
+FDIC_26816_20220809,finding_source,llm:gemini:gemini-3.5-flash-lite,value,this_CRA_exam,The FDIC identified illegal credit practices during the evaluation period.,9,institution,16041,16115,,,,0
+FDIC_6078_20240805,regulator,llm:gemini:gemini-3.5-flash-lite,value,FDIC,Federal Deposit Insurance Corporation,1,institution,220,257,,,,0
+FDIC_6078_20240805,bank_name,llm:gemini:gemini-3.5-flash-lite,value,One American Bank,One American Bank,1,institution,109,126,,,,0
+FDIC_6078_20240805,bank_id,llm:gemini:gemini-3.5-flash-lite,value,6078,Certificate Number:  6078,1,institution,128,153,,,,0
+FDIC_6078_20240805,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-08-05,"August 5, 2024",1,institution,29,43,,,,0
+FDIC_6078_20240805,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,Interagency Intermediate Small Institution Examination Procedures,7,institution,14507,14572,,,,0
+FDIC_6078_20240805,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,This institution is rated Needs to Improve.,3,institution,2128,2171,,,,0
+FDIC_6078_20240805,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Lending Test is rated Needs to Improve.,3,institution,2416,2459,,,,0
+FDIC_6078_20240805,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Community Development Test is rated Needs to Improve.,3,institution,3196,3253,,,,0
+FDIC_6078_20240805,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-12-03,"At the previous evaluation, dated December 3,
+2018",4,institution,3871,3922,,,,0
+FDIC_6078_20240805,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,and the institution received a Satisfactory rating.,4,institution,4024,4075,,,,0
+FDIC_6078_20240805,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,463000000,"As of March 31, 2024, the institution reported total assets of $463 million",4,institution,5101,5176,,,,0
+FDIC_6078_20240805,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2024-03-31,"As of March 31, 2024, the institution reported total assets of $463 million",4,institution,5101,5176,,,,0
+FDIC_6078_20240805,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,"This evaluation covers the period from the prior CRA evaluation dated December 3, 2018, to the
+current evaluation dated August 5, 2024.",7,institution,14207,14343,,,quote_does_not_support,0
+FDIC_6078_20240805,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2024-08-05,"This evaluation covers the period from the prior CRA evaluation dated December 3, 2018, to the
+current evaluation dated August 5, 2024.",7,institution,14207,14343,,,,0
+FDIC_6078_20240805,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,One American Bank has designated a single assessment area,5,institution,7055,7112,,,,0
+FDIC_6078_20240805,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|home_mortgage|small_business|small_farm,"Given the shift in lending focus during the
+evaluation period, examiners reviewed consumer, small business, small farm, and home mortgage
+loans.",8,institution,16190,16336,,,,0
+FDIC_6078_20240805,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,"Since the last
+evaluation, the bank’s primary focus changed to consumer lending, specifically student loans.",4,institution,4549,4658,,,,0
+FDIC_6078_20240805,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,0.9,"Total
+82 
+0.9 
+9,272 
+99.1 
+9,354 
+15,872 
+0.5 
+3,123,667 
+99.5 
+3,139,540",10,institution,21983,22058,,,,0
+FDIC_6078_20240805,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total
+82 
+0.9 
+9,272 
+99.1 
+9,354 
+15,872 
+0.5 
+3,123,667 
+99.5 
+3,139,540",10,institution,21983,22058,,,,0
+FDIC_6078_20240805,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,128.1,"The bank’s average net loan-to-deposit ratio is 128.1
+percent over the past 22 calendar quarters",9,institution,19395,19492,,,,0
+FDIC_6078_20240805,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,Examiners did not identify any evidence of discriminatory or other illegal credit practices,16,institution,32543,32634,,,,0
+FDIC_6078_20240805,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"therefore,
+this consideration did not affect the institution’s overall CRA rating.",16,institution,32636,32719,,,,0
+FDIC_6078_20240805,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FDIC_6078_20240805,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of New York,1,institution,352,384,,,,0
+FRB_3664588_20240116,bank_name,llm:gemini:gemini-3.5-flash-lite,value,Fieldpoint Private Bank & Trust,Fieldpoint Private Bank & Trust,1,institution,242,273,,,,0
+FRB_3664588_20240116,bank_id,llm:gemini:gemini-3.5-flash-lite,value,3664588,RSSD No. 3664588,1,institution,277,293,,,,0
+FRB_3664588_20240116,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-01-16,"January 16, 2024",1,institution,158,174,,,,0
+FRB_3664588_20240116,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,FFIEC Interagency Intermediate Small Institution Examination Procedures.,6,institution,12123,12196,,,,0
+FRB_3664588_20240116,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,INSTITUTION'S CRA RATING: This institution is rated Needs to Improve.,4,institution,7282,7351,,,,0
+FRB_3664588_20240116,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The Lending Test is rated: Needs to Improve.,4,institution,7354,7398,,,,0
+FRB_3664588_20240116,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,S,The Community Development Test is rated: Satisfactory.,4,institution,7401,7455,,,,0
+FRB_3664588_20240116,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-02-12,"Performance Evaluation dated February 12, 2018",6,institution,12069,12115,,,,0
+FRB_3664588_20240116,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation,6,institution,12015,12091,,,,0
+FRB_3664588_20240116,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,1700000000,the bank had total assets of $1.7 billion,5,institution,10177,10218,,,,0
+FRB_3664588_20240116,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-09-30,"September 30, 2023",5,institution,10038,10056,,,,0
+FRB_3664588_20240116,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2017-01-01,"January 1, 2017, to December 31, 2022.",8,institution,15595,15634,,,,0
+FRB_3664588_20240116,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-12-31,"January 1, 2017, to December 31, 2022.",8,institution,15595,15634,,,,0
+FRB_3664588_20240116,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,4,The CRA performance evaluation included the following four bank delineated assessment areas:,7,institution,13074,13166,,,,0
+FRB_3664588_20240116,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,4,Examiners used full-scope examination procedures to evaluate the bank’s performance for all included assessment areas.,8,institution,15085,15204,,,quote_does_not_support,0
+FRB_3664588_20240116,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage|small_business,"Examiners reviewed the bank’s home mortgage loans and small business loans from January 1, 2017, to December 31, 2022.",8,institution,15515,15634,,,,0
+FRB_3664588_20240116,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,"When evaluating the bank’s performance under the Lending Test, examiners placed more weight on home mortgage loans when compared to small business loans based on the number of loans originated.",8,institution,16116,16311,,,,0
+FRB_3664588_20240116,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,40.8,"Total Loans 
+ 171 
+ 40.8%",11,institution,24785,24808,,,,0
+FRB_3664588_20240116,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total Loans 
+ 171 
+ 40.8%",11,institution,24785,24808,,,,0
+FRB_3664588_20240116,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,91.1,"Fieldpoint’s average LTD ratio for the 24-quarters 
+from January 1, 2017, to December 31, 2022, was 91.1%",10,institution,23070,23175,,,,0
+FRB_3664588_20240116,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,14,institution,32221,32385,,,,0
+FRB_3664588_20240116,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,14,institution,32221,32385,,,,0
+FRB_3664588_20240116,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_3664588_20240116,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of Kansas City,1,institution,197,232,,,,0
+FRB_663656_20241118,bank_name,llm:gemini:gemini-3.5-flash-lite,value,Small Business Bank,Small Business Bank,1,institution,112,131,,,,0
+FRB_663656_20241118,bank_id,llm:gemini:gemini-3.5-flash-lite,value,663656,RSSD# 663656,1,institution,133,145,,,,0
+FRB_663656_20241118,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-11-18,"November 18, 2024",1,institution,33,50,,,,0
+FRB_663656_20241118,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Interagency Examination Procedures for Small Institutions,3,institution,2997,3054,,,,0
+FRB_663656_20241118,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,Small Business Bank (the bank) is rated Needs to Improve.,3,institution,2181,2238,,,,0
+FRB_663656_20241118,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2020-03-23,"March 23, 2020",4,institution,5439,5453,,,,0
+FRB_663656_20241118,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance evaluation.",4,institution,5386,5478,,,,0
+FRB_663656_20241118,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,94200000,"The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4057,4120,,,,0
+FRB_663656_20241118,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2024-06-30,"The bank has total assets of $94.2 million as of June 30, 2024.",3,institution,4057,4120,,,,0
+FRB_663656_20241118,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2020-03-24,"originated between March 24, 2020, and December 31, 2023.",4,institution,5784,5842,,,,0
+FRB_663656_20241118,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"originated between March 24, 2020, and December 31, 2023.",4,institution,5784,5842,,,,0
+FRB_663656_20241118,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,Lending performance was assessed within the bank’s only AA.,3,institution,3501,3561,,,quote_does_not_support,0
+FRB_663656_20241118,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,small_business,"A statistical sample of 169 small business loans from a universe of 1,005 loans",3,institution,3656,3735,,,,0
+FRB_663656_20241118,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,Small Business Lending,10,institution,19068,19090,,,,0
+FRB_663656_20241118,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,21.3,"As noted in Table 7, only 21.3 percent of the bank’s lending by number and 17.3 percent by dollar volume was originated inside the AA.",10,institution,18023,18159,,,,0
+FRB_663656_20241118,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,Total Loans,10,institution,18564,18575,,,,0
+FRB_663656_20241118,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,85.9,The bank’s 19-quarter average NLTD ratio of 85.9 percent,9,institution,16987,17044,,,,0
+FRB_663656_20241118,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices inconsistent with helping to meet community credit needs was identified.,12,institution,22057,22245,,,,0
+FRB_663656_20241118,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices inconsistent with helping to meet community credit needs was identified.,12,institution,22057,22245,,,,0
+FRB_663656_20241118,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_663656_20241118,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,regulator,llm:gemini:gemini-3.5-flash-lite,value,FRB,Federal Reserve Bank of Richmond,1,institution,133,165,,,,0
+FRB_722432_20230911,bank_name,llm:gemini:gemini-3.5-flash-lite,value,The Bank of Romney,The Bank of Romney,1,institution,90,108,,,,0
+FRB_722432_20230911,bank_id,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2023-09-11,"September 11, 2023",1,institution,19,37,,,,0
+FRB_722432_20230911,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,"The Bank of Romney (BOR) was evaluated using the interagency examination procedures for small 
+institutions developed by the Federal Financial Institutions Examination Council (FFIEC).",4,institution,4545,4729,,,,0
+FRB_722432_20230911,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,O,INSTITUTION'S CRA RATING:  This institution is rated Outstanding.,4,institution,3687,3752,,,,0
+FRB_722432_20230911,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2017-09-11,"The institution’s previous CRA rating dated September 11, 2017, 
+was Outstanding.",4,institution,5996,6077,,,,0
+FRB_722432_20230911,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,O,"The institution’s previous CRA rating dated September 11, 2017, 
+was Outstanding.",4,institution,5996,6077,,,,0
+FRB_722432_20230911,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,354900000,"As of June 30, 2023, the bank’s assets totaled $354.9 million",4,institution,6199,6260,,,,0
+FRB_722432_20230911,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-06-30,"As of June 30, 2023, the bank’s assets totaled $354.9 million",4,institution,6199,6260,,,,0
+FRB_722432_20230911,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,"The evaluation was based on 
+all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor 
+vehicle loans originated during 2022.",4,institution,4912,5070,,,quote_does_not_support,0
+FRB_722432_20230911,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2022-12-31,"The evaluation was based on 
+all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor 
+vehicle loans originated during 2022.",4,institution,4912,5070,,,quote_does_not_support,0
+FRB_722432_20230911,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,2,"Currently, BoR serves two assessment areas located within West Virginia.",4,institution,5231,5303,,,,0
+FRB_722432_20230911,n_full_scope,llm:gemini:gemini-3.5-flash-lite,value,1,"full-scope evaluation procedures were applied to the Winchester, WV 
+assessment area and limited-scope procedures were applied to the Hagerstown-Martinsburg, WV 
+assessment area.",4,institution,5552,5730,,,quote_does_not_support,0
+FRB_722432_20230911,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|home_mortgage,"HMDA loans and 
+consumer motor vehicle loans were identified as primary credit products.",4,institution,4823,4911,,,,0
+FRB_722432_20230911,primary_product,llm:gemini:gemini-3.5-flash-lite,value,unstated,"HMDA loans and 
+consumer motor vehicle loans were identified as primary credit products.",4,institution,4823,4911,,,,0
+FRB_722432_20230911,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,70.7,"As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were 
+extended within the bank’s assessment area.",6,institution,12338,12483,,,,0
+FRB_722432_20230911,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were 
+extended within the bank’s assessment area.",6,institution,12338,12483,,,quote_does_not_support,0
+FRB_722432_20230911,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,97.9,"The bank’s current loan-to-deposit ratio is 99.4% and averaged 97.9% for the preceding 24-quarter 
+period ending June 30, 2023.",6,institution,11279,11406,,,,0
+FRB_722432_20230911,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
+community credit needs was identified.",6,institution,12670,12807,,,,0
+FRB_722432_20230911,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,"No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet 
+community credit needs was identified.",6,institution,12670,12807,,,,0
+FRB_722432_20230911,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+FRB_722432_20230911,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,204,245,,,,0
+OCC_11715_20240408,bank_name,llm:gemini:gemini-3.5-flash-lite,value,The Lemont National Bank,The Lemont National Bank,1,institution,85,109,,,,0
+OCC_11715_20240408,bank_id,llm:gemini:gemini-3.5-flash-lite,value,11715,Charter Number 11715,1,institution,112,132,,,,0
+OCC_11715_20240408,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-04-08,"April 8, 2024",1,institution,18,31,,,,0
+OCC_11715_20240408,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,small bank CRA evaluation procedures,4,institution,6460,6496,,,,0
+OCC_11715_20240408,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,Institution’s CRA Rating: This institution is rated Substantial Noncompliance.,3,institution,1595,1673,,,,0
+OCC_11715_20240408,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,The lending test is rated: Substantial Noncompliance.,3,institution,1675,1728,,,,0
+OCC_11715_20240408,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2021-06-19,"preceding CRA evaluation, dated June 19, 2021.",4,institution,6144,6191,,,,0
+OCC_11715_20240408,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,SN,Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation,4,institution,6085,6168,,,,0
+OCC_11715_20240408,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,65400000,"As of December 31,
+2023, Lemont reported total assets of $65.4 million",4,institution,5109,5180,,,,0
+OCC_11715_20240408,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,"As of December 31,
+2023, Lemont reported total assets of $65.4 million",4,institution,5109,5180,,,,0
+OCC_11715_20240408,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,The evaluation period includes calendar years 2021 through 2023.,4,institution,6361,6425,,,quote_does_not_support,0
+OCC_11715_20240408,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,The evaluation period includes calendar years 2021 through 2023.,4,institution,6361,6425,,,quote_does_not_support,0
+OCC_11715_20240408,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,The bank is a single state institution with five branch offices in Cook and Will counties.,4,institution,5253,5343,,,quote_does_not_support,0
+OCC_11715_20240408,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,home mortgage loans represent the bank’s primary lending product,4,institution,6567,6631,,,,0
+OCC_11715_20240408,primary_product,llm:gemini:gemini-3.5-flash-lite,value,home_mortgage,home mortgage loans represent the bank’s primary lending product,4,institution,6567,6631,,,,0
+OCC_11715_20240408,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,54.4,"Total 
+6 
+54.4 
+5 
+45.4 
+11 
+1,863 
+52.9 
+1,657 
+47.1 
+3,520",4,institution,4743,4803,,,,0
+OCC_11715_20240408,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total 
+6 
+54.4 
+5 
+45.4 
+11 
+1,863 
+52.9 
+1,657 
+47.1 
+3,520",4,institution,4743,4803,,,,0
+OCC_11715_20240408,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,10.6,"The Lemont National Bank’s (“Lemont” or “bank”) average LTD for the 16-quarter period since the 
+preceding CRA evaluation was 10.6 percent.",3,institution,2364,2503,,,,0
+OCC_11715_20240408,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution (or any affiliate whose loans have been considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,9303,9565,,,,0
+OCC_11715_20240408,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution (or any affiliate whose loans have been considered as part of the institution’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,9303,9565,,,,0
+OCC_11715_20240408,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_11715_20240408,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,228,269,,,,0
+OCC_13682_20240819,bank_name,llm:gemini:gemini-3.5-flash-lite,value,"First Neighbor Bank, National Association","First Neighbor Bank, National Association",1,institution,116,157,,,,0
+OCC_13682_20240819,bank_id,llm:gemini:gemini-3.5-flash-lite,value,13682,Charter Number 13682,1,institution,159,179,,,,0
+OCC_13682_20240819,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2024-08-19,"August 19, 2024",1,institution,41,56,,,,0
+OCC_13682_20240819,exam_method,llm:gemini:gemini-3.5-flash-lite,value,isb,We evaluated First Neighbor’s CRA performance using intermediate small bank evaluation procedures,5,institution,7421,7519,,,,0
+OCC_13682_20240819,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,O,Institution’s CRA Rating: This institution is rated Outstanding.,3,institution,2811,2875,,,,0
+OCC_13682_20240819,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,O,The lending test is rated: Outstanding.,3,institution,2883,2922,,,,0
+OCC_13682_20240819,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,value,O,The community development test is rated: Outstanding.,3,institution,2925,2978,,,,0
+OCC_13682_20240819,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,prior_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,593700000,"First Neighbor Bank, N.A, (First Neighbor) is a $593.7 million (total assets) intrastate financial institution headquartered in Toledo, Illinois.",4,institution,5662,5808,,,,0
+OCC_13682_20240819,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2021-01-01,Source: Sample of 20 consumer and 20 business loans originated between 1/1/2021 - 12/31/2023.,4,institution,5488,5581,,,,0
+OCC_13682_20240819,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2023-12-31,Source: Sample of 20 consumer and 20 business loans originated between 1/1/2021 - 12/31/2023.,4,institution,5488,5581,,,,0
+OCC_13682_20240819,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,"Based on the branch locations, First Neighbor established one contiguous AA in Illinois",4,institution,6398,6485,,,,0
+OCC_13682_20240819,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,"As a result, we sampled consumer and business loans for this evaluation.",5,institution,8461,8534,,,quote_does_not_support,0
+OCC_13682_20240819,primary_product,llm:gemini:gemini-3.5-flash-lite,value,consumer,"Based on both the number and dollar volume of loan origination data supplied by the bank, First Neighbor’s primary lending products are consumer and business loans.",5,institution,8030,8195,,,,0
+OCC_13682_20240819,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,87.5,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
+OCC_13682_20240819,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,4,institution,4759,4877,,,,0
+OCC_13682_20240819,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,85.5,"During the evaluation period, the bank’s quarterly LTD ratio averaged 85.5 percent and ranged from 76.4 percent to 95.1 percent.",3,institution,4096,4225,,,,0
+OCC_13682_20240819,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,10175,10335,,,,0
+OCC_13682_20240819,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,6,institution,10175,10335,,,,0
+OCC_13682_20240819,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_13682_20240819,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,regulator,llm:gemini:gemini-3.5-flash-lite,value,OCC,Office of the Comptroller of the Currency,1,institution,208,249,,,,0
+OCC_703395_20230327,bank_name,llm:gemini:gemini-3.5-flash-lite,value,GN Bank,GN Bank,1,institution,113,120,,,,0
+OCC_703395_20230327,bank_id,llm:gemini:gemini-3.5-flash-lite,value,703395,Charter Number: 703395,1,institution,131,153,,,,0
+OCC_703395_20230327,exam_date,llm:gemini:gemini-3.5-flash-lite,value,2023-03-27,"March 27, 2023",1,institution,39,53,,,,0
+OCC_703395_20230327,exam_method,llm:gemini:gemini-3.5-flash-lite,value,small,Under interagency small bank CRA procedures,5,institution,8943,8986,,,,0
+OCC_703395_20230327,overall_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,Institution’s CRA Rating: This institution is rated Needs to Improve.,3,institution,1662,1731,,,,0
+OCC_703395_20230327,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,value,NI,The lending test is rated: Needs to Improve.,3,institution,1740,1784,,,,0
+OCC_703395_20230327,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,value,2018-10-01,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
+OCC_703395_20230327,prior_rating,llm:gemini:gemini-3.5-flash-lite,value,S,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",4,institution,7435,7533,,,,0
+OCC_703395_20230327,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,value,84700000,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",4,institution,5302,5374,,,,0
+OCC_703395_20230327,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",4,institution,5302,5374,,,,0
+OCC_703395_20230327,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,value,2019-01-01,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",5,institution,7923,8012,,,,0
+OCC_703395_20230327,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,value,2021-12-31,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",5,institution,7923,8012,,,,0
+OCC_703395_20230327,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,value,1,The bank delineated one AA consisting of 184 census tracts,4,institution,4350,4408,,,,0
+OCC_703395_20230327,n_full_scope,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,value,consumer|small_business,the OCC determined the primary loan products were consumer and small business loans.,5,institution,8105,8190,,,,0
+OCC_703395_20230327,primary_product,llm:gemini:gemini-3.5-flash-lite,value,small_business,the OCC determined the primary loan products were consumer and small business loans.,5,institution,8105,8190,,,,0
+OCC_703395_20230327,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,value,3.4,"Total 12 3.4 345 96.4 357 686 1.7 40,342 98.3 41,028",3,institution,3891,3953,,,,0
+OCC_703395_20230327,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,value,all_reviewed_combined,"Total 12 3.4 345 96.4 357 686 1.7 40,342 98.3 41,028",3,institution,3891,3953,,,,0
+OCC_703395_20230327,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,value,54.32,"The bank’s quarterly average LTD ratio since the end of the last performance evaluation period, June 30, 2018 to December 31, 2021, was 54.32 percent.",3,institution,2413,2564,,,,0
+OCC_703395_20230327,finding_present,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this bank (or any affiliate whose loans have been considered as part of the bank’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,5,institution,10377,10625,,,,0
+OCC_703395_20230327,finding_type,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,rating_effect,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,rating_lowered,llm:gemini:gemini-3.5-flash-lite,value,false,The OCC has not identified that this bank (or any affiliate whose loans have been considered as part of the bank’s lending performance) has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,5,institution,10377,10625,,,,0
+OCC_703395_20230327,rating_lowered_level,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,rating_before,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,rating_after,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,laws_cited,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,practice_basis,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
+OCC_703395_20230327,finding_source,llm:gemini:gemini-3.5-flash-lite,absent,,,,,,,,,,0
