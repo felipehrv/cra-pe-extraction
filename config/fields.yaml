@@ -139,8 +139,8 @@ fields:
       Total assets of the bank in US dollars as printed in the PE, usually in the Description of Institution. For FDIC
       PEs, when the loan-to-deposit comparison table prints the bank's own row under a "Total Assets as of" column (in
       thousands, $(000s)), take that figure times 1,000 (a cell of 123,456 is 123456000) rather than a rounded figure
-      in the description sentence ("approximately $X billion"), and quote the table from the "Total Assets as of"
-      header through the bank's figure; total_assets_asof is then the header's date. Never take a peer bank's row.
+      in the description sentence ("approximately $X billion"), and quote the bank's own row verbatim, from its name
+      through its total assets figure; total_assets_asof is then the date in the column header. Never take a peer bank's row.
       Status absent when the PE gives no figure.
 
   total_assets_asof:
@@ -160,7 +160,15 @@ fields:
     tolerance: exact
     verification: gold
     description: Start of the lending test data window. absent_from_document when only years are given (then analysis_periods holds them).
-    prompt_description: Start of the lending test data window; status absent when only years are given.
+    prompt_description: >-
+      First day of the window of loan data the Lending Test analysed, only when the PE prints it as a full date (for
+      example "loans originated between March 24, 2020, and December 31, 2023" or "Evaluation Period: 1/1/2021 -
+      6/30/2022"). When products have different windows, use the window of the primary loan product. Status absent
+      when the PE gives only years for the primary product's loans ("2019, 2020, and 2021 HMDA data", "loans
+      originated in 2022 and 2023", "calendar years 2021 and 2022", "2019 to 2021", a table with one row per year):
+      never turn a year into January 1. The single exception is the phrase "calendar years 2021 through 2023", which
+      gives 2021-01-01. The evaluation period that runs from the prior evaluation date to the current evaluation date
+      is not the data window, nor is the community development period or the loan-to-deposit averaging period.
 
   lending_data_period_end:
     group: B
@@ -171,6 +179,13 @@ fields:
     verification: gold
     consistency: lte_exam_date
     description: End of the lending test data window.
+    prompt_description: >-
+      Last day of the window of loan data the Lending Test analysed, only when the PE prints it as a full date; the
+      same window and the same rules as lending_data_period_start (when its status is absent, this one is absent too).
+      Status absent when the PE gives only years for the primary product's loans: never turn a year into December 31.
+      The single exception is the phrase "calendar years 2021 through 2023", which gives 2023-12-31. Never the
+      evaluation date and never the end of the evaluation period that runs from the prior evaluation to the current
+      one.
 
   n_assessment_areas:
     group: B

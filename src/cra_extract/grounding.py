@@ -16,7 +16,10 @@ state-level test rating must not support the institution's rating; see
 state section repeats "The Lending Test is rated: Needs to Improve"). (b) value
 presence: the normalized value appears in the quote (enums through their word
 forms, dates in ISO or printed form, numbers within tolerance, sets element by
-element). (c) Group C: a quote that asserts a finding must contain a finding
+element, number words and "single" for integers, a dollar figure printed in thousands
+when the located page or section carries a thousands marker, and the field rules of
+``field_rule_supports`` for counts and products stated by enumeration or by a table
+block). (c) Group C: a quote that asserts a finding must contain a finding
 predicate and must not be a stored "no evidence" template (``templates.residual``
 when ``cra_extract.templates`` exists, otherwise a small built-in negation check).
 
@@ -70,6 +73,8 @@ NUMBER_WORDS = {
     "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13,
     "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
     "nineteen": 19, "twenty": 20,
+    # "designated a single contiguous assessment area" (FDIC_16733_20240410 p5)
+    "single": 1,
 }
 
 SCALE_WORDS = {"thousand": 1e3, "million": 1e6, "billion": 1e9}
@@ -93,7 +98,8 @@ WORD_FORMS: dict[str, list[str]] = {
     "small_business": ["small business", "commercial"],
     "small_farm": ["small farm", "agricultur"],
     "consumer": ["consumer"],
-    "all_reviewed_combined": ["total", "combined", "all loans", "loans reviewed"],
+    # "total" must not be read inside "Subtotal", the row that closes one product's block.
+    "all_reviewed_combined": [r"(?<!sub)total", "combined", "all loans", "loans reviewed"],
     "discrimination": ["discriminat", "redlining", "fair lending", "fair housing act", "equal credit"],
     "other_illegal_credit_practice": [
         "illegal credit practice", r"\budap\b", "unfair", "deceptive",
@@ -313,6 +319,30 @@ def date_in_text(d: date, norm_text: str) -> bool:
     )
 
 
+# "The evaluation period includes calendar years 2021 through 2023" (OCC_11715_20240408 p4)
+# names a start and an end, coded 2021-01-01 to 2023-12-31 (docs/labeling_guide.md, field 12).
+# A bare list of years ("calendar years 2021 and 2022", "in 2022 and 2023") is not a range.
+YEAR_RANGE_RE = re.compile(r"\bcalendar years? ((?:19|20)\d{2}) ?(?:-|through|to|until) ?((?:19|20)\d{2})\b")
+
+
+def date_in_year_range(d: date, norm_text: str) -> bool:
+    """True when ``d`` is January 1 of the first year or December 31 of the last year of a
+    "calendar years YYYY through YYYY" range in ``norm_text`` (normalized)."""
+    for m in YEAR_RANGE_RE.finditer(norm_text):
+        first, last = int(m.group(1)), int(m.group(2))
+        if first > last:
+            continue
+        if (d.month, d.day) == (1, 1) and d.year == first:
+            return True
+        if (d.month, d.day) == (12, 31) and d.year == last:
+            return True
+    return False
+
+
+# Thousands markers of FDIC and OCC tables: "($000s)", "$(000s)", "$000", "in thousands".
+THOUSANDS_MARKER_RE = re.compile(r"\$ ?\(? ?000'?s?\b|\( ?\$? ?000'?s? ?\)|\bin thousands\b|\(thousands\)")
+
+
 UNIT_MARKER_RE = re.compile(r"\(?000s?\)?|thousand|million|billion|\$")
 _MONTHS = "january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec"
 DATE_SPAN_RE = re.compile(
@@ -436,8 +466,14 @@ def asserts_finding_sentence(norm_quote: str) -> bool:
     return any(_has_predicate(sent) and not _has_negation(sent) for sent in _sentences(norm_quote))
 
 
-def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
-    """Stage 2(b) and (d): does the normalized value appear in the quote?"""
+def value_in_quote(value: Any, quote: str, spec: dict[str, Any], thousands_context: bool = False) -> bool:
+    """Stage 2(b) and (d): does the normalized value appear in the quote?
+
+    ``thousands_context`` (set by :func:`check` for dollar fields when the located page or
+    section carries a thousands marker, :data:`THOUSANDS_MARKER_RE`) also accepts a figure
+    equal to the value divided by 1,000: the bank's row of an FDIC LTD table quoted without
+    its "($000s)" column header (FDIC_16733_20240410 p9 "North Star Bank Roseville, MN
+    352,077", value 352077000)."""
     norm_quote = normalize(quote)
     ftype = spec.get("type", "str")
     if ftype == "enum":
@@ -454,7 +490,7 @@ def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
         return not asserts_finding_sentence(norm_quote)
     if ftype == "date":
         d = parse_date(value)
-        return d is not None and date_in_text(d, norm_quote)
+        return d is not None and (date_in_text(d, norm_quote) or date_in_year_range(d, norm_quote))
     if ftype in {"int", "float"}:
         try:
             target = float(str(value).replace(",", "").replace("$", "").replace("%", ""))
@@ -462,7 +498,11 @@ def value_in_quote(value: Any, quote: str, spec: dict[str, Any]) -> bool:
             return False
         abs_tol, rel_tol = number_tolerance(spec)
         scale_bare = not (ftype == "int" and spec.get("tolerance", "exact") == "exact")
-        return number_matches(target, numbers_in(quote, scale_bare=scale_bare), abs_tol, rel_tol)
+        if number_matches(target, numbers_in(quote, scale_bare=scale_bare), abs_tol, rel_tol):
+            return True
+        return thousands_context and number_matches(
+            target / 1e3, numbers_in(quote, scale_bare=False), abs_tol / 1e3, rel_tol
+        )
     # Free strings (bank_name): fuzzy containment.
     return fuzz.partial_ratio(normalize(str(value)), norm_quote) >= MIN_LOCATE_SCORE
 
@@ -512,6 +552,155 @@ def _residual_is_boilerplate(residual_text: str) -> bool:
     return not asserts_finding_sentence(normalize(residual_text))
 
 
+# ------------------------------------------- stage 2: field rules (counts, products)
+
+
+# Dollar fields whose figure may be printed in thousands (the FDIC LTD comparison table).
+DOLLAR_FIELDS = {"total_assets_usd"}
+
+PRODUCT_CODES = ("home_mortgage", "small_business", "small_farm", "consumer")
+
+_FULL_SCOPE_RE = re.compile(r"full[- ]scope", re.IGNORECASE)
+_LIMITED_SCOPE_RE = re.compile(r"limited[- ]scope", re.IGNORECASE)
+# A named assessment area in the singular: a run of capitalized tokens before "AA" or
+# "assessment area" ("the Austin MSA AA", "the Winchester, WV assessment area"); generic
+# mentions ("its AA", "the bank's largest AA") have no capitalized name and do not count.
+_NAMED_AA_RE = re.compile(r"((?:[A-Z0-9][\w.'&-]*,? ){1,4})(?:assessment area|AA)\b(?!s)")
+_ALL_AAS_RE = re.compile(r"\ball\b(?: [\w'-]+){0,3} (?:assessment areas|aas)\b")
+# A count of assessment areas stated in prose ("included the following four bank delineated
+# assessment areas", FRB_3664588_20240116 p7).
+_AA_COUNT_RE = re.compile(
+    rf"\b(\d{{1,2}}|{'|'.join(NUMBER_WORDS)})\b (?:[a-z-]+ ){{0,3}}(?:assessment areas?|aas?)\b"
+)
+# A statement of the bank's lending inside its assessment area(s), as in a share sentence
+# ("were extended within the bank's assessment area", FRB_722432_20230911 p6).
+_INSIDE_AA_RE = re.compile(
+    r"\b(?:inside|within|in) (?:the |its )?(?:bank's |institution's )?(?:delineated )?(?:assessment areas?|aas?)\b"
+)
+
+
+def _collapse(text: str) -> str:
+    """Whitespace-collapsed text with unified quote characters, case preserved."""
+    return re.sub(r"\s+", " ", "".join(_QUOTE_CHARS.get(ch, ch) for ch in text)).strip()
+
+
+def full_scope_segments(quote: str) -> list[str]:
+    """The parts of the quote's sentences that speak of full-scope procedures: the whole
+    sentence when it does not mention limited-scope procedures, else the text from the
+    full-scope mention to the limited-scope mention (or to the end of the sentence when the
+    limited-scope mention comes first)."""
+    out: list[str] = []
+    for sent in _SENTENCE_SPLIT_RE.split(_collapse(quote)):
+        full = _FULL_SCOPE_RE.search(sent)
+        if full is None:
+            continue
+        limited = _LIMITED_SCOPE_RE.search(sent)
+        if limited is None:
+            out.append(sent)
+        elif limited.start() > full.start():
+            out.append(sent[full.start():limited.start()])
+        else:
+            out.append(sent[full.start():])
+    return out
+
+
+def document_aa_counts(sections: dict[str, Section], pages: list[Page]) -> set[int]:
+    """Assessment-area counts stated in institution-level text: the institution-scope
+    sections, or the institution-scope pages when no section was located. Sentences about
+    the prior evaluation ("At the prior evaluation, Fieldpoint maintained two assessment
+    areas", FRB_3664588_20240116 p7) are left out."""
+    texts = [sec.text for sec in sections.values() if sec.scope == "institution"]
+    if not texts:
+        texts = [p.text for p in pages if p.scope in SUPPORTING_SCOPES and not p.is_toc]
+    counts: set[int] = set()
+    for text in texts:
+        for sent in _sentences(normalize(text)):
+            if re.search(r"\b(?:prior|previous)\b", sent):
+                continue
+            for m in _AA_COUNT_RE.finditer(sent):
+                token = m.group(1)
+                counts.add(int(token) if token.isdigit() else NUMBER_WORDS[token])
+    return counts
+
+
+def full_scope_count_supported(
+    target: int, quote: str, sections: dict[str, Section], pages: list[Page]
+) -> bool:
+    """n_full_scope stated by enumeration rather than by a number: the count of distinct
+    named assessment areas in the full-scope parts of the quote ("full-scope procedures to
+    ... the Austin MSA AA. Examiners also applied full-scope procedures to the Killeen MSA
+    AA", FDIC_12299_20220912 p6, is 2), or, when the quote applies full-scope procedures to
+    all assessment areas ("for all included assessment areas", FRB_3664588_20240116 p8), an
+    assessment-area count stated in the document's institution-level text."""
+    segments = full_scope_segments(quote)
+    if not segments or target < 1:
+        return False
+    names = {m.group(1).strip(" ,").lower() for seg in segments for m in _NAMED_AA_RE.finditer(seg)}
+    if len(names) == target:
+        return True
+    if any(_ALL_AAS_RE.search(normalize(seg)) for seg in segments):
+        return target in document_aa_counts(sections, pages)
+    return False
+
+
+def subtotal_product(page_text: str, start: int) -> str | None:
+    """Product of the table block a "Subtotal" row closes: the product whose word form
+    occurs last on the page before the row (FDIC_12299_20220912 p9: the rows 2019, 2020 and
+    2021 under "Home Mortgage", then "Subtotal 713 75.2 235 24.8")."""
+    before = normalize(page_text[:start])[-3000:]
+    best: tuple[int, str] | None = None
+    for code in PRODUCT_CODES:
+        ends = [m.end() for form in WORD_FORMS[code] for m in re.finditer(form, before)]
+        if ends and (best is None or max(ends) > best[0]):
+            best = (max(ends), code)
+    return best[1] if best else None
+
+
+def combined_share_sentence(quote: str) -> bool:
+    """A share sentence about the bank's lending as a whole: it speaks of lending inside
+    the bank's assessment area(s) and names no loan product ("a majority of the number
+    (70.7%) and dollar amount (54.9%) were extended within the bank's assessment area",
+    FRB_722432_20230911 p6). A table row has no such phrase."""
+    norm = normalize(quote)
+    return bool(_INSIDE_AA_RE.search(norm)) and not any(enum_in_quote(c, norm) for c in PRODUCT_CODES)
+
+
+def field_rule_supports(
+    value: FieldValue, page: Page | None, start: int, sections: dict[str, Section], pages: list[Page]
+) -> bool:
+    """Field-specific value presence for values a PE states by enumeration or by layout
+    rather than verbatim; the scope check has already passed."""
+    quote = value.quote or ""
+    if value.field == "n_full_scope":
+        try:
+            target = int(float(str(value.value)))
+        except ValueError:
+            return False
+        return full_scope_count_supported(target, quote, sections, pages)
+    if value.field == "inside_aa_share_product":
+        code = str(value.value)
+        if code == "all_reviewed_combined":
+            return combined_share_sentence(quote)
+        if code in PRODUCT_CODES and normalize(quote).startswith("subtotal") and page is not None:
+            return subtotal_product(page.text, start) == code
+    return False
+
+
+def thousands_context(page: Page | None, page_no: int, quote: str, sections: dict[str, Section]) -> bool:
+    """True when the located page, or a section that spans it and contains the quote,
+    carries a thousands marker (:data:`THOUSANDS_MARKER_RE`)."""
+    if page is not None and THOUSANDS_MARKER_RE.search(normalize(page.text)):
+        return True
+    needle = normalize(quote)
+    for sec in sections.values():
+        if not (sec.page_start <= page_no <= sec.page_end):
+            continue
+        hay = normalize(sec.text)
+        if THOUSANDS_MARKER_RE.search(hay) and fuzz.partial_ratio(needle, hay) >= MIN_LOCATE_SCORE:
+            return True
+    return False
+
+
 # ----------------------------------------------------------------- check
 
 
@@ -543,7 +732,13 @@ def check(
     # (the span is the verbatim source; the quote may carry OCR or transcription noise).
     page = next((p for p in pages if p.number == page_no), None)
     span = page.text[start:end] if page is not None else ""
-    if not (value_in_quote(value.value, value.quote, spec) or (span and value_in_quote(value.value, span, spec))):
+    thousands = value.field in DOLLAR_FIELDS and thousands_context(page, page_no, value.quote, sections)
+    supported = (
+        value_in_quote(value.value, value.quote, spec, thousands)
+        or (bool(span) and value_in_quote(value.value, span, spec, thousands))
+        or field_rule_supports(value, page, start, sections, pages)
+    )
+    if not supported:
         return GroundingResult(True, page_no, start, end, score, False, "quote_does_not_support", "value not in quote")
 
     if spec.get("group") == "C" and _asserts_finding(value.value, spec):

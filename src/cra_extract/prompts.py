@@ -41,7 +41,11 @@ from cra_extract.models import DocRecord, Section
 # say which row to read (the combined figure, else the primary product's pooled subtotal) and
 # that the product names the row quoted; the JSON schema's per-field description uses
 # prompt_description too, so the schema no longer carries data-dictionary wording.
-PROMPT_VERSION = "v4"
+# v4 (2026-10-14): total_assets_usd prefers the FDIC LTD table figure in thousands.
+# v5 (2026-10-14, dev tuning): lending_data_period_start and _end are status absent when only
+# years are given for the primary product (except "calendar years YYYY through YYYY"), and
+# never the evaluation period; total_assets_usd quotes the bank's own LTD table row.
+PROMPT_VERSION = "v5"
 
 STATUSES = ["value", "absent", "abstain"]
 

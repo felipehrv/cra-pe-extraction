@@ -384,3 +384,194 @@ def test_date_forms_include_two_digit_years():
 
     forms = grounding.date_forms(date(2023, 6, 5))
     assert "6/5/23" in forms and "06/05/23" in forms
+
+
+# ------------------------------------------------- dev tuning: value-presence rule gaps
+# The quotes below are the Flash-Lite dev quotes that failed as quote_does_not_support with
+# a correct value (results/predictions_dev.csv, first dev scoring), on page texts trimmed
+# from the same dev documents.
+
+
+def one_page(text: str, scope: str = "institution") -> list[Page]:
+    return [Page(number=1, text=text, scope=scope)]
+
+
+@pytest.mark.parametrize(
+    "value,quote,ok",
+    [
+        # FDIC_16733_20240410 p5 and FDIC_6078_20240805 p5.
+        (1, "North Star Bank designated a single contiguous assessment area", True),
+        (2, "North Star Bank designated a single contiguous assessment area", False),
+        (5, "SouthStar Bank, S.S.B. designated five assessment areas", True),
+        (4, "SouthStar Bank, S.S.B. designated five assessment areas", False),
+        (20, "the bank has twenty assessment areas", True),
+    ],
+)
+def test_number_words_and_single_match_integers(value, quote, ok):
+    assert grounding.value_in_quote(value, quote, field_spec("n_assessment_areas")) is ok
+
+
+@pytest.mark.parametrize(
+    "field,value,quote,ok",
+    [
+        # OCC_11715_20240408 p4: a calendar-year range names a start and an end (codebook field 12).
+        ("lending_data_period_start", "2021-01-01", "The evaluation period includes calendar years 2021 through 2023.", True),
+        ("lending_data_period_end", "2023-12-31", "The evaluation period includes calendar years 2021 through 2023.", True),
+        ("lending_data_period_start", "2021-12-31", "The evaluation period includes calendar years 2021 through 2023.", False),
+        ("lending_data_period_end", "2023-01-01", "The evaluation period includes calendar years 2021 through 2023.", False),
+        ("lending_data_period_start", "2022-01-01", "The evaluation period includes calendar years 2021 through 2023.", False),
+        # FRB_722432_20230911 p4 and FDIC_16733_20240410 p8: a list of years is not a range.
+        ("lending_data_period_start", "2021-01-01", "all HMDA loans originated from calendar years 2021 and 2022", False),
+        ("lending_data_period_end", "2022-12-31", "all HMDA loans originated from calendar years 2021 and 2022", False),
+        ("lending_data_period_end", "2023-12-31", "originated, purchased, or renewed in 2023", False),
+    ],
+)
+def test_calendar_year_range_dates(field, value, quote, ok):
+    assert grounding.value_in_quote(value, quote, field_spec(field)) is ok
+
+
+# FDIC_16733_20240410 p9: the bank's row of the LTD table; the "$(000s)" marker is in the
+# column header, outside the quote.
+LTD_PAGE_16733 = (
+    "Loan-to-Deposit Ratio Comparison \nBank \nTotal Assets as of \n12/31/23 $(000s) \nAverage Net LTD \n"
+    "Ratio (%) \nBankCherokee \nSaint Paul, MN \n375,627 \n60.5 \nNorth Star Bank \nRoseville, MN \n352,077 \n"
+    "71.5 \nVillage Bank \nSaint Francis, MN \n410,440 \n62.9 \n"
+)
+
+
+def test_thousands_figure_needs_a_marker_in_context():
+    spec = field_spec("total_assets_usd")
+    quote = "North Star Bank\nRoseville, MN\n352,077"
+    assert not grounding.value_in_quote(352_077_000, quote, spec)
+    assert grounding.value_in_quote(352_077_000, quote, spec, thousands_context=True)
+    assert not grounding.value_in_quote(375_627_000, quote, spec, thousands_context=True)
+
+
+@pytest.mark.parametrize("marker", ["$(000s)", "($000s)", "$000", "(Dollars in thousands)"])
+def test_thousands_marker_on_the_page_supports_the_row(marker):
+    page = LTD_PAGE_16733.replace("$(000s)", marker)
+    res = grounding.check(fv("total_assets_usd", 352_077_000, "North Star Bank\nRoseville, MN\n352,077"), one_page(page), {})
+    assert res.supports, marker
+
+
+def test_thousands_figure_without_marker_is_not_supported():
+    page = LTD_PAGE_16733.replace(" $(000s)", "")
+    res = grounding.check(fv("total_assets_usd", 352_077_000, "North Star Bank\nRoseville, MN\n352,077"), one_page(page), {})
+    assert res.failure == "quote_does_not_support"
+
+
+def test_thousands_marker_in_the_section_spanning_the_page():
+    # FDIC_26816_20220809 p8 layout, with the table header on the previous page of the section.
+    header = "Loan-to-Deposit Ratio \nBank \nTotal Assets as of \n6/30/2022 \n($000s) \nAverage Net LTD Ratio (%) \n"
+    row = "Liberty Bank, Inc. \n12,614 \n64.9 \nSource: Call Reports \n"
+    pages = [Page(number=7, text="Lending Test\n" + header, scope="institution"), Page(number=8, text=row, scope="institution")]
+    sec = Section(name="ltd_ratio", doc_id="d", page_start=7, page_end=8, char_start=0, char_end=10, text=header + row)
+    value = fv("total_assets_usd", 12_614_000, "Liberty Bank, Inc.\n12,614", page=8)
+    assert grounding.check(value, pages, {}).failure == "quote_does_not_support"
+    assert grounding.check(value, pages, {"ltd_ratio": sec}).supports
+
+
+def test_thousands_rule_is_only_for_dollar_fields():
+    page = "Table ($000s)\nThe bank has 5 assessment areas.\n"
+    res = grounding.check(fv("n_assessment_areas", 5000, "The bank has 5 assessment areas."), one_page(page), {})
+    assert res.failure == "quote_does_not_support"
+
+
+# n_full_scope stated by enumeration.
+FULL_SCOPE_12299 = (
+    "Consequently, examiners applied full-scope procedures to and placed the greatest weight on the bank's "
+    "performance in the Austin MSA AA.  Examiners also applied full-scope procedures to the Killeen MSA AA"
+)
+FULL_SCOPE_722432 = (
+    "full-scope evaluation procedures were applied to the Winchester, WV \nassessment area and limited-scope "
+    "procedures were applied to the Hagerstown-Martinsburg, WV \nassessment area."
+)
+FULL_SCOPE_3664588 = (
+    "Examiners used full-scope examination procedures to evaluate the bank's performance for all included "
+    "assessment areas."
+)
+AA_SECTION_3664588 = (
+    "DESCRIPTION OF ASSESSMENT AREA \nAt the prior evaluation, Fieldpoint maintained two assessment areas. "
+    "Examiners did not consider the bank's performance in the MD 33124 (Miami-Miami Beach-Kendall, FL) assessment "
+    "area. The CRA performance evaluation included the following four bank delineated assessment areas: \n"
+)
+
+
+@pytest.mark.parametrize(
+    "quote,value,ok",
+    [
+        (FULL_SCOPE_12299, 2, True),
+        (FULL_SCOPE_12299, 1, False),
+        (FULL_SCOPE_12299, 3, False),
+        (FULL_SCOPE_722432, 1, True),   # the limited-scope area is not counted
+        (FULL_SCOPE_722432, 2, False),
+        # generic mentions carry no name: "its AA", "the bank's largest AA"
+        ("Examiners applied full-scope procedures to its AA and the bank's largest AA.", 2, False),
+    ],
+)
+def test_full_scope_count_by_enumeration(quote, value, ok):
+    res = grounding.check(fv("n_full_scope", value, quote), one_page(quote + "\n"), {})
+    assert res.supports is ok and (ok or res.failure == "quote_does_not_support")
+
+
+@pytest.mark.parametrize("value,ok", [(4, True), (2, False), (5, False), (3, False)])
+def test_full_scope_all_areas_uses_the_stated_count(value, ok):
+    pages = [Page(number=7, text=AA_SECTION_3664588, scope="institution"), Page(number=8, text=FULL_SCOPE_3664588, scope="institution")]
+    sec = Section(name="description_of_assessment_area", doc_id="d", page_start=7, page_end=7, char_start=0, char_end=10,
+                  text=AA_SECTION_3664588)
+    res = grounding.check(fv("n_full_scope", value, FULL_SCOPE_3664588, page=8), pages, {"description_of_assessment_area": sec})
+    assert res.supports is ok
+
+
+def test_full_scope_enumeration_still_checks_scope():
+    res = grounding.check(fv("n_full_scope", 1, FULL_SCOPE_722432), one_page(FULL_SCOPE_722432, scope="state"), {})
+    assert res.failure == "quote_out_of_scope"
+
+
+# inside_aa_share_product: a Subtotal row and a bank-level share sentence.
+AA_TABLE_12299 = (
+    "Lending Inside and Outside of the Assessment Area \nNumber of Loans \nDollar Amount of Loans $(000s) \n"
+    "Loan Category \n# \n% \nHome Mortgage \n \n2019 \n190 \n80.2 \n47 \n19.8 \n237 \n2020 \n321 \n77.0 \n96 \n"
+    "23.0 \n417 \n2021 \n202 \n68.7 \n92 \n31.3 \n294 \nSubtotal \n713 \n75.2 \n235 \n24.8 \n948 \n"
+    "Small Business \n403 \n77.1 \n120 \n22.9 \n523 \nSubtotal \n403 \n77.1 \n120 \n22.9 \n523 \n"
+    "Source:  2021 Bank Data; 2019, 2020, 2021 HMDA Reported Data \n"
+)
+SHARE_SENTENCE_722432 = (
+    "As indicated in the preceding table, a majority of the number (70.7%) and dollar amount (54.9%) were \n"
+    "extended within the bank's assessment area."
+)
+
+
+@pytest.mark.parametrize(
+    "value,quote,ok",
+    [
+        ("home_mortgage", "Subtotal 713 75.2 235 24.8", True),
+        ("small_business", "Subtotal 713 75.2 235 24.8", False),
+        ("all_reviewed_combined", "Subtotal 713 75.2 235 24.8", False),
+        ("small_business", "Subtotal 403 77.1 120 22.9 523", True),
+        ("home_mortgage", "Subtotal 403 77.1 120 22.9 523", False),
+    ],
+)
+def test_subtotal_row_takes_the_product_of_its_block(value, quote, ok):
+    res = grounding.check(fv("inside_aa_share_product", value, quote), one_page(AA_TABLE_12299), {})
+    assert res.supports is ok
+
+
+@pytest.mark.parametrize(
+    "value,quote,ok",
+    [
+        ("all_reviewed_combined", SHARE_SENTENCE_722432, True),
+        ("home_mortgage", SHARE_SENTENCE_722432, False),
+        # a sentence that names a product is that product's share, not the combined one
+        ("all_reviewed_combined", "a majority of home mortgage loans were extended within the bank's assessment area.", False),
+    ],
+)
+def test_bank_level_share_sentence_is_combined(value, quote, ok):
+    res = grounding.check(fv("inside_aa_share_product", value, quote), one_page(quote + "\n"), {})
+    assert res.supports is ok
+
+
+def test_share_sentence_on_a_state_page_is_out_of_scope():
+    res = grounding.check(fv("inside_aa_share_product", "all_reviewed_combined", SHARE_SENTENCE_722432),
+                          one_page(SHARE_SENTENCE_722432, scope="state"), {})
+    assert res.failure == "quote_out_of_scope"

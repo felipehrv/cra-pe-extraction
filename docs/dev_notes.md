@@ -412,6 +412,31 @@ LLM
   "Total Assets as of" figure in thousands over a rounded description sentence).
   `PROMPT_VERSION` is still v3 in `prompts.py`; bump it to v4 before the next LLM run so the
   traces record the change.
+- Prompt v5 (2026-10-14, dev tuning after the first dev scoring): lending_data_period_start
+  and _end get a `prompt_description` (status absent when only years are given for the
+  primary product; never a year turned into January 1 or December 31; the one exception is
+  "calendar years YYYY through YYYY", codebook field 12; the evaluation period is not the
+  data window), and total_assets_usd quotes the bank's own LTD table row instead of the
+  header through the figure (the header and the bank row are not contiguous in the page
+  text, so that quote failed stage 1). One live dev run: fabrication on the period fields
+  went from 0.75 and 1.0 to 0.5 and 0.5. Still wrong: SouthStar (the dated small business
+  window is taken although home mortgage is primary) and North Star ("renewed in 2023"
+  still turned into 2023-01-01 to 2023-12-31). Candidate v6 wording: put the years-only rule
+  first and state that a dated window of a non-primary product does not count.
+- Grounding value presence (dev tuning, same day): "single" counts as 1 (the number words
+  one to twenty were already read); a dollar figure equal to the value divided by 1,000
+  matches when the located page, or a section spanning it that contains the quote, carries
+  a thousands marker (`THOUSANDS_MARKER_RE`); a "calendar years YYYY through YYYY" range
+  supports January 1 of the first year and December 31 of the last; `field_rule_supports`
+  reads n_full_scope by enumeration (distinct named AAs in the full-scope part of the
+  quote, or the AA count stated in institution-level text when the quote says "all
+  assessment areas") and inside_aa_share_product from the product block a "Subtotal" row
+  closes, or as all_reviewed_combined for a share sentence about lending inside the bank's
+  AA that names no product; "total" no longer matches inside "Subtotal". Scope is still
+  checked first and the Group C predicate rule is unchanged. Known looseness: "single"
+  also matches "a single state institution" (OCC_11715 n_assessment_areas). Not covered:
+  "its AA" and "the bank's only AA" for n_assessment_areas = 1. The rules system's stored
+  grounding in `predictions_dev.csv` predates these rules; rerun rules on dev to refresh it.
 
 Evaluation
 
