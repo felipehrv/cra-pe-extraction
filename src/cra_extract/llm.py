@@ -1285,7 +1285,8 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"\nmodel={trace.model} reported={trace.model_reported} "
         f"in={trace.input_tokens} out={trace.output_tokens} "
-        f"cost=${trace.cost_usd:.4f} latency={trace.latency_s}s effort={trace.effort} error={trace.error}"
+        f"cost={'n/a' if trace.cost_usd is None else f'${trace.cost_usd:.4f}'} "
+        f"latency={trace.latency_s}s effort={trace.effort} error={trace.error}"
     )
     return 0
 
