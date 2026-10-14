@@ -314,7 +314,7 @@ Design section 7, produced by `report.descriptive`; exploratory and non-causal.
 | lending_test_rating (FRB/isb) | 196 | 75.0 (147 of 196) | 100.0 (147 of 147) | S3 |
 | cd_test_rating (FRB/isb) | 196 | 76.0 (149 of 196) | 100.0 (149 of 149) | S3 |
 
-Computed 2026-10-08 after the test draw (seed 20261013) on 2,751 evaluable documents of split corpus with dev, test, audit, tuning-document banks and excluded rows left out; RULES_VERSION 0.2.2; record in `config/s5_routing.yaml`. exam_date is decided on the 998 OCC and FRB documents (FDIC exam_date has no index truth) and applies to FDIC documents.
+Computed 2026-10-08 and recomputed 2026-10-14 with the same result after the test draw (seed 20261013) on 2,751 evaluable documents of split corpus with dev, test, audit, tuning-document banks and excluded rows left out; RULES_VERSION 0.2.4; record in `config/s5_routing.yaml`. exam_date is decided on the 998 OCC and FRB documents (FDIC exam_date has no index truth) and applies to FDIC documents.
 
 2. Corpus tier. Rule: on dev, pooled Group B accuracy per tier = sum of n_correct / sum of (n_correct + n_wrong + n_fabricated_absence) over the 11 Group B rows of `table1_dev.csv`; the eligible tiers are those within the margin of the best tier; the corpus pass uses the eligible tier with the lowest mean `cost_usd` per dev document. Proposed margin: 3 percentage points. Dev holds about 110 Group B items per tier, so the margin is a cost rule, not a significance test.
    TODO: confirm the 3 percentage-point margin and record the chosen tier with its dev accuracy and cost per document.

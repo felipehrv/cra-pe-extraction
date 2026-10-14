@@ -1,7 +1,7 @@
 # S5 routing (docs/analysis_plan.md, Decisions that depend on dev results, item 1).
 # Written by python -m cra_extract.routing compute; do not edit by hand.
-computed_on: '2026-10-08'
-rules_version: 0.2.2
+computed_on: '2026-10-14'
+rules_version: 0.2.4
 rules_version_source: predictions
 s1_system: rules
 s3_system: llm:gemini:gemini-3.8-flash
