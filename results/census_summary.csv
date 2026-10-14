@@ -1,30 +1,30 @@
 metric,system,field,stratum,k,n,estimate,ci_low,ci_high,note
-documents,census,,truth_source=hand,159,2791,,,,
+documents,census,,truth_source=hand,161,2791,,,,
 documents,census,,truth_source=template,2630,2791,,,,
-documents,census,,truth_source=unread,2,2791,,,,
-documents_read,census,,flagged,52,53,,,,
-documents_read,census,,locator_miss,7,8,,,,
+documents,census,,truth_source=unread,0,2791,,,,
+documents_read,census,,flagged,53,53,,,,
+documents_read,census,,locator_miss,8,8,,,,
 documents_read,census,,random_unflagged,100,100,,,,
 documents_read,census,,unflagged,0,2630,,,,
-prevalence,census,finding_present,all,23,2789,0.008246683399067766,0.005234665053194476,0.012348523287528224,exact CI over the labeled census
-prevalence,census,finding_present,OCC,1,603,0.001658374792703151,4.198553278911277e-05,0.009204922905610147,exact CI over the labeled census
+prevalence,census,finding_present,all,23,2791,0.008240773916159082,0.005230908939211076,0.012339692777914024,exact CI over the labeled census
+prevalence,census,finding_present,OCC,1,604,0.0016556291390728477,4.1916021928045666e-05,0.009189740610509034,exact CI over the labeled census
 prevalence,census,finding_present,FDIC,16,1770,0.00903954802259887,0.005175457702989661,0.014638252534041385,exact CI over the labeled census
-prevalence,census,finding_present,FRB,6,416,0.014423076923076924,0.00531092295432245,0.03112723245203597,exact CI over the labeled census
-prevalence,census,finding_present,OCC/small,0,370,0.0,0.0,0.009920409331698465,exact CI over the labeled census
+prevalence,census,finding_present,FRB,6,417,0.014388489208633094,0.005298143828895263,0.031053221030106215,exact CI over the labeled census
+prevalence,census,finding_present,OCC/small,0,371,0.0,0.0,0.009893802401620633,exact CI over the labeled census
 prevalence,census,finding_present,OCC/isb,1,233,0.004291845493562232,0.00010865421654671081,0.02367935413849409,exact CI over the labeled census
 prevalence,census,finding_present,FDIC/small,5,981,0.0050968399592252805,0.0016569388767493365,0.011853943660298683,exact CI over the labeled census
 prevalence,census,finding_present,FDIC/isb,11,789,0.01394169835234474,0.006979642489113758,0.02480836130644093,exact CI over the labeled census
-prevalence,census,finding_present,FRB/small,4,214,0.018691588785046728,0.005115734521950799,0.04716382100878036,exact CI over the labeled census
+prevalence,census,finding_present,FRB/small,4,215,0.018604651162790697,0.0050918335432470485,0.04694764998885148,exact CI over the labeled census
 prevalence,census,finding_present,FRB/isb,2,202,0.009900990099009901,0.0012013130040031683,0.035306217616835056,exact CI over the labeled census
-prevalence,census,rating_lowered,all,6,2789,0.002151308712800287,0.0007898887693045253,0.004676569359162386,exact CI over the labeled census
-prevalence,census,rating_lowered,OCC,0,603,0.0,0.0,0.006098870622281538,exact CI over the labeled census
+prevalence,census,rating_lowered,all,6,2791,0.002149767108563239,0.0007893224596955406,0.0046732224213883455,exact CI over the labeled census
+prevalence,census,rating_lowered,OCC,0,604,0.0,0.0,0.006088803958391509,exact CI over the labeled census
 prevalence,census,rating_lowered,FDIC,5,1770,0.002824858757062147,0.000917840432975936,0.006579867767413816,exact CI over the labeled census
-prevalence,census,rating_lowered,FRB,1,416,0.002403846153846154,6.0858263623231323e-05,0.013320011390078434,exact CI over the labeled census
-prevalence,census,rating_lowered,OCC/small,0,370,0.0,0.0,0.009920409331698465,exact CI over the labeled census
+prevalence,census,rating_lowered,FRB,1,417,0.002398081534772182,6.071232519389014e-05,0.01328824387246641,exact CI over the labeled census
+prevalence,census,rating_lowered,OCC/small,0,371,0.0,0.0,0.009893802401620633,exact CI over the labeled census
 prevalence,census,rating_lowered,OCC/isb,0,233,0.0,0.0,0.015707431746250222,exact CI over the labeled census
 prevalence,census,rating_lowered,FDIC/small,2,981,0.0020387359836901123,0.00024699581763343303,0.0073450299028081645,exact CI over the labeled census
 prevalence,census,rating_lowered,FDIC/isb,3,789,0.0038022813688212928,0.0007848092695894593,0.011071332714436721,exact CI over the labeled census
-prevalence,census,rating_lowered,FRB/small,1,214,0.004672897196261682,0.00011830051562355948,0.025759313853541244,exact CI over the labeled census
+prevalence,census,rating_lowered,FRB/small,1,215,0.004651162790697674,0.00011775031316574314,0.02564077492979777,exact CI over the labeled census
 prevalence,census,rating_lowered,FRB/isb,0,202,0.0,0.0,0.018096043591413036,exact CI over the labeled census
 locator_miss_rate,census,,all,8,2791,0.002866356144750985,0.0012382762147353787,0.005640011628656794,"review sections the locator did not find, over the census population"
 miss_bound,census,finding_present,random_unflagged,0,100,0.0,0.0,0.03621669264475713,positives among the read random unflagged sections; ci_high is the exact upper bound
@@ -41,25 +41,41 @@ attribute_count,census,laws_cited,FHA,3,23,0.13043478260869565,0.027751507422635
 attribute_count,census,laws_cited,FTC_s5_UDAP,12,23,0.5217391304347826,0.30587800149123723,0.7318038138241718,among census positives; set fields count elements
 attribute_count,census,laws_cited,RESPA_s8,2,23,0.08695652173913043,0.010709966037666163,0.28037933590940156,among census positives; set fields count elements
 attribute_count,census,laws_cited,TILA,3,23,0.13043478260869565,0.02775150742263577,0.33588913753692395,among census positives; set fields count elements
-negatives_by_distractor,census,distractor_laws_named,true,1757,2766,0.6352133044107013,0.6169578239109796,0.6531821998510168,
-negatives_by_distractor,census,distractor_laws_named,false,1009,2766,0.3647866955892986,0.3468178001489832,0.38304217608902036,
-documents,baseline,,all,2789,2789,,,,census documents with a Group C row of this system
+negatives_by_distractor,census,distractor_laws_named,true,1757,2768,0.6347543352601156,0.6165012602054958,0.652722006642307,
+negatives_by_distractor,census,distractor_laws_named,false,1011,2768,0.3652456647398844,0.34727799335769305,0.3834987397945042,
+documents,baseline,,all,2791,2791,,,,census documents with a Group C row of this system
 precision,baseline,finding_present,all,22,48,0.4583333333333333,0.3137154220726188,0.6082780024012209,
 recall,baseline,finding_present,all,22,23,0.9565217391304348,0.7805133925462542,0.9988998313697266,conditional on answering
-abstention,baseline,finding_present,all,7,2789,0.002509860164933668,0.001009670855182776,0.005164391928246914,
+abstention,baseline,finding_present,all,8,2791,0.002866356144750985,0.0012382762147353787,0.005640011628656794,
 fp_by_distractor,baseline,finding_present,distractor_laws_named=true,9,1757,0.005122367672168469,0.00234486737053885,0.009701485371351737,
-fp_by_distractor,baseline,finding_present,distractor_laws_named=false,17,1002,0.016966067864271458,0.009913624297496426,0.027025723329188622,
-fp_rate,baseline,finding_present,all,26,2766,0.009399855386840203,0.006149225507670053,0.013742827549776848,FP / all census negatives (abstentions in the denominator)
-fp_rate,baseline,finding_present,OCC,1,602,0.0016611295681063123,4.205527466183412e-05,0.009220155448474543,FP / all census negatives (abstentions in the denominator); n_negated_hits=611
+fp_by_distractor,baseline,finding_present,distractor_laws_named=false,17,1003,0.01694915254237288,0.009903709983973386,0.026998916564934916,
+fp_rate,baseline,finding_present,all,26,2768,0.00939306358381503,0.006144775957636739,0.013732919538142596,FP / all census negatives (abstentions in the denominator)
+fp_rate,baseline,finding_present,OCC,1,603,0.001658374792703151,4.198553278911277e-05,0.009204922905610147,FP / all census negatives (abstentions in the denominator); n_negated_hits=611
 fp_rate,baseline,finding_present,FDIC,11,1754,0.006271379703534778,0.0031346840473815973,0.01119346448149372,FP / all census negatives (abstentions in the denominator); n_negated_hits=12
-fp_rate,baseline,finding_present,FRB,14,410,0.03414634146341464,0.018791474833506072,0.056628548843491444,FP / all census negatives (abstentions in the denominator); n_negated_hits=394
-n_negated_hits,baseline,,OCC,611,603,,,,negated S0 hits summed over the census documents
+fp_rate,baseline,finding_present,FRB,14,411,0.0340632603406326,0.018745450034202804,0.05649237677198471,FP / all census negatives (abstentions in the denominator); n_negated_hits=394
+n_negated_hits,baseline,,OCC,611,604,,,,negated S0 hits summed over the census documents
 n_negated_hits,baseline,,FDIC,12,1770,,,,negated S0 hits summed over the census documents
-n_negated_hits,baseline,,FRB,394,416,,,,negated S0 hits summed over the census documents
+n_negated_hits,baseline,,FRB,394,417,,,,negated S0 hits summed over the census documents
 precision,baseline,rating_lowered,all,2,3,0.6666666666666666,0.09429932405009822,0.9915962413401758,
 recall,baseline,rating_lowered,all,2,6,0.3333333333333333,0.04327186829277707,0.7772219044968551,conditional on answering
-abstention,baseline,rating_lowered,all,7,2789,0.002509860164933668,0.001009670855182776,0.005164391928246914,
-fp_rate,baseline,rating_lowered,all,1,2783,0.00035932446999640676,9.097266683966154e-06,0.002000384213260986,FP / all census negatives (abstentions in the denominator)
-fp_rate,baseline,rating_lowered,OCC,1,603,0.001658374792703151,4.198553278911277e-05,0.009204922905610147,FP / all census negatives (abstentions in the denominator); n_negated_hits=611
+abstention,baseline,rating_lowered,all,8,2791,0.002866356144750985,0.0012382762147353787,0.005640011628656794,
+fp_rate,baseline,rating_lowered,all,1,2785,0.0003590664272890485,9.09073378352332e-06,0.0019989488505416375,FP / all census negatives (abstentions in the denominator)
+fp_rate,baseline,rating_lowered,OCC,1,604,0.0016556291390728477,4.1916021928045666e-05,0.009189740610509034,FP / all census negatives (abstentions in the denominator); n_negated_hits=611
 fp_rate,baseline,rating_lowered,FDIC,0,1765,0.0,0.0,0.002087834123358334,FP / all census negatives (abstentions in the denominator); n_negated_hits=12
-fp_rate,baseline,rating_lowered,FRB,0,415,0.0,0.0,0.008849476978411985,FP / all census negatives (abstentions in the denominator); n_negated_hits=394
+fp_rate,baseline,rating_lowered,FRB,0,416,0.0,0.0,0.008828298376556631,FP / all census negatives (abstentions in the denominator); n_negated_hits=394
+documents,llm:gemini:gemini-3.5-flash-lite,,all,78,2791,,,,census documents with a Group C row of this system
+precision,llm:gemini:gemini-3.5-flash-lite,finding_present,all,0,0,,,,
+recall,llm:gemini:gemini-3.5-flash-lite,finding_present,all,0,0,,,,conditional on answering
+abstention,llm:gemini:gemini-3.5-flash-lite,finding_present,all,3,78,0.038461538461538464,0.008003028417533642,0.10831165028912437,
+fp_by_distractor,llm:gemini:gemini-3.5-flash-lite,finding_present,distractor_laws_named=true,0,59,0.0,0.0,0.06060890095022842,
+fp_by_distractor,llm:gemini:gemini-3.5-flash-lite,finding_present,distractor_laws_named=false,0,16,0.0,0.0,0.20590721420785485,
+precision,llm:gemini:gemini-3.5-flash-lite,rating_lowered,all,0,0,,,,
+recall,llm:gemini:gemini-3.5-flash-lite,rating_lowered,all,0,0,,,,conditional on answering
+abstention,llm:gemini:gemini-3.5-flash-lite,rating_lowered,all,3,78,0.038461538461538464,0.008003028417533642,0.10831165028912437,
+accuracy_among_positives,llm:gemini:gemini-3.5-flash-lite,rating_effect,census_positives,0,0,,,,
+accuracy_among_positives,llm:gemini:gemini-3.5-flash-lite,rating_lowered_level,census_positives,0,0,,,,
+accuracy_among_positives,llm:gemini:gemini-3.5-flash-lite,rating_before,census_positives,0,0,,,,
+accuracy_among_positives,llm:gemini:gemini-3.5-flash-lite,rating_after,census_positives,0,0,,,,
+accuracy_among_positives,llm:gemini:gemini-3.5-flash-lite,finding_source,census_positives,0,0,,,,
+element_precision,llm:gemini:gemini-3.5-flash-lite,laws_cited,census_positives,0,0,,,,element-level; elements of one document are not independent
+element_recall,llm:gemini:gemini-3.5-flash-lite,laws_cited,census_positives,0,0,,,,element-level; elements of one document are not independent

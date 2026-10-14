@@ -2103,7 +2103,7 @@ within the census tracts;
 distribution to borrowers of different income levels; 
  
 • The bank did not have any CRA related complains during the assessment period. 
-",6,,,,,,,,,,,,,,,,,
+",6,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,6,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,1.2,claude:reader_a_agreed,2026-10-14T11:29:52,"Negative OCC review section; no fair lending law named (only 12 CFR 25.28(c) and agencies). Contains 'rating was not lowered as a result of these findings' boilerplate and forward-looking boilerplate, both non-findings."
 OCC_700508_20240226,flagged,OCC,small,"Home Savings and Loan Association of Carroll County, F.A.",2024-02-26,corpus,data/pdfs/OCC_700508_20240226.pdf,O,true,6,6,occ_pursuant_2024,100,446,"the cra performance rating was not lowered as a result of these findings. we considered the nature, extent, and strength of the evidence of the practices; the extent to which institution had policies and procedures in place to prevent the practices; and the extent to which the institution has taken or has committed to take corrective action, including voluntary corrective action resulting from self- assessment; and other relevant information.","Discriminatory or Other Illegal Credit Practices Review 
 Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively, in determining a national bank’s or federal 
 savings association’s (collectively, bank) CRA rating, the OCC considers evidence of discriminatory or 
@@ -2434,7 +2434,7 @@ area.
 • 
 There have been no complaints regarding the bank’s CRA performance since the last CRA 
 examination. 
-",,,,,,,,,,,,,,,,,,
+",,false,not_applicable,not_applicable,false,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,not_applicable,false,12,There have been no complaints regarding the bank’s CRA performance since the previous CRA examination.,1.2,claude:reader_a_agreed,2026-10-14T11:29:52,"no review section. Small institution PE (19 pages); TOC and text searched, conclusions end on p12 with Response to Complaints and CONCLUSION, no fair lending or illegal credit practices paragraph anywhere."
 FRB_654300_20230710,locator_miss,FRB,small,WASHINGTON SAVINGS BANK,2023-07-10,corpus,data/pdfs/FRB_654300_20230710.pdf,O,false,,,,,,,,3,"INSTITUTION'S CRA RATING: This institution is rated OUTSTANDING. 
  
 Washington Savings Bank (WSB or the bank) demonstrates an excellent responsiveness to the 
