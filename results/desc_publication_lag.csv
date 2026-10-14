@@ -1,0 +1,21 @@
+regulator,overall_rating,n,n_negative,median_months,p25_months,p75_months,median_days,p25_days,p75_days,precision
+all,O,253,0,5.0000,4.0000,6.0000,,,,month (FDIC release month only)
+all,S,2470,0,4.0000,4.0000,6.0000,,,,month (FDIC release month only)
+all,NI,65,0,6.0000,4.0000,7.0000,,,,month (FDIC release month only)
+all,SN,5,0,7.0000,6.0000,9.0000,,,,month (FDIC release month only)
+all,all,2793,0,5.0000,4.0000,6.0000,,,,month (FDIC release month only)
+OCC,O,149,0,5.0000,4.0000,6.0000,143.0000,127.0000,189.0000,day
+OCC,S,444,0,5.0000,4.0000,6.0000,140.0000,121.0000,178.2500,day
+OCC,NI,11,0,5.0000,4.5000,6.0000,163.0000,141.0000,193.5000,day
+OCC,SN,1,0,3.0000,3.0000,3.0000,105.0000,105.0000,105.0000,day
+OCC,all,605,0,5.0000,4.0000,6.0000,141.0000,123.0000,182.0000,day
+FDIC,O,67,0,5.0000,4.0000,6.0000,,,,month (FDIC release month only)
+FDIC,S,1649,0,5.0000,4.0000,6.0000,,,,month (FDIC release month only)
+FDIC,NI,50,0,6.0000,4.0000,7.0000,,,,month (FDIC release month only)
+FDIC,SN,4,0,8.0000,6.7500,11.2500,,,,month (FDIC release month only)
+FDIC,all,1770,0,5.0000,4.0000,6.0000,,,,month (FDIC release month only)
+FRB,O,37,0,4.0000,4.0000,7.0000,136.0000,116.0000,209.0000,day
+FRB,S,377,0,3.0000,3.0000,5.0000,104.0000,90.0000,143.0000,day
+FRB,NI,4,0,8.0000,6.5000,12.5000,245.5000,199.0000,379.5000,day
+FRB,SN,0,0,,,,,,,day
+FRB,all,418,0,4.0000,3.0000,5.0000,105.0000,90.0000,146.7500,day
