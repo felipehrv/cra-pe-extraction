@@ -1,321 +1,321 @@
 doc_id,field,field_group,pdf_path,prefilled,value,null_reason,evidence_page,quote,scope,minutes,labeler,labeled_at,notes
-FDIC_12299_20220912,regulator,A,data/pdfs/FDIC_12299_20220912.pdf,true,FDIC,,,,,,,,
-FDIC_12299_20220912,bank_name,A,data/pdfs/FDIC_12299_20220912.pdf,true,"SouthStar Bank, S.S.B.",,,,,,,,
-FDIC_12299_20220912,bank_id,A,data/pdfs/FDIC_12299_20220912.pdf,true,12299,,,,,,,,
-FDIC_12299_20220912,exam_date,A,data/pdfs/FDIC_12299_20220912.pdf,true,2022-09-12,,,,,,,,
-FDIC_12299_20220912,exam_method,A,data/pdfs/FDIC_12299_20220912.pdf,true,isb,,,,,,,,
-FDIC_12299_20220912,overall_rating,A,data/pdfs/FDIC_12299_20220912.pdf,true,NI,,,,,,,,
-FDIC_12299_20220912,lending_test_rating,A_or_B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,cd_test_rating,A_or_B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,prior_evaluation_date,A,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,prior_rating,A,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,total_assets_usd,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,total_assets_asof,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,lending_data_period_start,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,lending_data_period_end,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,n_assessment_areas,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,n_full_scope,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,loan_products_evaluated,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,primary_product,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,inside_aa_share_number_pct,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,inside_aa_share_product,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,avg_ltd_ratio_pct,B,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,finding_present,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,finding_type,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,rating_effect,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,rating_lowered,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,rating_lowered_level,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,rating_before,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,rating_after,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,laws_cited,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,practice_basis,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,finding_source,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_12299_20220912,distractor_laws_named,C,data/pdfs/FDIC_12299_20220912.pdf,false,,,,,,,,,
-FDIC_16733_20240410,regulator,A,data/pdfs/FDIC_16733_20240410.pdf,true,FDIC,,,,,,,,
-FDIC_16733_20240410,bank_name,A,data/pdfs/FDIC_16733_20240410.pdf,true,North Star Bank,,,,,,,,
-FDIC_16733_20240410,bank_id,A,data/pdfs/FDIC_16733_20240410.pdf,true,16733,,,,,,,,
-FDIC_16733_20240410,exam_date,A,data/pdfs/FDIC_16733_20240410.pdf,true,2024-04-10,,,,,,,,
-FDIC_16733_20240410,exam_method,A,data/pdfs/FDIC_16733_20240410.pdf,true,small,,,,,,,,
-FDIC_16733_20240410,overall_rating,A,data/pdfs/FDIC_16733_20240410.pdf,true,S,,,,,,,,
-FDIC_16733_20240410,lending_test_rating,A_or_B,data/pdfs/FDIC_16733_20240410.pdf,true,,absent_from_document,,,,,,,
-FDIC_16733_20240410,cd_test_rating,A_or_B,data/pdfs/FDIC_16733_20240410.pdf,true,,absent_from_document,,,,,,,
-FDIC_16733_20240410,prior_evaluation_date,A,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,prior_rating,A,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,total_assets_usd,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,total_assets_asof,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,lending_data_period_start,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,lending_data_period_end,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,n_assessment_areas,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,n_full_scope,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,loan_products_evaluated,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,primary_product,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,inside_aa_share_number_pct,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,inside_aa_share_product,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,avg_ltd_ratio_pct,B,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,finding_present,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,finding_type,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,rating_effect,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,rating_lowered,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,rating_lowered_level,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,rating_before,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,rating_after,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,laws_cited,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,practice_basis,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,finding_source,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_16733_20240410,distractor_laws_named,C,data/pdfs/FDIC_16733_20240410.pdf,false,,,,,,,,,
-FDIC_26816_20220809,regulator,A,data/pdfs/FDIC_26816_20220809.pdf,true,FDIC,,,,,,,,
-FDIC_26816_20220809,bank_name,A,data/pdfs/FDIC_26816_20220809.pdf,true,"Liberty Bank, Inc.",,,,,,,,
-FDIC_26816_20220809,bank_id,A,data/pdfs/FDIC_26816_20220809.pdf,true,26816,,,,,,,,
-FDIC_26816_20220809,exam_date,A,data/pdfs/FDIC_26816_20220809.pdf,true,2022-08-09,,,,,,,,
-FDIC_26816_20220809,exam_method,A,data/pdfs/FDIC_26816_20220809.pdf,true,small,,,,,,,,
-FDIC_26816_20220809,overall_rating,A,data/pdfs/FDIC_26816_20220809.pdf,true,SN,,,,,,,,
-FDIC_26816_20220809,lending_test_rating,A_or_B,data/pdfs/FDIC_26816_20220809.pdf,true,,absent_from_document,,,,,,,
-FDIC_26816_20220809,cd_test_rating,A_or_B,data/pdfs/FDIC_26816_20220809.pdf,true,,absent_from_document,,,,,,,
-FDIC_26816_20220809,prior_evaluation_date,A,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,prior_rating,A,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,total_assets_usd,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,total_assets_asof,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,lending_data_period_start,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,lending_data_period_end,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,n_assessment_areas,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,n_full_scope,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,loan_products_evaluated,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,primary_product,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,inside_aa_share_number_pct,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,inside_aa_share_product,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,avg_ltd_ratio_pct,B,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,finding_present,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,finding_type,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,rating_effect,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,rating_lowered,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,rating_lowered_level,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,rating_before,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,rating_after,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,laws_cited,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,practice_basis,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,finding_source,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_26816_20220809,distractor_laws_named,C,data/pdfs/FDIC_26816_20220809.pdf,false,,,,,,,,,
-FDIC_6078_20240805,regulator,A,data/pdfs/FDIC_6078_20240805.pdf,true,FDIC,,,,,,,,
-FDIC_6078_20240805,bank_name,A,data/pdfs/FDIC_6078_20240805.pdf,true,One American Bank,,,,,,,,
-FDIC_6078_20240805,bank_id,A,data/pdfs/FDIC_6078_20240805.pdf,true,6078,,,,,,,,
-FDIC_6078_20240805,exam_date,A,data/pdfs/FDIC_6078_20240805.pdf,true,2024-08-05,,,,,,,,
-FDIC_6078_20240805,exam_method,A,data/pdfs/FDIC_6078_20240805.pdf,true,isb,,,,,,,,
-FDIC_6078_20240805,overall_rating,A,data/pdfs/FDIC_6078_20240805.pdf,true,NI,,,,,,,,
-FDIC_6078_20240805,lending_test_rating,A_or_B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,cd_test_rating,A_or_B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,prior_evaluation_date,A,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,prior_rating,A,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,total_assets_usd,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,total_assets_asof,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,lending_data_period_start,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,lending_data_period_end,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,n_assessment_areas,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,n_full_scope,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,loan_products_evaluated,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,primary_product,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,inside_aa_share_number_pct,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,inside_aa_share_product,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,avg_ltd_ratio_pct,B,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,finding_present,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,finding_type,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,rating_effect,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,rating_lowered,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,rating_lowered_level,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,rating_before,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,rating_after,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,laws_cited,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,practice_basis,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,finding_source,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FDIC_6078_20240805,distractor_laws_named,C,data/pdfs/FDIC_6078_20240805.pdf,false,,,,,,,,,
-FRB_3664588_20240116,regulator,A,data/pdfs/FRB_3664588_20240116.pdf,true,FRB,,,,,,,,
-FRB_3664588_20240116,bank_name,A,data/pdfs/FRB_3664588_20240116.pdf,true,FIELDPOINT PRIVATE BANK & TRUST,,,,,,,,
-FRB_3664588_20240116,bank_id,A,data/pdfs/FRB_3664588_20240116.pdf,true,3664588,,,,,,,,
-FRB_3664588_20240116,exam_date,A,data/pdfs/FRB_3664588_20240116.pdf,true,2024-01-16,,,,,,,,
-FRB_3664588_20240116,exam_method,A,data/pdfs/FRB_3664588_20240116.pdf,true,isb,,,,,,,,
-FRB_3664588_20240116,overall_rating,A,data/pdfs/FRB_3664588_20240116.pdf,true,NI,,,,,,,,
-FRB_3664588_20240116,lending_test_rating,A_or_B,data/pdfs/FRB_3664588_20240116.pdf,true,NI,,,,,,,,
-FRB_3664588_20240116,cd_test_rating,A_or_B,data/pdfs/FRB_3664588_20240116.pdf,true,S,,,,,,,,
-FRB_3664588_20240116,prior_evaluation_date,A,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,prior_rating,A,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,total_assets_usd,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,total_assets_asof,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,lending_data_period_start,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,lending_data_period_end,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,n_assessment_areas,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,n_full_scope,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,loan_products_evaluated,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,primary_product,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,inside_aa_share_number_pct,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,inside_aa_share_product,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,avg_ltd_ratio_pct,B,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,finding_present,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,finding_type,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,rating_effect,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,rating_lowered,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,rating_lowered_level,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,rating_before,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,rating_after,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,laws_cited,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,practice_basis,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,finding_source,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_3664588_20240116,distractor_laws_named,C,data/pdfs/FRB_3664588_20240116.pdf,false,,,,,,,,,
-FRB_663656_20241118,regulator,A,data/pdfs/FRB_663656_20241118.pdf,true,FRB,,,,,,,,
-FRB_663656_20241118,bank_name,A,data/pdfs/FRB_663656_20241118.pdf,true,SMALL BUSINESS BANK,,,,,,,,
-FRB_663656_20241118,bank_id,A,data/pdfs/FRB_663656_20241118.pdf,true,663656,,,,,,,,
-FRB_663656_20241118,exam_date,A,data/pdfs/FRB_663656_20241118.pdf,true,2024-11-18,,,,,,,,
-FRB_663656_20241118,exam_method,A,data/pdfs/FRB_663656_20241118.pdf,true,small,,,,,,,,
-FRB_663656_20241118,overall_rating,A,data/pdfs/FRB_663656_20241118.pdf,true,NI,,,,,,,,
-FRB_663656_20241118,lending_test_rating,A_or_B,data/pdfs/FRB_663656_20241118.pdf,true,,absent_from_document,,,,,,,
-FRB_663656_20241118,cd_test_rating,A_or_B,data/pdfs/FRB_663656_20241118.pdf,true,,absent_from_document,,,,,,,
-FRB_663656_20241118,prior_evaluation_date,A,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,prior_rating,A,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,total_assets_usd,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,total_assets_asof,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,lending_data_period_start,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,lending_data_period_end,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,n_assessment_areas,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,n_full_scope,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,loan_products_evaluated,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,primary_product,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,inside_aa_share_number_pct,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,inside_aa_share_product,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,avg_ltd_ratio_pct,B,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,finding_present,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,finding_type,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,rating_effect,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,rating_lowered,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,rating_lowered_level,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,rating_before,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,rating_after,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,laws_cited,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,practice_basis,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,finding_source,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_663656_20241118,distractor_laws_named,C,data/pdfs/FRB_663656_20241118.pdf,false,,,,,,,,,
-FRB_722432_20230911,regulator,A,data/pdfs/FRB_722432_20230911.pdf,true,FRB,,,,,,,,
-FRB_722432_20230911,bank_name,A,data/pdfs/FRB_722432_20230911.pdf,true,"BANK OF ROMNEY, THE",,,,,,,,
-FRB_722432_20230911,bank_id,A,data/pdfs/FRB_722432_20230911.pdf,true,722432,,,,,,,,
-FRB_722432_20230911,exam_date,A,data/pdfs/FRB_722432_20230911.pdf,true,2023-09-11,,,,,,,,
-FRB_722432_20230911,exam_method,A,data/pdfs/FRB_722432_20230911.pdf,true,small,,,,,,,,
-FRB_722432_20230911,overall_rating,A,data/pdfs/FRB_722432_20230911.pdf,true,O,,,,,,,,
-FRB_722432_20230911,lending_test_rating,A_or_B,data/pdfs/FRB_722432_20230911.pdf,true,,absent_from_document,,,,,,,
-FRB_722432_20230911,cd_test_rating,A_or_B,data/pdfs/FRB_722432_20230911.pdf,true,,absent_from_document,,,,,,,
-FRB_722432_20230911,prior_evaluation_date,A,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,prior_rating,A,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,total_assets_usd,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,total_assets_asof,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,lending_data_period_start,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,lending_data_period_end,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,n_assessment_areas,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,n_full_scope,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,loan_products_evaluated,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,primary_product,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,inside_aa_share_number_pct,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,inside_aa_share_product,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,avg_ltd_ratio_pct,B,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,finding_present,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,finding_type,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,rating_effect,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,rating_lowered,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,rating_lowered_level,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,rating_before,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,rating_after,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,laws_cited,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,practice_basis,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,finding_source,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-FRB_722432_20230911,distractor_laws_named,C,data/pdfs/FRB_722432_20230911.pdf,false,,,,,,,,,
-OCC_11715_20240408,regulator,A,data/pdfs/OCC_11715_20240408.pdf,true,OCC,,,,,,,,
-OCC_11715_20240408,bank_name,A,data/pdfs/OCC_11715_20240408.pdf,true,The Lemont National Bank,,,,,,,,
-OCC_11715_20240408,bank_id,A,data/pdfs/OCC_11715_20240408.pdf,true,11715,,,,,,,,
-OCC_11715_20240408,exam_date,A,data/pdfs/OCC_11715_20240408.pdf,true,2024-04-08,,,,,,,,
-OCC_11715_20240408,exam_method,A,data/pdfs/OCC_11715_20240408.pdf,true,small,,,,,,,,
-OCC_11715_20240408,overall_rating,A,data/pdfs/OCC_11715_20240408.pdf,true,SN,,,,,,,,
-OCC_11715_20240408,lending_test_rating,A_or_B,data/pdfs/OCC_11715_20240408.pdf,true,SN,,,,,,,,
-OCC_11715_20240408,cd_test_rating,A_or_B,data/pdfs/OCC_11715_20240408.pdf,true,,absent_from_document,,,,,,,
-OCC_11715_20240408,prior_evaluation_date,A,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,prior_rating,A,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,total_assets_usd,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,total_assets_asof,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,lending_data_period_start,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,lending_data_period_end,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,n_assessment_areas,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,n_full_scope,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,loan_products_evaluated,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,primary_product,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,inside_aa_share_number_pct,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,inside_aa_share_product,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,avg_ltd_ratio_pct,B,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,finding_present,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,finding_type,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,rating_effect,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,rating_lowered,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,rating_lowered_level,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,rating_before,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,rating_after,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,laws_cited,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,practice_basis,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,finding_source,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_11715_20240408,distractor_laws_named,C,data/pdfs/OCC_11715_20240408.pdf,false,,,,,,,,,
-OCC_13682_20240819,regulator,A,data/pdfs/OCC_13682_20240819.pdf,true,OCC,,,,,,,,
-OCC_13682_20240819,bank_name,A,data/pdfs/OCC_13682_20240819.pdf,true,"First Neighbor Bank, National Association",,,,,,,,
-OCC_13682_20240819,bank_id,A,data/pdfs/OCC_13682_20240819.pdf,true,13682,,,,,,,,
-OCC_13682_20240819,exam_date,A,data/pdfs/OCC_13682_20240819.pdf,true,2024-08-19,,,,,,,,
-OCC_13682_20240819,exam_method,A,data/pdfs/OCC_13682_20240819.pdf,true,isb,,,,,,,,
-OCC_13682_20240819,overall_rating,A,data/pdfs/OCC_13682_20240819.pdf,true,O,,,,,,,,
-OCC_13682_20240819,lending_test_rating,A_or_B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,cd_test_rating,A_or_B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,prior_evaluation_date,A,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,prior_rating,A,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,total_assets_usd,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,total_assets_asof,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,lending_data_period_start,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,lending_data_period_end,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,n_assessment_areas,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,n_full_scope,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,loan_products_evaluated,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,primary_product,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,inside_aa_share_number_pct,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,inside_aa_share_product,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,avg_ltd_ratio_pct,B,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,finding_present,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,finding_type,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,rating_effect,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,rating_lowered,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,rating_lowered_level,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,rating_before,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,rating_after,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,laws_cited,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,practice_basis,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,finding_source,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_13682_20240819,distractor_laws_named,C,data/pdfs/OCC_13682_20240819.pdf,false,,,,,,,,,
-OCC_703395_20230327,regulator,A,data/pdfs/OCC_703395_20230327.pdf,true,OCC,,,,,,,,
-OCC_703395_20230327,bank_name,A,data/pdfs/OCC_703395_20230327.pdf,true,GN Bank,,,,,,,,
-OCC_703395_20230327,bank_id,A,data/pdfs/OCC_703395_20230327.pdf,true,703395,,,,,,,,
-OCC_703395_20230327,exam_date,A,data/pdfs/OCC_703395_20230327.pdf,true,2023-03-27,,,,,,,,
-OCC_703395_20230327,exam_method,A,data/pdfs/OCC_703395_20230327.pdf,true,small,,,,,,,,
-OCC_703395_20230327,overall_rating,A,data/pdfs/OCC_703395_20230327.pdf,true,NI,,,,,,,,
-OCC_703395_20230327,lending_test_rating,A_or_B,data/pdfs/OCC_703395_20230327.pdf,true,NI,,,,,,,,
-OCC_703395_20230327,cd_test_rating,A_or_B,data/pdfs/OCC_703395_20230327.pdf,true,,absent_from_document,,,,,,,
-OCC_703395_20230327,prior_evaluation_date,A,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,prior_rating,A,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,total_assets_usd,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,total_assets_asof,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,lending_data_period_start,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,lending_data_period_end,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,n_assessment_areas,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,n_full_scope,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,loan_products_evaluated,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,primary_product,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,inside_aa_share_number_pct,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,inside_aa_share_product,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,avg_ltd_ratio_pct,B,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,finding_present,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,finding_type,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,rating_effect,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,rating_lowered,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,rating_lowered_level,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,rating_before,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,rating_after,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,laws_cited,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,practice_basis,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,finding_source,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
-OCC_703395_20230327,distractor_laws_named,C,data/pdfs/OCC_703395_20230327.pdf,false,,,,,,,,,
+FDIC_12299_20220912,regulator,A,data/pdfs/FDIC_12299_20220912.pdf,true,FDIC,,1,Federal Deposit Insurance Corporation,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover; Dallas Regional Office is the FDIC regional office.
+FDIC_12299_20220912,bank_name,A,data/pdfs/FDIC_12299_20220912.pdf,true,"SouthStar Bank, S.S.B.",,1,"SouthStar Bank, S.S.B.",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover.
+FDIC_12299_20220912,bank_id,A,data/pdfs/FDIC_12299_20220912.pdf,true,12299,,1,Certificate Number: 12299,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover.
+FDIC_12299_20220912,exam_date,A,data/pdfs/FDIC_12299_20220912.pdf,true,2022-09-12,,1,"September 12, 2022",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover.
+FDIC_12299_20220912,exam_method,A,data/pdfs/FDIC_12299_20220912.pdf,true,isb,,6,"Examiners used the Interagency Intermediate Small Institution Examination Procedures to evaluate SouthStar Bank, S.S.B.’s CRA performance.",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill.
+FDIC_12299_20220912,overall_rating,A,data/pdfs/FDIC_12299_20220912.pdf,true,NI,,3,This institution is rated Needs to Improve.,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on rating page.
+FDIC_12299_20220912,lending_test_rating,A_or_B,data/pdfs/FDIC_12299_20220912.pdf,false,S,,3,The Lending Test is rated Satisfactory.,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,FDIC ISB: value per applicability table.
+FDIC_12299_20220912,cd_test_rating,A_or_B,data/pdfs/FDIC_12299_20220912.pdf,false,S,,3,The Community Development Test is rated Satisfactory.,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,FDIC ISB: value per applicability table.
+FDIC_12299_20220912,prior_evaluation_date,A,data/pdfs/FDIC_12299_20220912.pdf,false,2019-07-15,,4,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Also restated in Scope of Evaluation (page 6).
+FDIC_12299_20220912,prior_rating,A,data/pdfs/FDIC_12299_20220912.pdf,false,S,,4,"The institution received a Satisfactory rating at its previous Federal Deposit Insurance Corporation (FDIC) Performance Evaluation, dated July 15, 2019",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,total_assets_usd,B,data/pdfs/FDIC_12299_20220912.pdf,false,1159094000,,9,"SouthStar Bank, S.S.B., Moulton, TX 1,159,094 100.7",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"LTD Ratio Comparison table, column Total Assets as of 06/30/2022 ($000s); approx_1.2bn_in_text (page 4: assets totaled approximately $1.2 billion as of June 30, 2022)."
+FDIC_12299_20220912,total_assets_asof,B,data/pdfs/FDIC_12299_20220912.pdf,false,2022-06-30,,9,Total Assets as of 06/30/2022 ($000s),,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Table header date; matches the June 30, 2022 date of the rounded sentence on page 4."
+FDIC_12299_20220912,lending_data_period_start,B,data/pdfs/FDIC_12299_20220912.pdf,false,,absent_from_document,7,"This includes 2019 data showing 237 loans totaling $119.4 million, 2020 data showing 417 loans totaling $142.9 million, and 2021 data showing 294",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"analysis_periods=HMDA 2019-2021; SB 2021-01-01..2021-12-31. Primary product home mortgage is given by year only, so ABS per guide field 12 rule. Evaluation period 2019-07-15 to 2022-09-12 (page 6) is not the data window."
+FDIC_12299_20220912,lending_data_period_end,B,data/pdfs/FDIC_12299_20220912.pdf,false,,absent_from_document,7,"small business loans originated during the period of January 1, 2021, to December 31, 2021",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Only the small business window is dated (2021-01-01 to 2021-12-31); primary product home mortgage is years only (2019-2021), so ABS per guide."
+FDIC_12299_20220912,n_assessment_areas,B,data/pdfs/FDIC_12299_20220912.pdf,false,5,,5,"SouthStar Bank, S.S.B. designated five assessment areas",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Austin MSA, College Station MSA, Houston MSA, Killeen MSA, Non-MSA. Kerr County added to Non-MSA AA but not assessed; still 5 AAs."
+FDIC_12299_20220912,n_full_scope,B,data/pdfs/FDIC_12299_20220912.pdf,false,2,,6,Examiners also applied full-scope procedures to the Killeen MSA AA,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Austin MSA AA full scope in preceding sentence; College Station, Houston, Non-MSA limited scope (page 6); TOC on page 2 and AA headings confirm 2 full, 3 limited."
+FDIC_12299_20220912,loan_products_evaluated,B,data/pdfs/FDIC_12299_20220912.pdf,false,home_mortgage|small_business,,7,the bank’s major product lines include home mortgage and small business lending,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Small farm and consumer explicitly not presented as major product lines. Loan Products Reviewed table (page 8) lists Home Mortgage and Small Business.
+FDIC_12299_20220912,primary_product,B,data/pdfs/FDIC_12299_20220912.pdf,false,home_mortgage,,8,"Therefore, home mortgage loans received heavier weighting when arriving at overall conclusions.",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Small business weighted more in College Station, Houston and Non-MSA AAs only; institution-level weighting is home mortgage."
+FDIC_12299_20220912,inside_aa_share_number_pct,B,data/pdfs/FDIC_12299_20220912.pdf,false,75.2,,9,"Subtotal 713 75.2 235 24.8 948 312,850 78.4 86,308 21.6 399,158",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,No Total row; home mortgage pooled 2019-2021 subtotal per guide. Small business row is 403 77.1 by number.
+FDIC_12299_20220912,inside_aa_share_product,B,data/pdfs/FDIC_12299_20220912.pdf,false,home_mortgage,,9,"Subtotal 713 75.2 235 24.8 948 312,850 78.4 86,308 21.6 399,158",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Home Mortgage subtotal row of Lending Inside and Outside of the Assessment Area table.
+FDIC_12299_20220912,avg_ltd_ratio_pct,B,data/pdfs/FDIC_12299_20220912.pdf,false,100.7,,8,"averaged 100.7 percent over the past 12 calendar quarters from September 30, 2019, to June 30, 2022",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Not the 107.9 prior average or the 79.5-124.0 range.
+FDIC_12299_20220912,finding_present,C,data/pdfs/FDIC_12299_20220912.pdf,false,true,,14,"Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act, pertaining to the bank’s lending practices on the basis of redlining.",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Review section states violations identified and rating lowered; restated on rating page (page 3).
+FDIC_12299_20220912,finding_type,C,data/pdfs/FDIC_12299_20220912.pdf,false,discrimination,,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,ECOA and FHA redlining violations; prohibited basis.
+FDIC_12299_20220912,rating_effect,C,data/pdfs/FDIC_12299_20220912.pdf,false,substantive_lowered,,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve due to discriminatory lending practices,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,rating_lowered,C,data/pdfs/FDIC_12299_20220912.pdf,false,true,,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,rating_lowered_level,C,data/pdfs/FDIC_12299_20220912.pdf,false,overall,,3,resulted in the bank’s Community Reinvestment Act (CRA) rating being lowered from Satisfactory to Needs to Improve.,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Lending Test and CD Test both remain Satisfactory (page 3); the institution rating moved.
+FDIC_12299_20220912,rating_before,C,data/pdfs/FDIC_12299_20220912.pdf,false,S,,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,rating_after,C,data/pdfs/FDIC_12299_20220912.pdf,false,NI,,14,The FDIC lowered the CRA rating from Satisfactory to Needs to Improve,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,Equals overall_rating NI.
+FDIC_12299_20220912,laws_cited,C,data/pdfs/FDIC_12299_20220912.pdf,false,ECOA_RegB|FHA,,14,Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,practice_basis,C,data/pdfs/FDIC_12299_20220912.pdf,false,redlining,,14,pertaining to the bank’s lending practices on the basis of redlining,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_12299_20220912,finding_source,C,data/pdfs/FDIC_12299_20220912.pdf,false,this_CRA_exam,,14,Examiners identified violations of the Equal Credit Opportunity Act and Fair Housing Act,,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"No separate compliance exam, enforcement action or DOJ/HUD referral named."
+FDIC_12299_20220912,distractor_laws_named,C,data/pdfs/FDIC_12299_20220912.pdf,false,false,,14,"Consistent with the CRA, regulators must consider discriminatory and other illegal credit practices when arriving at the bank’s CRA rating.",,0.04,claude:reader_a_agreed,2026-10-14T11:01:11,"Boilerplate names only the CRA itself, not a consumer-protection law; ECOA and FHA appear only in finding sentences. Doubt: if the CRA mention counts as a law in boilerplate, this would be true."
+FDIC_16733_20240410,regulator,A,data/pdfs/FDIC_16733_20240410.pdf,true,FDIC,,1,Federal Deposit Insurance Corporation,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled FDIC confirmed on cover.
+FDIC_16733_20240410,bank_name,A,data/pdfs/FDIC_16733_20240410.pdf,true,North Star Bank,,1,North Star Bank,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed on cover.
+FDIC_16733_20240410,bank_id,A,data/pdfs/FDIC_16733_20240410.pdf,true,16733,,1,Certificate Number: 16733,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed; cover may print two spaces after the colon.
+FDIC_16733_20240410,exam_date,A,data/pdfs/FDIC_16733_20240410.pdf,true,2024-04-10,,1,"April 10, 2024",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed on cover; also restated on PDF p7 as current evaluation date.
+FDIC_16733_20240410,exam_method,A,data/pdfs/FDIC_16733_20240410.pdf,true,small,,7,Examiners used Interagency Small Institution Examination Procedures to evaluate North Star Bank's CRA performance.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled small confirmed; PDF p4 also says prior PE used Small Institution procedures.
+FDIC_16733_20240410,overall_rating,A,data/pdfs/FDIC_16733_20240410.pdf,true,S,,3,This institution is rated Satisfactory.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled S confirmed on rating page (printed page 1).
+FDIC_16733_20240410,lending_test_rating,A_or_B,data/pdfs/FDIC_16733_20240410.pdf,true,,absent_from_document,3,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"FDIC Small: rating page has no Lending Test rating sentence. PDF p8 says 'demonstrated satisfactory performance under the Lending Test' (conclusion narrative, not a printed component rating); null kept per applicability table."
+FDIC_16733_20240410,cd_test_rating,A_or_B,data/pdfs/FDIC_16733_20240410.pdf,true,,absent_from_document,3,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,FDIC Small probe: no Community Development Test rating anywhere; confirmed on rating page.
+FDIC_16733_20240410,prior_evaluation_date,A,data/pdfs/FDIC_16733_20240410.pdf,false,2021-04-05,,4,"received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Also restated in Scope (PDF p7).
+FDIC_16733_20240410,prior_rating,A,data/pdfs/FDIC_16733_20240410.pdf,false,S,,4,"received a Satisfactory rating at its previous FDIC Performance Evaluation dated April 5, 2021",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_16733_20240410,total_assets_usd,B,data/pdfs/FDIC_16733_20240410.pdf,false,352077000,,9,"North Star Bank Roseville, MN 352,077 71.5",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"LTD table column header 'Total Assets as of 12/31/23 $(000s)'; description PDF p4 gives 'approximately $352,077,000' as of December 31, 2023, same figure."
+FDIC_16733_20240410,total_assets_asof,B,data/pdfs/FDIC_16733_20240410.pdf,false,2023-12-31,,9,Total Assets as of 12/31/23 $(000s),,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"Header of the LTD comparison table; matches PDF p4 'As of December 31, 2023'."
+FDIC_16733_20240410,lending_data_period_start,B,data/pdfs/FDIC_16733_20240410.pdf,false,,absent_from_document,8,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"analysis_periods=2023. PE says small business loans 'originated, purchased, or renewed in 2023' (sentence spans PDF p7-p8). Year only, no dates: coded ABS per guide (years-only rule, OA example). Doubt: a single calendar year could be read as 2023-01-01..2023-12-31."
+FDIC_16733_20240410,lending_data_period_end,B,data/pdfs/FDIC_16733_20240410.pdf,false,,absent_from_document,8,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,See start row: year only (2023); ABS per years-only rule. Evaluation period 2021-04-05 to 2024-04-10 is not the data window.
+FDIC_16733_20240410,n_assessment_areas,B,data/pdfs/FDIC_16733_20240410.pdf,false,1,,5,North Star Bank designated a single contiguous assessment area in south central Minnesota,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"AA was expanded since prior evaluation (Wright, Sherburne counties added) but remains one AA."
+FDIC_16733_20240410,n_full_scope,B,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,5,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Single assessment area.
+FDIC_16733_20240410,loan_products_evaluated,B,data/pdfs/FDIC_16733_20240410.pdf,false,small_business,,7,"For this evaluation, examiners focused solely on the bank's small business lending to derive overall conclusions.",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Home mortgage and small farm explicitly not reviewed; consumer only in portfolio table.
+FDIC_16733_20240410,primary_product,B,data/pdfs/FDIC_16733_20240410.pdf,false,small_business,,7,Examiners determined that the bank's major product line is commercial loans.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"Only one product evaluated (small business), so it is primary by rule; commercial maps to small_business."
+FDIC_16733_20240410,inside_aa_share_number_pct,B,data/pdfs/FDIC_16733_20240410.pdf,false,82.3,,9,"Small Business 93 82.3 20 17.7 113 31,528 82.4 6,744 17.6 38,272",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Table has a single Small Business row and no Total row; 82.3 by number (82.4 is dollars). Narrative only says 'a majority'.
+FDIC_16733_20240410,inside_aa_share_product,B,data/pdfs/FDIC_16733_20240410.pdf,false,small_business,,9,"Small Business 93 82.3 20 17.7 113 31,528 82.4 6,744 17.6 38,272",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"Row is labeled Small Business, not Total; only one product reviewed, so all_reviewed_combined is also a defensible reading. Coded the product of the quoted row."
+FDIC_16733_20240410,avg_ltd_ratio_pct,B,data/pdfs/FDIC_16733_20240410.pdf,false,71.5,,8,"averaged 71.5 percent over the past 11 calendar quarters from June 30, 2021, to December 31, 2023",,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Not the range 68.4 to 76.3; table on PDF p9 shows same 71.5.
+FDIC_16733_20240410,finding_present,C,data/pdfs/FDIC_16733_20240410.pdf,false,false,,11,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Negative review section; no enforcement action or prior finding referenced elsewhere.
+FDIC_16733_20240410,finding_type,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FDIC_16733_20240410,rating_effect,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FDIC_16733_20240410,rating_lowered,C,data/pdfs/FDIC_16733_20240410.pdf,false,false,,11,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so not lowered."
+FDIC_16733_20240410,rating_lowered_level,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false.
+FDIC_16733_20240410,rating_before,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered false.
+FDIC_16733_20240410,rating_after,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered false.
+FDIC_16733_20240410,laws_cited,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; finding_present false.
+FDIC_16733_20240410,practice_basis,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FDIC_16733_20240410,finding_source,C,data/pdfs/FDIC_16733_20240410.pdf,false,,not_applicable,11,,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FDIC_16733_20240410,distractor_laws_named,C,data/pdfs/FDIC_16733_20240410.pdf,false,false,,11,Examiners did not identify any evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs.,,0.33,claude:reader_a_agreed,2026-10-14T11:01:11,Review section names no law.
+FDIC_26816_20220809,regulator,A,data/pdfs/FDIC_26816_20220809.pdf,true,FDIC,,1,Federal Deposit Insurance Corporation,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Cover also names San Francisco Regional Office; regulator FDIC.
+FDIC_26816_20220809,bank_name,A,data/pdfs/FDIC_26816_20220809.pdf,true,"Liberty Bank, Inc.",,1,"Liberty Bank, Inc.",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FDIC_26816_20220809,bank_id,A,data/pdfs/FDIC_26816_20220809.pdf,true,26816,,1,Certificate Number:  26816,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed; cover prints two spaces after the colon.
+FDIC_26816_20220809,exam_date,A,data/pdfs/FDIC_26816_20220809.pdf,true,2022-08-09,,1,"August 9, 2022",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FDIC_26816_20220809,exam_method,A,data/pdfs/FDIC_26816_20220809.pdf,true,small,,6,Examiners used the Interagency Small Institution Examination Procedures to evaluate LBI’s CRA performance,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed; appendix heading SMALL BANK PERFORMANCE CRITERIA (p10) agrees.
+FDIC_26816_20220809,overall_rating,A,data/pdfs/FDIC_26816_20220809.pdf,true,SN,,3,This institution is rated Substantial Noncompliance.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on rating page.
+FDIC_26816_20220809,lending_test_rating,A_or_B,data/pdfs/FDIC_26816_20220809.pdf,true,,absent_from_document,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Prefill confirmed: rating page (p3) prints only the institution rating, no Lending Test rating sentence; FDIC Small per applicability table."
+FDIC_26816_20220809,cd_test_rating,A_or_B,data/pdfs/FDIC_26816_20220809.pdf,true,,absent_from_document,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Prefill confirmed: no Community Development Test under Small Bank procedures; no CD sentence on p3. p7 mentions two investments, not a rating."
+FDIC_26816_20220809,prior_evaluation_date,A,data/pdfs/FDIC_26816_20220809.pdf,false,2021-04-12,,3,"received a “Substantial Noncompliance” CRA Rating at its previous CRA Performance Evaluation dated April 12, 2021",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Scope section (p6) restates the same date as the start of the evaluation period.
+FDIC_26816_20220809,prior_rating,A,data/pdfs/FDIC_26816_20220809.pdf,false,SN,,3,"received a “Substantial Noncompliance” CRA Rating at its previous CRA Performance Evaluation dated April 12, 2021",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_26816_20220809,total_assets_usd,B,data/pdfs/FDIC_26816_20220809.pdf,false,12614000,,8,"Total Assets as of 6/30/2022 ($000s) Liberty Bank, Inc. 12,614",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"LTD table figure in thousands preferred per guide; approx_12.6m_in_text (p4 ""assets totaling $12.6 million"" as of June 30, 2022). Quote joins table header and the bank row."
+FDIC_26816_20220809,total_assets_asof,B,data/pdfs/FDIC_26816_20220809.pdf,false,2022-06-30,,8,Total Assets as of 6/30/2022 ($000s),,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Same date as the Call Report sentence on p4.
+FDIC_26816_20220809,lending_data_period_start,B,data/pdfs/FDIC_26816_20220809.pdf,false,2021-01-01,,8,Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Source line of the inside/outside table; Loan Products Reviewed table (p7) shows 2021 and 2022 YTD, consistent. Not the evaluation period April 12, 2021 to August 9, 2022 (p6)."
+FDIC_26816_20220809,lending_data_period_end,B,data/pdfs/FDIC_26816_20220809.pdf,false,2022-06-30,,8,Source: Evaluation Period: 1/1/2021 – 6/30/2022 Bank Data.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Before exam_date 2022-08-09.
+FDIC_26816_20220809,n_assessment_areas,B,data/pdfs/FDIC_26816_20220809.pdf,false,1,,4,LBI has defined its AA as all of Salt Lake County,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Single AA (Salt Lake County, part of MSA 41620)."
+FDIC_26816_20220809,n_full_scope,B,data/pdfs/FDIC_26816_20220809.pdf,false,,not_applicable,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,n_assessment_areas is 1.
+FDIC_26816_20220809,loan_products_evaluated,B,data/pdfs/FDIC_26816_20220809.pdf,false,consumer|small_business,,7,Examiners also reviewed the bank’s small business loans.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Consumer Tiny Home Loans named as primary on p6; 2 small business loans reviewed (p7). Brokered home mortgage loans explicitly not evaluated (p3); no small farm or home mortgage originations.
+FDIC_26816_20220809,primary_product,B,data/pdfs/FDIC_26816_20220809.pdf,false,consumer,,6,examiners determined that the institution’s primary product line to be consumer Tiny Home Loans.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Typo in source (""to be"") kept verbatim."
+FDIC_26816_20220809,inside_aa_share_number_pct,B,data/pdfs/FDIC_26816_20220809.pdf,false,0.0,,8,Total 0 0.0 61 100.0 61,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Zero is a value; all 61 loans outside the AA.
+FDIC_26816_20220809,inside_aa_share_product,B,data/pdfs/FDIC_26816_20220809.pdf,false,all_reviewed_combined,,8,Total 0 0.0 61 100.0 61,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Total row of the inside/outside table.
+FDIC_26816_20220809,avg_ltd_ratio_pct,B,data/pdfs/FDIC_26816_20220809.pdf,false,64.9,,7,"The bank’s net LTD ratio, calculated from Call Report data, averaged 64.9 percent over the past five calendar quarters",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,Not the post-investment adjusted 65.5 (p7) nor the prior 54.2.
+FDIC_26816_20220809,finding_present,C,data/pdfs/FDIC_26816_20220809.pdf,false,true,,9,The FDIC identified illegal credit practices during the evaluation period.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Consideration stated: did not affect the CRA rating. Restated on rating page p3. reference=enforcement_action_description (p4 ""operating under formal enforcement actions""), context only."
+FDIC_26816_20220809,finding_type,C,data/pdfs/FDIC_26816_20220809.pdf,false,other_illegal_credit_practice,,9,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"UDAP, no prohibited basis stated."
+FDIC_26816_20220809,rating_effect,C,data/pdfs/FDIC_26816_20220809.pdf,false,substantive_not_lowered,,9,"considering the bank’s already substantially deficient performance, this illegal credit practice did not affect the CRA rating.",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_26816_20220809,rating_lowered,C,data/pdfs/FDIC_26816_20220809.pdf,false,false,,9,this illegal credit practice did not affect the CRA rating.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_26816_20220809,rating_lowered_level,C,data/pdfs/FDIC_26816_20220809.pdf,false,,not_applicable,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false.
+FDIC_26816_20220809,rating_before,C,data/pdfs/FDIC_26816_20220809.pdf,false,,not_applicable,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false.
+FDIC_26816_20220809,rating_after,C,data/pdfs/FDIC_26816_20220809.pdf,false,,not_applicable,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false.
+FDIC_26816_20220809,laws_cited,C,data/pdfs/FDIC_26816_20220809.pdf,false,FTC_s5_UDAP,,9,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,
+FDIC_26816_20220809,practice_basis,C,data/pdfs/FDIC_26816_20220809.pdf,false,,absent_from_document,,,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"Section names harm to ""a majority of the bank’s mortgage loan borrowers"" but no specific product, fee or term; guide codes LB as ABS. Doubt: the bank only brokers mortgages (p3), so the harmed group is odd, but no practice is named."
+FDIC_26816_20220809,finding_source,C,data/pdfs/FDIC_26816_20220809.pdf,false,this_CRA_exam,,9,The FDIC identified illegal credit practices during the evaluation period.,,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,"No separate compliance exam, order or referral named; p3 says examiners identified it during the CRA evaluation period."
+FDIC_26816_20220809,distractor_laws_named,C,data/pdfs/FDIC_26816_20220809.pdf,false,false,,9,"Examiners cited a violation of the Federal Trade Commission Act, Section 5 Unfair or Deceptive Acts of Practices (UDAP).",,0.23,claude:reader_a_agreed,2026-10-14T11:01:11,The only law named is cited inside the finding; no negated boilerplate in the review section.
+FDIC_6078_20240805,regulator,A,data/pdfs/FDIC_6078_20240805.pdf,true,FDIC,,1,Federal Deposit Insurance Corporation,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Cover page; Kansas City Regional Office also named. Prefill confirmed.
+FDIC_6078_20240805,bank_name,A,data/pdfs/FDIC_6078_20240805.pdf,true,One American Bank,,1,One American Bank,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FDIC_6078_20240805,bank_id,A,data/pdfs/FDIC_6078_20240805.pdf,true,6078,,1,Certificate Number: 6078,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FDIC_6078_20240805,exam_date,A,data/pdfs/FDIC_6078_20240805.pdf,true,2024-08-05,,1,"August 5, 2024",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FDIC_6078_20240805,exam_method,A,data/pdfs/FDIC_6078_20240805.pdf,true,isb,,7,examiners used Interagency Intermediate Small Institution Examination Procedures to evaluate One American Bank’s CRA performance,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"Bank became subject to ISB procedures effective January 1, 2024; prior evaluation used Small Institution procedures. Prefill confirmed."
+FDIC_6078_20240805,overall_rating,A,data/pdfs/FDIC_6078_20240805.pdf,true,NI,,3,This institution is rated Needs to Improve.,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on rating page (printed page 1).
+FDIC_6078_20240805,lending_test_rating,A_or_B,data/pdfs/FDIC_6078_20240805.pdf,false,NI,,3,The Lending Test is rated Needs to Improve.,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,FDIC ISB: value per applicability table.
+FDIC_6078_20240805,cd_test_rating,A_or_B,data/pdfs/FDIC_6078_20240805.pdf,false,NI,,3,The Community Development Test is rated Needs to Improve.,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,FDIC ISB: value per applicability table.
+FDIC_6078_20240805,prior_evaluation_date,A,data/pdfs/FDIC_6078_20240805.pdf,false,2018-12-03,,4,"At the previous evaluation, dated December 3, 2018, the FDIC evaluated the institution",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"Description of Institution (printed page 2); also restated in Scope, PDF page 7."
+FDIC_6078_20240805,prior_rating,A,data/pdfs/FDIC_6078_20240805.pdf,false,S,,4,the institution received a Satisfactory rating.,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Same sentence as prior evaluation date.
+FDIC_6078_20240805,total_assets_usd,B,data/pdfs/FDIC_6078_20240805.pdf,false,463000000,,4,"As of March 31, 2024, the institution reported total assets of $463 million",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"No LTD comparison table with a Total Assets column exists (examiners found no comparable banks, PDF page 9), so the rounded description figure is the only one printed."
+FDIC_6078_20240805,total_assets_asof,B,data/pdfs/FDIC_6078_20240805.pdf,false,2024-03-31,,4,"As of March 31, 2024, the institution reported total assets of $463 million",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Date in the same sentence as the figure.
+FDIC_6078_20240805,lending_data_period_start,B,data/pdfs/FDIC_6078_20240805.pdf,false,,absent_from_document,8,"originated, renewed, or extended in 2022 and 2023",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"analysis_periods=consumer/SB/SF 2022-2023; HMDA 2021-2023 (LARs 2021, 2022, 2023; only 2021-2022 presented for distribution). Primary product consumer is years only. Evaluation period 2018-12-03 to 2024-08-05 is not the data window."
+FDIC_6078_20240805,lending_data_period_end,B,data/pdfs/FDIC_6078_20240805.pdf,false,,absent_from_document,8,"originated, renewed, or extended in 2022 and 2023",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Years only; see start row notes.
+FDIC_6078_20240805,n_assessment_areas,B,data/pdfs/FDIC_6078_20240805.pdf,false,1,,5,One American Bank has designated a single assessment area,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"Portion of Sioux Falls SD MSA plus Clay County non-MSA, treated as one AA."
+FDIC_6078_20240805,n_full_scope,B,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,5,One American Bank has designated a single assessment area,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"Single AA, so NA."
+FDIC_6078_20240805,loan_products_evaluated,B,data/pdfs/FDIC_6078_20240805.pdf,false,consumer|home_mortgage|small_business|small_farm,,8,"examiners reviewed consumer, small business, small farm, and home mortgage loans.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Student loans are part of consumer; most student loans were sold and not reviewed.
+FDIC_6078_20240805,primary_product,B,data/pdfs/FDIC_6078_20240805.pdf,false,consumer,,9,"For the Lending Test, consumer loans received the most weight, followed by home mortgage, small business, and small farm loans.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Also Activities Reviewed (PDF page 7): primary lending focus is consumer lending.
+FDIC_6078_20240805,inside_aa_share_number_pct,B,data/pdfs/FDIC_6078_20240805.pdf,false,0.9,,10,"Total 82 0.9 9,272 99.1 9,354",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Total row of Lending Inside and Outside table (by number). Student loans not included in the table.
+FDIC_6078_20240805,inside_aa_share_product,B,data/pdfs/FDIC_6078_20240805.pdf,false,all_reviewed_combined,,10,"Total 82 0.9 9,272 99.1 9,354",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Total row.
+FDIC_6078_20240805,avg_ltd_ratio_pct,B,data/pdfs/FDIC_6078_20240805.pdf,false,128.1,,9,The bank’s average net loan-to-deposit ratio is 128.1 percent over the past 22 calendar quarters,,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Range 82.1 to 260.9 and SD state average 60 not used.
+FDIC_6078_20240805,finding_present,C,data/pdfs/FDIC_6078_20240805.pdf,false,false,,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"Negative review section. reference=enforcement_action_description (Consent Order with FDIC and SD Division of Banking, August 3, 2023, PDF page 5; capital/liquidity, not a credit practice finding)."
+FDIC_6078_20240805,finding_type,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,No finding.
+FDIC_6078_20240805,rating_effect,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,No finding.
+FDIC_6078_20240805,rating_lowered,C,data/pdfs/FDIC_6078_20240805.pdf,false,false,,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so not lowered."
+FDIC_6078_20240805,rating_lowered_level,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,No finding.
+FDIC_6078_20240805,rating_before,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Probe: no finding.
+FDIC_6078_20240805,rating_after,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Probe: no finding.
+FDIC_6078_20240805,laws_cited,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Probe: no finding.
+FDIC_6078_20240805,practice_basis,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,No finding.
+FDIC_6078_20240805,finding_source,C,data/pdfs/FDIC_6078_20240805.pdf,false,,not_applicable,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,No finding.
+FDIC_6078_20240805,distractor_laws_named,C,data/pdfs/FDIC_6078_20240805.pdf,false,false,,16,"Examiners did not identify any evidence of discriminatory or other illegal credit practices; therefore, this consideration did not affect the institution’s overall CRA rating.",,0.42,claude:reader_a_agreed,2026-10-14T11:01:11,Review section names no law.
+FRB_3664588_20240116,regulator,A,data/pdfs/FRB_3664588_20240116.pdf,true,FRB,,1,Federal Reserve Bank of New York,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled index value on cover.
+FRB_3664588_20240116,bank_name,A,data/pdfs/FRB_3664588_20240116.pdf,true,Fieldpoint Private Bank & Trust,,1,Fieldpoint Private Bank & Trust,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled index value is in capitals (FIELDPOINT PRIVATE BANK & TRUST); coded as printed on the cover.
+FRB_3664588_20240116,bank_id,A,data/pdfs/FRB_3664588_20240116.pdf,true,3664588,,1,RSSD No. 3664588,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled.
+FRB_3664588_20240116,exam_date,A,data/pdfs/FRB_3664588_20240116.pdf,true,2024-01-16,,1,"January 16, 2024",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled; cover date under PUBLIC DISCLOSURE.
+FRB_3664588_20240116,exam_method,A,data/pdfs/FRB_3664588_20240116.pdf,true,isb,,8,Fieldpoint’s CRA performance was evaluated using the FFIEC Interagency Intermediate Small Institution Examination Procedures.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled.
+FRB_3664588_20240116,overall_rating,A,data/pdfs/FRB_3664588_20240116.pdf,true,NI,,4,INSTITUTION'S CRA RATING: This institution is rated Needs to Improve.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled; institution scope (state ratings on p15 etc. not used).
+FRB_3664588_20240116,lending_test_rating,A_or_B,data/pdfs/FRB_3664588_20240116.pdf,true,NI,,4,The Lending Test is rated: Needs to Improve.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled; FRB ISB is value per applicability table; institution scope.
+FRB_3664588_20240116,cd_test_rating,A_or_B,data/pdfs/FRB_3664588_20240116.pdf,true,S,,4,The Community Development Test is rated: Satisfactory.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled; institution scope.
+FRB_3664588_20240116,prior_evaluation_date,A,data/pdfs/FRB_3664588_20240116.pdf,false,2018-02-12,,6,"assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation dated February 12, 2018",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Description of Institution.
+FRB_3664588_20240116,prior_rating,A,data/pdfs/FRB_3664588_20240116.pdf,false,S,,6,"assigned a rating of “Satisfactory” at the prior CRA Performance Evaluation dated February 12, 2018",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_3664588_20240116,total_assets_usd,B,data/pdfs/FRB_3664588_20240116.pdf,false,1700000000,,5,the bank had total assets of $1.7 billion,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"Only a rounded sentence figure is printed; no exact total assets table in this FRB PE (p6 table is deposits, p5 table is loans)."
+FRB_3664588_20240116,total_assets_asof,B,data/pdfs/FRB_3664588_20240116.pdf,false,2023-09-30,,5,"Based on the September 30, 2023, Federal Financial Institutions Examination Council (FFIEC) Consolidated Report of Condition and Income (Call Report)",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Same sentence as the $1.7 billion figure.
+FRB_3664588_20240116,lending_data_period_start,B,data/pdfs/FRB_3664588_20240116.pdf,false,2017-01-01,,8,"Examiners reviewed the bank’s home mortgage loans and small business loans from January 1, 2017, to December 31, 2022.",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"Scope, Evaluation Period; confirmed by Appendix C p92 'Lending Test: January 1, 2017- December 31, 2022'. CD window (April 1, 2017 to December 31, 2023) not used."
+FRB_3664588_20240116,lending_data_period_end,B,data/pdfs/FRB_3664588_20240116.pdf,false,2022-12-31,,8,"Examiners reviewed the bank’s home mortgage loans and small business loans from January 1, 2017, to December 31, 2022.",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_3664588_20240116,n_assessment_areas,B,data/pdfs/FRB_3664588_20240116.pdf,false,4,,7,The CRA performance evaluation included the following four bank delineated assessment areas:,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"excluded_aa=MD 33124 (Miami-Miami Beach-Kendall, FL), not considered due to limited timeframe; Appendix C p92 lists 4."
+FRB_3664588_20240116,n_full_scope,B,data/pdfs/FRB_3664588_20240116.pdf,false,4,,8,Examiners used full-scope examination procedures to evaluate the bank’s performance for all included assessment areas.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Appendix C p92 shows Full-scope Review for all 4 AAs.
+FRB_3664588_20240116,loan_products_evaluated,B,data/pdfs/FRB_3664588_20240116.pdf,false,home_mortgage|small_business,,8,loans reportable under the Home Mortgage Disclosure Act (HMDA) as well as small business loans were analyzed,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"Construction, consumer, and small farm loans excluded (p8)."
+FRB_3664588_20240116,primary_product,B,data/pdfs/FRB_3664588_20240116.pdf,false,home_mortgage,,8,examiners placed more weight on home mortgage loans when compared to small business loans based on the number of loans originated.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_3664588_20240116,inside_aa_share_number_pct,B,data/pdfs/FRB_3664588_20240116.pdf,false,40.8,,10,lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Table p11 Total Loans row 171 40.8% agrees; prior evaluation 51.7% not used.
+FRB_3664588_20240116,inside_aa_share_product,B,data/pdfs/FRB_3664588_20240116.pdf,false,all_reviewed_combined,,10,lending inside the assessment area was 40.8% by number and 43.6% by dollar volume.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Bank-level sentence; equals Total Loans row of p11 table.
+FRB_3664588_20240116,avg_ltd_ratio_pct,B,data/pdfs/FRB_3664588_20240116.pdf,false,91.1,,10,"Fieldpoint’s average LTD ratio for the 24-quarters from January 1, 2017, to December 31, 2022, was 91.1%",,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Prior evaluation 12-quarter average 87.6% not used.
+FRB_3664588_20240116,finding_present,C,data/pdfs/FRB_3664588_20240116.pdf,false,false,,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"FAIR LENDING OR OTHER ILLEGAL CREDIT PRACTICES REVIEW, institution level; negative."
+FRB_3664588_20240116,finding_type,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_3664588_20240116,rating_effect,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_3664588_20240116,rating_lowered,C,data/pdfs/FRB_3664588_20240116.pdf,false,false,,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so not lowered."
+FRB_3664588_20240116,rating_lowered_level,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false.
+FRB_3664588_20240116,rating_before,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered false.
+FRB_3664588_20240116,rating_after,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered false.
+FRB_3664588_20240116,laws_cited,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; finding_present false.
+FRB_3664588_20240116,practice_basis,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_3664588_20240116,finding_source,C,data/pdfs/FRB_3664588_20240116.pdf,false,,not_applicable,14,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet the community credit needs of the assessment area was identified.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_3664588_20240116,distractor_laws_named,C,data/pdfs/FRB_3664588_20240116.pdf,false,false,,14,Fieldpoint was in compliance with the substantive provisions of the anti-discrimination laws and regulations.,,0.20,claude:reader_a_agreed,2026-10-14T11:01:11,"Section refers generically to anti-discrimination laws and names no specific law. Community contact mention of appraisal discrimination (p9) is about the market, not a finding."
+FRB_663656_20241118,regulator,A,data/pdfs/FRB_663656_20241118.pdf,true,FRB,,1,Federal Reserve Bank of Kansas City,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FRB_663656_20241118,bank_name,A,data/pdfs/FRB_663656_20241118.pdf,true,Small Business Bank,,1,Small Business Bank,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill was the index capitals SMALL BUSINESS BANK; cover prints Small Business Bank.
+FRB_663656_20241118,bank_id,A,data/pdfs/FRB_663656_20241118.pdf,true,663656,,1,RSSD# 663656,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover.
+FRB_663656_20241118,exam_date,A,data/pdfs/FRB_663656_20241118.pdf,true,2024-11-18,,1,"November 18, 2024",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on cover; page header repeats the date.
+FRB_663656_20241118,exam_method,A,data/pdfs/FRB_663656_20241118.pdf,true,small,,3,Interagency Examination Procedures for Small Institutions,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed in Scope of Examination.
+FRB_663656_20241118,overall_rating,A,data/pdfs/FRB_663656_20241118.pdf,true,NI,,3,Small Business Bank (the bank) is rated Needs to Improve.,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed on rating page.
+FRB_663656_20241118,lending_test_rating,A_or_B,data/pdfs/FRB_663656_20241118.pdf,true,,absent_from_document,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Prefill kept per applicability table (FRB Small = ABS): rating page (p3) prints only the institution rating. Doubt: Conclusions (p8, printed page 7) says ""The bank’s overall lending test performance is Needs to Improve."" which is a lending test conclusion outside the rating section; not coded as app"
+FRB_663656_20241118,cd_test_rating,A_or_B,data/pdfs/FRB_663656_20241118.pdf,true,,absent_from_document,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Prefill confirmed: no Community Development Test sentence on p3 or anywhere; Small Bank procedures.
+FRB_663656_20241118,prior_evaluation_date,A,data/pdfs/FRB_663656_20241118.pdf,false,2020-03-23,,4,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance evaluation.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_663656_20241118,prior_rating,A,data/pdfs/FRB_663656_20241118.pdf,false,S,,4,"The bank was rated Satisfactory under the CRA at its March 23, 2020 performance evaluation.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_663656_20241118,total_assets_usd,B,data/pdfs/FRB_663656_20241118.pdf,false,94200000,,3,"The bank has total assets of $94.2 million as of June 30, 2024.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Description of Institution sentence, as in guide SB example. Table 6 (p9) prints bank Asset Size $(000) 94,182 without its own as-of date (table window Dec 31, 2019 - June 30, 2024); FDIC table rule not applied to FRB; 94182000 is within 1 percent."
+FRB_663656_20241118,total_assets_asof,B,data/pdfs/FRB_663656_20241118.pdf,false,2024-06-30,,3,"The bank has total assets of $94.2 million as of June 30, 2024.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_663656_20241118,lending_data_period_start,B,data/pdfs/FRB_663656_20241118.pdf,false,2020-03-24,,3,"A statistical sample of 169 small business loans from a universe of 1,005 loans originated between March 24, 2020, and December 31, 2023.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"p4 restates the same window. Aggregate data years 2020-2022 (p3) are context, not the bank's window."
+FRB_663656_20241118,lending_data_period_end,B,data/pdfs/FRB_663656_20241118.pdf,false,2023-12-31,,3,"A statistical sample of 169 small business loans from a universe of 1,005 loans originated between March 24, 2020, and December 31, 2023.",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Tables 8 and 9 note no AA loans in 2022 or 2023; window still ends 2023-12-31.
+FRB_663656_20241118,n_assessment_areas,B,data/pdfs/FRB_663656_20241118.pdf,false,1,,4,"The bank’s delineated AA is comprised of the Kansas City, Missouri-Kansas Multistate Metropolitan Statistical Area (MSA) AA",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Multistate MSA is one AA. p3 also says ""assessed within the bank’s only AA""."
+FRB_663656_20241118,n_full_scope,B,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,n_assessment_areas is 1.
+FRB_663656_20241118,loan_products_evaluated,B,data/pdfs/FRB_663656_20241118.pdf,false,small_business,,3,"A statistical sample of 169 small business loans from a universe of 1,005 loans",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Sample includes SBA PPP loans (p8), still small business. Farmland/agricultural appear only in portfolio Table 1 (p4) and agricultural participations were excluded."
+FRB_663656_20241118,primary_product,B,data/pdfs/FRB_663656_20241118.pdf,false,small_business,,3,"A statistical sample of 169 small business loans from a universe of 1,005 loans",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Only product evaluated, so primary per guide. Portfolio focus is agricultural (p3), not used."
+FRB_663656_20241118,inside_aa_share_number_pct,B,data/pdfs/FRB_663656_20241118.pdf,false,21.3,,10,only 21.3 percent of the bank’s lending by number and 17.3 percent by dollar volume was originated inside the AA,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"Table 7 Total Loans row agrees: 36, 21.3. Number not dollars (17.3)."
+FRB_663656_20241118,inside_aa_share_product,B,data/pdfs/FRB_663656_20241118.pdf,false,all_reviewed_combined,,10,only 21.3 percent of the bank’s lending by number and 17.3 percent by dollar volume was originated inside the AA,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Sentence speaks of the bank's lending overall; Table 7 Total Loans row equals the Small Business row.
+FRB_663656_20241118,avg_ltd_ratio_pct,B,data/pdfs/FRB_663656_20241118.pdf,false,85.9,,9,The bank’s 19-quarter average NLTD ratio of 85.9 percent was comparable,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Not the peer range 34.8 to 90.0.
+FRB_663656_20241118,finding_present,C,data/pdfs/FRB_663656_20241118.pdf,false,false,,12,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"reference=enforcement_action_description (Cease and Desist Order with the Board of Governors effective September 1, 2023, p4); review section is negative."
+FRB_663656_20241118,finding_type,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+FRB_663656_20241118,rating_effect,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+FRB_663656_20241118,rating_lowered,C,data/pdfs/FRB_663656_20241118.pdf,false,false,,12,No evidence of a pattern or practice of discrimination on a prohibited basis or of other illegal credit practices,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so no lowering."
+FRB_663656_20241118,rating_lowered_level,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false.
+FRB_663656_20241118,rating_before,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false (probe).
+FRB_663656_20241118,rating_after,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false (probe).
+FRB_663656_20241118,laws_cited,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,"finding_present is false (probe); ECOA and FHA named only in negated boilerplate, see distractor_laws_named."
+FRB_663656_20241118,practice_basis,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+FRB_663656_20241118,finding_source,C,data/pdfs/FRB_663656_20241118.pdf,false,,not_applicable,,,,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+FRB_663656_20241118,distractor_laws_named,C,data/pdfs/FRB_663656_20241118.pdf,false,true,,12,"including the Equal Credit Opportunity Act and the Fair Housing Act, was considered as part of this CRA evaluation",,0.44,claude:reader_a_agreed,2026-10-14T11:01:11,Laws named inside the sentence that precedes the no-evidence statement.
+FRB_722432_20230911,regulator,A,data/pdfs/FRB_722432_20230911.pdf,true,FRB,,1,Federal Reserve Bank of Richmond,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled FRB confirmed on cover.
+FRB_722432_20230911,bank_name,A,data/pdfs/FRB_722432_20230911.pdf,true,The Bank of Romney,,1,The Bank of Romney,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"Prefilled index value 'BANK OF ROMNEY, THE' corrected to the cover spelling (same name)."
+FRB_722432_20230911,bank_id,A,data/pdfs/FRB_722432_20230911.pdf,true,722432,,2,722432,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,RSSD printed on the second cover page (p2) without an 'RSSD' label; prefilled confirmed.
+FRB_722432_20230911,exam_date,A,data/pdfs/FRB_722432_20230911.pdf,true,2023-09-11,,1,"September 11, 2023",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed on cover.
+FRB_722432_20230911,exam_method,A,data/pdfs/FRB_722432_20230911.pdf,true,small,,4,The Bank of Romney (BOR) was evaluated using the interagency examination procedures for small institutions,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed in Scope of Examination.
+FRB_722432_20230911,overall_rating,A,data/pdfs/FRB_722432_20230911.pdf,true,O,,4,This institution is rated Outstanding.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Prefilled confirmed on rating page.
+FRB_722432_20230911,lending_test_rating,A_or_B,data/pdfs/FRB_722432_20230911.pdf,true,,absent_from_document,4,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"FRB Small: rating page (p4) has no Lending Test sentence; confirms applicability table. The 'Lending Test: Consistent' cell on p13 is a limited-scope AA conclusion, not a rating."
+FRB_722432_20230911,cd_test_rating,A_or_B,data/pdfs/FRB_722432_20230911.pdf,true,,absent_from_document,4,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,FRB Small: no Community Development Test rating anywhere in the PE; probe confirmed.
+FRB_722432_20230911,prior_evaluation_date,A,data/pdfs/FRB_722432_20230911.pdf,false,2017-09-11,,4,"The institution’s previous CRA rating dated September 11, 2017, was Outstanding.",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Description of Institution.
+FRB_722432_20230911,prior_rating,A,data/pdfs/FRB_722432_20230911.pdf,false,O,,4,"The institution’s previous CRA rating dated September 11, 2017, was Outstanding.",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_722432_20230911,total_assets_usd,B,data/pdfs/FRB_722432_20230911.pdf,false,354900000,,4,"As of June 30, 2023, the bank’s assets totaled $354.9 million",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,FRB PE; no exact table figure for the bank's total assets.
+FRB_722432_20230911,total_assets_asof,B,data/pdfs/FRB_722432_20230911.pdf,false,2023-06-30,,4,"As of June 30, 2023, the bank’s assets totaled $354.9 million",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,
+FRB_722432_20230911,lending_data_period_start,B,data/pdfs/FRB_722432_20230911.pdf,false,,absent_from_document,4,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,analysis_periods=HMDA 2021-2022; consumer motor vehicle 2022. Scope says 'all HMDA loans originated from calendar years 2021 and 2022 and a sample of consumer motor vehicle loans originated during 2022'. Coded ABS as years-only per guide (OA 'in 2022 and 2023' analog); doubt: 'calendar years 2021 an
+FRB_722432_20230911,lending_data_period_end,B,data/pdfs/FRB_722432_20230911.pdf,false,,absent_from_document,4,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,See start row: years only (HMDA 2021 and 2022; consumer motor vehicle 2022).
+FRB_722432_20230911,n_assessment_areas,B,data/pdfs/FRB_722432_20230911.pdf,false,2,,4,"Currently, BoR serves two assessment areas located within West Virginia.",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"Winchester, WV (Hampshire County) and Hagerstown-Martinsburg, WV (Morgan County); table on p5 and Appendix A p14."
+FRB_722432_20230911,n_full_scope,B,data/pdfs/FRB_722432_20230911.pdf,false,1,,4,"full-scope evaluation procedures were applied to the Winchester, WV assessment area and limited-scope procedures were applied to the Hagerstown-Martinsburg, WV assessment area",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"1 full-scope (Winchester), 1 limited-scope (Hagerstown-Martinsburg)."
+FRB_722432_20230911,loan_products_evaluated,B,data/pdfs/FRB_722432_20230911.pdf,false,consumer|home_mortgage,,4,HMDA loans and consumer motor vehicle loans were identified as primary credit products.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Consumer = consumer motor vehicle loans (sample of 148); home_mortgage = HMDA loans 2021-2022.
+FRB_722432_20230911,primary_product,B,data/pdfs/FRB_722432_20230911.pdf,false,unstated,,4,HMDA loans and consumer motor vehicle loans were identified as primary credit products.,,0.69,claude:adjudicated,2026-10-14T11:01:11,"Adjudicated for reader A. The institution-level Scope of Examination on p4 calls both products primary and does not rank them, which matches the GN precedent, so the code is unstated. The institution Conclusions on pp5-6 also give no product weighting. The sentence 'BOR's HMDA lending performance is"
+FRB_722432_20230911,inside_aa_share_number_pct,B,data/pdfs/FRB_722432_20230911.pdf,false,70.7,,6,a majority of the number (70.7%) and dollar amount (54.9%) were extended within the bank’s assessment area.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"Sentence matches table TOTAL LOANS row '456 70.7' (HMDA 325/65.4 plus consumer sample 131/88.5). By number, not dollars (54.9)."
+FRB_722432_20230911,inside_aa_share_product,B,data/pdfs/FRB_722432_20230911.pdf,false,all_reviewed_combined,,6,a majority of the number (70.7%) and dollar amount (54.9%) were extended within the bank’s assessment area.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Figure is the TOTAL LOANS row across HMDA and consumer loans.
+FRB_722432_20230911,avg_ltd_ratio_pct,B,data/pdfs/FRB_722432_20230911.pdf,false,97.9,,6,"The bank’s current loan-to-deposit ratio is 99.4% and averaged 97.9% for the preceding 24-quarter period ending June 30, 2023.",,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Not the current 99.4% or the peer range 77.4%-93.7%.
+FRB_722432_20230911,finding_present,C,data/pdfs/FRB_722432_20230911.pdf,false,false,,6,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,FRB review section is negative; no enforcement action or prior finding referenced anywhere.
+FRB_722432_20230911,finding_type,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_722432_20230911,rating_effect,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_722432_20230911,rating_lowered,C,data/pdfs/FRB_722432_20230911.pdf,false,false,,6,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so no downgrade."
+FRB_722432_20230911,rating_lowered_level,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false.
+FRB_722432_20230911,rating_before,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false (probe).
+FRB_722432_20230911,rating_after,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false (probe).
+FRB_722432_20230911,laws_cited,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false (probe).
+FRB_722432_20230911,practice_basis,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_722432_20230911,finding_source,C,data/pdfs/FRB_722432_20230911.pdf,false,,not_applicable,6,,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+FRB_722432_20230911,distractor_laws_named,C,data/pdfs/FRB_722432_20230911.pdf,false,false,,6,No evidence of discriminatory or other illegal credit practices inconsistent with helping to meet community credit needs was identified.,,0.69,claude:reader_a_agreed,2026-10-14T11:01:11,Richmond-district review section names no law (unlike the Kansas City template); only the negative sentence and a policies/training sentence.
+OCC_11715_20240408,regulator,A,data/pdfs/OCC_11715_20240408.pdf,true,OCC,,1,Office of the Comptroller of the Currency,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value against cover page.
+OCC_11715_20240408,bank_name,A,data/pdfs/OCC_11715_20240408.pdf,true,The Lemont National Bank,,1,The Lemont National Bank,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value against cover page.
+OCC_11715_20240408,bank_id,A,data/pdfs/OCC_11715_20240408.pdf,true,11715,,1,Charter Number 11715,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value against cover page.
+OCC_11715_20240408,exam_date,A,data/pdfs/OCC_11715_20240408.pdf,true,2024-04-08,,1,"April 8, 2024",,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value against cover page (under PUBLIC DISCLOSURE).
+OCC_11715_20240408,exam_method,A,data/pdfs/OCC_11715_20240408.pdf,true,small,,4,We assessed the bank under the small bank CRA evaluation procedures.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value; cover also says SMALL BANK.
+OCC_11715_20240408,overall_rating,A,data/pdfs/OCC_11715_20240408.pdf,true,SN,,3,This institution is rated Substantial Noncompliance.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value on rating page (printed page 1).
+OCC_11715_20240408,lending_test_rating,A_or_B,data/pdfs/OCC_11715_20240408.pdf,true,SN,,3,The lending test is rated: Substantial Noncompliance.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled value; equals overall as expected for OCC Small. State of Illinois repeat on p7 not used.
+OCC_11715_20240408,cd_test_rating,A_or_B,data/pdfs/OCC_11715_20240408.pdf,true,,absent_from_document,3,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefilled ABS: rating page has no community development test sentence (OCC Small probe); Appendix B shows only Lending Test Rating.
+OCC_11715_20240408,prior_evaluation_date,A,data/pdfs/OCC_11715_20240408.pdf,false,2021-06-19,,4,"Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation, dated June 19, 2021.",,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_11715_20240408,prior_rating,A,data/pdfs/OCC_11715_20240408.pdf,false,SN,,4,"Lemont received a Substantial Non-Compliance rating at the preceding CRA evaluation, dated June 19, 2021.",,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_11715_20240408,total_assets_usd,B,data/pdfs/OCC_11715_20240408.pdf,false,65400000,,4,"As of December 31, 2023, Lemont reported total assets of $65.4 million",,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Rounded figure in text; no exact table figure in this OCC PE.
+OCC_11715_20240408,total_assets_asof,B,data/pdfs/OCC_11715_20240408.pdf,false,2023-12-31,,4,"As of December 31, 2023, Lemont reported total assets of $65.4 million",,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_11715_20240408,lending_data_period_start,B,data/pdfs/OCC_11715_20240408.pdf,false,2021-01-01,,4,The evaluation period includes calendar years 2021 through 2023.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,"analysis_periods=2021; 2022-2023 (separate census-vintage analysis periods for Tables O and P, p5). Appendix A p11 also prints Time Period Reviewed 01/01/2021 to 12/31/2023."
+OCC_11715_20240408,lending_data_period_end,B,data/pdfs/OCC_11715_20240408.pdf,false,2023-12-31,,4,The evaluation period includes calendar years 2021 through 2023.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Appendix A p11 confirms 12/31/2023. Table O/P 2022-2023 source lines read 01/01/2022 - 01/01/2023 Bank Data (apparent typo in PE).
+OCC_11715_20240408,n_assessment_areas,B,data/pdfs/OCC_11715_20240408.pdf,false,1,,7,Lemont has one AA in the state of Illinois consisting of 14 contiguous census tracts,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,"Also p9 ""the bank's single AA"" and Appendix A p11 lists one AA (Chicago-Naperville-Schaumburg, IL MSA, full scope)."
+OCC_11715_20240408,n_full_scope,B,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,11,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,"Single AA, so NA by rule; Appendix A shows it was Full scope."
+OCC_11715_20240408,loan_products_evaluated,B,data/pdfs/OCC_11715_20240408.pdf,false,home_mortgage,,5,we reviewed 100 percent of the bank’s home mortgage loans during the evaluation period.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Appendix A p11 Bank Products Reviewed: Home mortgage. HELOCs in p8 origination table are home mortgage (open-end lines).
+OCC_11715_20240408,primary_product,B,data/pdfs/OCC_11715_20240408.pdf,false,home_mortgage,,4,home mortgage loans represent the bank’s primary lending product.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Only product evaluated.
+OCC_11715_20240408,inside_aa_share_number_pct,B,data/pdfs/OCC_11715_20240408.pdf,false,54.5,,4,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Table on same page prints Home Mortgage row 54.5 but Total row 54.4 (rounding inconsistency); sentence used per rule.
+OCC_11715_20240408,inside_aa_share_product,B,data/pdfs/OCC_11715_20240408.pdf,false,all_reviewed_combined,,4,The bank originated and purchased 54.5 percent of its total loans inside the bank’s AA during the evaluation period.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Sentence says total loans; only home mortgage reviewed.
+OCC_11715_20240408,avg_ltd_ratio_pct,B,data/pdfs/OCC_11715_20240408.pdf,false,10.6,,3,average LTD for the 16-quarter period since the preceding CRA evaluation was 10.6 percent.,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Not the 11.0/9.7 range nor the 77.8 peer average.
+OCC_11715_20240408,finding_present,C,data/pdfs/OCC_11715_20240408.pdf,false,false,,6,The OCC has not identified that this institution,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Review section is negative; the following paragraph is the OCC forward-looking boilerplate (non-finding). No enforcement action or prior finding referenced elsewhere.
+OCC_11715_20240408,finding_type,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+OCC_11715_20240408,rating_effect,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+OCC_11715_20240408,rating_lowered,C,data/pdfs/OCC_11715_20240408.pdf,false,false,,6,The OCC has not identified that this institution,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Derived: no finding.
+OCC_11715_20240408,rating_lowered_level,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered false.
+OCC_11715_20240408,rating_before,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,"Probe; rating_lowered false. Note prior rating SN is the prior PE rating, not a lowering."
+OCC_11715_20240408,rating_after,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered false.
+OCC_11715_20240408,laws_cited,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; finding_present false.
+OCC_11715_20240408,practice_basis,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+OCC_11715_20240408,finding_source,C,data/pdfs/OCC_11715_20240408.pdf,false,,not_applicable,6,,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present false.
+OCC_11715_20240408,distractor_laws_named,C,data/pdfs/OCC_11715_20240408.pdf,false,false,,6,the OCC consults with other federal agencies with responsibility for compliance with the relevant laws and regulations,,0.03,claude:reader_a_agreed,2026-10-14T11:01:11,"Review section names no statute by name (only generic relevant laws and agencies DOJ, HUD, CFPB). It does cite 12 CFR 25.28(c) or 195.28(c), the CRA regulation; treated as not a named law, consistent with guide GN:194-196 = false for the same OCC boilerplate. Doubt recorded."
+OCC_13682_20240819,regulator,A,data/pdfs/OCC_13682_20240819.pdf,true,OCC,,1,Office of the Comptroller of the Currency,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Cover page; confirms prefilled index value.
+OCC_13682_20240819,bank_name,A,data/pdfs/OCC_13682_20240819.pdf,true,"First Neighbor Bank, National Association",,1,"First Neighbor Bank, National Association",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Cover page; confirms prefilled index value.
+OCC_13682_20240819,bank_id,A,data/pdfs/OCC_13682_20240819.pdf,true,13682,,1,Charter Number 13682,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Cover page; confirms prefilled index value.
+OCC_13682_20240819,exam_date,A,data/pdfs/OCC_13682_20240819.pdf,true,2024-08-19,,1,"August 19, 2024",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Cover page under PUBLIC DISCLOSURE; confirms prefilled index value.
+OCC_13682_20240819,exam_method,A,data/pdfs/OCC_13682_20240819.pdf,true,isb,,5,using intermediate small bank evaluation procedures,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Scope of the Evaluation; cover banner also reads INTERMEDIATE SMALL BANK. Confirms prefilled value.
+OCC_13682_20240819,overall_rating,A,data/pdfs/OCC_13682_20240819.pdf,true,O,,3,This institution is rated Outstanding.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Rating page (printed page 1); confirms prefilled value.
+OCC_13682_20240819,lending_test_rating,A_or_B,data/pdfs/OCC_13682_20240819.pdf,false,O,,3,The lending test is rated: Outstanding.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Institution-level sentence on the rating page; OCC ISB applicability = value. State of Illinois repeat on p7 not used.
+OCC_13682_20240819,cd_test_rating,A_or_B,data/pdfs/OCC_13682_20240819.pdf,false,O,,3,The community development test is rated: Outstanding.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Institution-level sentence on the rating page; OCC ISB applicability = value.
+OCC_13682_20240819,prior_evaluation_date,A,data/pdfs/OCC_13682_20240819.pdf,false,,absent_from_document,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Read every page: no sentence giving a prior/previous/preceding CRA evaluation date or rating; only 'Prior Period' investments table (p14) and its footnote. ABS per guide field 9 (FN example).
+OCC_13682_20240819,prior_rating,A,data/pdfs/OCC_13682_20240819.pdf,false,,absent_from_document,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,No prior rating stated anywhere in the PE; ABS as for prior_evaluation_date.
+OCC_13682_20240819,total_assets_usd,B,data/pdfs/OCC_13682_20240819.pdf,false,593700000,,4,is a $593.7 million (total assets) intrastate financial institution,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Description of Institution; figure printed without an attached date.
+OCC_13682_20240819,total_assets_asof,B,data/pdfs/OCC_13682_20240819.pdf,false,,absent_from_document,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"The $593.7 million sentence has no date; 'As of December 31, 2023' belongs to the later loan-portfolio paragraph (462.1/593.7 = 77.8 percent suggests same date, but inference is not quoting). ABS per guide field 11a."
+OCC_13682_20240819,lending_data_period_start,B,data/pdfs/OCC_13682_20240819.pdf,false,2021-01-01,,5,"The evaluation period for this review is from January 1, 2021, to December 31, 2023.",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Same window in Table D source (p4: 'originated between 1/1/2021 - 12/31/2023') and Appendix A Time Period Reviewed (p15). analysis_periods=2021-01-01..2021-12-31; 2022-01-01..2023-12-31 (Tables Q/R/U/V split 2021 and 2022-2023). Doubt: Scope sentence speaks of the evaluation period for the whole rev
+OCC_13682_20240819,lending_data_period_end,B,data/pdfs/OCC_13682_20240819.pdf,false,2023-12-31,,5,"The evaluation period for this review is from January 1, 2021, to December 31, 2023.",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,See start row; end before exam_date 2024-08-19.
+OCC_13682_20240819,n_assessment_areas,B,data/pdfs/OCC_13682_20240819.pdf,false,1,,5,"First Neighbor has one AA in the state of Illinois, and we completed a full-scope review of the AA.",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Appendix A lists one AA (Clark, Coles, Cumberland, Douglas, Edgar and Moultrie Counties), full-scope. AA expanded in 2022 by one Moultrie County tract; still one AA."
+OCC_13682_20240819,n_full_scope,B,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,n_assessment_areas = 1.
+OCC_13682_20240819,loan_products_evaluated,B,data/pdfs/OCC_13682_20240819.pdf,false,consumer|small_business,,5,"As a result, we sampled consumer and business loans for this evaluation.",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Appendix A: 'Small business and consumer loans'. Farm loans (25.4 percent of portfolio) appear only in the portfolio table and CD loans, not in the Lending Test."
+OCC_13682_20240819,primary_product,B,data/pdfs/OCC_13682_20240819.pdf,false,unstated,,5,primary lending products are consumer and business loans.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Two products named primary with no weighting order (consumer 41.4 percent of number, business 34.9 percent of dollars); coded unstated per guide GN rule."
+OCC_13682_20240819,inside_aa_share_number_pct,B,data/pdfs/OCC_13682_20240819.pdf,false,87.5,,4,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Matches Table D Total row (35 inside, 87.5 percent by number)."
+OCC_13682_20240819,inside_aa_share_product,B,data/pdfs/OCC_13682_20240819.pdf,false,all_reviewed_combined,,4,The bank originated and purchased 87.5 percent of its total loans sampled inside the AA during the evaluation period.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Sentence speaks of total loans sampled; Table D Total row.
+OCC_13682_20240819,avg_ltd_ratio_pct,B,data/pdfs/OCC_13682_20240819.pdf,false,85.5,,3,quarterly LTD ratio averaged 85.5 percent and ranged from 76.4 percent to 95.1 percent.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,Peer average 64.5 percent not used. Number of quarters not stated.
+OCC_13682_20240819,finding_present,C,data/pdfs/OCC_13682_20240819.pdf,false,false,,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Review section negative. OCC forward-looking boilerplate present (p6), not a finding. No enforcement action mentioned in the Description of Institution."
+OCC_13682_20240819,finding_type,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present = false.
+OCC_13682_20240819,rating_effect,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present = false.
+OCC_13682_20240819,rating_lowered,C,data/pdfs/OCC_13682_20240819.pdf,false,false,,6,The OCC has not identified that this institution has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so no lowering."
+OCC_13682_20240819,rating_lowered_level,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered = false.
+OCC_13682_20240819,rating_before,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered = false (probe).
+OCC_13682_20240819,rating_after,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered = false (probe).
+OCC_13682_20240819,laws_cited,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present = false (probe).
+OCC_13682_20240819,practice_basis,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present = false.
+OCC_13682_20240819,finding_source,C,data/pdfs/OCC_13682_20240819.pdf,false,,not_applicable,,,,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present = false.
+OCC_13682_20240819,distractor_laws_named,C,data/pdfs/OCC_13682_20240819.pdf,false,false,,6,"Pursuant to 12 CFR 25.28(c) or 195.28(c), respectively",,0.53,claude:reader_a_agreed,2026-10-14T11:01:11,"Review section cites only the CRA regulation (12 CFR 25.28(c)/195.28(c)) and names agencies (DOJ, HUD, CFPB) plus 'relevant laws and regulations' generically; no fair lending or consumer protection law named. Coded false by analogy with the OCC template GN (guide 17i). Doubt: if a CFR citation count"
+OCC_703395_20230327,regulator,A,data/pdfs/OCC_703395_20230327.pdf,true,OCC,,1,Office of the Comptroller of the Currency,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover.
+OCC_703395_20230327,bank_name,A,data/pdfs/OCC_703395_20230327.pdf,true,GN Bank,,1,GN Bank,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover.
+OCC_703395_20230327,bank_id,A,data/pdfs/OCC_703395_20230327.pdf,true,703395,,1,Charter Number: 703395,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Confirmed prefill on cover; charter above 700000 is a former federal savings association, still a charter number."
+OCC_703395_20230327,exam_date,A,data/pdfs/OCC_703395_20230327.pdf,true,2023-03-27,,1,"March 27, 2023",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on cover under PUBLIC DISCLOSURE.
+OCC_703395_20230327,exam_method,A,data/pdfs/OCC_703395_20230327.pdf,true,small,,5,"Under interagency small bank CRA procedures, a small bank’s rating is determined through a blend of analyses.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill; cover page also prints SMALL BANK.
+OCC_703395_20230327,overall_rating,A,data/pdfs/OCC_703395_20230327.pdf,true,NI,,3,This institution is rated Needs to Improve.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill on rating page (printed page 1).
+OCC_703395_20230327,lending_test_rating,A_or_B,data/pdfs/OCC_703395_20230327.pdf,true,NI,,3,The lending test is rated: Needs to Improve.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Confirmed prefill; institution-level sentence on rating page, equals overall. State-level repeat on page 6 not used."
+OCC_703395_20230327,cd_test_rating,A_or_B,data/pdfs/OCC_703395_20230327.pdf,true,,absent_from_document,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Confirmed prefill: rating page (PDF p3) and Appendix B (p11) print only the lending test; no CD test sentence anywhere.
+OCC_703395_20230327,prior_evaluation_date,A,data/pdfs/OCC_703395_20230327.pdf,false,2018-10-01,,4,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_703395_20230327,prior_rating,A,data/pdfs/OCC_703395_20230327.pdf,false,S,,4,"The OCC assigned GN Bank a “Satisfactory” rating in its last CRA evaluation dated October 1, 2018.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_703395_20230327,total_assets_usd,B,data/pdfs/OCC_703395_20230327.pdf,false,84700000,,4,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Same paragraph also gives total assets $136.9 million (2019-12-31) and $99.7 million (2020-12-31); coded the headline current figure.
+OCC_703395_20230327,total_assets_asof,B,data/pdfs/OCC_703395_20230327.pdf,false,2021-12-31,,4,"As of December 31, 2021, GN Bank reported total assets of $84.7 million",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_703395_20230327,lending_data_period_start,B,data/pdfs/OCC_703395_20230327.pdf,false,2019-01-01,,5,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Appendix A (p10) Time Period Reviewed and Appendix D table sources (01/01/2019 - 12/31/2021 Bank Data) agree. LTD window June 30, 2018 to December 31, 2021 not used."
+OCC_703395_20230327,lending_data_period_end,B,data/pdfs/OCC_703395_20230327.pdf,false,2021-12-31,,5,"The evaluation period for the Lending Test was January 1, 2019 through December 31, 2021.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,
+OCC_703395_20230327,n_assessment_areas,B,data/pdfs/OCC_703395_20230327.pdf,false,1,,4,"The bank has one AA, referred to as the Chicago AA, which includes the southern portion of Cook County.",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Also p8 'The bank has only one AA, which was used for a full-scope review.' and Appendix A lists one AA."
+OCC_703395_20230327,n_full_scope,B,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Single AA, so not applicable by rule (the one AA is full-scope per p8 and Appendix A)."
+OCC_703395_20230327,loan_products_evaluated,B,data/pdfs/OCC_703395_20230327.pdf,false,consumer|small_business,,5,the OCC determined the primary loan products were consumer and small business loans.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Appendix A 'Small Business and Consumer Loans' agrees. Excluded home mortgage: p4 says the 34 real estate mortgages were 'not considered a primary loan product' and no table analyses them.
+OCC_703395_20230327,primary_product,B,data/pdfs/OCC_703395_20230327.pdf,false,unstated,,5,the OCC determined the primary loan products were consumer and small business loans.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Two products named jointly as primary with no weighting order; guide codes GN as unstated. By count consumer dominates (313 vs 44) but the PE states no weighting.
+OCC_703395_20230327,inside_aa_share_number_pct,B,data/pdfs/OCC_703395_20230327.pdf,false,3.4,,3,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Table Total row (p3) also prints 12 inside, 3.4 percent by number; dollar share 1.7 not used."
+OCC_703395_20230327,inside_aa_share_product,B,data/pdfs/OCC_703395_20230327.pdf,false,all_reviewed_combined,,3,The bank originated and purchased 3.4 percent of its total loans inside the bank’s AAs during the evaluation period.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Sentence speaks of total loans; table Total row covers Commercial and Consumer.
+OCC_703395_20230327,avg_ltd_ratio_pct,B,data/pdfs/OCC_703395_20230327.pdf,false,54.32,,3,"quarterly average LTD ratio since the end of the last performance evaluation period, June 30, 2018 to December 31, 2021, was 54.32 percent",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Not the low 36.67 / high 90.59 or the peer range 13.30 to 113.26.
+OCC_703395_20230327,finding_present,C,data/pdfs/OCC_703395_20230327.pdf,false,false,,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Quote is the tail of the sentence that opens 'The OCC has not identified that this bank (or any affiliate ...)'. reference=enforcement_action_description (p4-5: formal enforcement action due to financial condition, not a finding). OCC forward-looking boilerplate on p5-6 is not a finding."
+OCC_703395_20230327,finding_type,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+OCC_703395_20230327,rating_effect,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+OCC_703395_20230327,rating_lowered,C,data/pdfs/OCC_703395_20230327.pdf,false,false,,5,has engaged in discriminatory or other illegal credit practices that require consideration in this evaluation.,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"No finding, so no rating lowered."
+OCC_703395_20230327,rating_lowered_level,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,rating_lowered is false.
+OCC_703395_20230327,rating_before,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered is false.
+OCC_703395_20230327,rating_after,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; rating_lowered is false.
+OCC_703395_20230327,laws_cited,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,Probe; finding_present is false.
+OCC_703395_20230327,practice_basis,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+OCC_703395_20230327,finding_source,C,data/pdfs/OCC_703395_20230327.pdf,false,,not_applicable,,,,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,finding_present is false.
+OCC_703395_20230327,distractor_laws_named,C,data/pdfs/OCC_703395_20230327.pdf,false,false,,5,"Pursuant to 12 CFR 25.28(c), in determining a national bank’s or federal savings association’s CRA rating, the OCC considers evidence",,0.05,claude:reader_a_agreed,2026-10-14T11:01:11,"Review section names only the CRA regulation 12 CFR 25.28(c) and agencies (DOJ, HUD, CFPB), no fair lending or consumer protection law; guide lists GN as false."
