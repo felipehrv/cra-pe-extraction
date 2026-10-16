@@ -24,7 +24,7 @@ gemini:
     requests_per_day: 500  # observed 2026-10-14: generate_content_free_tier_requests daily limit 500 for gemini-3.5-flash-lite (429 message); resets midnight Pacific
     # Daily quota reset (run.gemini_limiter); the llm.py RateLimiter note says midnight Pacific
     # time. Verify on the AI Studio plan page when the limits are filled in.
-    reset_timezone: America/Los_Angeles
+    reset_timezone: UTC  # observed 2026-10-15: the daily cap reset at 00:00 UTC (retry hint of 13h14m at 10:44 UTC), not midnight Pacific
     data_used_for_training: true
     note: free tier terms allow Google to retain and use submitted data; acceptable here because PEs are public records
 
