@@ -151,10 +151,10 @@ label-hash:
 
 # Extraction systems over a split: rules (S1), baseline (S0) and llm:<backend>:<model> entries.
 # LLM calls replay from data/traces/{split}/ by default; add RUN_FLAGS=--allow-api for live calls.
-SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash
+SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.5-flash-lite
 # S3 corpus tier (analysis plan, Decisions item 2), used by the ablation, the closed-book
 # baseline, S5 routing, the pair run and the corpus scoring targets.
-S3_CORPUS ?= llm:gemini:gemini-3.8-flash
+S3_CORPUS ?= llm:gemini:gemini-3.5-flash-lite
 # LLM calls per document (run --field-groups): all = one call for every field (default, sized
 # for the free-tier daily request cap), split = one call per llm_field_groups entry of
 # config/fields.yaml (four). Closed book is one call either way and takes no flag.

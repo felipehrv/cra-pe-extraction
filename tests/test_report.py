@@ -514,9 +514,10 @@ def test_table3_tokens_fallback_and_cost(ws: report.ReportPaths) -> None:
     assert h["n_docs"] == "2" and h["n_calls_mode_unknown"] == "0"
     r = t.loc["rules"]
     assert r["price_status"] == "no model calls" and r["n_correct"] != ""
-    m = t.loc["manual (gold label timers)"]
-    assert m["price_status"] == "wage not set" and m["cost_per_doc_usd"] == "wage not set"
+    m = t.loc["reader time (model readers, reported)"]
+    assert m["price_status"] == "not a cost; reported reading minutes" and m["cost_per_doc_usd"] == ""
     assert float(m["minutes_per_doc"]) == pytest.approx(10.0)
+    assert t.loc["manual (page rate)"]["price_status"] == "page rate not set"
     rev = _csv(out["review_csv"])
     assert rev["share_reviewed"].tolist() == ["0.1000", "0.2500", "0.5000"]
     assert rev["review_cost_usd"].tolist() == ["wage not set"] * 3
@@ -540,10 +541,36 @@ def test_table3_with_wage_and_corpus_system(ws: report.ReportPaths) -> None:
     extraction = 4 * (1000 * 1.0 + 100 * 5.0) / 1e6 * 6
     assert float(rev["review_cost_usd"].iloc[0]) == pytest.approx(review_cost, abs=1e-4)
     assert float(rev["total_cost_usd"].iloc[0]) == pytest.approx(review_cost + extraction, abs=1e-4)
-    m = _csv(out["csv"]).set_index("system").loc["manual (gold label timers)"]
-    assert float(m["cost_per_doc_usd"]) == pytest.approx(10.0 / 60 * 30)
+    m = _csv(out["csv"]).set_index("system").loc["manual (page rate)"]
+    assert m["price_status"] == "page rate not set"  # no pages_per_hour in this fixture
     man = _csv(out["manual_csv"])
     assert man["field"].iloc[0] == "regulator"
+
+
+def test_table3_page_rate_baseline_and_paid_tier_equivalent(ws: report.ReportPaths) -> None:
+    """Plan, Cost accounting: manual cost = pages / pages_per_hour x wage on the split and the
+    evaluable corpus; reviewer minutes per value = mean evaluable pages / rate / 11; a free-tier
+    model priced null is billed 0 but gets a paid-tier equivalent from list_input/list_output."""
+    text = ws.prices.read_text(encoding="utf-8").replace("wage_usd_per_hour: null", "wage_usd_per_hour: 30\n  pages_per_hour: 60")
+    text = text.replace("gemini-3.8-flash: { input: null, output: null }",
+                        "gemini-3.8-flash: { input: null, output: null, list_input: 0.30, list_output: 2.50 }")
+    ws.prices.write_text(text, encoding="utf-8")
+    m = pd.read_csv(ws.manifest, dtype=str, keep_default_na=False)
+    m["pages"] = "30"
+    m.to_csv(ws.manifest, index=False)
+    out = report.table3("test", ws, corpus_system=GEMINI)
+    t = _csv(out["csv"]).set_index("system")
+    page = t.loc["manual (page rate)"]
+    assert float(page["minutes_per_doc"]) == pytest.approx(30.0)
+    assert float(page["cost_per_doc_usd"]) == pytest.approx(30 / 60 * 30)
+    assert float(page["corpus_cost_usd"]) == pytest.approx(6 * 30 / 60 * 30)  # 6 evaluable documents
+    g = t.loc[GEMINI]
+    assert g["cost_per_doc_usd"] == "" and g["cost_spent_usd"] == "0.5000"
+    assert g["price_status"].startswith("free tier (billed 0); paid-tier list price 0.30 in / 2.50 out")
+    assert float(g["cost_per_doc_list_usd"]) == pytest.approx((7500 * 2 + 21500) / 3 * 0.30 / 1e6 + float(g["output_tokens_per_doc"]) * 2.50 / 1e6, abs=1e-4)
+    rev = _csv(out["review_csv"])
+    assert float(rev["reviewer_minutes_per_value"].iloc[0]) == pytest.approx(30 / 11, abs=1e-4)
+    assert "page rate" in rev["note"].iloc[0]
 
 
 def test_table3_reads_corpus_traces_as_spent(ws: report.ReportPaths) -> None:

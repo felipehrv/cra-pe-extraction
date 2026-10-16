@@ -1292,7 +1292,7 @@ def figure1(split: str = "test", paths: ReportPaths | None = None) -> dict[str, 
                                   "x": s, "y": v, "kind": "operating_point"})
         if manual is not None:
             h = ax.axhline(manual * 100, color=REFERENCE_GRAY, linewidth=1.2, linestyle=(0, (4, 3)),
-                           label="Manual-review error (reliability check)")
+                           label="Inter-reader disagreement (readers A and B, Group B)")
             handles.append(h)
             drawn.append("manual-review error line")
             data_rows.append({"series": "manual_review_error", "system": "", "x": math.nan, "y": manual, "kind": "reference"})
@@ -1338,7 +1338,7 @@ def figure1(split: str = "test", paths: ReportPaths | None = None) -> dict[str, 
         "expected residual error under random order inside blocks of equal flag count. Dots mark the "
         "operating points at 10, 25 and 50 percent of values reviewed. Group B curve from the audit with "
         "design weights; Group A curve exact against the agency indexes corpus-wide. Dashed line: "
-        "manual-review error rate from the reliability check (one minus agreement on Group B fields). "
+        "inter-reader disagreement rate from the reliability check (one minus agreement of readers A and B on Group B fields, in place of the design's manual-review error). "
         f"Inset: error rate by flag count on the {split} split, probability = flags / 4, indicative only; "
         "flags from the pair run of evaluate (disagreement restricted to the pair"
         + (f": {', '.join(pair)}" if pair else "") + ").",
@@ -1390,8 +1390,8 @@ TABLE3_COLUMNS = [
     "input_tokens_per_call_located", "input_tokens_per_call_whole_document",
     "input_tokens_per_doc", "output_tokens_per_doc",
     "price_status", "prices_retrieved", "pricing_mode",
-    "cost_spent_usd", "cost_per_doc_usd", "n_correct", "cost_per_correct_field_usd",
-    "corpus_cost_usd", "corpus_cost_basis", "wall_clock_s", "hardware", "minutes_per_doc",
+    "cost_spent_usd", "cost_per_doc_usd", "cost_per_doc_list_usd", "n_correct", "cost_per_correct_field_usd",
+    "corpus_cost_usd", "corpus_cost_basis", "corpus_cost_list_usd", "wall_clock_s", "hardware", "minutes_per_doc",
 ]
 REVIEW_COLUMNS = [
     "share_reviewed", "n_values", "n_values_reviewed", "residual_error", "reviewer_minutes_per_value",
@@ -1564,6 +1564,15 @@ def _list_cost(entry: dict[str, Any] | None, t: Trace) -> float:
     return (t.input_tokens or 0) * float(entry["input"]) / 1e6 + (t.output_tokens or 0) * float(entry["output"]) / 1e6
 
 
+def _paid_tier_cost(entry: dict[str, Any] | None, t: Trace) -> float:
+    """Cost of a free-tier call at the provider's paid-tier list price (``list_input`` and
+    ``list_output`` in prices.yaml, USD per million tokens); NaN when not recorded. The
+    trace's own ``cost_usd`` stays what was billed (0.0 on a free tier)."""
+    if not entry or entry.get("list_input") is None or entry.get("list_output") is None:
+        return math.nan
+    return (t.input_tokens or 0) * float(entry["list_input"]) / 1e6 + (t.output_tokens or 0) * float(entry["list_output"]) / 1e6
+
+
 def _call_modes(predictions: pd.DataFrame) -> dict[tuple[str, str, str], bool]:
     """(doc_id, field_group, system) -> whole-document input, from ``locator_miss``.
 
@@ -1602,6 +1611,18 @@ def _field_groups_label(traces: Sequence[Trace]) -> str:
     if len(docs) <= 1:
         return next(iter(docs), "")
     return ", ".join(f"{m} ({len(d)} doc{'s' if len(d) != 1 else ''})" for m, d in sorted(docs.items()))
+
+
+def _page_counts(manifest: pd.DataFrame | None, split: str) -> tuple[list[float], list[float]]:
+    """Page counts (``pages`` of the manifest) of the split's documents and of the evaluable
+    corpus; two empty lists without a manifest or a ``pages`` column."""
+    if manifest is None or "pages" not in manifest.columns:
+        return [], []
+    pages = pd.to_numeric(manifest["pages"], errors="coerce")
+    in_split = manifest["split"] == split if "split" in manifest.columns else pd.Series(False, index=manifest.index)
+    ev = evaluable(manifest)
+    ev_pages = pd.to_numeric(ev["pages"], errors="coerce").dropna() if "pages" in ev.columns else pd.Series(dtype=float)
+    return [float(v) for v in pages[in_split].dropna()], [float(v) for v in ev_pages]
 
 
 def manual_minutes(gold_dir: Path, splits: Sequence[str] = ("dev", "test")) -> tuple[pd.DataFrame, list[str]]:
@@ -1733,13 +1754,16 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
             per_doc_in: dict[str, int] = {}
             per_doc_out: dict[str, int] = {}
             per_doc_cost: dict[str, float] = {}
+            per_doc_paid: dict[str, float] = {}
             for t in sys_latest:
                 per_doc_in[t.doc_id] = per_doc_in.get(t.doc_id, 0) + (t.input_tokens or 0)
                 per_doc_out[t.doc_id] = per_doc_out.get(t.doc_id, 0) + (t.output_tokens or 0)
                 per_doc_cost[t.doc_id] = per_doc_cost.get(t.doc_id, 0.0) + _list_cost(entry, t)
+                per_doc_paid[t.doc_id] = per_doc_paid.get(t.doc_id, 0.0) + _paid_tier_cost(entry, t)
             n_calls = len(sys_latest)
             cost_total = float(sum(per_doc_cost.values())) if per_doc_cost else math.nan
             cost_per_doc = cost_total / len(per_doc_cost) if per_doc_cost else math.nan
+            paid_per_doc = float(np.mean(list(per_doc_paid.values()))) if per_doc_paid else math.nan
             row.update(
                 field_groups=_field_groups_label(sys_latest),
                 n_calls=n_calls, n_calls_whole_document=len(whole), n_calls_mode_unknown=unknown,
@@ -1751,11 +1775,19 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
                 price_status=_price_status(entry), prices_retrieved=retrieved, pricing_mode="standard",
                 cost_spent_usd=float(sum(t.cost_usd or 0.0 for t in sys_all)),
                 cost_per_doc_usd=cost_per_doc,
+                cost_per_doc_list_usd=paid_per_doc,
             )
+            if not math.isnan(paid_per_doc) and row["price_status"] == "price not set":
+                row["price_status"] = (
+                    f"free tier (billed 0); paid-tier list price {float(entry['list_input']):.2f} in / "  # type: ignore[index]
+                    f"{float(entry['list_output']):.2f} out USD per M tokens"  # type: ignore[index]
+                )
             corpus_sys = [t for t in corpus_traces if trace_system(t) == system]
             if split != "corpus" and corpus_sys:
                 row["corpus_cost_usd"] = float(sum(t.cost_usd or 0.0 for t in corpus_sys))
                 row["corpus_cost_basis"] = "spent (corpus traces)"
+                paid = [_paid_tier_cost(entry, t) for t in corpus_sys]
+                row["corpus_cost_list_usd"] = float(sum(paid)) if paid and not any(math.isnan(c) for c in paid) else math.nan
             elif split == "corpus":
                 row["corpus_cost_usd"] = row["cost_spent_usd"]
                 row["corpus_cost_basis"] = "spent (corpus traces)"
@@ -1784,22 +1816,34 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
     if not audit_timed.empty:
         sheets = [*sheets, "audit_sheet.csv (blind mode, per field only)"]
     per_doc = timed.groupby("doc_id")["minutes"].sum() if not timed.empty else pd.Series(dtype=float)
-    manual_row: dict[str, Any] = {"system": "manual (gold label timers)", "n_docs": len(per_doc)}
-    if len(per_doc):
-        mean_min = float(per_doc.mean())
-        manual_row["minutes_per_doc"] = mean_min
-        if wage is None:
-            manual_row["price_status"] = WAGE_NOT_SET
-            manual_row["cost_per_doc_usd"] = WAGE_NOT_SET
-            manual_row["corpus_cost_usd"] = WAGE_NOT_SET
-        else:
-            manual_row["price_status"] = f"wage {float(wage):.2f} USD per hour"
-            manual_row["cost_per_doc_usd"] = mean_min / 60.0 * float(wage)
-            manual_row["corpus_cost_usd"] = mean_min / 60.0 * float(wage) * n_evaluable
-            manual_row["corpus_cost_basis"] = f"extrapolated (mean minutes x {n_evaluable} evaluable)"
+    # Human baseline (plan, Cost accounting): pages / pages_per_hour at the wage, on the split's
+    # documents and on the evaluable corpus. The readers' reported minutes are reader time only.
+    pages_per_hour = (prices.get("manual_baseline") or {}).get("pages_per_hour")
+    split_pages, corpus_pages = _page_counts(manifest, split)
+    page_row: dict[str, Any] = {"system": "manual (page rate)", "n_docs": len(split_pages)}
+    if pages_per_hour is None or not len(split_pages):
+        page_row["price_status"] = "page rate not set" if pages_per_hour is None else "no page counts"
     else:
-        manual_row["price_status"] = "no timed label rows" if wage is not None else WAGE_NOT_SET
-    rows.append(manual_row)
+        rate = float(pages_per_hour)
+        mean_pages = float(np.mean(split_pages))
+        page_row["minutes_per_doc"] = mean_pages / rate * 60.0
+        if wage is None:
+            page_row["price_status"] = WAGE_NOT_SET
+            page_row["cost_per_doc_usd"] = WAGE_NOT_SET
+            page_row["corpus_cost_usd"] = WAGE_NOT_SET
+        else:
+            page_row["price_status"] = f"{rate:g} pages per hour at wage {float(wage):.2f} USD per hour"
+            page_row["cost_per_doc_usd"] = mean_pages / rate * float(wage)
+            page_row["corpus_cost_usd"] = float(sum(corpus_pages)) / rate * float(wage)
+            page_row["corpus_cost_basis"] = f"page counts of the {len(corpus_pages)} evaluable documents"
+    rows.append(page_row)
+    reader_row: dict[str, Any] = {"system": "reader time (model readers, reported)", "n_docs": len(per_doc),
+                                  "price_status": "not a cost; reported reading minutes"}
+    if len(per_doc):
+        reader_row["minutes_per_doc"] = float(per_doc.mean())
+    else:
+        reader_row["price_status"] = "no timed label rows"
+    rows.append(reader_row)
 
     order = _field_order()
     manual_fields = []
@@ -1819,6 +1863,11 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
     elif corpus_system:
         curve = next((c for c in b_curves if c.system == corpus_system), None)
     per_value, per_value_mode = reviewer_minutes(paths)
+    if pages_per_hour is not None and len(corpus_pages):
+        # Plan: human-baseline minutes per evaluable document spread over the 11 Group B fields.
+        n_group_b = len(field_names("B"))
+        per_value = float(np.mean(corpus_pages)) / float(pages_per_hour) * 60.0 / n_group_b
+        per_value_mode = f"page rate ({float(pages_per_hour):g} pages per hour over {n_group_b} Group B fields)"
     n_values, n_values_basis = released_group_b_values(paths, n_evaluable)
     corpus_cost: Any = None
     if corpus_system:
@@ -1840,7 +1889,8 @@ def table3(split: str = "test", paths: ReportPaths | None = None, corpus_system:
             notes.append("audit timers not available")
             r["review_cost_usd"] = None
         else:
-            notes.append(f"reviewer minutes: audit mode {per_value_mode}")
+            notes.append(f"reviewer minutes: {per_value_mode}" if per_value_mode and per_value_mode.startswith("page rate")
+                         else f"reviewer minutes: audit mode {per_value_mode}")
             if wage is None:
                 r["review_cost_usd"] = WAGE_NOT_SET
             else:
@@ -1881,8 +1931,8 @@ def _table3_md(
     headers = [
         "System", "Field groups", "Documents", "Calls", "Locator fallback", "Input tokens per call, located",
         "Input tokens per call, whole document", "Tokens per document (in / out)", "Price", "Cost spent (USD)",
-        "Cost per document (USD)", "Cost per correct field (USD)", "Corpus cost (USD)", "Wall clock (s)",
-        "Minutes per document",
+        "Cost per document (USD)", "Cost per document at paid-tier list price (USD)", "Cost per correct field (USD)",
+        "Corpus cost (USD)", "Corpus cost at paid-tier list price (USD)", "Wall clock (s)", "Minutes per document",
     ]
     body = []
     for r in rows:
@@ -1897,7 +1947,8 @@ def _table3_md(
             pct(r.get("locator_fallback_rate")),
             _num_str(r.get("input_tokens_per_call_located")), _num_str(r.get("input_tokens_per_call_whole_document")),
             tok, r.get("price_status", ""), _usd(r.get("cost_spent_usd")), _usd(r.get("cost_per_doc_usd")),
-            _usd(r.get("cost_per_correct_field_usd")), corpus, _num_str(r.get("wall_clock_s"), 1),
+            _usd(r.get("cost_per_doc_list_usd")), _usd(r.get("cost_per_correct_field_usd")), corpus,
+            _usd(r.get("corpus_cost_list_usd"), 2), _num_str(r.get("wall_clock_s"), 1),
             _num_str(r.get("minutes_per_doc"), 1),
         ])
     rev_headers = ["Share reviewed", "Values reviewed", "Residual error", "Reviewer minutes per value",
@@ -1917,8 +1968,12 @@ def _table3_md(
         "Tokens are the usage fields of the latest call per document and field group; cost per document is "
         "those tokens at the prices in config/prices.yaml (empty while a price is not set); cost spent is the "
         "sum recorded in every trace, superseded calls included. Locator fallback = whole-document calls over "
-        "calls with a known input mode. Pricing mode: standard (no Batch API path). Manual baseline: gold "
-        f"label timers ({', '.join(sheets) if sheets else 'no sheet found'}); wage: {wage_txt}. Corpus: "
+        "calls with a known input mode. Pricing mode: standard (no Batch API path). A free-tier call is billed 0; "
+        "the paid-tier columns price the same tokens at the provider's list price (list_input and list_output in "
+        "config/prices.yaml). Manual baseline: the page-rate convention of the plan (pages of each document at "
+        "manual_baseline.pages_per_hour in config/prices.yaml, from config/corpus.csv); wage: "
+        f"{wage_txt}. Reader time: the model readers' reported minutes "
+        f"({', '.join(sheets) if sheets else 'no sheet found'}), not a human baseline. Corpus: "
         f"{n_evaluable} evaluable documents.",
         "",
         f"Field-group mode used: {used or 'none (no located or whole-document LLM calls)'}. Field groups: all = "
@@ -1936,10 +1991,11 @@ def _table3_md(
         "",
         "Values on the base of the review curve (answered Group B values of the released system when "
         "results/risk_values_corpus.csv exists, see the note); residual error from the Group B review curve; "
-        "reviewer minutes per value from the audit timers (shown mode, else all modes).",
+        "reviewer minutes per value from the page-rate baseline spread over the 11 Group B fields (plan, Cost "
+        "accounting), else from the audit timers (shown mode, else all modes).",
         "",
         md_table(rev_headers, rev_body),
-        "## Manual minutes per field",
+        "## Reader minutes per field (model readers, reported)",
         "",
         md_table(["Field", "Source", "Timed rows", "Mean minutes"], man_body),
     ]

@@ -477,3 +477,19 @@ Evaluation
   calls a day the 2,751-document pass needs about six quota days from 833 done; paid tier
   would finish it in about two hours for about three dollars (prices in
   `config/prices.yaml`).
+- Dry run of the post-corpus chain (2026-10-16, on the 930 corpus documents processed so far,
+  in a scratch folder: routing apply, Group A corpus scoring, risk, draw-audit on copies of
+  the manifest and strata file, audit sheet, a simulated audit fill, audit estimate, census
+  score, report with Figure 1). Everything ran; three fixes came out of it. (1) Table 3 priced
+  the manual baseline from the model readers' reported minutes; it now follows the plan's
+  page-rate convention (pages / 60 x wage on the split and the evaluable corpus; reviewer
+  minutes per value = mean evaluable pages / 60 x 60 / 11) and reports the readers' minutes as
+  reader time. (2) Figure 1's calibration inset reads results/pair/calibration_test.csv, which
+  `make eval-pair` (replay-only, logged as a replay) had not yet written; written 2026-10-16.
+  (3) Free-tier Gemini calls are billed 0, so Table 3 now also prices the same tokens at the
+  paid Standard tier list price (list_input 0.30, list_output 2.50 USD per million tokens for
+  gemini-3.5-flash-lite, ai.google.dev/gemini-api/docs/pricing, retrieved 2026-10-16): about
+  0.007 USD per document, so a paid corpus pass would cost about 19 USD, not the 3 USD guessed
+  earlier. The Figure 1 reference line is labeled inter-reader disagreement, as the plan says.
+  The audit sheet still carries model columns on shown-layout rows; the readers get a copy
+  without them (plan, Audit: the mode column is sheet layout, not a reading condition).
