@@ -464,3 +464,16 @@ Evaluation
   without logging.
 - CI (`.github/workflows/ci.yml`) does not fetch tags; when `make reproduce` is added to
   CI, set `CRA_ALLOW_TEST_EVAL=1` there.
+- Free-tier daily cap as observed (2026-10-15 and 10-16, gemini-3.5-flash-lite): the plan
+  page shows 15 requests per minute and 500 per day. The server counts every attempt,
+  including retries of a 429, so the SDK-style retry loop burned the cap: after the cap was
+  reached, 97 of 100 attempts in one resume were 429s with a retry hint of about 23 hours.
+  The window did not reopen at midnight Pacific, and at midnight UTC only 3 requests went
+  through before the next 429 pointed to the following midnight UTC. Changes: a 429 whose
+  retry hint exceeds 10 minutes (or names a per-day quota) is now `DailyLimitExceeded`
+  without retries and marks the limiter cache spent for the day (`llm.daily_quota_hint`);
+  client pacing is 10 per minute so a burst never trips the per-minute 429 that would be
+  retried; `scripts/resume_corpus.sh` moves failed traces aside and reruns. At 500 good
+  calls a day the 2,751-document pass needs about six quota days from 833 done; paid tier
+  would finish it in about two hours for about three dollars (prices in
+  `config/prices.yaml`).

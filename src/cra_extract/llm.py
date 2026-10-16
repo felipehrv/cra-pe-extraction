@@ -241,8 +241,33 @@ def _retry_after(exc: BaseException, now: Callable[[], float] = time.time) -> fl
     return max(0.0, when.timestamp() - now())
 
 
+_RETRY_HINT = re.compile(r"retry in\s+(?:(\d+)h)?(?:(\d+)m)?(?:([\d.]+)s)?", re.IGNORECASE)
+
+
+def daily_quota_hint(exc: BaseException) -> float | None:
+    """Seconds until a daily quota reopens, read from a 429 message such as Gemini's
+    ``Quota exceeded for metric: ...free_tier_requests, limit: 500 ... Please retry in
+    23h19m52s``. Returns ``None`` when the error is not a daily-quota 429 (per-minute
+    429s carry hints of a few seconds and no per-day marker)."""
+    if _status_code(exc) != 429:
+        return None
+    text = str(exc)
+    match = _RETRY_HINT.search(text)
+    if match is None:
+        return None
+    hours, minutes, seconds = match.groups()
+    wait = int(hours or 0) * 3600 + int(minutes or 0) * 60 + float(seconds or 0)
+    if wait >= 600 or "perday" in text.lower().replace("_", ""):
+        return wait
+    return None
+
+
 def is_retryable(exc: BaseException) -> bool:
-    """429, 5xx, connection and timeout errors are retried; other errors are not."""
+    """429, 5xx, connection and timeout errors are retried; other errors are not.
+    A 429 whose retry hint says the daily quota is spent is not retried: every
+    attempt counts against that quota, so retrying only burns it."""
+    if daily_quota_hint(exc) is not None:
+        return False
     code = _status_code(exc)
     if code is not None:
         return code == 429 or code >= 500
@@ -329,6 +354,16 @@ class RateLimiter:
         """Requests recorded today."""
         return int(self._load_daily().get("count", 0))
 
+    def mark_exhausted(self) -> None:
+        """Record that the server reported the daily quota spent, so later runs on the
+        same day halt before sending (and burning) further requests."""
+        if not self.per_day:
+            return
+        daily = self._load_daily()
+        daily["count"] = max(int(daily.get("count", 0)), self.per_day)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps(daily), encoding="utf-8")
+
     def acquire(self) -> None:
         """Block until a request may be sent, then record it."""
         now = self._clock()
@@ -394,7 +429,17 @@ class Backend:
             return self._call(system_prompt, user_prompt, json_schema, model)
 
         start = time.perf_counter()
-        result = call_with_retry(attempt, max_attempts=self.max_attempts, sleep=self.sleep)
+        try:
+            result = call_with_retry(attempt, max_attempts=self.max_attempts, sleep=self.sleep)
+        except Exception as exc:
+            wait = daily_quota_hint(exc)
+            if wait is None:
+                raise
+            if self.limiter is not None:
+                self.limiter.mark_exhausted()
+            raise DailyLimitExceeded(
+                f"{self.name}: daily quota reported spent by the server; retry in {wait / 3600:.1f} h"
+            ) from exc
         result.latency_s = round(time.perf_counter() - start, 3)
         return result
 

@@ -1126,3 +1126,39 @@ def test_trace_values_rebuilds_rows(doc, sections, tmp_path):
     cb_rows = llm.trace_values(cb)
     assert [v.field for v in cb_rows] == ["overall_rating", "finding_present"]
     assert cb_rows[0].system == "llm:fake:fake-1:closedbook" and cb_rows[0].value == "S"
+
+
+DAILY_429 = (
+    "429 RESOURCE_EXHAUSTED. Quota exceeded for metric: generativelanguage.googleapis.com/"
+    "generate_content_free_tier_requests, limit: 500, model: gemini-3.5-flash-lite "
+    "quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier. Please retry in 23h19m52.36s."
+)
+MINUTE_429 = (
+    "429 RESOURCE_EXHAUSTED. Quota exceeded for metric: generativelanguage.googleapis.com/"
+    "generate_content_free_tier_requests, limit: 15 quotaId: GenerateRequestsPerMinutePerProjectPerModel-FreeTier. "
+    "Please retry in 12.5s."
+)
+
+
+def _code_error(message: str, code: int = 429):
+    return type("ClientError", (Exception,), {"code": code})(message)
+
+
+def test_daily_quota_hint_reads_gemini_messages():
+    assert llm.daily_quota_hint(_code_error(DAILY_429)) == pytest.approx(23 * 3600 + 19 * 60 + 52.36)
+    assert llm.daily_quota_hint(_code_error(MINUTE_429)) is None
+    assert llm.daily_quota_hint(_code_error(DAILY_429, code=503)) is None
+    assert llm.daily_quota_hint(StatusError(429)) is None
+    assert not llm.is_retryable(_code_error(DAILY_429))
+    assert llm.is_retryable(_code_error(MINUTE_429))
+
+
+def test_daily_quota_429_halts_without_retrying(tmp_path):
+    rl = llm.RateLimiter("x", per_day=500, cache_dir=tmp_path, clock=lambda: 1_700_000_000.0)
+    backend = FlakyBackend({"a": 1}, lambda: _code_error(DAILY_429), n_failures=10)
+    backend.limiter = rl
+    backend.sleep = lambda s: None
+    with pytest.raises(llm.DailyLimitExceeded):
+        backend.complete("s", "u", {}, "fake-1")
+    assert backend.attempts == 1  # the daily-cap 429 was not retried
+    assert rl.daily_count() == 500  # later runs on the same day halt before sending
