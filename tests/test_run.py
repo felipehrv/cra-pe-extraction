@@ -470,7 +470,7 @@ def test_makefile_targets_use_real_flags():
     scale = text[text.index("scale:") :].split("\n")[1]
     assert "cra_extract.run --split dev --systems $(SYSTEMS)" in pilot
     assert "cra_extract.run --split corpus --systems $(SYSTEMS)" in scale
-    assert "SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.8-flash" in text
+    assert "SYSTEMS ?= rules,baseline,llm:gemini:gemini-3.5-flash-lite" in text
     assert "--systems rules,llm" not in text
     # Every run target with located or whole-document LLM calls passes the field-group mode.
     assert f"FIELD_GROUPS ?= {run.DEFAULT_FIELD_GROUPS}" in text
