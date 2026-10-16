@@ -1,0 +1,85 @@
+section,field,system,metric_type,n_gold,n,accuracy,accuracy_lo,accuracy_hi,precision,precision_lo,precision_hi,recall,recall_lo,recall_hi,abstention_rate,fabrication_rate,fabrication_lo,fabrication_hi,fabrication_denominator,grounded_rate,hallucination_rate,hallucination_lo,hallucination_hi,error_rate_no_grounding,error_rate_no_grounding_lo,error_rate_no_grounding_hi,note
+Group A (smoke test),regulator,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),regulator,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),regulator,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),regulator,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,grounding not checked on every answered item; error rate without grounding shown
+Group A (smoke test),bank_name,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),bank_name,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),bank_name,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),bank_name,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),bank_id,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),bank_id,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.9333,0.7868,0.9815,,,,,,,0.0000,,,,0,1.0000,0.0667,0.0185,0.2132,,,,
+Group A (smoke test),bank_id,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),bank_id,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,grounding not checked on every answered item; error rate without grounding shown
+Group A (smoke test),exam_date,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),exam_date,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),exam_date,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),exam_date,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,grounding not checked on every answered item; error rate without grounding shown
+Group A (smoke test),exam_method,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),exam_method,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,0.9000,0.1000,0.0346,0.2562,,,,
+Group A (smoke test),exam_method,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),exam_method,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,grounding not checked on every answered item; error rate without grounding shown
+Group A (smoke test),overall_rating,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),overall_rating,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),overall_rating,rules,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,
+Group A (smoke test),overall_rating,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,,,,,0.0000,0.0000,0.1135,grounding not checked on every answered item; error rate without grounding shown
+Component ratings,lending_test_rating,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,,,,,,,,,probe cells in table_probes
+Component ratings,lending_test_rating,llm:gemini:gemini-3.5-flash-lite,accuracy,30,20,0.9500,0.7639,0.9911,,,,,,,0.0000,,,,,1.0000,0.0667,0.0185,0.2132,,,,probe cells in table_probes
+Component ratings,lending_test_rating,rules,accuracy,30,20,0.9500,0.7639,0.9911,,,,,,,0.0000,,,,,,,,,0.0333,0.0059,0.1667,probe cells in table_probes
+Component ratings,lending_test_rating,s5,accuracy,30,20,0.9500,0.7639,0.9911,,,,,,,0.0000,,,,,1.0000,0.0667,0.0185,0.2132,,,,probe cells in table_probes
+Component ratings,cd_test_rating,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,,,,,,,,,probe cells in table_probes
+Component ratings,cd_test_rating,llm:gemini:gemini-3.5-flash-lite,accuracy,30,16,1.0000,0.8064,1.0000,,,,,,,0.0000,,,,,1.0000,0.0000,0.0000,0.1135,,,,probe cells in table_probes
+Component ratings,cd_test_rating,rules,accuracy,30,16,1.0000,0.8064,1.0000,,,,,,,0.0000,,,,,,,,,0.0000,0.0000,0.1135,probe cells in table_probes
+Component ratings,cd_test_rating,s5,accuracy,30,16,1.0000,0.8064,1.0000,,,,,,,0.0000,,,,,1.0000,0.0000,0.0000,0.1135,,,,probe cells in table_probes
+Group A (smoke test),prior_evaluation_date,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),prior_evaluation_date,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),prior_evaluation_date,rules,accuracy,30,28,0.8929,0.7280,0.9629,,,,,,,0.0667,,,,0,,,,,0.1071,0.0371,0.2720,
+Group A (smoke test),prior_evaluation_date,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),prior_rating,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group A (smoke test),prior_rating,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group A (smoke test),prior_rating,rules,accuracy,30,24,0.9583,0.7976,0.9926,,,,,,,0.2000,,,,0,,,,,0.0417,0.0074,0.2024,
+Group A (smoke test),prior_rating,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,1.0000,0.0000,0.0000,0.1135,,,,
+Group B,total_assets_usd,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,total_assets_usd,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,
+Group B,total_assets_usd,rules,accuracy,30,25,1.0000,0.8668,1.0000,,,,,,,0.1667,,,,0,,,,,0.0000,0.0000,0.1332,
+Group B,total_assets_usd,s5,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,
+Group B,total_assets_asof,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,total_assets_asof,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,
+Group B,total_assets_asof,rules,accuracy,30,25,1.0000,0.8668,1.0000,,,,,,,0.1667,,,,0,,,,,0.0000,0.0000,0.1332,
+Group B,total_assets_asof,s5,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,
+Group B,lending_data_period_start,baseline,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.2425,12,,,,,,,,
+Group B,lending_data_period_start,llm:gemini:gemini-3.5-flash-lite,accuracy,30,18,0.6667,0.4375,0.8372,,,,,,,0.0000,0.2500,0.0889,0.5323,12,0.7500,0.3333,0.1923,0.5122,,,,
+Group B,lending_data_period_start,rules,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.2425,12,,,,,,,,
+Group B,lending_data_period_start,s5,accuracy,30,18,0.6667,0.4375,0.8372,,,,,,,0.0000,0.2500,0.0889,0.5323,12,0.7500,0.3333,0.1923,0.5122,,,,
+Group B,lending_data_period_end,baseline,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.2425,12,,,,,,,,
+Group B,lending_data_period_end,llm:gemini:gemini-3.5-flash-lite,accuracy,30,18,0.7222,0.4913,0.8750,,,,,,,0.0000,0.2500,0.0889,0.5323,12,0.7500,0.3333,0.1923,0.5122,,,,
+Group B,lending_data_period_end,rules,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.2425,12,,,,,,,,
+Group B,lending_data_period_end,s5,accuracy,30,18,0.7222,0.4913,0.8750,,,,,,,0.0000,0.2500,0.0889,0.5323,12,0.7500,0.3333,0.1923,0.5122,,,,
+Group B,n_assessment_areas,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,n_assessment_areas,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,0.8000,0.2000,0.0950,0.3731,,,,
+Group B,n_assessment_areas,rules,accuracy,30,27,0.8889,0.7194,0.9615,,,,,,,0.1000,,,,0,,,,,0.1111,0.0385,0.2806,
+Group B,n_assessment_areas,s5,accuracy,30,30,1.0000,0.8865,1.0000,,,,,,,0.0000,,,,0,0.8000,0.2000,0.0950,0.3731,,,,
+Group B,n_full_scope,baseline,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.1843,17,,,,,,,,
+Group B,n_full_scope,llm:gemini:gemini-3.5-flash-lite,accuracy,30,13,0.9231,0.6669,0.9863,,,,,,,0.0000,0.0000,0.0000,0.1843,17,0.5833,0.2000,0.0950,0.3731,,,,
+Group B,n_full_scope,rules,accuracy,30,0,,,,,,,,,,1.0000,0.0000,0.0000,0.1843,17,,,,,,,,
+Group B,n_full_scope,s5,accuracy,30,13,0.9231,0.6669,0.9863,,,,,,,0.0000,0.0000,0.0000,0.1843,17,0.5833,0.2000,0.0950,0.3731,,,,
+Group B,loan_products_evaluated,baseline,set_pr,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,precision and recall element-level
+Group B,loan_products_evaluated,llm:gemini:gemini-3.5-flash-lite,set_pr,30,30,1.0000,0.8865,1.0000,1.0000,0.9379,1.0000,1.0000,0.9379,1.0000,0.0000,,,,0,0.9000,0.1000,0.0346,0.2562,,,,precision and recall element-level
+Group B,loan_products_evaluated,rules,set_pr,30,29,0.9310,0.7803,0.9809,1.0000,0.9324,1.0000,0.9636,0.8768,0.9900,0.0333,,,,0,,,,,0.0690,0.0191,0.2196,precision and recall element-level
+Group B,loan_products_evaluated,s5,set_pr,30,30,1.0000,0.8865,1.0000,1.0000,0.9379,1.0000,1.0000,0.9379,1.0000,0.0000,,,,0,0.9000,0.1000,0.0346,0.2562,,,,precision and recall element-level
+Group B,primary_product,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,primary_product,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.9000,0.7438,0.9654,,,,,,,0.0000,,,,0,0.9667,0.1333,0.0531,0.2968,,,,
+Group B,primary_product,rules,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,primary_product,s5,accuracy,30,30,0.9000,0.7438,0.9654,,,,,,,0.0000,,,,0,0.9667,0.1333,0.0531,0.2968,,,,
+Group B,inside_aa_share_number_pct,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,inside_aa_share_number_pct,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.8667,0.7032,0.9469,,,,,,,0.0000,,,,0,0.8571,0.2000,0.0950,0.3731,,,,
+Group B,inside_aa_share_number_pct,rules,accuracy,30,27,1.0000,0.8754,1.0000,,,,,,,0.1000,,,,0,,,,,0.0000,0.0000,0.1246,
+Group B,inside_aa_share_number_pct,s5,accuracy,30,30,0.8667,0.7032,0.9469,,,,,,,0.0000,,,,0,0.8571,0.2000,0.0950,0.3731,,,,
+Group B,inside_aa_share_product,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,inside_aa_share_product,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.8333,0.6643,0.9266,,,,,,,0.0000,,,,0,0.8929,0.2000,0.0950,0.3731,,,,
+Group B,inside_aa_share_product,rules,accuracy,30,27,1.0000,0.8754,1.0000,,,,,,,0.1000,,,,0,,,,,0.0000,0.0000,0.1246,
+Group B,inside_aa_share_product,s5,accuracy,30,30,0.8333,0.6643,0.9266,,,,,,,0.0000,,,,0,0.8929,0.2000,0.0950,0.3731,,,,
+Group B,avg_ltd_ratio_pct,baseline,accuracy,30,0,,,,,,,,,,1.0000,,,,0,,,,,,,,
+Group B,avg_ltd_ratio_pct,llm:gemini:gemini-3.5-flash-lite,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,
+Group B,avg_ltd_ratio_pct,rules,accuracy,30,22,0.9091,0.7218,0.9747,,,,,,,0.2667,,,,0,,,,,0.0909,0.0253,0.2782,
+Group B,avg_ltd_ratio_pct,s5,accuracy,30,30,0.9667,0.8333,0.9941,,,,,,,0.0000,,,,0,1.0000,0.0333,0.0059,0.1667,,,,

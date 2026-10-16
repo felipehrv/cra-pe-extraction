@@ -2,7 +2,7 @@
 
 To: the data offices of the OCC, the FDIC and the Federal Reserve
 From: the author of `cra-pe-extraction`, a public code sample built on public records
-Re: structured publication of Small Bank and ISB PE fields, 2023 to 2025 (draft of 2026-10-08)
+Re: structured publication of Small Bank and ISB PE fields, 2023 to 2025 (draft of 2026-10-16)
 
 ## Summary
 
@@ -13,14 +13,17 @@ which 2,791 are evaluable (one PDF returns HTTP 500 and one index link points to
 It extracts 31 fields per document from four parts of the PE (cover and rating, description of
 the institution, lending tables, and the review of discriminatory and other illegal credit
 practices), keeps a verbatim quote for every model-extracted value, and checks each field an
-agency already publishes against that agency's feed. Extraction costs {{COST_PER_DOC}} per
-document in model calls; a person reading the same fields needs {{MANUAL_MINUTES}} minutes.
+agency already publishes against that agency's feed. Extraction cost $0.00 per document in API
+fees on the free tier of the hosted model (8,181 input and 1,775 output tokens per document);
+reading a PE by hand at 60 pages per hour takes 25.7 minutes for the average PE, $19.37 at the
+BLS median hourly wage for financial examiners.
 
 The feeds are reliable for what they carry: the overall rating printed in the PE matches the
 index on 2,785 of the 2,786 documents where the rules read it, and the one exception is an
 index error (data-quality row 33). The problems are in what the feeds leave out or encode
-loosely. ISB component ratings are absent from the OCC feed and, in the FDIC feed, sit on a
-scale ISB PEs do not use (pending confirmation on hand-labeled PEs). The FDIC feed has no
+loosely. ISB component ratings are absent from the OCC feed and, in the FDIC feed, are published
+under Large Bank labels that the ISB PEs never print (on the 9 gold FDIC ISB PEs the labels map
+one to one to the printed ISB scale, so the column is usable only with an undocumented mapping). The FDIC feed has no
 evaluation date; the date inside its PDF file name differs from the printed date on 127 PEs.
 No feed records whether examiners identified discriminatory or other illegal credit practices,
 which laws were involved, or whether the rating was lowered, so finding those cases takes a
@@ -37,8 +40,10 @@ so publishing it means carrying into a column a value the examiner has already w
 Row numbers refer to `results/data_quality_findings.csv` in file order. Counts come from
 `results/corpus_counts.csv`, `docs/corpus_pass_2.md`, `results/s5_routing.md` and
 `docs/analysis_plan.md`; feed details from `docs/design.md`. Costs are per document from the
-cost table: {{COST_PER_DOC}} in model calls for the released system and {{MANUAL_MINUTES}}
-minutes of timed manual reading, both for all fields; each item names the part it relies on.
+cost table: $0.00 in API fees for the released system (free tier; 8,181 input and 1,775 output
+tokens per document) and 25.7 minutes of manual reading at 60 pages per hour (a page-rate
+convention, since there are no human timers), both for all fields; each item names the part it
+relies on.
 
 ### 1. ISB component ratings (Lending Test and Community Development Test)
 
@@ -51,11 +56,15 @@ minutes of timed manual reading, both for all fields; each item names the part i
   "Low Satisfactory" (row 1). "High Satisfactory" and "Low Satisfactory" are Large Bank
   lending-test values; the ISB scale is Outstanding, Satisfactory, Needs to Improve and
   Substantial Noncompliance. One American Bank's PE (FDIC_6078_20240805) prints "Needs to
-  Improve" where the feed says "Low Satisfactory". Gold verification: {{FDIC_ISB_GOLD_CHECK}}.
+  Improve" where the feed says "Low Satisfactory". Gold verification: on the 9 gold FDIC ISB PEs (dev and test, read by the model readers) the feed's
+  value maps to the printed ISB rating in every case, High Satisfactory to Satisfactory (7),
+  Outstanding to Outstanding (1) and Low Satisfactory to Needs to Improve (1), so the field is
+  usable with that mapping, which the feed does not document.
 - The Federal Reserve format works: on its 202 ISB PEs the rules read a lending rating in 153
   and a CD rating in 155, and every one matches the Federal Reserve file.
-- Cost of the PDF route: the ratings come from the cover-and-rating model call, part of
-  {{COST_PER_DOC}} and of {{MANUAL_MINUTES}} manual minutes per document. For OCC and FDIC ISBs
+- Cost of the PDF route: the ratings come from the cover-and-rating sections of the one model call per
+  document ($0.00 in API fees on the free tier) and from the first pages of the 25.7 manual
+  minutes per document. For OCC and FDIC ISBs
   there is no usable index to check against, so their accuracy rests on a hand-labeled sample.
 - Ask: one column per test on the ISB scale, as the Federal Reserve already publishes.
 
@@ -73,9 +82,8 @@ minutes of timed manual reading, both for all fields; each item names the part i
   (94.8 percent); counting the FDIC file-id differences as agreements gives 99.4 percent.
   Related: 25 FDIC PEs print one date on the cover and another in the Scope sentence (row 28);
   13 OCC (row 29) and 2 Federal Reserve (row 31) index dates appear nowhere in the PE.
-- Cost of the PDF route: the routing table sends the date to the rules, so it adds little to
-  {{COST_PER_DOC}}; the cost is human time, part of {{MANUAL_MINUTES}} manual minutes per
-  document plus triage of every FDIC disagreement against the PE, and FDIC dates can be scored
+- Cost of the PDF route: the routing table sends the date to the rules, so it adds nothing to the
+  model cost; the cost is human time, part of the 25.7 manual minutes per document plus triage of every FDIC disagreement against the PE, and FDIC dates can be scored
   only on hand-labeled PEs because the feed holds no evaluation date.
 - Ask: the evaluation date printed on the cover, as its own field, and a day-level release date.
 
@@ -94,11 +102,11 @@ minutes of timed manual reading, both for all fields; each item names the part i
   sections. With 39 templates, 61 sections still need a human reader (53 flagged located
   sections and 8 the locator could not find), plus a random 100 unflagged sections to bound
   misses: 161 sections in all. 26 flagged sections contain a sentence that asserts a finding;
-  they are candidates, not confirmed findings. Census result: {{CENSUS_POSITIVES}} PEs with a
-  finding, {{CENSUS_LOWERED}} of them with a lowered rating.
-- Cost of the PDF route: the review model call (part of {{COST_PER_DOC}} and of
-  {{MANUAL_MINUTES}} manual minutes per document) plus the hand reading of 161 sections, with
-  every positive read twice.
+  they are candidates, not confirmed findings. Census result: 23 PEs with a finding (0.82 percent,
+  exact CI 0.52 to 1.23), 6 of them with a lowered rating; 0 of 100 random unflagged sections
+  held a finding, so misses among the unflagged sections are bounded at 3.6 percent.
+- Cost of the PDF route: the review section of the one model call per document ($0.00 in API fees
+  on the free tier) plus the reading of 161 sections, each by two model readers.
 - Ask: per PE, whether the review was performed; the finding type (none, discrimination, other
   illegal credit practice, both); the laws cited from a fixed list (ECOA and Regulation B, Fair
   Housing Act, FTC Act section 5, CFPA UDAAP, HOEPA, RESPA section 8, TILA, SCRA, MLA, other);
@@ -116,8 +124,9 @@ minutes of timed manual reading, both for all fields; each item names the part i
   performance-criteria conclusions at all (row 11). 32 Federal Reserve PEs print the
   institution-level conclusions after an assessment-area heading (row 19), so a reader of the
   text needs a layout rule to know the figure covers the whole bank.
-- Cost of the PDF route: the lending-tables model call (part of {{COST_PER_DOC}} and of
-  {{MANUAL_MINUTES}} manual minutes per document). The locator could not find the loan-to-deposit
+- Cost of the PDF route: the lending sections of the one model call per document ($0.00 in API
+  fees on the free tier; on test the model read the inside share right on 26 of 30 PEs and the
+  loan-to-deposit ratio on 29 of 30) and part of the 25.7 manual minutes per document. The locator could not find the loan-to-deposit
   section in 71 FDIC, 28 OCC and 2 Federal Reserve PEs, nor the assessment-area concentration
   section in 21, 29 and 2; those need whole-document input or a person.
 - Ask: the average net loan-to-deposit ratio with the quarters averaged, and the inside share
@@ -130,7 +139,7 @@ minutes of timed manual reading, both for all fields; each item names the part i
 - Who prints it: the PEs of all three agencies, in the borrower-profile and geographic
   distribution analyses, usually per assessment area.
 - Discrepancy: not measured; per-assessment-area tables are a stretch item, with no table row.
-- Cost of the PDF route: not measured; {{COST_PER_DOC}} and {{MANUAL_MINUTES}} exclude it.
+- Cost of the PDF route: not measured; the per-document cost and minutes above exclude it.
 - Why last: for home mortgages the agencies can compute these shares from HMDA. A published
   figure would matter mainly for products outside HMDA and for the examiner's own sample.
 
@@ -169,12 +178,3 @@ the agencies' public indexes. The hosted model runs on a free tier whose terms l
 keep and reuse submitted text, which is acceptable only because PEs are public. Non-public
 records, such as draft PEs or examination workpapers, would need a paid tier with zero data
 retention or a local open-weight model, which the pipeline already supports.
-
-## Placeholders to fill (draft only; delete this section after filling)
-
-- `{{COST_PER_DOC}}`: model cost per document of the released system (S5), from the cost table.
-- `{{MANUAL_MINUTES}}`: timed manual minutes per document for the same fields (gold sheets).
-- `{{FDIC_ISB_GOLD_CHECK}}`: result of checking the FDIC ISB lending field against at least
-  three hand-labeled FDIC ISB PEs; until confirmed, item 1's FDIC sentence stays conditional.
-- `{{CENSUS_POSITIVES}}`: census count of PEs with a finding (finding_present), with exact CI.
-- `{{CENSUS_LOWERED}}`: census count of positives whose rating was lowered (rating_lowered).
