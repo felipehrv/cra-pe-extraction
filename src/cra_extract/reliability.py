@@ -314,7 +314,7 @@ def manual_review_error(table: pd.DataFrame) -> float:
 
 # ----------------------------------------------------------------------------- agreement
 
-SPLITS = ("dev", "test", "census")
+SPLITS = ("dev", "test", "audit", "census")
 READER_SUFFIXES = ("a", "b")
 AGREEMENT_COLUMNS = ["split", "field", "n", "agree", "pct", "ci_low", "ci_high", "kappa", "note"]
 POOLED = "pooled"

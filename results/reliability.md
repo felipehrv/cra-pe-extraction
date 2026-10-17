@@ -4,6 +4,7 @@ Agreement between readers A and B before adjudication (plan "Reliability", proto
 
 - dev: readers A and B agreed on 319 of 320 items (99.7 percent, 95 percent CI 98.3 to 99.9) over 32 fields of 10 documents; 1 item was sent to adjudication (adjudication rate 0.3 percent).
 - test: readers A and B agreed on 958 of 960 items (99.8 percent, 95 percent CI 99.2 to 99.9) over 32 fields of 30 documents; 2 items were sent to adjudication (adjudication rate 0.2 percent).
+- audit: no reader files found, not compared.
 - census: readers A and B agreed on 1767 of 1771 items (99.8 percent, 95 percent CI 99.4 to 99.9) over 11 fields of 161 sections; 4 items were sent to adjudication (adjudication rate 0.2 percent).
 - all: 3044 of 3051 items agree (99.8 percent, 95 percent CI 99.5 to 99.9); adjudication rate 0.2 percent.
 

@@ -493,3 +493,14 @@ Evaluation
   earlier. The Figure 1 reference line is labeled inter-reader disagreement, as the plan says.
   The audit sheet still carries model columns on shown-layout rows; the readers get a copy
   without them (plan, Audit: the mode column is sheet layout, not a reading condition).
+- Post-corpus runbook (2026-10-16): `scripts/post_corpus.sh before` refuses until the corpus
+  pass has 2,751 good traces, then runs s5-apply, group-a-corpus, risk-corpus, draw-audit
+  (seed 20261016, dated the day it runs), audit-sheet, and writes the readers' copy of the
+  sheet without model columns (`scripts/merge_reads.py readers`) and the workflow arguments
+  (`data/gold/audit_workflow_args.json`). The audit is read with `scripts/audit_double_read.js`
+  (the test-split protocol: two Claude readers from the PDF, a third adjudicating, reads in
+  `data/gold/audit_reads/`). `scripts/post_corpus.sh after` merges the reads into the sheet
+  (refusing on any unadjudicated disagreement), validates it, and runs reliability (the audit
+  split is now included), audit, census-score, dev-rerun (10 live calls, run-to-run
+  agreement), report, reproduce and the test suite. Every step ran on the partial corpus in a
+  scratch folder; the merge was checked with simulated reads and one forced adjudication.
