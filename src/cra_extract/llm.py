@@ -508,7 +508,10 @@ class GeminiBackend(Backend):
         key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
         if not key:
             raise LLMError("GEMINI_API_KEY (or GOOGLE_API_KEY) is not set")
-        self.client = genai.Client(api_key=key)
+        # 180 s per request (milliseconds in HttpOptions): a hung connection otherwise blocks the
+        # run indefinitely (observed 2026-10-18: one request waited 24 hours). A timeout is
+        # retried like any connection error.
+        self.client = genai.Client(api_key=key, http_options=genai.types.HttpOptions(timeout=180_000))
         self.model = model
         self.limiter = limiter
         self.effort = effort
