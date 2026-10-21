@@ -1,0 +1,4 @@
+tertile,N_h,n_h,weight,n_docs_blind,n_docs_shown,n_values,n_answered,n_errors,n_abstentions,error_raw,ci_lo,ci_hi,abstention_rate,interval
+low,803,10,80.30000,10,0,110,110,10,0,0.09091,0.05013,0.15930,0.00000,wilson_95
+mid,803,10,80.30000,5,5,110,110,11,0,0.10000,0.05676,0.17024,0.00000,wilson_95
+high,802,10,80.20000,0,10,110,109,28,1,0.25688,0.18412,0.34620,0.00909,wilson_95

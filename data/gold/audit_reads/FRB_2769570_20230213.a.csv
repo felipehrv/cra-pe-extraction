@@ -1,0 +1,12 @@
+"doc_id","field","value","null_reason","evidence_page","quote","notes","reading_minutes"
+"FRB_2769570_20230213","total_assets_usd","236000000","",4,"The bank has total assets of $236.0 million as of September 30, 2022.","Description of Institution; LTD comparison table prints Asset Size 208,741 ($000s) for the bank (FRB table, not used per guide)",12
+"FRB_2769570_20230213","total_assets_asof","2022-09-30","",4,"The bank has total assets of $236.0 million as of September 30, 2022.","",12
+"FRB_2769570_20230213","lending_data_period_start","2019-01-01","",3,"Assessment Area Concentration, Geographic Distribution of Loans, and Loan Distribution by Borrower’s Profile January 1, 2019 – December 31, 2021","Scope table row; same window for all three products; LTD window March 31, 2018 - September 30, 2022 not used",12
+"FRB_2769570_20230213","lending_data_period_end","2021-12-31","",3,"Assessment Area Concentration, Geographic Distribution of Loans, and Loan Distribution by Borrower’s Profile January 1, 2019 – December 31, 2021","",12
+"FRB_2769570_20230213","n_assessment_areas","1","",5,"The bank’s AA consists of Conway County, which is located in a nonmetropolitan statistical area","single nonMSA AA",12
+"FRB_2769570_20230213","n_full_scope","","not_applicable","","","single AA",12
+"FRB_2769570_20230213","loan_products_evaluated","consumer|home_mortgage|small_business","",3,"Small business, 1–4 family residential real estate, and consumer motor vehicle loans were used to evaluate lending performance","consumer motor vehicle mapped to consumer; 1-4 family residential to home_mortgage",12
+"FRB_2769570_20230213","primary_product","small_business","",3,"Based on the bank’s emphasis on small business and volume by number and dollar amount, this product type carried the most significance","",12
+"FRB_2769570_20230213","inside_aa_share_number_pct","74.0","",8,"As shown in the table below, 74.0 percent of the loans were made inside the AA","Table TOTAL LOANS row also 194 74.0; dollar share 71.8 not used",12
+"FRB_2769570_20230213","inside_aa_share_product","all_reviewed_combined","",8,"As shown in the table below, 74.0 percent of the loans were made inside the AA","",12
+"FRB_2769570_20230213","avg_ltd_ratio_pct","54.8","",8,"Petit Jean State Bank Morrilton, Arkansas 208,741 54.8","table row under LTD Ratio (%) 19-Quarter Average; narrative gives no number",12

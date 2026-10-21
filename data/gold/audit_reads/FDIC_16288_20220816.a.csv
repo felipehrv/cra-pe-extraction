@@ -1,0 +1,12 @@
+"doc_id","field","value","null_reason","evidence_page","quote","notes","reading_minutes"
+"FDIC_16288_20220816","total_assets_usd","184700000","",4,"As of June 30, 2022, Southern Bank reported total assets of $184.7 million","No LTD comparison table with a Total Assets column (peer comparison is a sentence only), so the rounded description figure is used.",2
+"FDIC_16288_20220816","total_assets_asof","2022-06-30","",4,"As of June 30, 2022, Southern Bank reported total assets of $184.7 million","",2
+"FDIC_16288_20220816","lending_data_period_start","2020-01-01","",6,"Source: Bank Records (Small Business Loans 01/01/2020 – 12/31/2021; Home Mortgage Loans 01/01/2020 – 12/31/2021)","Full dates from the source line of the AA breakdown table; narrative gives years only (2020 and 2021 loans). Both products share the window; primary is unstated (equal weight).",2
+"FDIC_16288_20220816","lending_data_period_end","2021-12-31","",6,"Source: Bank Records (Small Business Loans 01/01/2020 – 12/31/2021; Home Mortgage Loans 01/01/2020 – 12/31/2021)","",2
+"FDIC_16288_20220816","n_assessment_areas","2","",6,"this review is limited to the Augusta MSA and Georgia Non-MSA assessment areas.","excluded_aa=Greenville County SC (designated third AA, branch opened 2022-07-19, not evaluated; p5).",2
+"FDIC_16288_20220816","n_full_scope","2","",6,"Both of these assessment areas received full-scope reviews.","",2
+"FDIC_16288_20220816","loan_products_evaluated","home_mortgage|small_business","",7,"For the Lending Test, examiners reviewed the number and dollar volume of small business and home mortgage originations.","Small farm explicitly not evaluated (p6-7).",2
+"FDIC_16288_20220816","primary_product","unstated","",6,"For these reasons, small business and home mortgage loans were assigned equal weight in this evaluation.","Most weight given to Augusta MSA AA (geography), not a product.",2
+"FDIC_16288_20220816","inside_aa_share_number_pct","57.3","",8,"Total 211 57.3 157 42.7 368","Total row of Lending Inside and Outside table. The 58.8 percent on p6 is home mortgage share of loans inside the AA (124/211), not an inside share.",2
+"FDIC_16288_20220816","inside_aa_share_product","all_reviewed_combined","",8,"Total 211 57.3 157 42.7 368","",2
+"FDIC_16288_20220816","avg_ltd_ratio_pct","68.0","",7,"Southern Bank’s LTD ratio, calculated from its Call Report, averaged 68.0 percent over the previous 24 quarters.","Not the 76.2 point-in-time ratio (p8) or the range.",2

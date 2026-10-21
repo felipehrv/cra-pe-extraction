@@ -1,0 +1,8 @@
+system,field_groups,n_docs,n_calls,n_calls_whole_document,n_calls_mode_unknown,locator_fallback_rate,input_tokens_per_call_located,input_tokens_per_call_whole_document,input_tokens_per_doc,output_tokens_per_doc,price_status,prices_retrieved,pricing_mode,cost_spent_usd,cost_per_doc_usd,cost_per_doc_list_usd,n_correct,cost_per_correct_field_usd,corpus_cost_usd,corpus_cost_basis,corpus_cost_list_usd,wall_clock_s,hardware,minutes_per_doc
+baseline,,30,,,,,,,,,no model calls,,,0.0000,0.0000,,58,0.0000,0.0000,no model calls,,0.0000,,
+llm:gemini:gemini-3.5-flash-lite,all,30,30,2,0,0.0667,7676.0357,15247.5000,8180.8000,1774.9333,free tier (billed 0); paid-tier list price 0.30 in / 2.50 out USD per M tokens,2026-10-14,standard,0.0000,,0.0069,595,,0.0000,spent (corpus traces),18.3931,440.4810,,
+llm:gemini:gemini-3.5-flash-lite:closedbook,,30,30,0,30,,,,229.2000,46.1667,free tier (billed 0); paid-tier list price 0.30 in / 2.50 out USD per M tokens,2026-10-14,standard,0.0000,,0.0002,16,,,free tier (billed 0); paid-tier list price 0.30 in / 2.50 out USD per M tokens,,107.8880,,
+llm:gemini:gemini-3.5-flash-lite:whole,all,20,19,19,0,1.0000,,23945.8421,23945.8421,1845.4737,free tier (billed 0); paid-tier list price 0.30 in / 2.50 out USD per M tokens,2026-10-14,standard,0.0000,,0.0118,403,,,free tier (billed 0); paid-tier list price 0.30 in / 2.50 out USD per M tokens,,168.3670,,
+rules,,30,,,,,,,,,no model calls,,,0.0000,0.0000,,438,0.0000,0.0000,no model calls,,0.2260,,
+manual (page rate),,30,,,,,,,,,60 pages per hour at wage 45.27 USD per hour,,,,20.2709,,,,54062.1885,page counts of the 2791 evaluable documents,,,,26.8667
+"reader time (model readers, reported)",,40,,,,,,,,,not a cost; reported reading minutes,,,,,,,,,,,,,11.4720

@@ -270,14 +270,14 @@ reliability-compare:
 # Tables and figures from results/ (Table 1, Figure 1, Tables 2 and 3, section 7 tables).
 # CORPUS_SYSTEM names the corpus tier whose cost enters the review operating points.
 REPORT_SPLIT ?= test
-CORPUS_SYSTEM ?=
+CORPUS_SYSTEM ?= $(S3_CORPUS)
 report:
 	$(PY) -m cra_extract.report --split $(REPORT_SPLIT) $(if $(CORPUS_SYSTEM),--corpus-system $(CORPUS_SYSTEM),)
 
 reproduce:
 	$(PY) -m cra_extract.evaluate --split test --replay-only
 	$(PY) -m cra_extract.evaluate --split test --replay-only --systems rules,$(S3_CORPUS) --out-dir results/pair
-	$(PY) -m cra_extract.report --check results/table1_test.csv
+	$(PY) -m cra_extract.report --check results/table1_test.csv --corpus-system $(CORPUS_SYSTEM)
 
 test:
 	$(PY) -m pytest -m "not network"

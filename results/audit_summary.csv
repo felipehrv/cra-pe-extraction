@@ -1,0 +1,14 @@
+quantity,stratum,n_docs,n_values,n_answered,n_errors,estimate,ci_lo,ci_hi,interval,note
+design_weighted_error,all,30,330,329,49,0.14889,0.11814,0.18177,stratified_bootstrap_1000_seed0_percentile,
+design_weighted_abstention_rate,all,30,330,329,49,0.00303,,,,abstentions are excluded from the error estimate
+error_by_regulator,FDIC,22,242,242,41,0.16938,,,,design-weighted point estimate; regulator is a post-stratification covariate
+error_by_regulator,FRB,2,22,22,0,0.00000,,,,design-weighted point estimate; regulator is a post-stratification covariate
+error_by_regulator,OCC,6,66,65,8,0.12304,,,,design-weighted point estimate; regulator is a post-stratification covariate
+mid_tertile_error_by_mode,blind,5,55,55,4,0.07273,0.02864,0.17260,wilson_95,descriptive
+mid_tertile_error_by_mode,shown,5,55,55,7,0.12727,0.06304,0.24017,wilson_95,descriptive
+error_by_n_flags,n_flags=0,30,281,281,24,0.08540,,,,design-weighted point estimate; verification of the risk flags
+error_by_n_flags,n_flags=1,20,44,44,22,0.49996,,,,design-weighted point estimate; verification of the risk flags
+error_by_n_flags,n_flags=2,3,4,4,3,0.75000,,,,design-weighted point estimate; verification of the risk flags
+minutes_per_value,blind,15,165,165,14,0.56533,,,,unweighted mean over 165 timed values; total 93.3 minutes
+minutes_per_value,shown,15,165,164,35,0.67733,,,,unweighted mean over 165 timed values; total 111.8 minutes
+minutes_per_value,all,30,330,329,49,0.62133,,,,unweighted mean over 330 timed values; total 205.0 minutes

@@ -1,0 +1,12 @@
+"doc_id","field","value","null_reason","evidence_page","quote","notes","reading_minutes"
+"FDIC_33794_20240708","total_assets_usd","204109000","",9,"First Community Bank of East Tennessee – Rogersville, Tennessee 204,109","LTD comparison table, Total Assets as of 03/31/2024 ($000s); description (p3) gives rounded approximately $204.1 million as of March 31, 2024",6
+"FDIC_33794_20240708","total_assets_asof","2024-03-31","",9,"Total Assets as of 03/31/2024 ($000s)","Column header date of LTD table; matches p3 'as of March 31, 2024'",6
+"FDIC_33794_20240708","lending_data_period_start","","absent_from_document","","","analysis_periods=HMDA 2022-2023; SB 2023. Primary product (home mortgage) window given only as years (p7 '2022 and 2023 Home Mortgage Disclosure (HMDA) Loan Application Register (LAR) data'); the 1/1/2023-12/31/2023 source line belongs to the lending activity table and small business universe, not the primary product; evaluation period May 2, 2018 to July 8, 2024 is not the data window",6
+"FDIC_33794_20240708","lending_data_period_end","","absent_from_document","","","Same as start: home mortgage data given as years 2022 and 2023 only",6
+"FDIC_33794_20240708","n_assessment_areas","1","",4,"FCBET designated one AA comprised of all CTs in Hawkins and Sullivan counties","Single AA in the Kingsport-Bristol TN-VA MSA",6
+"FDIC_33794_20240708","n_full_scope","","not_applicable","","","Single assessment area",6
+"FDIC_33794_20240708","loan_products_evaluated","home_mortgage|small_business","",7,"examiners determined the major product lines (among those typically considered for CRA) consist of home mortgage and small business loans","Small farm and consumer loans explicitly excluded (p7)",6
+"FDIC_33794_20240708","primary_product","home_mortgage","",8,"examiners applied most weight to home mortgage loans when arriving at conclusions.","",6
+"FDIC_33794_20240708","inside_aa_share_number_pct","41.8","",9,"Total 102 41.8 142 58.2 244","Total row of Lending Inside and Outside table; narrative says only 'A majority of loans ... are outside'; home mortgage subtotal 39.2, small business 57.1",6
+"FDIC_33794_20240708","inside_aa_share_product","all_reviewed_combined","",9,"Total 102 41.8 142 58.2 244","Total row combines 2022-2023 HMDA and 2023 small business loans",6
+"FDIC_33794_20240708","avg_ltd_ratio_pct","75.2","",8,"The LTD ratio, calculated from Reports of Condition and Income data, averaged 75.2 percent over the past 24 quarters","Not the prior-evaluation average 71.1 or the range 64.1-86.5",6

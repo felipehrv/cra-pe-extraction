@@ -1,0 +1,8 @@
+point,share_reviewed,residual_error,n_flags_block,note
+knot,0.00000,0.14889,,nothing reviewed
+knot,0.01215,0.13978,2.00000,end of the n_flags=2 block (4 values)
+knot,0.14583,0.07294,1.00000,end of the n_flags=1 block (44 values)
+knot,1.00000,0.00000,0.00000,end of the n_flags=0 block (281 values)
+operating_point,0.10000,0.09586,1.00000,top 10 percent of values by n_flags
+operating_point,0.25000,0.06405,0.00000,top 25 percent of values by n_flags
+operating_point,0.50000,0.04270,0.00000,top 50 percent of values by n_flags

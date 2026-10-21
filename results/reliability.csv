@@ -65,6 +65,18 @@ test,practice_basis,30,30,100.00,88.65,100.00,,"kappa not computed: reader A use
 test,finding_source,30,30,100.00,88.65,100.00,,"kappa not computed: reader A uses 1 and reader B 1 category; majority class 'null:not_applicable', prevalence 1.000"
 test,distractor_laws_named,30,30,100.00,88.65,100.00,1.0000,
 test,pooled,960,958,99.79,99.24,99.94,,32 fields; kappa not pooled across fields; Wilson CI treats items as independent (items cluster within documents); adjudication rate 2/960 = 0.2%
+audit,total_assets_usd,30,30,100.00,88.65,100.00,1.0000,
+audit,total_assets_asof,30,30,100.00,88.65,100.00,1.0000,
+audit,lending_data_period_start,30,29,96.67,83.33,99.41,0.9510,adjudicated 1 of 30
+audit,lending_data_period_end,30,29,96.67,83.33,99.41,0.9493,adjudicated 1 of 30
+audit,n_assessment_areas,30,30,100.00,88.65,100.00,1.0000,
+audit,n_full_scope,30,30,100.00,88.65,100.00,1.0000,
+audit,loan_products_evaluated,30,30,100.00,88.65,100.00,1.0000,"element-wise 150/150 agree over 5 elements, kappa 1.000"
+audit,primary_product,30,30,100.00,88.65,100.00,1.0000,
+audit,inside_aa_share_number_pct,30,28,93.33,78.68,98.15,0.9309,adjudicated 2 of 30
+audit,inside_aa_share_product,30,28,93.33,78.68,98.15,0.8734,adjudicated 2 of 30
+audit,avg_ltd_ratio_pct,30,30,100.00,88.65,100.00,1.0000,
+audit,pooled,330,324,98.18,96.09,99.16,,11 fields; kappa not pooled across fields; Wilson CI treats items as independent (items cluster within documents); adjudication rate 6/330 = 1.8%
 census,finding_present,161,161,100.00,97.67,100.00,1.0000,
 census,finding_type,161,161,100.00,97.67,100.00,1.0000,
 census,rating_effect,161,161,100.00,97.67,100.00,1.0000,
@@ -87,17 +99,17 @@ all,lending_test_rating,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
 all,cd_test_rating,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
 all,prior_evaluation_date,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
 all,prior_rating,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,total_assets_usd,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,total_assets_asof,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,lending_data_period_start,40,39,97.50,87.12,99.56,0.9673,"splits dev, test; adjudicated 1 of 40"
-all,lending_data_period_end,40,39,97.50,87.12,99.56,0.9667,"splits dev, test; adjudicated 1 of 40"
-all,n_assessment_areas,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,n_full_scope,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,loan_products_evaluated,40,40,100.00,91.24,100.00,1.0000,"splits dev, test; element-wise 200/200 agree over 5 elements, kappa 1.000"
-all,primary_product,40,39,97.50,87.12,99.56,0.9662,"splits dev, test; adjudicated 1 of 40"
-all,inside_aa_share_number_pct,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,inside_aa_share_product,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
-all,avg_ltd_ratio_pct,40,40,100.00,91.24,100.00,1.0000,"splits dev, test"
+all,total_assets_usd,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test"
+all,total_assets_asof,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test"
+all,lending_data_period_start,70,68,97.14,90.17,99.21,0.9613,"splits audit, dev, test; adjudicated 2 of 70"
+all,lending_data_period_end,70,68,97.14,90.17,99.21,0.9604,"splits audit, dev, test; adjudicated 2 of 70"
+all,n_assessment_areas,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test"
+all,n_full_scope,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test"
+all,loan_products_evaluated,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test; element-wise 350/350 agree over 5 elements, kappa 1.000"
+all,primary_product,70,69,98.57,92.34,99.75,0.9812,"splits audit, dev, test; adjudicated 1 of 70"
+all,inside_aa_share_number_pct,70,68,97.14,90.17,99.21,0.9710,"splits audit, dev, test; adjudicated 2 of 70"
+all,inside_aa_share_product,70,68,97.14,90.17,99.21,0.9403,"splits audit, dev, test; adjudicated 2 of 70"
+all,avg_ltd_ratio_pct,70,70,100.00,94.80,100.00,1.0000,"splits audit, dev, test"
 all,finding_present,201,201,100.00,98.12,100.00,1.0000,"splits census, dev, test"
 all,finding_type,201,201,100.00,98.12,100.00,1.0000,"splits census, dev, test"
 all,rating_effect,201,201,100.00,98.12,100.00,1.0000,"splits census, dev, test"
@@ -109,4 +121,4 @@ all,laws_cited,201,201,100.00,98.12,100.00,1.0000,"splits census, dev, test; ele
 all,practice_basis,201,199,99.00,96.45,99.73,0.9561,"splits census, dev, test; element-wise 1405/1407 agree over 7 elements, kappa 0.908; adjudicated 2 of 201"
 all,finding_source,201,200,99.50,97.24,99.91,0.9779,"splits census, dev, test; adjudicated 1 of 201"
 all,distractor_laws_named,201,200,99.50,97.24,99.91,0.9900,"splits census, dev, test; adjudicated 1 of 201"
-all,pooled,3051,3044,99.77,99.53,99.89,,32 fields; kappa not pooled across fields; Wilson CI treats items as independent (items cluster within documents); adjudication rate 7/3051 = 0.2%; 4 document(s) read in more than one split count once per split
+all,pooled,3381,3368,99.62,99.34,99.78,,32 fields; kappa not pooled across fields; Wilson CI treats items as independent (items cluster within documents); adjudication rate 13/3381 = 0.4%; 5 document(s) read in more than one split count once per split

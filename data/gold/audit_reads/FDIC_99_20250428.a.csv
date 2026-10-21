@@ -1,0 +1,12 @@
+"doc_id","field","value","null_reason","evidence_page","quote","notes","reading_minutes"
+"FDIC_99_20250428","total_assets_usd","184236000","",9,"Bank of Delight, Delight, AR 184,236","LTD Ratio Comparison table, Total Assets as of 12/31/2024 ($000s); description (PDF p3) gives rounded $184.2 million as of December 31, 2024; approx_184.2m_in_text",1.2
+"FDIC_99_20250428","total_assets_asof","2024-12-31","",9,"Total Assets as of 12/31/2024 ($000s)","Date from the LTD table column header; matches the December 31, 2024 Call Report sentence on PDF p3",1.2
+"FDIC_99_20250428","lending_data_period_start","","absent_from_document",8,"This evaluation includes a review of the universe of 1,170 small business loans totaling $83.8 million originated or purchased in 2024.","analysis_periods=2024 (all three products, years only: originated or purchased in 2024). Doubt: a single calendar year is unambiguous, but guide treats bare data years as ABS",1.2
+"FDIC_99_20250428","lending_data_period_end","","absent_from_document",8,"","Same window as start; years only (2024). Evaluation period June 17, 2019 to April 28, 2025 is not the data window",1.2
+"FDIC_99_20250428","n_assessment_areas","1","",4,"Bank of Delight designated one contiguous AA","Single AR Non-MSA AA (Clark, Hempstead, Nevada, Pike counties; 19 tracts)",1.2
+"FDIC_99_20250428","n_full_scope","","not_applicable",4,"","n_assessment_areas is 1",1.2
+"FDIC_99_20250428","loan_products_evaluated","home_mortgage|small_business|small_farm","",8,"examiners determined the major product lines consist of commercial, home mortgage, and agricultural loans.","Consumer loans explicitly excluded from review (same page); commercial=small_business, agricultural=small_farm",1.2
+"FDIC_99_20250428","primary_product","small_business","",8,"Therefore, small business loans received more weight when arriving at conclusions followed by home mortgage and small farm loans.","",1.2
+"FDIC_99_20250428","inside_aa_share_number_pct","78.0","",10,"Total 1,687 78.0 476 22.0 2,163","Lending Inside and Outside of the Assessment Area table, Total row by number (2024 bank data); dollar share 65.5 not used",1.2
+"FDIC_99_20250428","inside_aa_share_product","all_reviewed_combined","",10,"Total 1,687 78.0 476 22.0 2,163","Total row across small business, home mortgage, small farm",1.2
+"FDIC_99_20250428","avg_ltd_ratio_pct","95.9","",9,"The LTD ratio, calculated from Call Report data, averaged 95.9 percent over the past 23 quarters","Not the range 85.1-108.8 nor prior 92.4",1.2

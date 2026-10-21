@@ -1,0 +1,4 @@
+share_reviewed,n_values,n_values_reviewed,residual_error,reviewer_minutes_per_value,review_cost_usd,extraction_cost_usd,total_cost_usd,note
+0.1000,24983,2498,0.0959,2.3339,4398.7931,0.0000,4398.7931,n_values: answered Group B values (risk_values_corpus.csv); reviewer minutes: page rate (60 pages per hour over 11 Group B fields)
+0.2500,24983,6246,0.0640,2.3339,10998.7437,0.0000,10998.7437,n_values: answered Group B values (risk_values_corpus.csv); reviewer minutes: page rate (60 pages per hour over 11 Group B fields)
+0.5000,24983,12492,0.0427,2.3339,21997.4873,0.0000,21997.4873,n_values: answered Group B values (risk_values_corpus.csv); reviewer minutes: page rate (60 pages per hour over 11 Group B fields)

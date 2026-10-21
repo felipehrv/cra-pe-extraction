@@ -1,0 +1,12 @@
+doc_id,field,value,null_reason,evidence_page,quote,notes,reading_minutes
+"FDIC_2444_20250128","total_assets_usd","132773000","","10","Clay County Bank, Inc. 132,773","LTD comparison table row ($000s); description gives rounded $132.8 million as of September 30, 2024 (PDF p4); approx_132.8m_in_text","12"
+"FDIC_2444_20250128","total_assets_asof","2024-09-30","","10","Total Assets as of 9/30/2024 ($000s)","Column header of the LTD comparison table; matches Call Report date in description (PDF p4)","12"
+"FDIC_2444_20250128","lending_data_period_start","","absent_from_document","","","analysis_periods=HMDA 2022-2023; consumer 2024. Equal weight, primary unstated; HMDA given as years only; consumer given as 'consumer loans for 2024'. The 'January 1, 2024, through December 31, 2024' origination table (PDF p8) is the product-selection table, not used as the window. Doubt: a reader could code consumer window 2024-01-01..2024-12-31","12"
+"FDIC_2444_20250128","lending_data_period_end","","absent_from_document","","","Same as start: years only (HMDA 2022, 2023; consumer 2024)","12"
+"FDIC_2444_20250128","n_assessment_areas","1","","4","Clay County Bank has designated one assessment area located within the Charleston, WV MSA.","Clay County only","12"
+"FDIC_2444_20250128","n_full_scope","","not_applicable","","","Single assessment area","12"
+"FDIC_2444_20250128","loan_products_evaluated","consumer|home_mortgage","","8","Therefore, the analysis only included home mortgage and consumer lending.","Commercial loans explicitly not reviewed","12"
+"FDIC_2444_20250128","primary_product","unstated","","9","During analysis, examiners assigned equal weight to the loan products","Equal weight to home mortgage and consumer; 'focused more on the number of loans' refers to number vs dollar, not product","12"
+"FDIC_2444_20250128","inside_aa_share_number_pct","80.3","","10","Total 926 80.3 227 19.7 1,153","Total row of Lending Inside and Outside table (HM 2022-2023 plus consumer 2024)","12"
+"FDIC_2444_20250128","inside_aa_share_product","all_reviewed_combined","","10","Total 926 80.3 227 19.7 1,153","Total row","12"
+"FDIC_2444_20250128","avg_ltd_ratio_pct","59.3","","9","averaged 59.3 percent over the last 24 calendar quarters from December 31, 2018, to September 30, 2024","","12"

@@ -39,7 +39,7 @@ READ_COLUMNS = ["doc_id", "field", "value", "null_reason", "evidence_page", "quo
 
 def read_rows(path: Path) -> list[dict[str, str]]:
     with open(path, newline="", encoding="utf-8") as fh:
-        return [{k: (v or "").strip() for k, v in r.items()} for r in csv.DictReader(fh)]
+        return [{k: (v or "").strip() for k, v in r.items() if k is not None and not isinstance(v, list)} for r in csv.DictReader(fh)]
 
 
 def write_rows(path: Path, rows: list[dict[str, str]], columns: list[str]) -> None:
@@ -115,7 +115,7 @@ def merge() -> int:
                                  "reader_b": b["value"] or b["null_reason"],
                                  "final": row["value"] or row["null_reason"], "note": note})
             final[(d, f)] = {
-                "value": row["value"], "null_reason": row["null_reason"], "evidence_page": row["evidence_page"],
+                "value": row["value"], "null_reason": row["null_reason"], "evidence_page": "" if (row["null_reason"] and row["evidence_page"] in ("", "0")) else row["evidence_page"],
                 "quote": row["quote"], "minutes": "" if per_row is None else f"{per_row:.2f}",
                 "labeler": labeler, "labeled_at": stamp, "notes": row.get("notes", ""),
             }
