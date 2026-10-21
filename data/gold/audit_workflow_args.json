@@ -1,0 +1,155 @@
+{
+ "root": "/Users/vrhf/Desktop/cra-pe-extraction",
+ "docs": [
+  {
+   "doc_id": "FDIC_13692_20220919",
+   "bank": "Brunswick State Bank",
+   "pages": 14
+  },
+  {
+   "doc_id": "FDIC_1376_20230710",
+   "bank": "Citizens Bank & Trust Company",
+   "pages": 23
+  },
+  {
+   "doc_id": "FDIC_14445_20240122",
+   "bank": "Farmers and Merchants Union Bank",
+   "pages": 40
+  },
+  {
+   "doc_id": "FDIC_16288_20220816",
+   "bank": "Southern Bank",
+   "pages": 28
+  },
+  {
+   "doc_id": "FDIC_17443_20250121",
+   "bank": "Piscataqua Savings Bank",
+   "pages": 17
+  },
+  {
+   "doc_id": "FDIC_18165_20240212",
+   "bank": "The Stockgrowers State Bank",
+   "pages": 15
+  },
+  {
+   "doc_id": "FDIC_2444_20250128",
+   "bank": "Clay County Bank, Inc.",
+   "pages": 17
+  },
+  {
+   "doc_id": "FDIC_25267_20230814",
+   "bank": "TruBank",
+   "pages": 30
+  },
+  {
+   "doc_id": "FDIC_26627_20250331",
+   "bank": "Bank of the West",
+   "pages": 35
+  },
+  {
+   "doc_id": "FDIC_27503_20240729",
+   "bank": "The Berkshire Bank",
+   "pages": 33
+  },
+  {
+   "doc_id": "FDIC_27824_20230320",
+   "bank": "Salem Co-operative Bank",
+   "pages": 27
+  },
+  {
+   "doc_id": "FDIC_31028_20231023",
+   "bank": "HomeTown  Bank",
+   "pages": 37
+  },
+  {
+   "doc_id": "FDIC_32018_20221206",
+   "bank": "Angelina Savings Bank, SSB",
+   "pages": 18
+  },
+  {
+   "doc_id": "FDIC_33794_20240708",
+   "bank": "First Community Bank of East Tennessee",
+   "pages": 17
+  },
+  {
+   "doc_id": "FDIC_35169_20230424",
+   "bank": "State Bank",
+   "pages": 19
+  },
+  {
+   "doc_id": "FDIC_4041_20241028",
+   "bank": "The First Security Bank",
+   "pages": 21
+  },
+  {
+   "doc_id": "FDIC_5415_20241028",
+   "bank": "Security First Bank",
+   "pages": 44
+  },
+  {
+   "doc_id": "FDIC_9064_20230508",
+   "bank": "Planters First Bank",
+   "pages": 29
+  },
+  {
+   "doc_id": "FDIC_9529_20240909",
+   "bank": "State Bank of Newburg",
+   "pages": 18
+  },
+  {
+   "doc_id": "FDIC_9620_20250218",
+   "bank": "First Bank",
+   "pages": 43
+  },
+  {
+   "doc_id": "FDIC_9881_20250818",
+   "bank": "Security Bank and Trust Company",
+   "pages": 16
+  },
+  {
+   "doc_id": "FDIC_99_20250428",
+   "bank": "Bank of Delight",
+   "pages": 18
+  },
+  {
+   "doc_id": "FRB_175140_20240812",
+   "bank": "COMMUNITY FIRST BANK",
+   "pages": 30
+  },
+  {
+   "doc_id": "FRB_2769570_20230213",
+   "bank": "PETIT JEAN STATE BANK",
+   "pages": 16
+  },
+  {
+   "doc_id": "OCC_13116_20240415",
+   "bank": "Western National Bank",
+   "pages": 23
+  },
+  {
+   "doc_id": "OCC_15389_20240429",
+   "bank": "Community National Bank in Monmouth",
+   "pages": 18
+  },
+  {
+   "doc_id": "OCC_23202_20240610",
+   "bank": "The Malvern National Bank",
+   "pages": 31
+  },
+  {
+   "doc_id": "OCC_703692_20220801",
+   "bank": "Monroe Federal Savings & Loan Association",
+   "pages": 23
+  },
+  {
+   "doc_id": "OCC_704013_20230918",
+   "bank": "Southern Hills Community Bank",
+   "pages": 31
+  },
+  {
+   "doc_id": "OCC_705273_20250616",
+   "bank": "Carver Federal Savings Bank",
+   "pages": 20
+  }
+ ]
+}

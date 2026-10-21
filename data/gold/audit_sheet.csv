@@ -1,0 +1,446 @@
+doc_id,field,field_group,pdf_path,mode,model_status,model_value,model_quote,value,null_reason,evidence_page,quote,scope,minutes,labeler,labeled_at,notes
+FDIC_13692_20220919,total_assets_usd,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,total_assets_asof,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,lending_data_period_start,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,lending_data_period_end,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,n_assessment_areas,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,n_full_scope,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,loan_products_evaluated,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,primary_product,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,inside_aa_share_number_pct,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,inside_aa_share_product,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_13692_20220919,avg_ltd_ratio_pct,B,data/pdfs/FDIC_13692_20220919.pdf,blind,,,,,,,,,,,,
+FDIC_1376_20230710,total_assets_usd,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,410904000,"Citizens Bank & Trust Company, Plaquemine, Iberville Par., LA 
+410,904  
+71.9",,,,,,,,,
+FDIC_1376_20230710,total_assets_asof,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,2023-03-31,"Total Assets as of 
+3/31/2023",,,,,,,,,
+FDIC_1376_20230710,lending_data_period_start,B,data/pdfs/FDIC_1376_20230710.pdf,shown,absent,,,,,,,,,,,
+FDIC_1376_20230710,lending_data_period_end,B,data/pdfs/FDIC_1376_20230710.pdf,shown,absent,,,,,,,,,,,
+FDIC_1376_20230710,n_assessment_areas,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,1,CB designated one assessment area,,,,,,,,,
+FDIC_1376_20230710,n_full_scope,B,data/pdfs/FDIC_1376_20230710.pdf,shown,absent,,,,,,,,,,,
+FDIC_1376_20230710,loan_products_evaluated,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,home_mortgage|small_business,examiners determined that the bank’s major product lines consist of small business and home mortgage loans.,,,,,,,,,
+FDIC_1376_20230710,primary_product,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,unstated,,,,,,,,,,
+FDIC_1376_20230710,inside_aa_share_number_pct,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,61.2,"A majority of loans are in the institution’s assessment area.  The following tables shows a majority of small business and home mortgage loans, by both number and dollar, originated inside the bank’s assessment area.",,,,,,,,,
+FDIC_1376_20230710,inside_aa_share_product,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,all_reviewed_combined,"A majority of loans are in the institution’s assessment area.  The following tables shows a majority of small business and home mortgage loans, by both number and dollar, originated inside the bank’s assessment area.",,,,,,,,,
+FDIC_1376_20230710,avg_ltd_ratio_pct,B,data/pdfs/FDIC_1376_20230710.pdf,shown,value,71.9,"The bank recorded a 71.9 percent average net LTD ratio for the 11 quarters since the previous evaluation, July 27, 2020, to March 31, 2023.",,,,,,,,,
+FDIC_14445_20240122,total_assets_usd,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,481951000,"FMUB 
+481,951",,,,,,,,,
+FDIC_14445_20240122,total_assets_asof,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,2023-09-30,"Total Assets as of 
+09/30/2023",,,,,,,,,
+FDIC_14445_20240122,lending_data_period_start,B,data/pdfs/FDIC_14445_20240122.pdf,shown,absent,,,,,,,,,,,
+FDIC_14445_20240122,lending_data_period_end,B,data/pdfs/FDIC_14445_20240122.pdf,shown,absent,,,,,,,,,,,
+FDIC_14445_20240122,n_assessment_areas,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,2,"FMUB has designated two AAs, which include portions of the 
+Madison, Wisconsin Metropolitan Statistical Area (MSA) and partial counties within Wisconsin’s 
+non-MSAs.",,,,,,,,,
+FDIC_14445_20240122,n_full_scope,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,2,Examiners conducted a full-scope review of both AAs.,,,,,,,,,
+FDIC_14445_20240122,loan_products_evaluated,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,home_mortgage|small_business|small_farm,"Examiners determined that the bank's major product lines are small business and small farm loans, 
+with a secondary focus on home mortgage loans.",,,,,,,,,
+FDIC_14445_20240122,primary_product,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,unstated,"small business and small farm lending performance received 
+equal consideration and carried the most weight when arriving at overall conclusions.",,,,,,,,,
+FDIC_14445_20240122,inside_aa_share_number_pct,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,74.5,"Subtotal 
+240 
+74.5 
+82 
+25.5 
+322 
+45,633 
+69.6 
+19,903 
+30.4 
+65,536",,,,,,,,,
+FDIC_14445_20240122,inside_aa_share_product,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,all_reviewed_combined,"Subtotal 
+240 
+74.5 
+82 
+25.5 
+322 
+45,633 
+69.6 
+19,903 
+30.4 
+65,536",,,,,,,,,
+FDIC_14445_20240122,avg_ltd_ratio_pct,B,data/pdfs/FDIC_14445_20240122.pdf,shown,value,80.0,"averaged 80.0 percent over the past 11 quarters from March 31, 2021, to September 30, 2023.",,,,,,,,,
+FDIC_16288_20220816,total_assets_usd,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,184700000,"As of June 30, 2022, Southern Bank reported total assets of $184.7 million",,,,,,,,,
+FDIC_16288_20220816,total_assets_asof,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,2022-06-30,"As of June 30, 2022",,,,,,,,,
+FDIC_16288_20220816,lending_data_period_start,B,data/pdfs/FDIC_16288_20220816.pdf,shown,absent,,,,,,,,,,,
+FDIC_16288_20220816,lending_data_period_end,B,data/pdfs/FDIC_16288_20220816.pdf,shown,absent,,,,,,,,,,,
+FDIC_16288_20220816,n_assessment_areas,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,3,Southern Bank designated a third assessment area: Greenville County,,,,,,,,,
+FDIC_16288_20220816,n_full_scope,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,2,Both of these assessment areas received full-scope reviews.,,,,,,,,,
+FDIC_16288_20220816,loan_products_evaluated,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,home_mortgage|small_business,small business and home mortgage loans were assigned equal weight in this evaluation.,,,,,,,,,
+FDIC_16288_20220816,primary_product,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,unstated,small business and home mortgage loans were assigned equal weight in this evaluation.,,,,,,,,,
+FDIC_16288_20220816,inside_aa_share_number_pct,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,57.3,Total 211 57.3,,,,,,,,,
+FDIC_16288_20220816,inside_aa_share_product,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,all_reviewed_combined,Total 211 57.3,,,,,,,,,
+FDIC_16288_20220816,avg_ltd_ratio_pct,B,data/pdfs/FDIC_16288_20220816.pdf,shown,value,68.0,averaged 68.0 percent over the previous 24 quarters.,,,,,,,,,
+FDIC_17443_20250121,total_assets_usd,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,total_assets_asof,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,lending_data_period_start,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,lending_data_period_end,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,n_assessment_areas,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,n_full_scope,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,loan_products_evaluated,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,primary_product,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,inside_aa_share_number_pct,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,inside_aa_share_product,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_17443_20250121,avg_ltd_ratio_pct,B,data/pdfs/FDIC_17443_20250121.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,total_assets_usd,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,total_assets_asof,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,lending_data_period_start,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,lending_data_period_end,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,n_assessment_areas,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,n_full_scope,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,loan_products_evaluated,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,primary_product,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,inside_aa_share_number_pct,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,inside_aa_share_product,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_18165_20240212,avg_ltd_ratio_pct,B,data/pdfs/FDIC_18165_20240212.pdf,blind,,,,,,,,,,,,
+FDIC_2444_20250128,total_assets_usd,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,132773000,"Clay County Bank, Inc.
+132,773
+59.3",,,,,,,,,
+FDIC_2444_20250128,total_assets_asof,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,2024-09-30,"Total Assets as of
+9/30/2024",,,,,,,,,
+FDIC_2444_20250128,lending_data_period_start,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,2022-01-01,This evaluation considered all home mortgage loans reported for 2022 and 2023 under the HMDA.,,,,,,,,,
+FDIC_2444_20250128,lending_data_period_end,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,2024-12-31,This evaluation also considered consumer loans for 2024.,,,,,,,,,
+FDIC_2444_20250128,n_assessment_areas,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,1,Clay County Bank has designated one assessment area,,,,,,,,,
+FDIC_2444_20250128,n_full_scope,B,data/pdfs/FDIC_2444_20250128.pdf,shown,absent,,,,,,,,,,,
+FDIC_2444_20250128,loan_products_evaluated,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,consumer|home_mortgage,"Therefore, the analysis only included home mortgage and consumer lending.",,,,,,,,,
+FDIC_2444_20250128,primary_product,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,home_mortgage,Clay County Bank's primary lending focus is home mortgage and consumer loans.,,,,,,,,,
+FDIC_2444_20250128,inside_aa_share_number_pct,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,80.3,"Total	926	80.3	227	19.7	1,153	18,522,140	71.4	7,410,227	28.6	25,932,367",,,,,,,,,
+FDIC_2444_20250128,inside_aa_share_product,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,all_reviewed_combined,"Total	926	80.3	227	19.7	1,153	18,522,140	71.4	7,410,227	28.6	25,932,367",,,,,,,,,
+FDIC_2444_20250128,avg_ltd_ratio_pct,B,data/pdfs/FDIC_2444_20250128.pdf,shown,value,59.3,"The loan-to-deposit ratio was calculated from Call Report data and averaged 59.3
+percent over the last 24 calendar quarters from December 31, 2018, to September 30, 2024.",,,,,,,,,
+FDIC_25267_20230814,total_assets_usd,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,total_assets_asof,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,lending_data_period_start,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,lending_data_period_end,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,n_assessment_areas,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,n_full_scope,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,loan_products_evaluated,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,primary_product,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,inside_aa_share_number_pct,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,inside_aa_share_product,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_25267_20230814,avg_ltd_ratio_pct,B,data/pdfs/FDIC_25267_20230814.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,total_assets_usd,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,total_assets_asof,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,lending_data_period_start,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,lending_data_period_end,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,n_assessment_areas,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,n_full_scope,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,loan_products_evaluated,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,primary_product,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,inside_aa_share_number_pct,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,inside_aa_share_product,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_26627_20250331,avg_ltd_ratio_pct,B,data/pdfs/FDIC_26627_20250331.pdf,blind,,,,,,,,,,,,
+FDIC_27503_20240729,total_assets_usd,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,585000000,"As of June 30, 2024, the bank reported total assets of $585 million",,,,,,,,,
+FDIC_27503_20240729,total_assets_asof,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,2024-06-30,"As of June 30, 2024",,,,,,,,,
+FDIC_27503_20240729,lending_data_period_start,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,2022-01-01,Examiners reviewed all bank commercial loans for 2022 and 2023,,,,,,,,,
+FDIC_27503_20240729,lending_data_period_end,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,2023-12-31,Examiners reviewed all bank commercial loans for 2022 and 2023,,,,,,,,,
+FDIC_27503_20240729,n_assessment_areas,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,2,Berkshire designated the following AAs:,,,,,,,,,
+FDIC_27503_20240729,n_full_scope,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,2,Examiners conducted a full-scope review of the bank’s performance in each of its AAs.,,,,,,,,,
+FDIC_27503_20240729,loan_products_evaluated,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,home_mortgage|small_business,Examiners analyzed Berkshire’s CRA performance by reviewing all commercial loans regardless of loan size... Berkshire also extended a small number of 1-4 family and multifamily (five or more unit) loans relating to non-owner occupied investment properties.,,,,,,,,,
+FDIC_27503_20240729,primary_product,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,small_business,"reviewing all commercial loans regardless of loan size, as this loan category represents the bank’s primary product line",,,,,,,,,
+FDIC_27503_20240729,inside_aa_share_number_pct,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,87.5,the bank originated 87.5 percent of its total loans by number and 99.3 percent by dollar volume inside its AA.,,,,,,,,,
+FDIC_27503_20240729,inside_aa_share_product,B,data/pdfs/FDIC_27503_20240729.pdf,shown,value,all_reviewed_combined,"Total 28 87.5 4 12.5 32 67,318 99.3 492 0.7 67,810",,,,,,,,,
+FDIC_27503_20240729,avg_ltd_ratio_pct,B,data/pdfs/FDIC_27503_20240729.pdf,shown,absent,,,,,,,,,,,
+FDIC_27824_20230320,total_assets_usd,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,487232000,"Salem Co-operative Bank 
+ 487,232",,,,,,,,,
+FDIC_27824_20230320,total_assets_asof,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,2022-12-31,"Total Assets as of 
+ 12/31/2022",,,,,,,,,
+FDIC_27824_20230320,lending_data_period_start,B,data/pdfs/FDIC_27824_20230320.pdf,shown,absent,,,,,,,,,,,
+FDIC_27824_20230320,lending_data_period_end,B,data/pdfs/FDIC_27824_20230320.pdf,shown,absent,,,,,,,,,,,
+FDIC_27824_20230320,n_assessment_areas,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,1,SCB designated one contiguous assessment area,,,,,,,,,
+FDIC_27824_20230320,n_full_scope,B,data/pdfs/FDIC_27824_20230320.pdf,shown,absent,,,,,,,,,,,
+FDIC_27824_20230320,loan_products_evaluated,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,home_mortgage|small_business,Examiners determined SCB’s major product lines are home mortgage and small business loans.,,,,,,,,,
+FDIC_27824_20230320,primary_product,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,home_mortgage,One-to-four family loans are the bank’s primary credit product,,,,,,,,,
+FDIC_27824_20230320,inside_aa_share_number_pct,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,67.2,"Total 
+ 509 
+ 67.2",,,,,,,,,
+FDIC_27824_20230320,inside_aa_share_product,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,all_reviewed_combined,"Total 
+ 509 
+ 67.2 
+ 249 
+ 32.8 
+ 758 
+ 150,442 
+ 65.0 
+ 80,890 
+ 35.0 
+ 231,331",,,,,,,,,
+FDIC_27824_20230320,avg_ltd_ratio_pct,B,data/pdfs/FDIC_27824_20230320.pdf,shown,value,102.7,"Salem Co-operative Bank 
+ 487,232 
+ 102.7",,,,,,,,,
+FDIC_31028_20231023,total_assets_usd,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,total_assets_asof,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,lending_data_period_start,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,lending_data_period_end,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,n_assessment_areas,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,n_full_scope,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,loan_products_evaluated,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,primary_product,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,inside_aa_share_number_pct,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,inside_aa_share_product,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_31028_20231023,avg_ltd_ratio_pct,B,data/pdfs/FDIC_31028_20231023.pdf,blind,,,,,,,,,,,,
+FDIC_32018_20221206,total_assets_usd,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,79030000,"Angelina Savings Bank, SSB, Angelina County, TX
+79,030",,,,,,,,,
+FDIC_32018_20221206,total_assets_asof,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,2022-09-30,"Total Assets as of
+09/30/2022",,,,,,,,,
+FDIC_32018_20221206,lending_data_period_start,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,2021-01-01,"Examiners selected a sample of small business loans originated in the period January 1, 2021, through December 31, 2021.",,,,,,,,,
+FDIC_32018_20221206,lending_data_period_end,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,2021-12-31,"Examiners selected a sample of small business loans originated in the period January 1, 2021, through December 31, 2021.",,,,,,,,,
+FDIC_32018_20221206,n_assessment_areas,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,1,ASB designated one contiguous assessment area,,,,,,,,,
+FDIC_32018_20221206,n_full_scope,B,data/pdfs/FDIC_32018_20221206.pdf,shown,absent,,,,,,,,,,,
+FDIC_32018_20221206,loan_products_evaluated,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,consumer|small_business,"examiners determined that the bank’s major product lines, of those typically reviewed, consist of small business lending (commercial real estate loans and commercial and industrial loans) and consumer lending",,,,,,,,,
+FDIC_32018_20221206,primary_product,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,unstated,"consist of small business lending (commercial real estate loans and commercial and industrial loans) and consumer lending, at 37.1 percent and 37.9 percent by dollar volume of total loans originated in 2021, respectively.",,,,,,,,,
+FDIC_32018_20221206,inside_aa_share_number_pct,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,84.3,"Consumer | 58 | 82.9 | 12 | 17.1 | 70 | 851 | 82.7 | 178 | 17.3 | 1,029
+Small Business | 43 | 86.0 | 7 | 14.0 | 50 | 4,052 | 85.6 | 680 | 14.4 | 4,732",,,,,,,,,
+FDIC_32018_20221206,inside_aa_share_product,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,all_reviewed_combined,"The following table shows that for consumer and small business loans, by the percentages of the number and dollar volume of loans, the bank originated majorities inside its assessment area.",,,,,,,,,
+FDIC_32018_20221206,avg_ltd_ratio_pct,B,data/pdfs/FDIC_32018_20221206.pdf,shown,value,61.6,"The bank recorded a 61.6 percent average, net LTD ratio for the 24 calendar quarters since the previous evaluation, December 31, 2016, to September 30, 2022.",,,,,,,,,
+FDIC_33794_20240708,total_assets_usd,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,total_assets_asof,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,lending_data_period_start,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,lending_data_period_end,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,n_assessment_areas,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,n_full_scope,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,loan_products_evaluated,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,primary_product,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,inside_aa_share_number_pct,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,inside_aa_share_product,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_33794_20240708,avg_ltd_ratio_pct,B,data/pdfs/FDIC_33794_20240708.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,total_assets_usd,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,total_assets_asof,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,lending_data_period_start,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,lending_data_period_end,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,n_assessment_areas,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,n_full_scope,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,loan_products_evaluated,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,primary_product,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,inside_aa_share_number_pct,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,inside_aa_share_product,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_35169_20230424,avg_ltd_ratio_pct,B,data/pdfs/FDIC_35169_20230424.pdf,blind,,,,,,,,,,,,
+FDIC_4041_20241028,total_assets_usd,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,159683000,"The First Security Bank, Beaver, Oklahoma  
+159,683  
+73.7",,,,,,,,,
+FDIC_4041_20241028,total_assets_asof,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,2024-06-30,"Total Assets as of 
+6/30/2024",,,,,,,,,
+FDIC_4041_20241028,lending_data_period_start,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,2023-01-01,loans originated between January 2023 thru December 2023,,,,,,,,,
+FDIC_4041_20241028,lending_data_period_end,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,2023-12-31,loans originated between January 2023 thru December 2023,,,,,,,,,
+FDIC_4041_20241028,n_assessment_areas,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,2,"This evaluation includes two rated areas, the State of Oklahoma and the 
+State of Texas.  The First Security Bank defined one AA in each state and operates branches in each 
+AA.",,,,,,,,,
+FDIC_4041_20241028,n_full_scope,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,2,"Examiners applied full-scope procedures to assess the bank’s performance in the Oklahoma Non-MSA 
+AA... Examiners also applied full-scope procedures to the Beaumont-Port Arthur MSA AA",,,,,,,,,
+FDIC_4041_20241028,loan_products_evaluated,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,small_business|small_farm,"For the Lending Test, this evaluation includes a review of a sample of 73 small business loans... This evaluation also includes a review of a sample of 59 small farms loans",,,,,,,,,
+FDIC_4041_20241028,primary_product,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,small_business,"The following table shows that small business loans represent a majority by number and dollar of 
+the loan categories reviewed.",,,,,,,,,
+FDIC_4041_20241028,inside_aa_share_number_pct,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,73.5,"Small Business 
+56 
+76.7 
+17 
+23.3 
+73 
+5,624 
+51.7 
+5,248 
+48.3 
+10,872 
+Small Farm 
+41 
+69.5 
+18 
+30.5 
+59 
+4,968 
+68.0 
+2,338 
+32.0 
+7,306",,,,,,,,,
+FDIC_4041_20241028,inside_aa_share_product,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,all_reviewed_combined,"The following table shows that The First Security Bank originated a majority of small business and small farm loans, by number and dollar volume, in 
+the AAs.",,,,,,,,,
+FDIC_4041_20241028,avg_ltd_ratio_pct,B,data/pdfs/FDIC_4041_20241028.pdf,shown,value,73.7,"averaged 73.7 percent over the 
+past 24 calendar quarters from September 30, 2018, to June 30, 2024",,,,,,,,,
+FDIC_5415_20241028,total_assets_usd,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,1930300000,"Security First Bank. Lincoln, Nebraska 
+1,930,300",,,,,,,,,
+FDIC_5415_20241028,total_assets_asof,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,2024-06-30,"Total Assets as of 
+6/30/2024",,,,,,,,,
+FDIC_5415_20241028,lending_data_period_start,B,data/pdfs/FDIC_5415_20241028.pdf,shown,absent,,,,,,,,,,,
+FDIC_5415_20241028,lending_data_period_end,B,data/pdfs/FDIC_5415_20241028.pdf,shown,absent,,,,,,,,,,,
+FDIC_5415_20241028,n_assessment_areas,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,4,"SFB designated the following four assessment areas in the states of 
+Nebraska and South Dakota",,,,,,,,,
+FDIC_5415_20241028,n_full_scope,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,3,"Examiners used full-scope examination procedures to evaluate SFB’s performance in the Nebraska 
+Nonmetropolitan, Lincoln Metropolitan, and Rapid City Metropolitan Assessment Areas",,,,,,,,,
+FDIC_5415_20241028,loan_products_evaluated,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,home_mortgage|small_business|small_farm,"Examiners selected small business, small farm, and home mortgage loans to evaluate the bank’s 
+lending performance.",,,,,,,,,
+FDIC_5415_20241028,primary_product,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,unstated,"Small business, small farm, and home mortgage lending received equal weight when drawing 
+conclusions.",,,,,,,,,
+FDIC_5415_20241028,inside_aa_share_number_pct,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,82.2,"A majority of small business, small farm, and home mortgage loans, by number and dollar volume, 
+were located inside the assessment areas.",,,,,,,,,
+FDIC_5415_20241028,inside_aa_share_product,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,all_reviewed_combined,"A majority of small business, small farm, and home mortgage loans, by number and dollar volume, 
+were located inside the assessment areas.",,,,,,,,,
+FDIC_5415_20241028,avg_ltd_ratio_pct,B,data/pdfs/FDIC_5415_20241028.pdf,shown,value,81.4,"averaged 81.4 percent over the past 12 quarters from September 30, 2021, to June 30, 2024.",,,,,,,,,
+FDIC_9064_20230508,total_assets_usd,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,total_assets_asof,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,lending_data_period_start,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,lending_data_period_end,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,n_assessment_areas,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,n_full_scope,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,loan_products_evaluated,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,primary_product,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,inside_aa_share_number_pct,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,inside_aa_share_product,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9064_20230508,avg_ltd_ratio_pct,B,data/pdfs/FDIC_9064_20230508.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,total_assets_usd,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,total_assets_asof,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,lending_data_period_start,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,lending_data_period_end,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,n_assessment_areas,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,n_full_scope,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,loan_products_evaluated,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,primary_product,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,inside_aa_share_number_pct,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,inside_aa_share_product,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9529_20240909,avg_ltd_ratio_pct,B,data/pdfs/FDIC_9529_20240909.pdf,blind,,,,,,,,,,,,
+FDIC_9620_20250218,total_assets_usd,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,739517000,"First Bank, Clewiston, Florida 
+739,517  
+61.8",,,,,,,,,
+FDIC_9620_20250218,total_assets_asof,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,2024-12-31,Source: Call Reports 12/31/2021 through 12/31/2024,,,,,,,,,
+FDIC_9620_20250218,lending_data_period_start,B,data/pdfs/FDIC_9620_20250218.pdf,shown,absent,,,,,,,,,,,
+FDIC_9620_20250218,lending_data_period_end,B,data/pdfs/FDIC_9620_20250218.pdf,shown,absent,,,,,,,,,,,
+FDIC_9620_20250218,n_assessment_areas,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,4,The bank continues to define four contiguous assessment areas in south Florida.,,,,,,,,,
+FDIC_9620_20250218,n_full_scope,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,3,"The Florida Non-MSA, Cape Coral MSA, and Naples MSA assessment areas received full-scope reviews",,,,,,,,,
+FDIC_9620_20250218,loan_products_evaluated,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,home_mortgage|small_business|small_farm,First Bank’s major product lines are home mortgage and small business loans followed by small farm loans.,,,,,,,,,
+FDIC_9620_20250218,primary_product,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,home_mortgage,First Bank’s major product lines are home mortgage and small business loans followed by small farm loans.,,,,,,,,,
+FDIC_9620_20250218,inside_aa_share_number_pct,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,75.7,"Total 
+324 
+75.7 
+104 
+24.3 
+428 
+94,261 
+71.1 
+38,288 
+29.9 
+132,549",,,,,,,,,
+FDIC_9620_20250218,inside_aa_share_product,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,all_reviewed_combined,"Total 
+324 
+75.7 
+104 
+24.3 
+428 
+94,261 
+71.1 
+38,288 
+29.9 
+132,549",,,,,,,,,
+FDIC_9620_20250218,avg_ltd_ratio_pct,B,data/pdfs/FDIC_9620_20250218.pdf,shown,value,61.8,"First Bank, Clewiston, Florida 
+739,517  
+61.8",,,,,,,,,
+FDIC_9881_20250818,total_assets_usd,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,151019000,"Security Bank and Trust Company – Miami, OK 151,019",,,,,,,,,
+FDIC_9881_20250818,total_assets_asof,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,2025-06-30,Total Assets as of 6/30/2025,,,,,,,,,
+FDIC_9881_20250818,lending_data_period_start,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,2024-01-01,This evaluation includes a review of the universe of 86 small business loans totaling $7.7 million originated or purchased in 2024,,,,,,,,,
+FDIC_9881_20250818,lending_data_period_end,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,2024-12-31,This evaluation includes a review of the universe of 86 small business loans totaling $7.7 million originated or purchased in 2024,,,,,,,,,
+FDIC_9881_20250818,n_assessment_areas,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,1,Security Bank and Trust Company designated a single AA in the Oklahoma Non-Metropolitan Statistical Area (Non-MSA) consisting of the entirety of Ottawa County.,,,,,,,,,
+FDIC_9881_20250818,n_full_scope,B,data/pdfs/FDIC_9881_20250818.pdf,shown,absent,,,,,,,,,,,
+FDIC_9881_20250818,loan_products_evaluated,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,home_mortgage|small_business,examiners determined the major product lines consist of commercial and home mortgage loans.,,,,,,,,,
+FDIC_9881_20250818,primary_product,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,small_business,examiners placed more weight on small business lending when arriving at conclusions.,,,,,,,,,
+FDIC_9881_20250818,inside_aa_share_number_pct,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,64.2,Total 102 64.2,,,,,,,,,
+FDIC_9881_20250818,inside_aa_share_product,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,all_reviewed_combined,"Total 102 64.2 57 35.8 159 10,616 44.4 13,305 55.6 23,921",,,,,,,,,
+FDIC_9881_20250818,avg_ltd_ratio_pct,B,data/pdfs/FDIC_9881_20250818.pdf,shown,value,86.1,averaged 86.1 percent over the past 22 quarters,,,,,,,,,
+FDIC_99_20250428,total_assets_usd,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,184236000,"Bank of Delight, Delight, AR  
+184,236",,,,,,,,,
+FDIC_99_20250428,total_assets_asof,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,2024-12-31,12/31/2024,,,,,,,,,
+FDIC_99_20250428,lending_data_period_start,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,2024-01-01,originated or purchased during 2024,,,,,,,,,
+FDIC_99_20250428,lending_data_period_end,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,2024-12-31,originated or purchased during 2024,,,,,,,,,
+FDIC_99_20250428,n_assessment_areas,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,1,Bank of Delight designated one contiguous AA,,,,,,,,,
+FDIC_99_20250428,n_full_scope,B,data/pdfs/FDIC_99_20250428.pdf,shown,absent,,,,,,,,,,,
+FDIC_99_20250428,loan_products_evaluated,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,home_mortgage|small_business|small_farm,"major product lines consist of commercial, home mortgage, and agricultural loans.",,,,,,,,,
+FDIC_99_20250428,primary_product,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,small_business,"small business loans comprise a majority of loans among the products reviewed.  Therefore, small business loans received more weight",,,,,,,,,
+FDIC_99_20250428,inside_aa_share_number_pct,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,78.0,"Total | 1,687 | 78.0",,,,,,,,,
+FDIC_99_20250428,inside_aa_share_product,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,all_reviewed_combined,"Total | 1,687 | 78.0 | 476 | 22.0 | 2,163 | 109,875 | 65.5 | 57,939 | 34.5 | 167,814",,,,,,,,,
+FDIC_99_20250428,avg_ltd_ratio_pct,B,data/pdfs/FDIC_99_20250428.pdf,shown,value,95.9,averaged 95.9 percent,,,,,,,,,
+FRB_175140_20240812,total_assets_usd,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,total_assets_asof,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,lending_data_period_start,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,lending_data_period_end,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,n_assessment_areas,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,n_full_scope,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,loan_products_evaluated,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,primary_product,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,inside_aa_share_number_pct,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,inside_aa_share_product,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_175140_20240812,avg_ltd_ratio_pct,B,data/pdfs/FRB_175140_20240812.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,total_assets_usd,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,total_assets_asof,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,lending_data_period_start,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,lending_data_period_end,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,n_assessment_areas,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,n_full_scope,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,loan_products_evaluated,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,primary_product,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,inside_aa_share_number_pct,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,inside_aa_share_product,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+FRB_2769570_20230213,avg_ltd_ratio_pct,B,data/pdfs/FRB_2769570_20230213.pdf,blind,,,,,,,,,,,,
+OCC_13116_20240415,total_assets_usd,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,122000000,"As of December 31, 2023, the bank had total assets of $122 million.",,,,,,,,,
+OCC_13116_20240415,total_assets_asof,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,2023-12-31,"As of December 31, 2023, the bank had total assets of $122 million.",,,,,,,,,
+OCC_13116_20240415,lending_data_period_start,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,2021-01-01,"The evaluation period for the remaining portions of the lending test ranged from January 1, 2021, to December 31, 2023.",,,,,,,,,
+OCC_13116_20240415,lending_data_period_end,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,2023-12-31,"The evaluation period for the remaining portions of the lending test ranged from January 1, 2021, to December 31, 2023.",,,,,,,,,
+OCC_13116_20240415,n_assessment_areas,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,1,It is the bank’s only rating area.,,,,,,,,,
+OCC_13116_20240415,n_full_scope,B,data/pdfs/OCC_13116_20240415.pdf,shown,absent,,,,,,,,,,,
+OCC_13116_20240415,loan_products_evaluated,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,home_mortgage|small_business,We determined home mortgage loans and commercial loans to be the bank’s primary products during the evaluation period.,,,,,,,,,
+OCC_13116_20240415,primary_product,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,home_mortgage,We determined home mortgage loans and commercial loans to be the bank’s primary products during the evaluation period.,,,,,,,,,
+OCC_13116_20240415,inside_aa_share_number_pct,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,78.8,The bank originated and purchased 78.8 percent of its total loans inside the bank’s AA during the evaluation period.,,,,,,,,,
+OCC_13116_20240415,inside_aa_share_product,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,all_reviewed_combined,The bank originated and purchased 78.8 percent of its total loans inside the bank’s AA during the evaluation period.,,,,,,,,,
+OCC_13116_20240415,avg_ltd_ratio_pct,B,data/pdfs/OCC_13116_20240415.pdf,shown,value,74.25,The bank's average LTD ratio over the past 16 quarters was 74.25 percent.,,,,,,,,,
+OCC_15389_20240429,total_assets_usd,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,total_assets_asof,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,lending_data_period_start,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,lending_data_period_end,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,n_assessment_areas,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,n_full_scope,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,loan_products_evaluated,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,primary_product,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,inside_aa_share_number_pct,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,inside_aa_share_product,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_15389_20240429,avg_ltd_ratio_pct,B,data/pdfs/OCC_15389_20240429.pdf,blind,,,,,,,,,,,,
+OCC_23202_20240610,total_assets_usd,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,640700000,"As of December 3l, 2023, the bank reported total assets of $640.7 million",,,,,,,,,
+OCC_23202_20240610,total_assets_asof,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,2023-12-31,"As of December 3l, 2023",,,,,,,,,
+OCC_23202_20240610,lending_data_period_start,B,data/pdfs/OCC_23202_20240610.pdf,shown,absent,,,,,,,,,,,
+OCC_23202_20240610,lending_data_period_end,B,data/pdfs/OCC_23202_20240610.pdf,shown,absent,,,,,,,,,,,
+OCC_23202_20240610,n_assessment_areas,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,2,"MNB has one rating area, the state of Arkansas, with two AAs:",,,,,,,,,
+OCC_23202_20240610,n_full_scope,B,data/pdfs/OCC_23202_20240610.pdf,shown,abstain,,,,,,,,,,,
+OCC_23202_20240610,loan_products_evaluated,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,home_mortgage|small_business,The lending test focused on small business loans and home mortgages.,,,,,,,,,
+OCC_23202_20240610,primary_product,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,unstated,The lending test focused on small business loans and home mortgages.,,,,,,,,,
+OCC_23202_20240610,inside_aa_share_number_pct,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,88.0,The bank originated and purchased 88.0 percent of its total loans inside the bank’s AAs during the evaluation period.,,,,,,,,,
+OCC_23202_20240610,inside_aa_share_product,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,all_reviewed_combined,The bank originated and purchased 88.0 percent of its total loans inside the bank’s AAs during the evaluation period.,,,,,,,,,
+OCC_23202_20240610,avg_ltd_ratio_pct,B,data/pdfs/OCC_23202_20240610.pdf,shown,value,58.8,The Malvern National Bank (MNB) maintained an average quarterly LTD ratio of 58.8 percent since the previous CRA evaluation.,,,,,,,,,
+OCC_703692_20220801,total_assets_usd,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,total_assets_asof,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,lending_data_period_start,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,lending_data_period_end,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,n_assessment_areas,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,n_full_scope,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,loan_products_evaluated,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,primary_product,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,inside_aa_share_number_pct,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,inside_aa_share_product,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_703692_20220801,avg_ltd_ratio_pct,B,data/pdfs/OCC_703692_20220801.pdf,blind,,,,,,,,,,,,
+OCC_704013_20230918,total_assets_usd,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,181000000,"As of December 31, 2022, SHCB had total assets of $181 million and tier 1 capital of $26.1 million.",,,,,,,,,
+OCC_704013_20230918,total_assets_asof,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,2022-12-31,"As of December 31, 2022, SHCB had total assets of $181 million and tier 1 capital of $26.1 million.",,,,,,,,,
+OCC_704013_20230918,lending_data_period_start,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,2020-01-01,"This evaluation considers the bank’s CRA performance from January 1, 2020, to December 31, 2022.",,,,,,,,,
+OCC_704013_20230918,lending_data_period_end,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,2022-12-31,"This evaluation considers the bank’s CRA performance from January 1, 2020, to December 31, 2022.",,,,,,,,,
+OCC_704013_20230918,n_assessment_areas,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,2,"This market footprint creates one rating area in Ohio with two AAs, the Ohio nonmetropolitan statistical area AA (Ohio Non-MSA AA) and the Cincinnati OH-KY-IN MSA (Cincinnati MSA AA).",,,,,,,,,
+OCC_704013_20230918,n_full_scope,B,data/pdfs/OCC_704013_20230918.pdf,shown,absent,,,,,,,,,,,
+OCC_704013_20230918,loan_products_evaluated,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,consumer|home_mortgage,"Therefore, the OCC evaluated relevant loan data from all home mortgage loans reported under HMDA and a random sample of consumer loans.",,,,,,,,,
+OCC_704013_20230918,primary_product,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,home_mortgage,"To analyze SHCB’s performance under the Lending Test, the OCC considered data from a representative sample of the primary loan products.",,,,,,,,,
+OCC_704013_20230918,inside_aa_share_number_pct,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,89.0,"By number, SHCB originated and purchased 89 percent of its loans by number inside the AAs during the evaluation period.",,,,,,,,,
+OCC_704013_20230918,inside_aa_share_product,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,all_reviewed_combined,"Total 323 89.0 40 11.0 363 27,221 82.8 5,644 17.2 32,865",,,,,,,,,
+OCC_704013_20230918,avg_ltd_ratio_pct,B,data/pdfs/OCC_704013_20230918.pdf,shown,value,69.4,"SHCB’s quarterly LTD ratio, as calculated on a bank-wide basis, averaged 69.4 percent over the 12-quarter period ending December 31, 2022.",,,,,,,,,
+OCC_705273_20250616,total_assets_usd,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,total_assets_asof,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,lending_data_period_start,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,lending_data_period_end,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,n_assessment_areas,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,n_full_scope,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,loan_products_evaluated,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,primary_product,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,inside_aa_share_number_pct,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,inside_aa_share_product,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,
+OCC_705273_20250616,avg_ltd_ratio_pct,B,data/pdfs/OCC_705273_20250616.pdf,blind,,,,,,,,,,,,

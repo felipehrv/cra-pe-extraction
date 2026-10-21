@@ -469,3 +469,289 @@ splits:
       keeps that later chance, so its inclusion probability exceeds the recorded stage probability; gold
       metrics are reported unweighted, corpus estimates come from the audit (design 5.1)
     - 'documents removed from the pool by bank exclusivity during the draw: 34'
+  audit:
+    split: audit
+    seed: 20261016
+    drawn_at: '2026-10-20'
+    n: 30
+    rules:
+      n_per_tertile: 10
+      tertiles: rank thirds of the eligible corpus documents by doc_risk, ties broken at random
+      weight: N_h / n_h at document level (design 5.3)
+      tuning_documents: 334
+      tuning_documents_hash: 093d7847b91b73a743e34e6ca440f4ba3b1307e304f8d3fba283886c4c984fc4
+      tuning_documents_removed_from_pool: 338
+    strata:
+    - name: tertile:low
+      population: 803
+      pool: 803
+      drawn: 10
+      selection_probability: 0.012453
+      weight: 80.3
+      detail:
+        doc_risk_min: 0.0
+        doc_risk_max: 1.0
+    - name: tertile:mid
+      population: 803
+      pool: 803
+      drawn: 10
+      selection_probability: 0.012453
+      weight: 80.3
+      detail:
+        doc_risk_min: 1.0
+        doc_risk_max: 2.0
+    - name: tertile:high
+      population: 802
+      pool: 802
+      drawn: 10
+      selection_probability: 0.012469
+      weight: 80.2
+      detail:
+        doc_risk_min: 2.0
+        doc_risk_max: 9.0
+    docs:
+    - doc_id: FDIC_13692_20220919
+      bank_id: '13692'
+      cell: FDIC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_1376_20230710
+      bank_id: '1376'
+      cell: FDIC/isb
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_14445_20240122
+      bank_id: '14445'
+      cell: FDIC/isb
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_16288_20220816
+      bank_id: '16288'
+      cell: FDIC/small
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_17443_20250121
+      bank_id: '17443'
+      cell: FDIC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_18165_20240212
+      bank_id: '18165'
+      cell: FDIC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_2444_20250128
+      bank_id: '2444'
+      cell: FDIC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_25267_20230814
+      bank_id: '25267'
+      cell: FDIC/isb
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_26627_20250331
+      bank_id: '26627'
+      cell: FDIC/isb
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_27503_20240729
+      bank_id: '27503'
+      cell: FDIC/isb
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_27824_20230320
+      bank_id: '27824'
+      cell: FDIC/isb
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_31028_20231023
+      bank_id: '31028'
+      cell: FDIC/isb
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_32018_20221206
+      bank_id: '32018'
+      cell: FDIC/small
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_33794_20240708
+      bank_id: '33794'
+      cell: FDIC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_35169_20230424
+      bank_id: '35169'
+      cell: FDIC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_4041_20241028
+      bank_id: '4041'
+      cell: FDIC/small
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_5415_20241028
+      bank_id: '5415'
+      cell: FDIC/isb
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_9064_20230508
+      bank_id: '9064'
+      cell: FDIC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_9529_20240909
+      bank_id: '9529'
+      cell: FDIC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_9620_20250218
+      bank_id: '9620'
+      cell: FDIC/isb
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FDIC_9881_20250818
+      bank_id: '9881'
+      cell: FDIC/small
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FDIC_99_20250428
+      bank_id: '99'
+      cell: FDIC/small
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: FRB_175140_20240812
+      bank_id: '175140'
+      cell: FRB/isb
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: FRB_2769570_20230213
+      bank_id: '2769570'
+      cell: FRB/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: OCC_13116_20240415
+      bank_id: '13116'
+      cell: OCC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: OCC_15389_20240429
+      bank_id: '15389'
+      cell: OCC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: OCC_23202_20240610
+      bank_id: '23202'
+      cell: OCC/isb
+      stratum: tertile:high
+      reason: doc_risk_tertile
+      pool_size: 802
+      selection_probability: 0.012469
+    - doc_id: OCC_703692_20220801
+      bank_id: '703692'
+      cell: OCC/small
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: OCC_704013_20230918
+      bank_id: '704013'
+      cell: OCC/small
+      stratum: tertile:mid
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    - doc_id: OCC_705273_20250616
+      bank_id: '705273'
+      cell: OCC/isb
+      stratum: tertile:low
+      reason: doc_risk_tertile
+      pool_size: 803
+      selection_probability: 0.012453
+    doc_ids:
+    - FDIC_13692_20220919
+    - FDIC_1376_20230710
+    - FDIC_14445_20240122
+    - FDIC_16288_20220816
+    - FDIC_17443_20250121
+    - FDIC_18165_20240212
+    - FDIC_2444_20250128
+    - FDIC_25267_20230814
+    - FDIC_26627_20250331
+    - FDIC_27503_20240729
+    - FDIC_27824_20230320
+    - FDIC_31028_20231023
+    - FDIC_32018_20221206
+    - FDIC_33794_20240708
+    - FDIC_35169_20230424
+    - FDIC_4041_20241028
+    - FDIC_5415_20241028
+    - FDIC_9064_20230508
+    - FDIC_9529_20240909
+    - FDIC_9620_20250218
+    - FDIC_9881_20250818
+    - FDIC_99_20250428
+    - FRB_175140_20240812
+    - FRB_2769570_20230213
+    - OCC_13116_20240415
+    - OCC_15389_20240429
+    - OCC_23202_20240610
+    - OCC_703692_20220801
+    - OCC_704013_20230918
+    - OCC_705273_20250616
+    doc_id_hash: 80d6e6b2b5c0c3a03df4e1d953dc3d5c39fbb0c9af006e5037f9fdf85ba6ff9f
+    notes:
+    - 'eligible corpus documents without a doc_risk value, excluded from the pool: 0'
+    - 'documents removed from the pool by bank exclusivity during the draw: 30'
