@@ -25,3 +25,6 @@ results/run_log_*.jsonl
 
 # Smoke-test traces are throwaway; gold and corpus traces are committed.
 data/traces/smoke/
+
+# R session history
+.Rhistory
