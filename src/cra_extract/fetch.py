@@ -47,7 +47,7 @@ log = logging.getLogger(__name__)
 
 USER_AGENT = (
     f"cra-pe-extraction/{__version__} "
-    "(research code sample; downloads public CRA Performance Evaluations at 1 request per second)"
+    "(independent research project; downloads public CRA Performance Evaluations at 1 request per second)"
 )
 HEADERS = {"User-Agent": USER_AGENT, "Accept": "application/pdf,*/*;q=0.8"}
 DEFAULT_RATE_LIMIT = 1.0  # requests per second

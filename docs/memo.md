@@ -1,7 +1,7 @@
 # Memo: fields the CRA Performance Evaluations print and the public feeds do not carry
 
 To: the data offices of the OCC, the FDIC and the Federal Reserve
-From: the author of `cra-pe-extraction`, a public code sample built on public records
+From: the author of `cra-pe-extraction`, an independent research project built on public records
 Re: structured publication of Small Bank and ISB PE fields, 2023 to 2025 (draft of 2026-10-16)
 
 ## Summary

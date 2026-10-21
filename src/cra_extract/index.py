@@ -50,7 +50,7 @@ from cra_extract.overrides import default_exam_date_source
 
 log = logging.getLogger(__name__)
 
-USER_AGENT = "cra-pe-extraction/0.1 (research code sample; see README)"
+USER_AGENT = "cra-pe-extraction/0.1 (independent research project; see README)"
 REQUEST_PAUSE_S = 0.4
 
 OCC_SEARCH_URL = "https://apps.occ.gov/Occ.DataServices.WebApi.Public/api/CraEvaluations/Search/Options"
